@@ -200,7 +200,7 @@ public class InviteShareDialog extends BaseDialog implements CuckooShareDialogVi
                         Paint paint = new Paint();
                         canvas.drawBitmap(bm_qr, Math.abs(w - w_2) / 2,
                                 Math.abs(h - h_2) / 2 + 230, paint);
-                        canvas.save(Canvas.ALL_SAVE_FLAG);
+                        canvas.save();
                         // 存储新合成的图片
                         canvas.restore();
                         Log.e("getShareInfo_img", shareUrl + "合成完毕");

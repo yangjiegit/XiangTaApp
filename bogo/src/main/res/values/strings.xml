@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">想她</string>
 
+
+    <string name="agora_app_id" translatable="false">aab8b8f5a8cd4469a63042fcfafe7063</string>
+
     <string name="company">钻石</string>
 
 

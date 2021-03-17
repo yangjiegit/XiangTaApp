@@ -20,6 +20,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.blankj.utilcode.util.LogUtils;
+import com.faceunity.nama.FURenderer;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.dao.DaoMaster;
 import com.muse.xiangta.dao.DaoSession;
@@ -76,6 +77,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 
+import io.agora.capture.video.camera.CameraVideoManager;
+import io.agora.rtc.RtcEngine;
+
 import static com.tencent.imsdk.TIMElemType.Custom;
 import static com.tencent.imsdk.TIMElemType.Text;
 import static com.tencent.qalsdk.QALBroadcastReceiver.tag;
@@ -90,6 +94,12 @@ public class CuckooApplication extends Application {
     private static int mMainThreadId;
     private static Thread mMainThread;
     private static Handler mMainHandler;
+
+    //--------
+    private CameraVideoManager mVideoManager;
+    private RtcEngine mRtcEngine;
+    private RtcEngineEventHandlerProxy mRtcEventHandler;
+    //--------
 
 
     private DaoMaster.DevOpenHelper mHelper;
@@ -139,6 +149,10 @@ public class CuckooApplication extends Application {
         instances = this;
         mInstance = this;
 
+        //--------
+        initRtcEngine();
+        initVideoCaptureAsync();
+        //--------
 
         mMainThreadId = android.os.Process.myTid();
         mMainThread = Thread.currentThread();
@@ -163,6 +177,35 @@ public class CuckooApplication extends Application {
         registerActivityLifecycleCallbacks(new CuckooLifecycleHandler());
         //registerActivityLifecycleCallbacks(new ActivityHelper());
         closeAndroidPDialog();
+    }
+
+    private void initRtcEngine() {
+        String appId = getString(R.string.agora_app_id);
+        if (TextUtils.isEmpty(appId)) {
+            throw new RuntimeException("NEED TO use your App ID, get your own ID at https://dashboard.agora.io/");
+        }
+
+        mRtcEventHandler = new RtcEngineEventHandlerProxy();
+        try {
+            mRtcEngine = RtcEngine.create(this, appId, mRtcEventHandler);
+            mRtcEngine.enableVideo();
+            mRtcEngine.setChannelProfile(io.agora.rtc.Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
+        } catch (Exception e) {
+            throw new RuntimeException("NEED TO check rtc sdk init fatal error\n" + Log.getStackTraceString(e));
+        }
+    }
+
+    private void initVideoCaptureAsync() {
+        new Thread(() -> {
+            Context application = getApplicationContext();
+            FURenderer.setup(application);
+            mVideoManager = new CameraVideoManager(application,
+                    new PreprocessorFaceUnity(application));
+        }).start();
+    }
+
+    public CameraVideoManager videoManager() {
+        return mVideoManager;
     }
 
     private void initTbs() {

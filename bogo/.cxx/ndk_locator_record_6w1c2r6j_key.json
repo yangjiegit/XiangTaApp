@@ -1,0 +1,9 @@
+{
+  "ndkDirProperty": "/Users/joker/Library/Android/sdk/ndk/android-ndk-r21e",
+  "sdkFolder": "/Users/joker/Library/Android/sdk",
+  "sideBySideNdkFolderNames": [
+    "20.0.5594570",
+    "android-ndk-r21e",
+    "android-ndk-r16b"
+  ]
+}

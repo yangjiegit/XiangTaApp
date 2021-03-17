@@ -1,0 +1,27 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "28.0.3"
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 730
+        versionName "7.3.0"
+        // 7.3.0_phy_505b959b_bf80f59
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    api 'com.android.support:appcompat-v7:26.1.0'
+    api 'com.android.support:recyclerview-v7:26.1.0'
+    api 'com.android.support.constraint:constraint-layout:1.0.2'
+//    implementation 'com.faceunity:nama:7.3.0'
+}

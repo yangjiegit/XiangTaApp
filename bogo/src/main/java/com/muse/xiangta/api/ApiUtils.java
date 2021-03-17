@@ -5,17 +5,16 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.muse.xiangta.helper.ImageUtil;
-import com.muse.xiangta.manage.AppConfig;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.BitmapCallback;
+import com.muse.xiangta.helper.ImageUtil;
+import com.muse.xiangta.manage.AppConfig;
 
 import java.io.File;
 import java.io.InputStream;
@@ -29,8 +28,6 @@ import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Response;
 
-import static io.agora.rtc.internal.AudioRoutingController.TAG;
-
 /**
  * api工具类
  * Created by jiahengfei on 2018/1/20 0020.
@@ -38,23 +35,24 @@ import static io.agora.rtc.internal.AudioRoutingController.TAG;
 
 public class ApiUtils {
     public static Bitmap bitMap = null;
-    public static File file  = null;
+    public static File file = null;
 
     /**
      * 判断是否是url
+     *
      * @param url
      * @return
      */
-    public static boolean isTrueUrl(String url){
-        if (url==null){
+    public static boolean isTrueUrl(String url) {
+        if (url == null) {
             return false;
-        }else{
-            if (url.length()==0){
+        } else {
+            if (url.length() == 0) {
                 return false;
-            }else{
-                if ("".equals(url.trim())){
+            } else {
+                if ("".equals(url.trim())) {
                     return false;
-                }else{
+                } else {
                     return true;
                 }
             }
@@ -63,42 +61,42 @@ public class ApiUtils {
 
     /**
      * 判断是否是全地址
+     *
      * @param url
      * @return
      */
-    public static String isHttpString(String url){
-        Log.d(TAG, "isHttpString: 地址打印::"+url);
-        if (url!=null && url.length() > 0){
-            if (url.substring(0,4).equals("http")){
-                Log.d(TAG, "isHttpString: 地址正确,不需要拼接!!");
+    public static String isHttpString(String url) {
+        if (url != null && url.length() > 0) {
+            if (url.substring(0, 4).equals("http")) {
                 return url;
-            }else {
-                Log.d(TAG, "isHttpString: 拼接之后的地址"+AppConfig.MAIN_URL+url);
-                return AppConfig.MAIN_URL+url;
+            } else {
+                return AppConfig.MAIN_URL + url;
             }
-        }else{
-            Log.d(TAG, "isHttpString: 拼接之后的地址"+"---地址为空,无法拼接");
+        } else {
             return url;
         }
     }
 
     /**
      * 获取解析的map集合
+     *
      * @param jsonStr
      * @return
      */
-    public static Map<String,Object> getJsonObj(String jsonStr){
-        Map<String,Object> map = new HashMap<>();
-        map = JSON.parseObject(jsonStr,new TypeReference<HashMap<String,Object>>(){});
+    public static Map<String, Object> getJsonObj(String jsonStr) {
+        Map<String, Object> map = new HashMap<>();
+        map = JSON.parseObject(jsonStr, new TypeReference<HashMap<String, Object>>() {
+        });
         return map;
     }
 
     /**
      * 获取解析的对象
+     *
      * @param jsonStr
      * @return
      */
-    public static JSONObject getJsonObj2(String jsonStr){
+    public static JSONObject getJsonObj2(String jsonStr) {
         JSONObject jsonObject = JSON.parseObject(jsonStr);
         return jsonObject;
     }
@@ -106,16 +104,17 @@ public class ApiUtils {
     /**
      * 获取网络图片之后执行的方法接口
      */
-    public interface GetUrlBitMap{
+    public interface GetUrlBitMap {
         void doThenByBitmap(Bitmap bitmap);
     }
 
     /**
      * 网络获取bitmap图片
+     *
      * @param url
      * @return
      */
-    public static void getUrlBitmap(String url, final GetUrlBitMap getUrlBitMap){
+    public static void getUrlBitmap(String url, final GetUrlBitMap getUrlBitMap) {
         OkGo.get(isHttpString(url))
                 .tag("getRecommendUserList")
                 .cacheMode(CacheMode.DEFAULT)
@@ -124,6 +123,7 @@ public class ApiUtils {
                     public void onSuccess(Bitmap bitmap, Call call, Response response) {
                         getUrlBitMap.doThenByBitmap(bitmap);
                     }
+
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
@@ -133,6 +133,7 @@ public class ApiUtils {
 
     /**
      * 获取网络图片
+     *
      * @param url
      * @return
      */
@@ -157,16 +158,17 @@ public class ApiUtils {
 
     /**
      * 获取网络图片(批量+获取之后的监听)
+     *
      * @param urls
      * @return
      */
     public static void getURLimages(final List<String> urls, final GetUrlBitMaps getUrlBitMaps) {
         final ArrayList<Bitmap> bmp = new ArrayList<>();
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
-                    for (String url:urls) {
+                    for (String url : urls) {
                         URL myurl = new URL(isHttpString(url));
                         // 获得连接
                         HttpURLConnection conn = (HttpURLConnection) myurl.openConnection();
@@ -184,22 +186,23 @@ public class ApiUtils {
                             getUrlBitMaps.doThenByRefresh(bmp);
                         }
                     });
-                }catch (Exception e){
-                    Log.d(TAG, "run<getURLimages>: "+e);
+                } catch (Exception e) {
                 }
             }
         }.start();
     }
-    public interface GetUrlBitMaps{
+
+    public interface GetUrlBitMaps {
         void doThenByRefresh(ArrayList<Bitmap> bmp);
     }
 
     /**
      * 设置网络获取bitmap图片
+     *
      * @param url
      * @return
      */
-    public static void setUrlBitmapToFile(String url, final ImageView imgView){
+    public static void setUrlBitmapToFile(String url, final ImageView imgView) {
         OkGo.get(isHttpString(url))
                 .tag("getRecommendUserList")
                 .cacheMode(CacheMode.DEFAULT)
@@ -209,6 +212,7 @@ public class ApiUtils {
                         imgView.setImageBitmap(bitmap);
                         setFiles(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/headImage.jpg"));
                     }
+
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
@@ -216,7 +220,7 @@ public class ApiUtils {
                 });
     }
 
-    public static void setFiles(File files){
+    public static void setFiles(File files) {
         file = files;
     }
 
@@ -243,28 +247,31 @@ public class ApiUtils {
 
     /**
      * 获取stringuri地址
+     *
      * @param stringUri 例"/api/index.php/index/Smallvideo/index
      * @return
      */
-    public static Uri getUriByString(String stringUri){
-       //return Uri.parse(AppConfig.MAIN_URL+stringUri);
-       return Uri.parse(stringUri);
+    public static Uri getUriByString(String stringUri) {
+        //return Uri.parse(AppConfig.MAIN_URL+stringUri);
+        return Uri.parse(stringUri);
     }
 
     /**
      * 网络获取bitmap图片
+     *
      * @param url
      * @return
      */
-    public static void getUrlBitmapToSD(String url, final String filename){
+    public static void getUrlBitmapToSD(String url, final String filename) {
         OkGo.get(isHttpString(url))
                 .tag("getRecommendUserList")
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(new BitmapCallback() {
                     @Override
                     public void onSuccess(Bitmap bitmap, Call call, Response response) {
-                        ImageUtil.getSaveFile(bitmap,filename);
+                        ImageUtil.getSaveFile(bitmap, filename);
                     }
+
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
@@ -275,7 +282,7 @@ public class ApiUtils {
     /**
      * 视频类型参数
      */
-    public static class VideoType{
+    public static class VideoType {
         //推荐reference
         public static final String reference = "reference";
         //最新latest

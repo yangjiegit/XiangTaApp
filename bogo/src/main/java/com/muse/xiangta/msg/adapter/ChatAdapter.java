@@ -2,7 +2,6 @@ package com.muse.xiangta.msg.adapter;
 
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static io.agora.rtc.internal.AudioRoutingController.TAG;
 
 /**
  * 聊天列表适配器
@@ -43,19 +41,20 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> im
     //创建新View，被LayoutManager所调用
     @Override
     public ChatAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_chat_list,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_chat_list, viewGroup, false);
         return new ChatAdapter.ViewHolder(view);
     }
 
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        RelativeLayout leftLayout,rightLayout;
-        TextView leftTextMsg,rightTextMsg;
-        CircleImageView leftImg,rightImg;
-        ImageView leftImgMsg,rightImgMsg;
+        RelativeLayout leftLayout, rightLayout;
+        TextView leftTextMsg, rightTextMsg;
+        CircleImageView leftImg, rightImg;
+        ImageView leftImgMsg, rightImgMsg;
         QMUILinkTextView linkText;
         TextView rightSend;
-        public ViewHolder(View view){
+
+        public ViewHolder(View view) {
             super(view);
             leftLayout = view.findViewById(R.id.left_layout);
             rightLayout = view.findViewById(R.id.right_layout);
@@ -74,15 +73,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> im
     @Override
     public void onBindViewHolder(ChatAdapter.ViewHolder viewHolder, int position) {
         MsgModle.Type type = msgs.get(position).getType();
-        switch (type){
+        switch (type) {
             case Tip:
-                showTipMsg(viewHolder,msgs.get(position).getMsg());
+                showTipMsg(viewHolder, msgs.get(position).getMsg());
                 break;
             case Left:
-                showLeftMsg(viewHolder,position,msgs.get(position).getMsg());
+                showLeftMsg(viewHolder, position, msgs.get(position).getMsg());
                 break;
             case Right:
-                showRightMsg(viewHolder,position,msgs.get(position).getMsg());
+                showRightMsg(viewHolder, position, msgs.get(position).getMsg());
                 break;
         }
         viewHolder.rightSend.setTag(position);
@@ -99,22 +98,22 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> im
 
     /**
      * 根据position索引获取一个msgMoudle
+     *
      * @param position 当前索引
      * @return MsgMoudle
      */
-    public MsgModle getModle(int position){
+    public MsgModle getModle(int position) {
         return msgs.get(position);
     }
 
     /**
      * 显示左侧信息
      */
-    private void showLeftMsg(ViewHolder viewHolder, int position, Msg msg){
+    private void showLeftMsg(ViewHolder viewHolder, int position, Msg msg) {
         //显示控件
         viewHolder.leftLayout.setVisibility(View.VISIBLE);
-        Log.d(TAG, "showLeftMsg: "+msg);
         int msgType = msg.getType();
-        switch (msgType){
+        switch (msgType) {
             case 0://文本
                 viewHolder.leftTextMsg.setVisibility(View.VISIBLE);
                 viewHolder.leftTextMsg.setText(msg.getMsg());
@@ -135,12 +134,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> im
     /**
      * 显示右侧信息
      */
-    private void showRightMsg(ViewHolder viewHolder, int position, Msg msg){
+    private void showRightMsg(ViewHolder viewHolder, int position, Msg msg) {
         //显示控件
         viewHolder.rightLayout.setVisibility(View.VISIBLE);
-        Log.d(TAG, "showRightMsg: "+msg);
         int msgType = msg.getType();
-        switch (msgType){
+        switch (msgType) {
             case 0://文本
                 viewHolder.rightTextMsg.setVisibility(View.VISIBLE);
                 viewHolder.rightTextMsg.setText(msg.getMsg());
@@ -162,7 +160,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> im
     /**
      * 显示提示信息
      */
-    private void showTipMsg(ViewHolder viewHolder, Msg msg){
+    private void showTipMsg(ViewHolder viewHolder, Msg msg) {
         //显示控件
         viewHolder.linkText.setVisibility(View.VISIBLE);
         viewHolder.linkText.setText(msg.getMsg());
@@ -181,14 +179,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> im
         //注意这里使用getTag方法获取数据
         int position = (int) v.getTag();
         if (mOnItemClickListener != null) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.right_donot_send:
                     //点击重发按钮
-                    mOnItemClickListener.onItemClick(v, AdapterOnItemClick.ViewName.RETRY,position);
+                    mOnItemClickListener.onItemClick(v, AdapterOnItemClick.ViewName.RETRY, position);
                     break;
                 default:
                     //默认点击根布局
-                    mOnItemClickListener.onItemClick(v,null,position);
+                    mOnItemClickListener.onItemClick(v, null, position);
                     break;
             }
         }

@@ -1,1 +1,2 @@
+include ':faceunity'
 include ':bogo', ':utilcode', ':timSdk', ':timImUI', ':timPresentation', ':imagelibrary', ':bogokjBeauty'
