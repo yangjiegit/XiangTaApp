@@ -129,79 +129,77 @@ dependencies {
 
     annotationProcessor 'com.github.jokermonn:permissions4m:2.1.2-processor'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    testImplementation 'junit:junit:4.12'
+    api 'junit:junit:4.12'
 
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    api 'de.hdodenhof:circleimageview:2.2.0'
     //轮播库
-    implementation 'com.qmuiteam:qmui:1.0.6'
+    api 'com.qmuiteam:qmui:1.0.6'
     //QMUI库
-    implementation 'com.lzy.net:okgo:2.1.4'
+    api 'com.lzy.net:okgo:2.1.4'
     //OKGO库
-    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+    api 'com.rengwuxian.materialedittext:library:2.1.4'
     //文本输入框库
-    implementation 'com.alibaba:fastjson:1.2.44'
-    implementation 'me.grantland:autofittextview:0.2.+'
+    api 'com.alibaba:fastjson:1.2.44'
+    api 'me.grantland:autofittextview:0.2.+'
     //数据库操作库
-    implementation 'org.greenrobot:greendao:3.0.1'
-    implementation 'org.greenrobot:greendao-generator:3.0.0'
-    implementation 'org.greenrobot:eventbus:3.0.0'
+    api 'org.greenrobot:greendao:3.0.1'
+    api 'org.greenrobot:greendao-generator:3.0.0'
+    api 'org.greenrobot:eventbus:3.0.0'
     //分包
-    implementation 'com.android.support:multidex:1.0.1'
+    api 'com.android.support:multidex:1.0.1'
     //recycleView
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
-    implementation 'com.yanzhenjie:recyclerview-swipe:1.2.2'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
+    api 'com.yanzhenjie:recyclerview-swipe:1.2.2'
 
-    implementation 'com.idescout.sql:sqlscout-server:4.0'
+    api 'com.idescout.sql:sqlscout-server:4.0'
     //noinspection GradleCompatible
-    implementation 'com.android.support:cardview-v7:21.0.+'
-    implementation 'com.sunfusheng:marqueeview:1.3.3'
+    api 'com.android.support:cardview-v7:21.0.+'
+    api 'com.sunfusheng:marqueeview:1.3.3'
     //毛玻璃
-    implementation 'jp.wasabeef:glide-transformations:3.1.1'
-    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.9'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    api 'jp.wasabeef:glide-transformations:3.1.1'
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.9'
+    api 'com.android.support.constraint:constraint-layout:1.0.2'
     //PushSDK必须依赖基础组件库，所以需要加入对应依赖
-    implementation 'com.umeng.sdk:common:1.5.0'
+    api 'com.umeng.sdk:common:1.5.0'
     //PushSDK必须依赖utdid库，所以需要加入对应依赖
     //compile 'com.umeng.sdk:utdid:1.1.5.3'
     //PushSDK
-    implementation 'com.umeng.sdk:push:4.1.0'
+    api 'com.umeng.sdk:push:4.1.0'
     //umeng推送
-    implementation 'com.umeng.sdk:analytics:7.5.0'
-    implementation 'com.google.zxing:core:3.3.0'
+    api 'com.umeng.sdk:analytics:7.5.0'
+    api 'com.google.zxing:core:3.3.0'
     //权限
-    implementation 'com.github.jokermonn:permissions4m:2.1.2-lib'
-    implementation('cn.qqtheme.framework:WheelPicker:1.5.6') {
+    api 'com.github.jokermonn:permissions4m:2.1.2-lib'
+    api('cn.qqtheme.framework:WheelPicker:1.5.6') {
         exclude group: 'com.android.support'
     }
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'
-    implementation 'com.hyman:flowlayout-lib:1.1.2'
-    implementation 'com.zhy:percent-support-extends:1.1.1'
-    implementation 'com.qiniu:qiniu-android-sdk:7.2.+'
-    implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
-    implementation('com.github.bumptech.glide:glide:3.7.0') { // 所加的第三方框架
+    api 'com.jakewharton:butterknife:8.8.1'
+    api 'com.github.castorflex.verticalviewpager:library:19.0.1'
+    api 'com.hyman:flowlayout-lib:1.1.2'
+    api 'com.zhy:percent-support-extends:1.1.1'
+    api 'com.qiniu:qiniu-android-sdk:7.2.+'
+    api 'com.paypal.sdk:paypal-android-sdk:2.16.0'
+    api('com.github.bumptech.glide:glide:3.7.0') { // 所加的第三方框架
         exclude group: 'com.github.bumptech.glide', module: 'glide'     // 加载时排除框架中的design包
     }
-    implementation 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
+    api 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
     //dialog
-    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation 'com.facebook.rebound:rebound:0.3.8'
+    api 'com.afollestad.material-dialogs:core:0.9.6.0'
+    api 'com.facebook.rebound:rebound:0.3.8'
 
-    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
+    api 'com.github.chrisbanes:PhotoView:2.1.3'
 
-    implementation 'com.contrarywind:Android-PickerView:4.1.7'
+    api 'com.contrarywind:Android-PickerView:4.1.7'
 
-    implementation 'com.android.support:design:27.1.0'
+    api 'com.android.support:design:27.1.0'
 
-    implementation 'com.github.xiaohaibin:XBanner:1.7.0'
+    api 'com.github.xiaohaibin:XBanner:1.7.0'
 
-    implementation 'com.github.Jay-Goo:RangeSeekBar:v1.1.0'
+    api 'com.github.Jay-Goo:RangeSeekBar:v1.1.0'
 
-//    //相芯科技美颜
-//    implementation 'com.faceunity:nama:7.1.0'
 
     //流式布局
-    implementation 'com.github.1002326270xc:LayoutManager-FlowLayout:v1.8'
+    api 'com.github.1002326270xc:LayoutManager-FlowLayout:v1.8'
 
     implementation files('src/main/jniLibs/tbs_sdk_thirdapp_v4.3.0.1148_43697_sharewithdownloadwithfile_withoutGame_obfs_20190805_175505.jar')
 }
