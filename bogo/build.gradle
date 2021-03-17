@@ -97,6 +97,11 @@ android {
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 
@@ -112,6 +117,7 @@ dependencies {
     implementation project(':utilcode')
 
     implementation(name: 'LiteAVSDK_UGC_3.5.2170', ext: 'aar')
+    implementation(name: 'video-capture', ext: 'aar')
     implementation files('libs/MobCommons-2018.0523.1925.jar')
     implementation files('libs/MobTools-2018.0523.1923.jar')
     implementation files('libs/ShareSDK-Core-3.2.0.jar')
