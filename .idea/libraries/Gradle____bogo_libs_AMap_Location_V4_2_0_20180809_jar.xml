@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./bogo/libs/AMap_Location_V4.2.0_20180809.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bogo/libs/AMap_Location_V4.2.0_20180809.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

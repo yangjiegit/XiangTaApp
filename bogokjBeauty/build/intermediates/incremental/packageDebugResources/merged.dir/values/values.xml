@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ti_bg_panel_content">#FFFFFF</color>
+    <color name="ti_bg_panel_tab">#FFFFFF</color>
+    <color name="ti_divider">#959595</color>
+    <color name="ti_selected">#ef8074</color>
+    <color name="ti_unselected">#898989</color>
+    <style name="TiTextView">
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@drawable/color_ti_selector</item>
+        <item name="android:singleLine">true</item>
+    </style>
+</resources>

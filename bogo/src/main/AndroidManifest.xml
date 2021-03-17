@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.muse.xiangta">
+    <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 用于写入缓存数据到扩展存储卡 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" /> <!-- 加入应用需要的权限 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- 网络相关 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 读写文件 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 多媒体 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 如果需要实时音视频通话模块，下面的权限也是必须的。否则，可以不加 -->
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" /> <!-- 手机状态 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission
+        android:name="android.permission.CHANGE_CONFIGURATION"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:name=".CuckooApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:persistent="true"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/qmuiThemeNoBar">
+        <activity android:name=".ui.XWebViewActivity"></activity>
+        <!-- TODO 看情况再说 -->
+        <activity android:name=".ui.PairingActivity" />
+        <activity android:name=".ui.FriendEditActivity" />
+        <activity android:name=".ui.ContactSettingActivity" />
+        <activity android:name=".ui.FriendsActivity" /> <!-- 推广海报 -->
+        <activity android:name=".ui.PosterActivity" /> <!-- 绑定手机号码 -->
+        <activity android:name=".ui.BindPhoneActivity" /> <!-- 自定义话术添加 -->
+        <activity android:name=".ui.CuckooAddCustomMsgActivity" />
+        <activity android:name=".ui.WealthDetailedActivity" /> <!-- 入口 -->
+<!--        <activity-->
+<!--            android:name=".ui.GuildActivity"-->
+<!--            android:launchMode="standard"-->
+<!--            android:screenOrientation="portrait">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.o" />-->
+
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+
+<!--                <data android:scheme="q1fwid" />-->
+<!--            </intent-filter>-->
+<!--        </activity> &lt;!&ndash; 登录选择页 &ndash;&gt;-->
+        <activity
+            android:name=".ui.GuildActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.RegisterSelectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/qmuiTheme" /> <!-- 主页 -->
+        <activity
+            android:name=".ui.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/qmuiTheme" /> <!-- 主页 -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" /> <!-- player主页 -->
+        <activity
+            android:name=".ui.HomePageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/qmuiTheme" /> <!-- 视频播放页面 -->
+        <activity
+            android:name=".ui.VideoPlayerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/qmuiTheme" /> <!-- 发起视频通话 -->
+        <activity
+            android:name=".ui.CallPlayerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/qmuiTheme" /> <!-- 被呼叫页面 -->
+        <activity
+            android:name=".ui.PlayerCallActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/qmuiTheme" /> <!-- 视频聊天页面 -->
+        <activity
+            android:name=".ui.VideoLineActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/qmuiTheme" /> <!-- 举报player页面 -->
+        <activity
+            android:name=".ui.ReportActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/qmuiTheme" /> <!-- 加盟合作页面 -->
+        <activity
+            android:name=".ui.ToJoinActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/qmuiTheme" /> <!-- 聊天页面 -->
+        <activity
+            android:name=".msg.ui.MsgActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/qmuiTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" /> <!-- 联系人列表页面 -->
+        <activity
+            android:name=".msg.ui.AboutFansActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/qmuiTheme" /> <!-- 编辑资料页面 -->
+        <activity
+            android:name=".ui.EditActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/qmuiTheme" /> <!-- H5页面 -->
+        <activity
+            android:name=".ui.WebViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/qmuiTheme" /> <!-- 聊天列表页面 -->
+        <activity
+            android:name=".msg.ui.MsgListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.muse.chat.ui.ImageViewActivity"
+            android:screenOrientation="portrait" /> <!-- 图片预览 -->
+        <activity
+            android:name="com.muse.chat.ui.ImagePreviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.PrivateChatActivity"
+            android:screenOrientation="portrait" /> <!-- 私信页面 -->
+        <activity
+            android:name="com.muse.chat.ui.ChatActivity"
+            android:screenOrientation="portrait" /> <!-- 通话结束 -->
+        <activity
+            android:name=".ui.VideoLineEndActivity"
+            android:screenOrientation="portrait" /> <!-- 私照管理 -->
+        <activity
+            android:name=".ui.PrivatePhotoActivity"
+            android:screenOrientation="portrait" /> <!-- 测试页 -->
+        <!-- ##########################第三方插件声明######################### -->
+        <!-- 高德地图 -->
+        <service android:name="com.amap.api.location.APSService" /> <!-- 测试页 -->
+        <!-- 图片选择界面 -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.muse.xiangta.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider> <!-- ##########################声网后台服务，请使用独立进程。######################### -->
+        <!-- ##########################腾讯云通信配置########################## -->
+        <!-- 【必须】消息收发service -->
+        <service
+            android:name="com.tencent.qalsdk.service.QalService"
+            android:exported="true"
+            android:process=":QALSERVICE" />
+        <service
+            android:name="com.tencent.qalsdk.service.QalAssistService"
+            android:exported="false"
+            android:process=":QALSERVICE" /> <!-- 【必须】 离线消息广播接收器 -->
+        <receiver
+            android:name="com.tencent.qalsdk.QALBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.tencent.qalsdk.broadcast.qal" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.tencent.qalsdk.core.NetConnInfoCenter"
+            android:process=":QALSERVICE">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+
+            <!-- ImSDK 3.0.2 后添加 -->
+            <intent-filter>
+                <action android:name="com.tencent.qalsdk.service.TASK_REMOVED" />
+            </intent-filter>
+        </receiver> <!-- ##########################腾讯云通信配置########################## -->
+        <!-- 视频录制 -->
+        <activity
+            android:name=".ui.VideoRecordActivity"
+            android:screenOrientation="portrait" /> <!-- 发布短视频 -->
+        <activity
+            android:name=".ui.PushShortVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.PerViewImgActivity"
+            android:screenOrientation="portrait" /> <!-- 视频认证 -->
+        <activity
+            android:name=".ui.VideoAuthActivity"
+            android:screenOrientation="portrait" /> <!-- 短视频列表 -->
+        <activity
+            android:name=".ui.ShortVideoActivity"
+            android:screenOrientation="portrait" /> <!-- 充值 -->
+        <activity
+            android:name=".ui.RechargeActivity"
+            android:screenOrientation="portrait" /> <!-- 钱包 -->
+        <activity
+            android:name=".ui.WealthActivity"
+            android:screenOrientation="portrait" /> <!-- 设置 -->
+        <activity
+            android:name=".ui.SettingActivity"
+            android:screenOrientation="portrait" /> <!-- 邀请 （废弃） -->
+        <activity
+            android:name=".ui.InviteActivity"
+            android:screenOrientation="portrait" /> <!-- 提现 （废弃） -->
+        <activity
+            android:name=".ui.UserIncomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.UserContribuionRankActivity"
+            android:screenOrientation="portrait" /> <!-- 守护排行 -->
+        <activity
+            android:name=".ui.UserGuardRankActivity"
+            android:screenOrientation="portrait" /> <!-- 购买守护 -->
+        <activity
+            android:name=".ui.UserGuardBuyActivity"
+            android:screenOrientation="portrait" /> <!-- 黑名单列表 -->
+        <activity
+            android:name=".ui.BlackListActivity"
+            android:screenOrientation="portrait" /> <!-- 支付宝 -->
+        <activity
+            android:name=".ui.RewardActivity"
+            android:screenOrientation="portrait" /> <!-- 任务奖励 -->
+        <activity
+            android:name=".ui.FamilyActivity"
+            android:screenOrientation="portrait" /> <!-- 家族 -->
+        <activity
+            android:name=".ui.GuardActivity"
+            android:screenOrientation="portrait" /> <!-- 守护 -->
+        <activity
+            android:name=".ui.MyGradeActivity"
+            android:screenOrientation="portrait" /> <!-- 我的等级 -->
+        <activity
+            android:name=".ui.ProfitActivity"
+            android:screenOrientation="portrait" /> <!-- 我的等级 -->
+        <activity
+            android:name=".ui.NobleActivity"
+            android:screenOrientation="portrait" /> <!-- 贵族 -->
+        <activity
+            android:name=".ui.CarActivity"
+            android:screenOrientation="portrait" /> <!-- 座驾 -->
+        <activity
+            android:name=".ui.MyMessageActivity"
+            android:screenOrientation="portrait" /> <!-- 好友 等页面 -->
+        <activity
+            android:name=".ui.AddLoveActivity"
+            android:screenOrientation="portrait" /> <!-- 爱情故事投稿 -->
+        <activity
+            android:name=".ui.MatchingActivity"
+            android:screenOrientation="portrait" /> <!-- 视频速配 -->
+        <activity
+            android:name=".ui.DeclarationActivity"
+            android:screenOrientation="portrait" /> <!-- 交友宣言 -->
+        <activity
+            android:name=".ui.VideoDatingActivity"
+            android:screenOrientation="portrait" /> <!-- 交友宣言 -->
+        <activity
+            android:name=".ui.GroupChatActivity"
+            android:screenOrientation="portrait" /> <!-- 群聊 -->
+        <activity
+            android:name=".ui.AddFramilyActivity"
+            android:screenOrientation="portrait" /> <!-- 群聊 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".ui.PerfectRegisterInfoActivity" />
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <data android:scheme="tencent101433675" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!-- 调用新浪原生SDK，需要注册的回调activity -->
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="@string/wx_app_id" />
+            </intent-filter>
+        </activity> <!-- 系统消息（废弃） -->
+        <activity
+            android:name=".ui.SystemMessageActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.CuckooVideoTouchPlayerActivity" /> <!-- 视频结束评价 -->
+        <activity
+            android:name=".ui.CuckooVideoEndEvaluateActivity"
+            android:theme="@style/transparent_" /> <!-- 搜索 -->
+        <activity android:name=".ui.CuckooSearchActivity" /> <!-- 排行 -->
+        <activity android:name=".ui.CuckooOrderActivity" /> <!-- 认证表单 -->
+        <activity android:name=".ui.CuckooAuthFormActivity" /> <!-- 认证昵称 -->
+        <activity android:name=".ui.CuckooAuthUserNicknameActivity" /> <!-- 认证图片 -->
+        <activity android:name=".ui.CuckooAuthPhoneActivity" /> <!-- 认证编辑内容 -->
+        <activity android:name=".ui.CuckooAuthEditBodyActivity" /> <!-- 选择标签 -->
+        <activity android:name=".ui.CuckooSelectLabelActivity" /> <!-- 他人资料页 -->
+        <activity android:name=".ui.CuckooHomePageActivity" /> <!-- 登录选择 -->
+        <activity android:name=".ui.CuckooLoginSelectActivity" /> <!-- 手机登录 -->
+        <activity android:name=".ui.CuckooMobileLoginActivity" /> <!-- 拨打列表 -->
+        <activity android:name=".ui.CuckooVideoCallListActivity" /> <!-- 动态图预览 -->
+        <activity android:name=".ui.DynamicImagePreviewActivity" /> <!-- 动态详情 -->
+        <activity
+            android:name=".ui.DynamicDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" /> <!-- 发布动态 -->
+        <activity android:name=".ui.PushDynamicActivity" /> <!-- 音频录制 -->
+        <activity
+            android:name=".ui.AudioRecordActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- 推荐列表 -->
+        <activity
+            android:name=".ui.RecommendActivity"
+            android:screenOrientation="portrait" /> <!-- 订阅 -->
+        <activity
+            android:name=".ui.CuckooSubscribeActivity"
+            android:screenOrientation="portrait" /> <!-- H5页面弹窗 -->
+        <activity
+            android:name=".ui.DialogH5Activity"
+            android:theme="@style/Transparent" /> <!-- 视频接听等待 -->
+        <activity
+            android:name=".ui.CuckooVideoCallWaitActivity"
+            android:screenOrientation="portrait" /> <!-- 音频等待接听 -->
+        <activity
+            android:name=".ui.CuckooVoiceCallActivity"
+            android:screenOrientation="portrait" /> <!-- 图片认证 -->
+        <activity
+            android:name=".ui.CuckooImgAuthActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.CuckooGuildCreateActivity"
+            android:screenOrientation="portrait" /> <!-- 公会列表 -->
+        <activity
+            android:name=".ui.CuckooGuildListActivity"
+            android:screenOrientation="portrait" /> <!-- 公会管理 （废弃） -->
+        <activity
+            android:name=".ui.CuckooGuildManageActivity"
+            android:screenOrientation="portrait" /> <!-- 公会用户管理 （废弃） -->
+        <activity
+            android:name=".ui.CuckooGuildUserManageActivity"
+            android:screenOrientation="portrait" /> <!-- 公会申请列表 （废弃） -->
+        <activity
+            android:name=".ui.CuckooGuildApplyListActivity"
+            android:screenOrientation="portrait" /> <!-- 公会修改用户比例 （废弃） -->
+        <activity
+            android:name=".ui.CuckooChangeUserRatioActivity"
+            android:screenOrientation="portrait" /> <!-- 选择提现规则 -->
+        <activity
+            android:name=".ui.CuckooSelectIncomeLogActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.CuckooGiftCabinetGiftListActivity"
+            android:screenOrientation="portrait" /> <!-- 短视频播放 -->
+        <activity
+            android:name=".ui.CuckooSmallVideoPlayerActivity"
+            android:screenOrientation="portrait" /> <!-- 充值VIP -->
+        <activity
+            android:name=".ui.RechargeVipActivity"
+            android:screenOrientation="portrait" /> <!-- 邀请好友 -->
+        <activity
+            android:name=".ui.InviteActivityNew"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.ExtensionInfoActvity" /> <!-- 邀请明细 -->
+        <activity
+            android:name=".ui.InviteDetailedActivity"
+            android:screenOrientation="portrait" /> <!-- 自定义话术 -->
+        <activity
+            android:name=".ui.CuckooCustomMsgActivity"
+            android:screenOrientation="portrait" /> <!-- 美颜设置 -->
+        <activity
+            android:name=".ui.CuckooSettingBeautyActivity"
+            android:screenOrientation="portrait" />
+        <meta-data
+            android:name="com.openinstall.APP_KEY"
+            android:value="q1fwid" /> <!-- APP 溯源SDK -->
+        <meta-data
+            android:name="com.tencent.rdm.uuid"
+            android:value="a2af72ec-a731-46eb-8501-0477e34702f3" />
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="@string/amap_key" />
+    </application>
+
+</manifest>

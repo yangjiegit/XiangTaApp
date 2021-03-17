@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./bogo/libs/MobTools-2018.0523.1923.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bogo/libs/MobTools-2018.0523.1923.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

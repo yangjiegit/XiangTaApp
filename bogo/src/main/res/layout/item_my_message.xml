@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/bg_whitle_tr5"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_44"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop" />
+
+        <RelativeLayout
+            android:id="@+id/bottom_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_head"
+            android:background="@color/white"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/pagemsg_view_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:maxWidth="100dp"
+                android:maxEms="6"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="布谷小美"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp_12"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/pagemsg_view_name"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_toRightOf="@+id/pagemsg_view_name"
+                android:src="@mipmap/img_huizhang" />
+
+            <TextView
+                android:id="@+id/tv_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pagemsg_view_name"
+                android:layout_marginTop="@dimen/dp_2"
+                android:gravity="center"
+                android:maxWidth="100dp"
+                android:maxEms="6"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="#FFBBBBBB"
+                android:textSize="@dimen/dp_10"
+                android:textStyle="bold"
+                tools:text="25岁.165cm" />
+
+            <TextView
+                android:id="@+id/pagemsg_view_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_age"
+                android:layout_marginTop="@dimen/dp_2"
+                android:layout_marginRight="10dp"
+                android:singleLine="true"
+                android:text="暂无签名字段"
+                android:textColor="#ffBBBBBB"
+                android:textSize="@dimen/dp_10" />
+
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="10dp"
+                android:singleLine="true"
+                android:text="郑州市"
+                android:textColor="#ffBBBBBB"
+                android:textSize="@dimen/dp_10" />
+
+            <TextView
+                android:id="@+id/tv_dashan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:background="@drawable/edit_text_bk_hong"
+                android:drawableLeft="@mipmap/icon_ds"
+                android:drawablePadding="@dimen/dp_5"
+                android:paddingLeft="@dimen/dp_5"
+                android:paddingTop="@dimen/dp_2"
+                android:paddingRight="@dimen/dp_5"
+                android:paddingBottom="@dimen/dp_2"
+                android:singleLine="true"
+                android:text="私信"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp_10" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

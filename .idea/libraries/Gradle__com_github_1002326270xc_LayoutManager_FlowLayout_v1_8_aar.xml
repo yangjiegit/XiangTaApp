@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.1002326270xc:LayoutManager-FlowLayout:v1.8@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/LayoutManager-FlowLayout-v1.8.aar/c34ed7e7463a63762c54c68b0eb6b918/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/LayoutManager-FlowLayout-v1.8.aar/c34ed7e7463a63762c54c68b0eb6b918/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/LayoutManager-FlowLayout-v1.8.aar/c34ed7e7463a63762c54c68b0eb6b918/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.1002326270xc/LayoutManager-FlowLayout/v1.8/7d6bace6a4e35ab34654bc15c39cd4b0525da9a3/LayoutManager-FlowLayout-v1.8-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

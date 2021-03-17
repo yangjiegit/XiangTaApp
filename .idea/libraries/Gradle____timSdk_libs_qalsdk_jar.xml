@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./timSdk/libs/qalsdk.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/timSdk/libs/qalsdk.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

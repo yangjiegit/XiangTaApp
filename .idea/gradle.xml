@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="testRunner" value="PLATFORM" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/bogo" />
+            <option value="$PROJECT_DIR$/bogokjBeauty" />
+            <option value="$PROJECT_DIR$/imagelibrary" />
+            <option value="$PROJECT_DIR$/timImUI" />
+            <option value="$PROJECT_DIR$/timPresentation" />
+            <option value="$PROJECT_DIR$/timSdk" />
+            <option value="$PROJECT_DIR$/utilcode" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

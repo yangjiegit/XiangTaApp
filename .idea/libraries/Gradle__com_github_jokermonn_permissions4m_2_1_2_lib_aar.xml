@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.jokermonn:permissions4m:2.1.2-lib@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/permissions4m-2.1.2-lib.aar/c05be27a49652f313aca12651f8cb863/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/permissions4m-2.1.2-lib.aar/c05be27a49652f313aca12651f8cb863/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/permissions4m-2.1.2-lib.aar/c05be27a49652f313aca12651f8cb863/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/permissions4m-2.1.2-lib.aar/c05be27a49652f313aca12651f8cb863/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

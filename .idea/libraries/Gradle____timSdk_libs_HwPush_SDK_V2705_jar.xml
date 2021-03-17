@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./timSdk/libs/HwPush_SDK_V2705.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/timSdk/libs/HwPush_SDK_V2705.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

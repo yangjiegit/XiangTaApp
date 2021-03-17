@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./timSdk/libs/imsdk_ugc_ext.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/timSdk/libs/imsdk_ugc_ext.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

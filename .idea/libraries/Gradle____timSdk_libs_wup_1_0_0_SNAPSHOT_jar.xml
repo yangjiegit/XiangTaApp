@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./timSdk/libs/wup-1.0.0-SNAPSHOT.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/timSdk/libs/wup-1.0.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

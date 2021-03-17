@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: ./bogokjBeauty/libs/ti-sdk.aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ti-sdk.aar/f41c6eae260d09b31fd9acf3b57c867c/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ti-sdk.aar/f41c6eae260d09b31fd9acf3b57c867c/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ti-sdk.aar/f41c6eae260d09b31fd9acf3b57c867c/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

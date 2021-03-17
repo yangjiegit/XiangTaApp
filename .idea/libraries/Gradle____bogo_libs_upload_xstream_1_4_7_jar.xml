@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./bogo/libs/upload/xstream-1.4.7.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bogo/libs/upload/xstream-1.4.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

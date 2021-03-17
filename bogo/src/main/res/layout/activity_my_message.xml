@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:src="@mipmap/user_home_back" />
+
+        <LinearLayout
+            android:id="@+id/ll_miyou"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_miyou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="密友"
+                android:textColor="#ffF96881"
+                android:textSize="@dimen/dp_13" />
+
+            <View
+                android:id="@+id/view_miyou"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="3dp"
+                android:layout_marginTop="@dimen/dp_3"
+                android:background="#ffF96881" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_fensi"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_fensi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="粉丝"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp_13" />
+
+            <View
+                android:id="@+id/view_fensi"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="3dp"
+                android:layout_marginTop="@dimen/dp_3"
+                android:background="#ffF96881"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_guanzhu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_guanzhu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="关注 "
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp_13" />
+
+            <View
+                android:id="@+id/view_guanzhu"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="3dp"
+                android:layout_marginTop="@dimen/dp_3"
+                android:background="#ffF96881"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_haoyou"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_haoyou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="好友"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp_13" />
+
+            <View
+                android:id="@+id/view_haoyou"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="3dp"
+                android:layout_marginTop="@dimen/dp_3"
+                android:background="#ffF96881"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/img_wen" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

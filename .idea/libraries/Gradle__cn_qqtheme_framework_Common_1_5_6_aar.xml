@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="Gradle: cn.qqtheme.framework:Common:1.5.6@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/Common-1.5.6.aar/3036cf35f664cdb62ed4b2ccc01ae21f/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/Common-1.5.6.aar/3036cf35f664cdb62ed4b2ccc01ae21f/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/Common-1.5.6.aar/3036cf35f664cdb62ed4b2ccc01ae21f/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/Common-1.5.6.aar/3036cf35f664cdb62ed4b2ccc01ae21f/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cn.qqtheme.framework/Common/1.5.6/ace2e4ddc58f6ee476f0825eb1710e8949c9fb0f/Common-1.5.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

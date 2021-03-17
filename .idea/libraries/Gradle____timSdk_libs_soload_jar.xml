@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./timSdk/libs/soload.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/timSdk/libs/soload.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/XiangTaApp.iml" filepath="$PROJECT_DIR$/.idea/XiangTaApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bogo/XiangTaApp.bogo.iml" filepath="$PROJECT_DIR$/.idea/modules/bogo/XiangTaApp.bogo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bogokjBeauty/XiangTaApp.bogokjBeauty.iml" filepath="$PROJECT_DIR$/.idea/modules/bogokjBeauty/XiangTaApp.bogokjBeauty.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imagelibrary/XiangTaApp.imagelibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/imagelibrary/XiangTaApp.imagelibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/timImUI/XiangTaApp.timImUI.iml" filepath="$PROJECT_DIR$/.idea/modules/timImUI/XiangTaApp.timImUI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/timPresentation/XiangTaApp.timPresentation.iml" filepath="$PROJECT_DIR$/.idea/modules/timPresentation/XiangTaApp.timPresentation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/timSdk/XiangTaApp.timSdk.iml" filepath="$PROJECT_DIR$/.idea/modules/timSdk/XiangTaApp.timSdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/utilcode/XiangTaApp.utilcode.iml" filepath="$PROJECT_DIR$/.idea/modules/utilcode/XiangTaApp.utilcode.iml" />
+    </modules>
+  </component>
+</project>

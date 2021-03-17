@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./bogo/libs/agora-rtc-sdk.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bogo/libs/agora-rtc-sdk.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

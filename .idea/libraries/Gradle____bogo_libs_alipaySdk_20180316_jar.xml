@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./bogo/libs/alipaySdk-20180316.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bogo/libs/alipaySdk-20180316.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

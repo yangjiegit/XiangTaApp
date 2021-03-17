@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./timSdk/libs/open_sdk.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/timSdk/libs/open_sdk.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
