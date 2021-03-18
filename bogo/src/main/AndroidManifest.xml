@@ -169,6 +169,9 @@
         <activity
             android:name=".ui.PrivatePhotoActivity"
             android:screenOrientation="portrait" /> <!-- 测试页 -->
+        <activity
+            android:name=".ui.FUChatActivity"
+            android:screenOrientation="portrait" /> <!-- 测试页 -->
         <!-- ##########################第三方插件声明######################### -->
         <!-- 高德地图 -->
         <service android:name="com.amap.api.location.APSService" /> <!-- 测试页 -->

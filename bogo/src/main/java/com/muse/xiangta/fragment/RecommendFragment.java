@@ -20,6 +20,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lzy.okgo.callback.StringCallback;
+import com.muse.xiangta.Constants;
 import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.recycler.RecyclerRecommendAdapter;
 import com.muse.xiangta.api.Api;
@@ -38,6 +39,7 @@ import com.muse.xiangta.modle.OnKeyCallBean;
 import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.ui.CuckooAuthFormActivity;
 import com.muse.xiangta.ui.DeclarationActivity;
+import com.muse.xiangta.ui.FUChatActivity;
 import com.muse.xiangta.ui.GroupChatActivity;
 import com.muse.xiangta.ui.MatchingActivity;
 import com.muse.xiangta.ui.VideoAuthActivity;
@@ -185,7 +187,10 @@ public class RecommendFragment extends BaseListFragment<TargetUserData> {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fl_qunliao:
-                startActivity(new Intent(getContext(), GroupChatActivity.class));
+//                startActivity(new Intent(getContext(), GroupChatActivity.class));
+                Intent intent1 = new Intent(getContext(), FUChatActivity.class);
+                intent1.putExtra(Constants.ACTION_KEY_ROOM_NAME, "1234");
+                startActivity(intent1);
                 break;
             case R.id.fl_yuehui:
                 startActivity(new Intent(getContext(), VideoDatingActivity.class));

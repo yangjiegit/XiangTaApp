@@ -21,6 +21,9 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.blankj.utilcode.util.LogUtils;
 import com.faceunity.nama.FURenderer;
+import com.fm.openinstall.OpenInstall;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.HttpParams;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.dao.DaoMaster;
 import com.muse.xiangta.dao.DaoSession;
@@ -39,9 +42,6 @@ import com.muse.xiangta.ui.RegisterSelectActivity;
 import com.muse.xiangta.utils.CuckooLifecycleHandler;
 import com.muse.xiangta.utils.CuckooSharedPreUtil;
 import com.muse.xiangta.utils.SDHandlerManager;
-import com.fm.openinstall.OpenInstall;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.HttpParams;
 import com.muse.xiangta.utils.Utils;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.tencent.imsdk.TIMConnListener;
@@ -204,9 +204,22 @@ public class CuckooApplication extends Application {
         }).start();
     }
 
+    public RtcEngine rtcEngine() {
+        return mRtcEngine;
+    }
+
+    public void addRtcHandler(RtcEngineEventHandler handler) {
+        mRtcEventHandler.addEventHandler(handler);
+    }
+
+    public void removeRtcHandler(RtcEngineEventHandler handler) {
+        mRtcEventHandler.removeEventHandler(handler);
+    }
+
     public CameraVideoManager videoManager() {
         return mVideoManager;
     }
+
 
     private void initTbs() {
         QbSdk.initX5Environment(this, new QbSdk.PreInitCallback() {
@@ -221,6 +234,7 @@ public class CuckooApplication extends Application {
             }
         });
     }
+
 
     private void closeAndroidPDialog() {
         try {
@@ -385,7 +399,7 @@ public class CuckooApplication extends Application {
 
                 if (SaveData.getInstance().isLogin && !isRefreshLocal) {
                     isRefreshLocal = true;
-                    Log.e("doRefreshCity",city+"="+lat+"="+lng);
+                    Log.e("doRefreshCity", city + "=" + lat + "=" + lng);
                     Api.doRefreshCity(SaveData.getInstance().getId(), city, lat, lng, null);
                 }
 
@@ -515,7 +529,6 @@ public class CuckooApplication extends Application {
                                         continue;
                                     }
                                     lastType = type;
-
 
 
                                     if (AppConfig.DEBUG) {
