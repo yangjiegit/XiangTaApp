@@ -397,11 +397,11 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
         //打开视频模式
         mRtcEngine.enableAudio();
 
-        if (StringUtils.toInt(video_px) == 0) {
-            mRtcEngine.setVideoProfile(Constants.VIDEO_PROFILE_480P, false);//设置视频分辨率
-        } else {
-            mRtcEngine.setVideoProfile(Constants.VIDEO_PROFILE_720P, false);//设置视频分辨率
-        }
+//        if (StringUtils.toInt(video_px) == 0) {
+//            mRtcEngine.setVideoProfile(Constants.VIDEO_PROFILE_480P, false);//设置视频分辨率
+//        } else {
+//            mRtcEngine.setVideoProfile(Constants.VIDEO_PROFILE_720P, false);//设置视频分辨率
+//        }
 
         //创建视频渲染视图, 设置本地视频视图##初始化本地视图
         SurfaceView surfaceView = RtcEngine.CreateRendererView(getBaseContext());
