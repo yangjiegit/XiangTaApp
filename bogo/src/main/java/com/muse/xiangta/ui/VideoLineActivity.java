@@ -3,6 +3,10 @@ package com.muse.xiangta.ui;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.CountDownTimer;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +14,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceView;
+import android.view.TextureView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Chronometer;
@@ -20,16 +25,21 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.faceunity.nama.FURenderer;
+import com.faceunity.nama.ui.FaceUnityView;
+import com.faceunity.nama.utils.CameraUtils;
+import com.lzy.okgo.callback.StringCallback;
 import com.muse.chat.model.CustomMessage;
 import com.muse.chat.model.Message;
-import com.muse.tisdk.AGRender;
 import com.muse.tisdk.VideoPreProcessing;
 import com.muse.xiangta.LiveConstant;
+import com.muse.xiangta.PreprocessorFaceUnity;
 import com.muse.xiangta.R;
+import com.muse.xiangta.RtcEngineEventHandler;
+import com.muse.xiangta.RtcVideoConsumer;
 import com.muse.xiangta.adapter.GiftInfoAdapter;
 import com.muse.xiangta.api.Api;
-import com.muse.xiangta.base.BaseActivity;
-import com.muse.xiangta.business.CuckooCheckRateBusiness;
+import com.muse.xiangta.base.BaseActivity2;
 import com.muse.xiangta.business.CuckooVideoLineTimeBusiness;
 import com.muse.xiangta.dialog.GiftBottomDialog;
 import com.muse.xiangta.dialog.InputTextDialog;
@@ -61,7 +71,6 @@ import com.muse.xiangta.utils.Utils;
 import com.muse.xiangta.utils.im.IMHelp;
 import com.muse.xiangta.widget.CircleTextProgressbar;
 import com.muse.xiangta.widget.GiftAnimationContentView;
-import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.tencent.imsdk.TIMConversation;
 import com.tencent.imsdk.TIMConversationType;
@@ -79,28 +88,28 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CountDownLatch;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.tillusory.sdk.TiSDKManager;
 import cn.tillusory.tiui.TiPanelLayout;
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.agora.rtc.Constants;
-import io.agora.rtc.IRtcEngineEventHandler;
+import io.agora.capture.video.camera.CameraVideoManager;
+import io.agora.capture.video.camera.Constant;
+import io.agora.capture.video.camera.VideoCapture;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtc.video.VideoCanvas;
+import io.agora.rtc.video.VideoEncoderConfiguration;
 import okhttp3.Call;
 import okhttp3.Response;
-
-import static io.agora.rtc.Constants.LOG_FILTER_DEBUG;
 
 /**
  * 山东布谷鸟网络科技有限公司
  * 视频通话页面
  */
 
-public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.DoSendGiftListen, CuckooVideoLineTimeBusiness.VideoLineTimeBusinessCallback, InputTextDialog.SendMsgListener {
-
+public class VideoLineActivity extends BaseActivity2 implements SensorEventListener, RtcEngineEventHandler, GiftBottomDialog.DoSendGiftListen, CuckooVideoLineTimeBusiness.VideoLineTimeBusinessCallback, InputTextDialog.SendMsgListener {
 
     public static final String IS_BE_CALL = "IS_BE_CALL";
     public static final String IS_NEED_CHARGE = "IS_NEED_CHARGE";
@@ -111,26 +120,6 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
 
     //免费时长
     public static final String FREE_TIME = "FREE_TIME";
-
-    //标记
-    private static final int PERMISSION_REQ_ID_RECORD_AUDIO = 22;
-    private static final int PERMISSION_REQ_ID_CAMERA = PERMISSION_REQ_ID_RECORD_AUDIO + 1;
-
-    //本地视图
-    @BindView(R.id.video_chat_small)
-    FrameLayout video_chat_small;
-
-    //本地视图bac
-    @BindView(R.id.video_chat_small_bac)
-    FrameLayout smallVideoViewBac;
-
-    //目标视图
-    @BindView(R.id.video_chat_big)
-    FrameLayout video_chat_big;
-
-    //目标视图bac
-    @BindView(R.id.video_chat_big_bac)
-    FrameLayout bigVideoViewBac;
 
     //关闭按钮
     @BindView(R.id.close_video_chat)
@@ -200,9 +189,6 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
     private ImageView iv_close_camera;
     private ImageView iv_video_chat_lucky_corn;
 
-    //创建 RtcEngine 对象
-    private RtcEngine mRtcEngine;// Tutorial Step 1
-
     //是否需要扣费
     private boolean isNeedCharge = false;
 
@@ -217,7 +203,6 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
     private List<String> guardInfoList = new ArrayList<>();
 
     private GiftInfoAdapter giftInfoAdapter;
-    private CuckooCheckRateBusiness cuckooCheckRateBusiness;
 
     private int videoUid;
     private int videoViewStatus = 1;
@@ -256,21 +241,43 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
     @BindView(R.id.tl_view)
     TiPanelLayout tl_view;
 
+    /**
+     * 美颜
+     */
+    private final static String TAG = VideoLineActivity.class.getSimpleName();
+
+    private boolean isMeiYan = false;
+
+    private static final int CAPTURE_WIDTH = 1280;
+    private static final int CAPTURE_HEIGHT = 720;
+    private static final int CAPTURE_FRAME_RATE = 24;
+
+    private CameraVideoManager mVideoManager;
+    private FURenderer mFURenderer;
+    private FrameLayout mRemoteViewContainer;
+    private TextView mTrackingText;
+
+    private FaceUnityView faceUnityView;
+    private int mRemoteUid = -1;
+    private boolean mFinished;
+    private int mCameraFace = FURenderer.CAMERA_FACING_FRONT;
+    private SensorManager mSensorManager;
+
+    /**
+     * 美颜
+     */
+
     @Override
     protected void initView() {
         chatData = getIntent().getParcelableExtra(CALL_USER_DATA);
         video_px = getIntent().getStringExtra(VIDEO_PX);
 
-        //禁止截屏
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         QMUIStatusBarHelper.translucent(this);
         Utils.initTransP(top);
 
         iv_close_camera = findViewById(R.id.iv_close_camera);
         iv_video_chat_lucky_corn = findViewById(R.id.iv_video_chat_lucky_corn);
 
-        video_chat_small.setOnClickListener(this);
-        video_chat_big.setOnClickListener(this);
         iv_video_chat_lucky_corn.setOnClickListener(this);
         iv_open_beauty.setOnClickListener(this);
 
@@ -278,8 +285,6 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
         progress_bar_time.setProgressColor(getResources().getColor(R.color.admin_color));
         // 改变外部边框颜色。
         progress_bar_time.setOutLineColor(getResources().getColor(R.color.transparent));
-        // 改变圆心颜色。
-        //progress_bar_time.setInCircleColor(Color.RED);
 
         mGiftAnimationContentView.startHandel();
 
@@ -306,9 +311,99 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
         giftInfoRv.setAdapter(giftInfoAdapter);
     }
 
+    private void initUI() {
+        initRemoteViewLayout();
+    }
+
+    private void initRemoteViewLayout() {
+        mRemoteViewContainer = findViewById(R.id.remote_video_view);
+    }
+
+    private void initRoom() {
+        initVideoModule();
+        rtcEngine().setVideoSource(new RtcVideoConsumer());
+        joinChannel();
+    }
+
+    private void initVideoModule() {
+        mVideoManager = videoManager();
+        mVideoManager.setCameraStateListener(new VideoCapture.VideoCaptureStateListener() {
+            @Override
+            public void onFirstCapturedFrame(int width, int height) {
+                Log.i(TAG, "onFirstCapturedFrame: " + width + "x" + height);
+            }
+
+            @Override
+            public void onCameraCaptureError(int error, String msg) {
+                Log.i(TAG, "onCameraCaptureError: error:" + error + " " + msg);
+                if (mVideoManager != null) {
+                    // When there is a camera error, the capture should
+                    // be stopped to reset the internal states.
+                    mVideoManager.stopCapture();
+                }
+            }
+        });
+
+        mTrackingText = findViewById(R.id.iv_face_detect);
+        faceUnityView = findViewById(R.id.fu_view);
+        mFURenderer = ((PreprocessorFaceUnity) mVideoManager.getPreprocessor()).getFURenderer();
+        faceUnityView.setModuleManager(mFURenderer);
+        mFURenderer.setOnTrackStatusChangedListener(new FURenderer.OnTrackStatusChangedListener() {
+            @Override
+            public void onTrackStatusChanged(int type, int status) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mTrackingText.setText(type == FURenderer.TRACK_TYPE_FACE ? R.string.toast_not_detect_face : R.string.toast_not_detect_face_or_body);
+                        mTrackingText.setVisibility(status > 0 ? View.INVISIBLE : View.VISIBLE);
+                    }
+                });
+            }
+        });
+
+        mVideoManager.setPictureSize(CAPTURE_WIDTH, CAPTURE_HEIGHT);
+        mVideoManager.setFrameRate(CAPTURE_FRAME_RATE);
+        mVideoManager.setFacing(Constant.CAMERA_FACING_FRONT);
+        mVideoManager.setLocalPreviewMirror(Constant.MIRROR_MODE_AUTO);
+
+        TextureView localVideo = findViewById(R.id.local_video_view);
+        mVideoManager.setLocalPreview(localVideo);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Sensor sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mSensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        mVideoManager.startCapture();
+        mFURenderer.queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                mFURenderer.onSurfaceCreated();
+            }
+        });
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mGiftAnimationContentView != null) {
+            mGiftAnimationContentView.stopHandel();
+        }
+        if (!mFinished) {
+            mVideoManager.stopCapture();
+        }
+        mSensorManager.unregisterListener(this);
+    }
+
+
     @Override
     protected void initData() {
-
+        //美颜
+        initUI();
+        initRoom();
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        //美颜
 
         //免费观看时长（s）
         int freeTime = getIntent().getIntExtra(FREE_TIME, 0);
@@ -331,7 +426,7 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
             initBeCallAction();
         } else {
             initCallView();
-            initCallAction();
+//            initCallAction();
         }
 
         conversation = TIMManager.getInstance().getConversation(TIMConversationType.C2C, chatData.getUserModel().getId());
@@ -357,111 +452,9 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
 
     @Override
     protected void initSet() {
-        setOnclickListener(isSoundOut, closeVideo, cutCamera, videoGift, headImage, tv_follow, iv_close_camera);
-        //初始化本地操作
-        if (callType == 0) {
-            initAgoraEngineAndJoinChannel();
-        } else {
-            initAgoraVoiceEngineAndJoinChannel();
-            iv_close_camera.setVisibility(View.GONE);
-        }
-        //加入频道
-        joinChannel();
+
     }
 
-
-    /**
-     * 初始化设置视图
-     */
-    private void initAgoraEngineAndJoinChannel() {
-        //初始化RtcEngine对象
-        try {
-            mRtcEngine = RtcEngine.create(getBaseContext(), ConfigModel.getInitData().getApp_qgorq_key(), mRtcEventHandler);
-
-            // 将日志过滤器等级设置为 LOG_FILTER_DEBUG
-            mRtcEngine.setLogFilter(LOG_FILTER_DEBUG);
-
-            // 获取在 SD 卡中的文件路径
-            // 获取时间戳
-//            String ts = new SimpleDateFormat("yyyyMMdd").format(new Date());
-//            String filepath = "/sdcard/" + ts + ".log";
-//            File file = new File(filepath);
-//            mRtcEngine.setLogFile(filepath);
-
-        } catch (Exception e) {
-            throw new RuntimeException("NEED TO check rtc sdk init fatal error\n" + Log.getStackTraceString(e));
-        }
-
-        //初始化设置信息
-        mRtcEngine.enableVideo();
-        //打开视频模式
-        mRtcEngine.enableAudio();
-
-//        if (StringUtils.toInt(video_px) == 0) {
-//            mRtcEngine.setVideoProfile(Constants.VIDEO_PROFILE_480P, false);//设置视频分辨率
-//        } else {
-//            mRtcEngine.setVideoProfile(Constants.VIDEO_PROFILE_720P, false);//设置视频分辨率
-//        }
-
-        //创建视频渲染视图, 设置本地视频视图##初始化本地视图
-        SurfaceView surfaceView = RtcEngine.CreateRendererView(getBaseContext());
-        surfaceView.setZOrderMediaOverlay(true);
-        video_chat_small.addView(surfaceView);
-
-        smallVideoCanvas = new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, 0);
-        mRtcEngine.setupLocalVideo(smallVideoCanvas);
-        mRtcEngine.startPreview();
-
-        if (!TextUtils.isEmpty(ConfigModel.getInitData().getBogokj_beauty_sdk_key())) {
-            //TODO 美颜开关按钮
-//            iv_open_beauty.setVisibility(View.VISIBLE);
-            initBoGoBeautySdk();
-        }
-    }
-
-    //初始化布谷科技美颜SDK
-    private void initBoGoBeautySdk() {
-        // --- boGoBeauty start ---
-        tiSDKManager = TiSDKManager.getInstance();
-        tl_view.init(tiSDKManager);
-//        addContentView(tiView = new TiPanelLayout(this).init(tiSDKManager),
-//                new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-        AGRender.init(tiSDKManager);
-
-//        if (mVideoPreProcessing == null) {
-//            mVideoPreProcessing = new VideoPreProcessing();
-//        }
-        // --- boGoBeauty end ---
-    }
-
-    /**
-     * 初始化设置视图
-     */
-    private void initAgoraVoiceEngineAndJoinChannel() {
-        //初始化RtcEngine对象
-        try {
-            mRtcEngine = RtcEngine.create(getBaseContext(), ConfigModel.getInitData().getApp_qgorq_key(), mRtcEventHandler);
-        } catch (Exception e) {
-            throw new RuntimeException("NEED TO check rtc sdk init fatal error\n" + Log.getStackTraceString(e));
-        }
-
-        mRtcEngine.disableVideo();
-        mRtcEngine.enableAudio();
-    }
-
-
-    /**
-     * 主播业务
-     */
-    private void initCallAction() {
-        //鉴黄业务逻辑
-//        cuckooCheckRateBusiness = new CuckooCheckRateBusiness(this);
-//        if (ConfigModel.getInitData().getIs_open_check_huang() == 1) {
-//            cuckooCheckRateBusiness.setTime(ConfigModel.getInitData().getCheck_huang_rate());
-//            cuckooCheckRateBusiness.startCheck();
-//        }
-    }
 
     /**
      * 被呼叫用户业务
@@ -475,7 +468,6 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
      */
     private void initCallView() {
         tv_chat_unit_price.setVisibility(View.GONE);
-
         //礼物和打赏收入
         tv_time_info.setVisibility(View.VISIBLE);
         tv_reward.setVisibility(View.VISIBLE);
@@ -486,9 +478,7 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
      * 被呼叫视频通话用户View初始化
      */
     private void initBeCallView() {
-
         tv_chat_unit_price.setVisibility(View.GONE);
-
         //礼物和打赏收入
         tv_time_info.setVisibility(View.GONE);
         tv_reward.setVisibility(View.GONE);
@@ -501,13 +491,22 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
     }
 
     /////////////////////////////////////////////监听事件处理/////////////////////////////////////////
-    @OnClick({R.id.say_rl})
+    @OnClick({R.id.iv_open_beauty, R.id.videochat_gift, R.id.videochat_screen, R.id.close_video_chat,
+            R.id.videochat_switch, R.id.videochat_voice, R.id.iv_close_camera,
+            R.id.iv_video_chat_lucky_corn, R.id.say_rl})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.iv_open_beauty:
-                tl_view.open();
+                if (isMeiYan == false) {
+                    faceUnityView.setVisibility(View.VISIBLE);
+                    isMeiYan = true;
+                } else {
+                    faceUnityView.setVisibility(View.GONE);
+                    isMeiYan = false;
+                }
+//                tl_view.open();
                 break;
             case R.id.videochat_gift:
                 clickOpenGiftDialog();
@@ -530,11 +529,8 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
             case R.id.this_player_img:
                 Common.jumpUserPage(VideoLineActivity.this, chatData.getUserModel().getId());
                 break;
-            case R.id.video_chat_big:
-                //switchVideoView();
-                break;
             case R.id.video_chat_small:
-                switchVideoView();
+//                switchVideoView();
                 break;
             case R.id.iv_close_camera:
                 closeCamera();
@@ -544,7 +540,6 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
                 intent.putExtra("uri", ConfigModel.getInitData().getApp_h5().getTurntable_url());
                 startActivity(intent);
                 break;
-
             //发言框
             case R.id.say_rl:
                 changeEditStatus(true);
@@ -573,147 +568,139 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
 
     }
 
+    //切换视图
+//    private void switchVideoView() {
+//        if (videoViewStatus == 1) {
+//            //ToastUtils.showLong("1");
+//            //surfaceView.setZOrderMediaOverlay(true);
+//            //创建视频渲染视图, 设置本地视频视图##初始化本地视图
+//            SurfaceView surfaceView = RtcEngine.CreateRendererView(getBaseContext());
+//            surfaceView.setTag(videoUid);
+//            video_chat_small.addView(surfaceView);
+//            surfaceView.setZOrderMediaOverlay(true);
+//
+//            //网络放小窗
+//            smallVideoCanvas = new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, videoUid);
+//            rtcEngine().setupRemoteVideo(smallVideoCanvas);
+//
+//
+//            SurfaceView surfaceView2 = RtcEngine.CreateRendererView(getBaseContext());
+//            video_chat_big.addView(surfaceView2);
+//
+//            //本地放大窗
+//            bigVideoCanvas = new VideoCanvas(surfaceView2, VideoCanvas.RENDER_MODE_HIDDEN, 0);
+//            rtcEngine().setupLocalVideo(bigVideoCanvas);
+//
+//            videoViewStatus = 2;
+//
+//        } else {
+//
+//            //ToastUtils.showLong("2");
+//            //创建视频渲染视图, 设置本地视频视图##初始化本地视图
+//            SurfaceView surfaceView = RtcEngine.CreateRendererView(getBaseContext());
+//            video_chat_small.addView(surfaceView);
+//            surfaceView.setZOrderMediaOverlay(true);
+//
+//            //本地放小窗
+//            smallVideoCanvas = new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, 0);
+//            rtcEngine().setupLocalVideo(smallVideoCanvas);
+//
+//            SurfaceView surfaceView2 = RtcEngine.CreateRendererView(getBaseContext());
+//            surfaceView2.setTag(videoUid);
+//            video_chat_big.addView(surfaceView2);
+//
+//            //网络放大窗
+//            bigVideoCanvas = new VideoCanvas(surfaceView2, VideoCanvas.RENDER_MODE_HIDDEN, videoUid);
+//            rtcEngine().setupRemoteVideo(bigVideoCanvas);
+//
+//            videoViewStatus = 1;
+//        }
+//
+//        if (!isOpenCamera) {
+//            if (videoViewStatus == 1) {
+////                smallVideoViewBac.setVisibility(View.VISIBLE);
+////                bigVideoViewBac.setVisibility(View.GONE);
+//            } else {
+////                smallVideoViewBac.setVisibility(View.GONE);
+////                bigVideoViewBac.setVisibility(View.VISIBLE);
+//            }
+//        }
+//    }
+
     /**
      * 创建视频渲染视图, 设置远端视频视图
-     *
-     * @param uid 用户uid
+     * <p>
+     * //     * @param uid 用户uid
      */
-    private void setupRemoteVideo(int uid) {
-        //创建视频渲染视图, 设置远端视频视图
-        if (video_chat_big.getChildCount() >= 1) {
-            return;
-        }
-        SurfaceView surfaceView = RtcEngine.CreateRendererView(getBaseContext());
-        surfaceView.setTag(uid);
-        video_chat_big.addView(surfaceView);
-        videoUid = uid;
-
-        bigVideoCanvas = new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, uid);
-        mRtcEngine.setupRemoteVideo(bigVideoCanvas);
-    }
+//    private void setupRemoteVideo(int uid) {
+//        //创建视频渲染视图, 设置远端视频视图
+//        if (video_chat_big.getChildCount() >= 1) {
+//            return;
+//        }
+//        SurfaceView surfaceView = RtcEngine.CreateRendererView(getBaseContext());
+//        surfaceView.setTag(uid);
+//        video_chat_big.addView(surfaceView);
+//        videoUid = uid;
+//
+//        bigVideoCanvas = new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, uid);
+//        mRtcEngine.setupRemoteVideo(bigVideoCanvas);
+//    }
 
     //移除目标组件所有视图文件
-    private void onRemoteUserLeft() {
-        video_chat_big.removeAllViews();
-        //hangUpVideo();
-    }
+//    private void onRemoteUserLeft() {
+//        video_chat_big.removeAllViews();
+//        //hangUpVideo();
+//    }
 
     //初始化目标视图
-    private void onRemoteUserVideoMuted(int uid, boolean muted) {
-        SurfaceView surfaceView = (SurfaceView) video_chat_big.getChildAt(0);
-        if (surfaceView == null) {
-            return;
-        }
-        Object tag = surfaceView.getTag();
-        if (tag != null && (Integer) tag == uid) {
-            surfaceView.setVisibility(muted ? View.GONE : View.VISIBLE);
-        }
-    }
+//    private void onRemoteUserVideoMuted(int uid, boolean muted) {
+//        SurfaceView surfaceView = (SurfaceView) video_chat_big.getChildAt(0);
+//        if (surfaceView == null) {
+//            return;
+//        }
+//        Object tag = surfaceView.getTag();
+//        if (tag != null && (Integer) tag == uid) {
+//            surfaceView.setVisibility(muted ? View.GONE : View.VISIBLE);
+//        }
+//    }
 
 
     //开关摄像头
     private void closeCamera() {
         if (isOpenCamera) {
             //关闭摄像头
-            mRtcEngine.enableLocalVideo(false);
-
+            rtcEngine().enableLocalVideo(false);
             if (videoViewStatus == 1) {
-                smallVideoViewBac.setVisibility(View.VISIBLE);
-                bigVideoViewBac.setVisibility(View.GONE);
+//                smallVideoViewBac.setVisibility(View.VISIBLE);
+//                bigVideoViewBac.setVisibility(View.GONE);
             } else {
-                smallVideoViewBac.setVisibility(View.GONE);
-                bigVideoViewBac.setVisibility(View.VISIBLE);
+//                smallVideoViewBac.setVisibility(View.GONE);
+//                bigVideoViewBac.setVisibility(View.VISIBLE);
             }
-
             iv_close_camera.setImageResource(R.mipmap.ic_close_camera);
             ToastUtils.showLong("摄像头已关闭");
         } else {
-            mRtcEngine.enableLocalVideo(true);
-            video_chat_small.setVisibility(View.VISIBLE);
-            smallVideoViewBac.setVisibility(View.GONE);
-            bigVideoViewBac.setVisibility(View.GONE);
+            rtcEngine().enableLocalVideo(true);
+//            video_chat_small.setVisibility(View.VISIBLE);
+//            smallVideoViewBac.setVisibility(View.GONE);
+//            bigVideoViewBac.setVisibility(View.GONE);
             iv_close_camera.setImageResource(R.mipmap.ic_open_camera);
             ToastUtils.showLong("摄像头已打开");
         }
         isOpenCamera = !isOpenCamera;
     }
 
-    //切换视图
-    private void switchVideoView() {
-
-        video_chat_small.removeAllViews();
-        video_chat_big.removeAllViews();
-        mRtcEngine.setupLocalVideo(null);
-        mRtcEngine.setupRemoteVideo(null);
-        video_chat_big.setVisibility(View.VISIBLE);
-
-        if (videoViewStatus == 1) {
-
-            //ToastUtils.showLong("1");
-            //surfaceView.setZOrderMediaOverlay(true);
-            //创建视频渲染视图, 设置本地视频视图##初始化本地视图
-            SurfaceView surfaceView = RtcEngine.CreateRendererView(getBaseContext());
-            surfaceView.setTag(videoUid);
-            video_chat_small.addView(surfaceView);
-            surfaceView.setZOrderMediaOverlay(true);
-
-            //网络放小窗
-            smallVideoCanvas = new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, videoUid);
-            mRtcEngine.setupRemoteVideo(smallVideoCanvas);
-
-
-            SurfaceView surfaceView2 = RtcEngine.CreateRendererView(getBaseContext());
-            video_chat_big.addView(surfaceView2);
-
-            //本地放大窗
-            bigVideoCanvas = new VideoCanvas(surfaceView2, VideoCanvas.RENDER_MODE_HIDDEN, 0);
-            mRtcEngine.setupLocalVideo(bigVideoCanvas);
-
-            videoViewStatus = 2;
-
-        } else {
-
-            //ToastUtils.showLong("2");
-            //创建视频渲染视图, 设置本地视频视图##初始化本地视图
-            SurfaceView surfaceView = RtcEngine.CreateRendererView(getBaseContext());
-            video_chat_small.addView(surfaceView);
-            surfaceView.setZOrderMediaOverlay(true);
-
-            //本地放小窗
-            smallVideoCanvas = new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, 0);
-            mRtcEngine.setupLocalVideo(smallVideoCanvas);
-
-            SurfaceView surfaceView2 = RtcEngine.CreateRendererView(getBaseContext());
-            surfaceView2.setTag(videoUid);
-            video_chat_big.addView(surfaceView2);
-
-            //网络放大窗
-            bigVideoCanvas = new VideoCanvas(surfaceView2, VideoCanvas.RENDER_MODE_HIDDEN, videoUid);
-            mRtcEngine.setupRemoteVideo(bigVideoCanvas);
-
-            videoViewStatus = 1;
-        }
-
-        if (!isOpenCamera) {
-            if (videoViewStatus == 1) {
-                smallVideoViewBac.setVisibility(View.VISIBLE);
-                bigVideoViewBac.setVisibility(View.GONE);
-            } else {
-                smallVideoViewBac.setVisibility(View.GONE);
-                bigVideoViewBac.setVisibility(View.VISIBLE);
-            }
-        }
-
-    }
 
     //发起会话通道名额外的可选的数据--uid(uid为空时自动赋予)
     private void joinChannel() {
-        mRtcEngine.joinChannel(null, chatData.getChannelName(), null, 0);
-        // --- boGoBeauty start ---
-        if(mVideoPreProcessing != null){
-//            mVideoPreProcessing.enablePreProcessing(true);
-        }
-        // --- boGoBeauty end ---
+        rtcEngine().setVideoEncoderConfiguration(new VideoEncoderConfiguration(
+                VideoEncoderConfiguration.VD_640x360,
+                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_24,
+                VideoEncoderConfiguration.STANDARD_BITRATE,
+                VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT));
+        rtcEngine().setClientRole(io.agora.rtc.Constants.CLIENT_ROLE_BROADCASTER);
+        rtcEngine().enableLocalAudio(true);
+        rtcEngine().joinChannel(null, chatData.getChannelName(), null, 0);
     }
 
     //本地音频静音
@@ -725,39 +712,37 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
             isSoundOut.setSelected(true);
             isSoundOut.setImageResource(R.drawable.icon_call_muted);
         }
-        mRtcEngine.muteLocalAudioStream(isSoundOut.isSelected());
+        rtcEngine().muteLocalAudioStream(isSoundOut.isSelected());
     }
 
     /**
      * 执行切换前后相机
      */
     private void doCutCamera() {
-        mRtcEngine.switchCamera();
+        mVideoManager.switchCamera();
+        mCameraFace = FURenderer.CAMERA_FACING_FRONT - mCameraFace;
+        mFURenderer.onCameraChanged(mCameraFace, CameraUtils.getCameraOrientation(mCameraFace));
     }
 
     private void operationVideoAndAudio(boolean muted) {
-
-        mRtcEngine.muteLocalAudioStream(muted);
-        mRtcEngine.muteLocalVideoStream(muted);
-        mRtcEngine.muteAllRemoteVideoStreams(muted);
-        mRtcEngine.muteAllRemoteAudioStreams(muted);
-
+        rtcEngine().muteLocalAudioStream(muted);
+        rtcEngine().muteLocalVideoStream(muted);
+        rtcEngine().muteAllRemoteVideoStreams(muted);
+        rtcEngine().muteAllRemoteAudioStreams(muted);
     }
 
     //销毁操作
     private void leaveChannel() {
-        if (mRtcEngine != null) {
-            mRtcEngine.leaveChannel();
+        if (rtcEngine() != null) {
+            rtcEngine().leaveChannel();
         }
     }
 
     //关闭通话
     private void hangUpVideo() {
-
         operationVideoAndAudio(true);
         showLoadingDialog(getString(R.string.loading_huang_up));
         cuckooVideoLineTimeBusiness.doHangUpVideo();
-
         if (getVideoTimeInfoTask != null) {
             getVideoTimeInfoTask.stopRunnable();
         }
@@ -813,78 +798,78 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
     /**
      * 回调监听
      */
-    private final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() { // Tutorial Step 1
-
-        @Override
-        public void onFirstRemoteVideoDecoded(final int uid, int width, int height, int elapsed) {
-            // 在第一个远程的
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    setupRemoteVideo(uid);
-                }
-            });
-        }
-
-        @Override
-        public void onUserOffline(final int uid, int reason) {
-            //用户不在线
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (uid != 1) {
-                        onRemoteUserLeft();
-                    }
-                }
-            });
-        }
-
-        @Override
-        public void onUserMuteVideo(final int uid, final boolean muted) {
-            // 在用户静音视频
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    onRemoteUserVideoMuted(uid, muted);
-                }
-            });
-        }
-
-
-        @Override
-        public void onUserEnableVideo(int uid, final boolean enabled) {
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (enabled) {
-                        LogUtils.e("agora:" + "onUserEnableVideo" + enabled);
-                        video_chat_big.setVisibility(View.VISIBLE);
-                    } else {
-                        LogUtils.e("agora:" + "onUserEnableVideo" + enabled);
-                        video_chat_big.setVisibility(View.GONE);
-                    }
-                }
-            });
-        }
-
-        @Override
-        public void onUserEnableLocalVideo(int uid, final boolean enabled) {
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (enabled) {
-                        LogUtils.e("agora:" + "onUserEnableLocalVideo" + enabled);
-                        video_chat_big.setVisibility(View.VISIBLE);
-                    } else {
-                        LogUtils.e("agora:" + "onUserEnableLocalVideo" + enabled);
-                        video_chat_big.setVisibility(View.GONE);
-                    }
-                }
-            });
-        }
-    };
+//    private final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() { // Tutorial Step 1
+//
+//        @Override
+//        public void onFirstRemoteVideoDecoded(final int uid, int width, int height, int elapsed) {
+//            // 在第一个远程的
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    setupRemoteVideo(uid);
+//                }
+//            });
+//        }
+//
+//        @Override
+//        public void onUserOffline(final int uid, int reason) {
+//            //用户不在线
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (uid != 1) {
+//                        onRemoteUserLeft();
+//                    }
+//                }
+//            });
+//        }
+//
+//        @Override
+//        public void onUserMuteVideo(final int uid, final boolean muted) {
+//            // 在用户静音视频
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    onRemoteUserVideoMuted(uid, muted);
+//                }
+//            });
+//        }
+//
+//
+//        @Override
+//        public void onUserEnableVideo(int uid, final boolean enabled) {
+//
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (enabled) {
+//                        LogUtils.e("agora:" + "onUserEnableVideo" + enabled);
+//                        video_chat_big.setVisibility(View.VISIBLE);
+//                    } else {
+//                        LogUtils.e("agora:" + "onUserEnableVideo" + enabled);
+//                        video_chat_big.setVisibility(View.GONE);
+//                    }
+//                }
+//            });
+//        }
+//
+//        @Override
+//        public void onUserEnableLocalVideo(int uid, final boolean enabled) {
+//
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (enabled) {
+//                        LogUtils.e("agora:" + "onUserEnableLocalVideo" + enabled);
+//                        video_chat_big.setVisibility(View.VISIBLE);
+//                    } else {
+//                        LogUtils.e("agora:" + "onUserEnableLocalVideo" + enabled);
+//                        video_chat_big.setVisibility(View.GONE);
+//                    }
+//                }
+//            });
+//        }
+//    };
 
     /**
      * 退出聊天
@@ -913,7 +898,7 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
         super.doLogout();
         leaveChannel();
         RtcEngine.destroy();
-        mRtcEngine = null;
+//        mRtcEngine = null;
     }
 
 
@@ -1007,7 +992,6 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
      * 获取当前视频主播信息
      */
     private void requestUserData() {
-
         Api.getUserData(
                 chatData.getUserModel().getId(),
                 uId,
@@ -1060,14 +1044,6 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
 
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        if (mGiftAnimationContentView != null) {
-            mGiftAnimationContentView.stopHandel();
-        }
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
 
@@ -1078,9 +1054,9 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
         if (getVideoTimeInfoTask != null) {
             getVideoTimeInfoTask.stopRunnable();
         }
-        leaveChannel();
+//        leaveChannel();
         RtcEngine.destroy();
-        mRtcEngine = null;
+//        mRtcEngine = null;
 
         if (DialogH5Activity.instance != null) {
             DialogH5Activity.instance.finish();
@@ -1314,5 +1290,91 @@ public class VideoLineActivity extends BaseActivity implements GiftBottomDialog.
 
         changeEditStatus(false);
 
+    }
+
+    @Override
+    public void onJoinChannelSuccess(String channel, int uid, int elapsed) {
+        Log.i(TAG, "onJoinChannelSuccess " + channel + " " + (uid & 0xFFFFFFFFL));
+    }
+
+    @Override
+    public void onUserOffline(int uid, int reason) {
+        runOnUiThread(this::onRemoteUserLeft);
+    }
+
+
+    private void onRemoteUserLeft() {
+        mRemoteUid = -1;
+        removeRemoteView();
+    }
+
+    private void removeRemoteView() {
+        mRemoteViewContainer.removeAllViews();
+    }
+
+
+    @Override
+    public void onUserJoined(int uid, int elapsed) {
+        Log.i(TAG, "onUserJoined " + (uid & 0xFFFFFFFFL));
+    }
+
+    @Override
+    public void onRemoteVideoStateChanged(int uid, int state, int reason, int elapsed) {
+        Log.i(TAG, "onRemoteVideoStateChanged " + (uid & 0xFFFFFFFFL) + " " + state + " " + reason);
+        if (mRemoteUid == -1 && state == io.agora.rtc.Constants.REMOTE_VIDEO_STATE_DECODING) {
+            runOnUiThread(() -> {
+                mRemoteUid = uid;
+                setRemoteVideoView(uid);
+            });
+        }
+    }
+
+    private void setRemoteVideoView(int uid) {
+        SurfaceView surfaceView = RtcEngine.CreateRendererView(this);
+        rtcEngine().setupRemoteVideo(new VideoCanvas(
+                surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, uid));
+        mRemoteViewContainer.addView(surfaceView);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            if (Math.abs(x) > 3 || Math.abs(y) > 3) {
+                if (Math.abs(x) > Math.abs(y)) {
+                    mFURenderer.onDeviceOrientationChanged(x > 0 ? 0 : 180);
+                } else {
+                    mFURenderer.onDeviceOrientationChanged(y > 0 ? 90 : 270);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    @Override
+    public void finish() {
+        mFinished = true;
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+        mFURenderer.queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                mFURenderer.onSurfaceDestroyed();
+                countDownLatch.countDown();
+            }
+        });
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        mVideoManager.stopCapture();
+        rtcEngine().leaveChannel();
+        super.finish();
     }
 }

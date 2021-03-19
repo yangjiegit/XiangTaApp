@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.CountDownTimer;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.ApiConstantDefine;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.json.JsonRequestDoEndVideoCall;
@@ -12,7 +13,6 @@ import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.utils.BGTimedTaskManage;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.im.IMHelp;
-import com.lzy.okgo.callback.StringCallback;
 import com.tencent.imsdk.TIMMessage;
 import com.tencent.imsdk.TIMValueCallBack;
 
@@ -149,7 +149,6 @@ public class CuckooVideoLineTimeBusiness {
 
     //关闭通话
     public void doHangUpVideo() {
-
         Api.doEndVideoCall(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), toUserId, new StringCallback() {
 
             @Override
