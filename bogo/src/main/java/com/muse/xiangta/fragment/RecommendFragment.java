@@ -187,10 +187,10 @@ public class RecommendFragment extends BaseListFragment<TargetUserData> {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fl_qunliao:
-//                startActivity(new Intent(getContext(), GroupChatActivity.class));
-                Intent intent1 = new Intent(getContext(), FUChatActivity.class);
-                intent1.putExtra(Constants.ACTION_KEY_ROOM_NAME, "1234");
-                startActivity(intent1);
+                startActivity(new Intent(getContext(), GroupChatActivity.class));
+//                Intent intent1 = new Intent(getContext(), FUChatActivity.class);
+//                intent1.putExtra(Constants.ACTION_KEY_ROOM_NAME, "1234");
+//                startActivity(intent1);
                 break;
             case R.id.fl_yuehui:
                 startActivity(new Intent(getContext(), VideoDatingActivity.class));

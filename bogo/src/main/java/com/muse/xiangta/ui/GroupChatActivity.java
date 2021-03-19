@@ -107,9 +107,9 @@ public class GroupChatActivity extends BaseActivity {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 Log.d("ret", "joker    " + s);
-//                ChatActivity.navToChat(GroupChatActivity.this,
-//                        id, "默认房间", "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2710535566,3134134619&fm=26&gp=0.jpg",
-//                        1, "1", 1, 1, 1, TIMConversationType.Group);
+                ChatActivity.navToChat(GroupChatActivity.this,
+                        id, "默认房间", "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2710535566,3134134619&fm=26&gp=0.jpg",
+                        1, "1", 1, 1, 1, TIMConversationType.Group);
             }
         });
     }
