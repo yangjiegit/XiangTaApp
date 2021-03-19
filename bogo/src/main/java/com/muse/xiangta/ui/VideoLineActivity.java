@@ -259,7 +259,7 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
 
     private FaceUnityView faceUnityView;
     private int mRemoteUid = -1;
-    private boolean mFinished;
+    private boolean mFinished = false;
     private int mCameraFace = FURenderer.CAMERA_FACING_FRONT;
     private SensorManager mSensorManager;
 
@@ -544,8 +544,6 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
             case R.id.say_rl:
                 changeEditStatus(true);
                 break;
-
-
             default:
                 break;
         }
@@ -1054,9 +1052,8 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
         if (getVideoTimeInfoTask != null) {
             getVideoTimeInfoTask.stopRunnable();
         }
-//        leaveChannel();
+        leaveChannel();
         RtcEngine.destroy();
-//        mRtcEngine = null;
 
         if (DialogH5Activity.instance != null) {
             DialogH5Activity.instance.finish();
