@@ -312,6 +312,9 @@
             android:name=".ui.FamilyDetailsActivity"
             android:screenOrientation="portrait" /> <!-- 家族详情 -->
         <activity
+            android:name=".ui.MemberListActivity"
+            android:screenOrientation="portrait" /> <!-- 家族成员列表 -->
+        <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"

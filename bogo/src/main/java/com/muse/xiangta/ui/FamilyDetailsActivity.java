@@ -1,12 +1,14 @@
 package com.muse.xiangta.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -28,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -52,6 +53,8 @@ public class FamilyDetailsActivity extends BaseActivity {
     TextView tv_address;
     @BindView(R.id.rv_data)
     RecyclerView rv_data;
+    @BindView(R.id.rl_data)
+    RelativeLayout rl_data;
     @BindView(R.id.tv_comm)
     TextView tv_comm;
     @BindView(R.id.tv_name_number)
@@ -77,7 +80,7 @@ public class FamilyDetailsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        tv_comm.setOnClickListener(this);
     }
 
     @Override
@@ -111,6 +114,14 @@ public class FamilyDetailsActivity extends BaseActivity {
         };
 
         rv_data.setAdapter(mAdapter);
+
+        mAdapter.setOnRecyclerViewItemClickListener(new CommonRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                startActivity(new Intent(FamilyDetailsActivity.this, MemberListActivity.class)
+                        .putExtra("family_id", String.valueOf(mData.getFamily_id())));
+            }
+        });
     }
 
     private void setData() {
@@ -162,7 +173,6 @@ public class FamilyDetailsActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.tv_comm)
     @Override
     public void onClick(View v) {
         super.onClick(v);
