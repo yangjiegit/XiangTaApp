@@ -51,6 +51,7 @@
             style="@style/h_line"
             android:layout_height="1px" />
 
+
         <RelativeLayout
             android:id="@+id/redact_name"
             android:layout_width="match_parent"
@@ -82,6 +83,23 @@
         <View
             style="@style/h_line"
             android:layout_height="1px" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:background="#ffF5F6FA"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="个人信息"
+                android:textColor="#FFA6A6A6"
+                android:textSize="@dimen/dp_12" />
+        </LinearLayout>
+
 
         <RelativeLayout
             android:id="@+id/redact_sex"
@@ -141,13 +159,409 @@
                 android:textSize="13sp" />
         </RelativeLayout>
 
+        <View
+            style="@style/h_line"
+            android:layout_height="1px" />
+
+        <RelativeLayout
+            android:id="@+id/redact_shengao"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="身高"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/shengao_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="@string/redact_sextext"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <View
+            style="@style/h_line"
+            android:layout_height="1px" />
+
+        <RelativeLayout
+            android:id="@+id/redact_tizhong"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="体重"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tizhong_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="@string/redact_sextext"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <View
+            style="@style/h_line"
+            android:layout_height="1px" />
+
+        <RelativeLayout
+            android:id="@+id/redact_chengshi"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="所在城市"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/chengshi_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="@string/redact_sextext"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <View
+            style="@style/h_line"
+            android:layout_height="1px" />
+
+        <RelativeLayout
+            android:id="@+id/redact_zhiye"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="职业"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/zhiye_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="@string/redact_sextext"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <View
+            style="@style/h_line"
+            android:layout_height="1px" />
+
+        <RelativeLayout
+            android:id="@+id/redact_xueli"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="学历"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/xueli_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="@string/redact_sextext"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <View
+            style="@style/h_line"
+            android:layout_height="1px" />
+
+        <RelativeLayout
+            android:id="@+id/redact_qinggan"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="情感状态"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/qinggan_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="@string/redact_sextext"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <View
+            style="@style/h_line"
+            android:layout_height="1px" />
+
+        <RelativeLayout
+            android:id="@+id/redact_neixin"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="内心独白"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/neixin_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="@string/redact_sextext"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <View
+            style="@style/h_line"
+            android:layout_height="1px" />
+
+        <RelativeLayout
+            android:id="@+id/redact_xingzuo"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="星座"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/xingzuo_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="@string/redact_sextext"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <View
+            style="@style/h_line"
+            android:layout_height="1px" />
+
+        <RelativeLayout
+            android:id="@+id/redact_jieshao"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="个人介绍"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/jieshao_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="@string/redact_sextext"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <View
+            style="@style/h_line"
+            android:layout_height="1px" />
+
+        <RelativeLayout
+            android:id="@+id/redact_biaoqian"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="形象标签"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/biaoqian_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="@string/redact_sextext"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:background="#ffF5F6FA"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="交友宣言"
+                android:textColor="#FFA6A6A6"
+                android:textSize="@dimen/dp_12" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/redact_xuanyan"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="交友宣言"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/xuanyan_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="@string/redact_sextext"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:background="#ffF5F6FA"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="封面视频"
+                android:textColor="#FFA6A6A6"
+                android:textSize="@dimen/dp_12" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/redact_fengmian"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="封面视频"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/fengmian_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="@string/redact_sextext"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp" />
+        </RelativeLayout>
 
         <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
-            android:background="@color/white_bg"
             android:id="@+id/groupListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible" />
+            android:layout_gravity="right"
+            android:background="@color/white_bg"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="match_parent"

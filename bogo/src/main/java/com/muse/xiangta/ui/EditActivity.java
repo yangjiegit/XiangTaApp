@@ -12,6 +12,11 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.muse.xiangta.LiveConstant;
 import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.FullyGridLayoutManager;
@@ -28,11 +33,6 @@ import com.muse.xiangta.modle.UserImgModel;
 import com.muse.xiangta.utils.CuckooQiniuFileUploadUtils;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
-import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.config.PictureConfig;
-import com.luck.picture.lib.config.PictureMimeType;
-import com.luck.picture.lib.entity.LocalMedia;
-import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.qqtheme.framework.picker.NumberPicker;
 import cn.qqtheme.framework.picker.OptionPicker;
 import cn.qqtheme.framework.widget.WheelView;
@@ -63,6 +64,26 @@ public class EditActivity extends BaseActivity {
     private TextView redactNameText, redactSexText;
     private GridImageAdapter redactAdapter;
     private RelativeLayout mRlChangeNameLayout;
+    @BindView(R.id.redact_shengao)
+    RelativeLayout redact_shengao;
+    @BindView(R.id.shengao_tv)
+    TextView shengao_tv;
+    @BindView(R.id.redact_tizhong)
+    RelativeLayout redact_tizhong;
+    @BindView(R.id.tizhong_tv)
+    TextView tizhong_tv;
+    @BindView(R.id.redact_xingzuo)
+    RelativeLayout redact_xingzuo;
+    @BindView(R.id.xingzuo_tv)
+    TextView xingzuo_tv;
+    @BindView(R.id.redact_jieshao)
+    RelativeLayout redact_jieshao;
+    @BindView(R.id.jieshao_tv)
+    TextView jieshao_tv;
+    @BindView(R.id.redact_biaoqian)
+    RelativeLayout redact_biaoqian;
+    @BindView(R.id.biaoqian_tv)
+    TextView biaoqian_tv;
 
     private File headImgFile;//头像列表
     private ArrayList<File> filesByAll = new ArrayList<>();//要上传的图片
@@ -225,7 +246,8 @@ public class EditActivity extends BaseActivity {
         }
     };
 
-
+    @OnClick({R.id.redact_shengao, R.id.redact_tizhong, R.id.redact_xingzuo,
+            R.id.redact_biaoqian, R.id.redact_jieshao})
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -249,10 +271,10 @@ public class EditActivity extends BaseActivity {
             case R.id.redact_sign:
                 showDialogSignEdText();
                 break;
-            case R.id.auth_user_weight:
+            case R.id.redact_tizhong://体重
                 onNumberWeightPicker();
                 break;
-            case R.id.auth_user_height:
+            case R.id.redact_shengao://身高
                 onNumberHeightPicker();
                 break;
             case R.id.auth_user_nickname:
@@ -261,16 +283,16 @@ public class EditActivity extends BaseActivity {
             case R.id.auth_bind_phone:
                 clickBindPhone();
                 break;
-            case R.id.auth_user_constellation:
+            case R.id.redact_xingzuo://星座
                 onConstellationPicker();
                 break;
             case R.id.auth_self_label:
                 clickEditSelfSign();
                 break;
-            case R.id.auth_introduce:
+            case R.id.redact_jieshao://个人介绍
                 clickEditSelfIntroduce();
                 break;
-            case R.id.auth_image_label:
+            case R.id.redact_biaoqian://形象
                 clickSelectLabel();
                 break;
             default:
@@ -489,6 +511,7 @@ public class EditActivity extends BaseActivity {
             @Override
             public void onNumberPicked(int index, Number item) {
                 itemHeight.setDetailText(item.toString() + "cm");
+                shengao_tv.setText(item.toString() + "cm");
             }
         });
         picker.show();
@@ -507,6 +530,7 @@ public class EditActivity extends BaseActivity {
             @Override
             public void onNumberPicked(int index, Number item) {
                 itemWeight.setDetailText(item.toString() + "kg");
+                tizhong_tv.setText(item.toString() + "kg");
             }
         });
         picker.show();
@@ -582,6 +606,7 @@ public class EditActivity extends BaseActivity {
             @Override
             public void onOptionPicked(int index, String item) {
                 itemConstellation.setDetailText(item);
+                xingzuo_tv.setText(item);
             }
         });
         picker.show();

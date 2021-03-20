@@ -221,6 +221,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                 break;
             case Group:
                 title.setMoreImg(R.drawable.ic_chat_user_page);
+
                 title.setTitleText(userName);
                 break;
 
