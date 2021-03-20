@@ -139,7 +139,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
         if (sex == 1) {
             imgLl.setVisibility(GONE);
         } else {
-            imgLl.setVisibility(VISIBLE);
+            imgLl.setVisibility(GONE);
         }
     }
 
