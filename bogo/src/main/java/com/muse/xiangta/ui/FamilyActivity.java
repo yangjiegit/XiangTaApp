@@ -211,19 +211,19 @@ public class FamilyActivity extends BaseActivity {
                                     }
                                     getSupportFragmentManager().beginTransaction().
                                             replace(R.id.fl_layout,
-                                                    FamilyFragment.getInstance(mList)).commit();
+                                                    FamilyFragment.getInstance(mList, type)).commit();
                                 } else {
                                     mList.clear();
                                     getSupportFragmentManager().beginTransaction().
                                             replace(R.id.fl_layout,
-                                                    FamilyFragment.getInstance(mList)).commit();
+                                                    FamilyFragment.getInstance(mList, type)).commit();
                                 }
                             }
                         } else {
                             mList.clear();
                             getSupportFragmentManager().beginTransaction().
                                     replace(R.id.fl_layout,
-                                            FamilyFragment.getInstance(mList)).commit();
+                                            FamilyFragment.getInstance(mList, type)).commit();
                         }
                     }
 

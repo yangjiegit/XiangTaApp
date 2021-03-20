@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.lzy.okgo.callback.StringCallback;
-import com.muse.chat.ui.ChatActivity;
+import com.muse.chat.ui.ChatActivity2;
 import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.CommonRecyclerViewAdapter;
 import com.muse.xiangta.adapter.CommonRecyclerViewHolder;
@@ -94,12 +94,13 @@ public class GroupChatActivity extends BaseActivity {
         mAdapter.setOnRecyclerViewItemClickListener(new CommonRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                qunliao(String.valueOf(mList.get(position).getGroupid()));
+                qunliao(String.valueOf(mList.get(position).getGroupid()),
+                        mList.get(position).getName());
             }
         });
     }
 
-    private void qunliao(final String id) {
+    private void qunliao(final String id, String name) {
         final String uid = SaveData.getInstance().getId();
         final String token = SaveData.getInstance().getToken();
 
@@ -107,9 +108,8 @@ public class GroupChatActivity extends BaseActivity {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 Log.d("ret", "joker    " + s);
-                ChatActivity.navToChat(GroupChatActivity.this,
-                        id, "默认房间", "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2710535566,3134134619&fm=26&gp=0.jpg",
-                        1, "1", 1, 1, 1, TIMConversationType.Group);
+                ChatActivity2.navToChat(GroupChatActivity.this,
+                        id, name, TIMConversationType.Group);
             }
         });
     }

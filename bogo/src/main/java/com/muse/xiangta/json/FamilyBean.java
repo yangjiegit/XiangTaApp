@@ -5,6 +5,12 @@ import java.util.List;
 
 public class FamilyBean implements Serializable {
 
+    /**
+     * code : 1
+     * msg :
+     * data : [{"family_id":5,"family_name":"拾壹家族","family_cover":"http://xta.zzmzrj.com/idImage/1615861277219.png","family_level_id":1,"family_people":1,"family_activation":0,"family_description_id":0,"family_active":1,"is_delete":0,"owner_uid":102604,"create_time":"2021-03-16 10:22:27","is_hot":0,"group_id":"@TGS#2FITPGBHE","city":"郑州市","lat":"34.785849","lng":"113.685894","is_join":1,"level":{"level_id":1,"level_name":"1级","min_activation":0,"max_activation":100,"max_people":100},"description":{"description_id":5,"description":"靠样子，半辈子，靠才华，一辈子","family_id":5},"owner":{"id":102604,"user_type":2,"sex":2,"birthday":0,"last_login_time":1615859467,"score":0,"coin_system":0,"coin":0,"create_time":"2021-03-08 16:29:47","user_status":2,"user_login":"","user_pass":"","user_nickname":"帅哥2","user_email":"","user_url":"","avatar":"http://xta.zzmzrj.com/idImage/1615360951953.png","signature":"","last_login_ip":"171.8.114.45","user_activation_key":"","mobile":"15137830553","more":null,"token":"c8869250fb43feee585d13c8a030c778","address":"郑州市","level":1,"noble_level":0,"status":1,"teacher":0,"income":0,"income_total":0,"last_remove_message_time":1615859560,"fabulous":0,"is_reg_perfect":1,"custom_video_charging_coin":15,"is_open_do_not_disturb":0,"login_type":0,"plat_id":"","reference":0,"last_change_name_time":0,"is_use_free_time":0,"is_online":0,"vip_end_time":0,"link_id":"0","invitation_coin":"0.00","alipay_account":"","sort":0,"is_auth":1,"alipay_account_name":"","host_bay_video_proportion":"0","host_bay_phone_proportion":"0","host_bay_gift_proportion":"0","host_one_video_proportion":"0","host_direct_messages":"0","device_uuid":"3C66D59A-58B4-41F8-A459-CC809B9EE020","host_guardian_proportion":"0","invite_buckle_probability":0,"invite_buckle_recharge_probability":0,"host_turntable_ratio":"0","province":"","city":"郑州市","is_open_auto_see_hi":0,"wx_number":"","qq_number":"","phone_number":"","wx_price":0,"qq_price":0,"phone_price":0,"orderno":0,"shielding_time":0,"login_way":1,"lat":"34.785970","lng":"113.685911","height":"0","weight":"","constellation":"","image_label":"","introduce":"","host_bay_contact_proportion":"","diamond":0,"diamond_system":0,"glamour":0,"glamour_level_id":5,"wealth":5,"wealth_level_id":1,"has_declaration":1,"declaration":"http://xta.zzmzrj.com/idIosAudio/1615360349342.wav","overlapping_sound":"","love_status":"","declaration_length":0,"education":"","occupation":"","is_settled":2,"age":18,"noble":""}},{"family_id":4,"family_name":"biu~","family_cover":"http://xta.zzmzrj.com/idImage/1615861255799.png","family_level_id":1,"family_people":2,"family_activation":0,"family_description_id":0,"family_active":1,"is_delete":0,"owner_uid":102595,"create_time":"2021-03-16 10:21:28","is_hot":0,"group_id":"@TGS#22HRPGBHM","city":"郑州市","lat":"34.785771","lng":"113.686223","is_join":0,"level":{"level_id":1,"level_name":"1级","min_activation":0,"max_activation":100,"max_people":100},"description":{"description_id":4,"description":"图五图教育了哭哭哭跳舞楼塌楼梯DJ体操土豪与跳舞吧宽体具体的位置就是这样吧。图很开心说啥时候回来嘛","family_id":4},"owner":{"id":102595,"user_type":2,"sex":2,"birthday":0,"last_login_time":1616149403,"score":1414,"coin_system":0,"coin":1001889,"create_time":"2021-03-01 10:20:32","user_status":2,"user_login":"","user_pass":"","user_nickname":"晨晨！","user_email":"","user_url":"","avatar":"http://xta.zzmzrj.com/6e3ea202103081120398748.png","signature":"嗯哼大王叫我来巡山～","last_login_ip":"171.8.115.19","user_activation_key":"","mobile":"18595457559","more":null,"token":"7e28b1e7525c06e26151c70547191084","address":"郑州市","level":7,"noble_level":0,"status":1,"teacher":0,"income":2199,"income_total":2199,"last_remove_message_time":1615972916,"fabulous":0,"is_reg_perfect":1,"custom_video_charging_coin":22,"is_open_do_not_disturb":0,"login_type":0,"plat_id":"","reference":1,"last_change_name_time":0,"is_use_free_time":0,"is_online":1,"vip_end_time":0,"link_id":"0","invitation_coin":"0.00","alipay_account":"","sort":0,"is_auth":1,"alipay_account_name":"","host_bay_video_proportion":"0","host_bay_phone_proportion":"0","host_bay_gift_proportion":"0","host_one_video_proportion":"0","host_direct_messages":"0","device_uuid":"223D22D4-A2C7-4E6C-B7B1-91335E97ADBD","host_guardian_proportion":"0","invite_buckle_probability":0,"invite_buckle_recharge_probability":0,"host_turntable_ratio":"0","province":"","city":"郑州市","is_open_auto_see_hi":0,"wx_number":"","qq_number":"","phone_number":"","wx_price":0,"qq_price":0,"phone_price":0,"orderno":0,"shielding_time":0,"login_way":1,"lat":"34.785741","lng":"113.685961","height":"178","weight":"50","constellation":"水瓶座","image_label":"呵呵哒-哇塞-逗比","introduce":"没有介绍","host_bay_contact_proportion":"","diamond":0,"diamond_system":0,"glamour":0,"glamour_level_id":1,"wealth":22,"wealth_level_id":5,"has_declaration":1,"declaration":"http://xta.zzmzrj.com/idIosAudio/1616211420260.wav","overlapping_sound":"没有独白","love_status":"保密","declaration_length":12,"education":"双学士","occupation":"传媒/艺术","is_settled":2,"age":18,"noble":""}}]
+     */
+
     private int code;
     private String msg;
     /**
@@ -12,7 +18,7 @@ public class FamilyBean implements Serializable {
      * family_name : 拾壹家族
      * family_cover : http://xta.zzmzrj.com/idImage/1615861277219.png
      * family_level_id : 1
-     * family_people : 0
+     * family_people : 1
      * family_activation : 0
      * family_description_id : 0
      * family_active : 1
@@ -24,10 +30,10 @@ public class FamilyBean implements Serializable {
      * city : 郑州市
      * lat : 34.785849
      * lng : 113.685894
-     * is_join : 0
+     * is_join : 1
      * level : {"level_id":1,"level_name":"1级","min_activation":0,"max_activation":100,"max_people":100}
      * description : {"description_id":5,"description":"靠样子，半辈子，靠才华，一辈子","family_id":5}
-     * owner : {"id":102604,"user_type":2,"sex":2,"birthday":0,"last_login_time":1615859467,"score":0,"coin_system":0,"coin":0,"create_time":"2021-03-08 16:29:47","user_status":2,"user_login":"","user_pass":"","user_nickname":"帅哥2","user_email":"","user_url":"","avatar":"http://xta.zzmzrj.com/idImage/1615360951953.png","signature":"","last_login_ip":"171.8.114.45","user_activation_key":"","mobile":"15137830553","more":null,"token":"c8869250fb43feee585d13c8a030c778","address":"郑州市","level":1,"noble_level":0,"status":1,"teacher":0,"income":0,"income_total":0,"last_remove_message_time":1615859560,"fabulous":0,"is_reg_perfect":1,"custom_video_charging_coin":15,"is_open_do_not_disturb":0,"login_type":0,"plat_id":"","reference":0,"last_change_name_time":0,"is_use_free_time":0,"is_online":0,"vip_end_time":0,"link_id":"0","invitation_coin":"0.00","alipay_account":"","sort":0,"is_auth":1,"alipay_account_name":"","host_bay_video_proportion":"0","host_bay_phone_proportion":"0","host_bay_gift_proportion":"0","host_one_video_proportion":"0","host_direct_messages":"0","device_uuid":"3C66D59A-58B4-41F8-A459-CC809B9EE020","host_guardian_proportion":"0","invite_buckle_probability":0,"invite_buckle_recharge_probability":0,"host_turntable_ratio":"0","province":"","city":"郑州市","is_open_auto_see_hi":0,"wx_number":"","qq_number":"","phone_number":"","wx_price":0,"qq_price":0,"phone_price":0,"orderno":0,"shielding_time":0,"login_way":1,"lat":"34.785970","lng":"113.685911","height":"0","weight":"","constellation":"","image_label":"","introduce":"","host_bay_contact_proportion":"","diamond":0,"diamond_system":0,"glamour":0,"glamour_level_id":5,"wealth":5,"wealth_level_id":1,"has_declaration":1,"declaration":"http://xta.zzmzrj.com/idIosAudio/1615360349342.wav","overlapping_sound":"","love_status":"1","declaration_length":0,"education":"","occupation":"","is_settled":1,"age":18,"noble":""}
+     * owner : {"id":102604,"user_type":2,"sex":2,"birthday":0,"last_login_time":1615859467,"score":0,"coin_system":0,"coin":0,"create_time":"2021-03-08 16:29:47","user_status":2,"user_login":"","user_pass":"","user_nickname":"帅哥2","user_email":"","user_url":"","avatar":"http://xta.zzmzrj.com/idImage/1615360951953.png","signature":"","last_login_ip":"171.8.114.45","user_activation_key":"","mobile":"15137830553","more":null,"token":"c8869250fb43feee585d13c8a030c778","address":"郑州市","level":1,"noble_level":0,"status":1,"teacher":0,"income":0,"income_total":0,"last_remove_message_time":1615859560,"fabulous":0,"is_reg_perfect":1,"custom_video_charging_coin":15,"is_open_do_not_disturb":0,"login_type":0,"plat_id":"","reference":0,"last_change_name_time":0,"is_use_free_time":0,"is_online":0,"vip_end_time":0,"link_id":"0","invitation_coin":"0.00","alipay_account":"","sort":0,"is_auth":1,"alipay_account_name":"","host_bay_video_proportion":"0","host_bay_phone_proportion":"0","host_bay_gift_proportion":"0","host_one_video_proportion":"0","host_direct_messages":"0","device_uuid":"3C66D59A-58B4-41F8-A459-CC809B9EE020","host_guardian_proportion":"0","invite_buckle_probability":0,"invite_buckle_recharge_probability":0,"host_turntable_ratio":"0","province":"","city":"郑州市","is_open_auto_see_hi":0,"wx_number":"","qq_number":"","phone_number":"","wx_price":0,"qq_price":0,"phone_price":0,"orderno":0,"shielding_time":0,"login_way":1,"lat":"34.785970","lng":"113.685911","height":"0","weight":"","constellation":"","image_label":"","introduce":"","host_bay_contact_proportion":"","diamond":0,"diamond_system":0,"glamour":0,"glamour_level_id":5,"wealth":5,"wealth_level_id":1,"has_declaration":1,"declaration":"http://xta.zzmzrj.com/idIosAudio/1615360349342.wav","overlapping_sound":"","love_status":"","declaration_length":0,"education":"","occupation":"","is_settled":2,"age":18,"noble":""}
      */
 
     private List<DataBean> data;
@@ -56,7 +62,7 @@ public class FamilyBean implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean implements Serializable {
+    public static class DataBean implements Serializable{
         private int family_id;
         private String family_name;
         private String family_cover;
@@ -177,11 +183,11 @@ public class FamilyBean implements Serializable {
          * has_declaration : 1
          * declaration : http://xta.zzmzrj.com/idIosAudio/1615360349342.wav
          * overlapping_sound :
-         * love_status : 1
+         * love_status :
          * declaration_length : 0
          * education :
          * occupation :
-         * is_settled : 1
+         * is_settled : 2
          * age : 18
          * noble :
          */
@@ -348,7 +354,7 @@ public class FamilyBean implements Serializable {
             this.owner = owner;
         }
 
-        public static class LevelBean implements Serializable {
+        public static class LevelBean implements Serializable{
             private int level_id;
             private String level_name;
             private int min_activation;
@@ -426,7 +432,7 @@ public class FamilyBean implements Serializable {
             }
         }
 
-        public static class OwnerBean implements Serializable {
+        public static class OwnerBean implements Serializable{
             private int id;
             private int user_type;
             private int sex;
@@ -1266,5 +1272,4 @@ public class FamilyBean implements Serializable {
             }
         }
     }
-
 }

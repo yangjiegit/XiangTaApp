@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -21,16 +20,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.ToastUtils;
-import com.muse.chat.adapter.ChatAdapter;
+import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
+import com.muse.chat.adapter.ChatAdapter2;
 import com.muse.chat.model.CustomMessage;
 import com.muse.chat.model.FileMessage;
+import com.muse.chat.model.FileMessage2;
 import com.muse.chat.model.ImageMessage;
+import com.muse.chat.model.ImageMessage2;
 import com.muse.chat.model.Message;
-import com.muse.chat.model.MessageFactory;
+import com.muse.chat.model.Message2;
+import com.muse.chat.model.MessageFactory2;
 import com.muse.chat.model.TextMessage;
 import com.muse.chat.model.UGCMessage;
 import com.muse.chat.model.VideoMessage;
@@ -48,22 +49,13 @@ import com.muse.xiangta.dialog.GiftBottomDialog;
 import com.muse.xiangta.event.EventChatClickPrivateImgMessage;
 import com.muse.xiangta.inter.JsonCallback;
 import com.muse.xiangta.json.JsonRequest;
-import com.muse.xiangta.json.JsonRequestBase;
 import com.muse.xiangta.json.JsonRequestDoPrivateSendGif;
-import com.muse.xiangta.json.JsonRequestPrivateChatPay;
-import com.muse.xiangta.manage.RequestConfig;
 import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
 import com.muse.xiangta.modle.custommsg.InputListenerMsgText;
 import com.muse.xiangta.ui.PrivatePhotoActivity;
 import com.muse.xiangta.ui.common.Common;
-import com.muse.xiangta.utils.DialogHelp;
-import com.muse.xiangta.utils.SharedPreferencesUtils;
-import com.muse.xiangta.utils.StringUtils;
-import com.muse.xiangta.utils.Utils;
-import com.lzy.okgo.callback.StringCallback;
-import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.tencent.imsdk.TIMConversationType;
 import com.tencent.imsdk.TIMCustomElem;
 import com.tencent.imsdk.TIMElem;
@@ -90,7 +82,7 @@ import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
-public class ChatActivity extends BaseActivity implements ChatView, View.OnClickListener, GiftBottomDialog.DoSendGiftListen, ChatAdapter.OnChatChildrenItemListen {
+public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClickListener, GiftBottomDialog.DoSendGiftListen, ChatAdapter2.OnChatChildrenItemListen {
     @BindView(R.id.chat_attribute_card_view)
     CardView attributeCv;
 
@@ -102,8 +94,8 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     public static final int SEND_FILE_MESSAGE = 4;
     public static final int SEND_VIDEO_MESSAGE = 5;
 
-    private List<Message> messageList = new ArrayList<>();
-    private ChatAdapter adapter;
+    private List<Message2> messageList = new ArrayList<>();
+    private ChatAdapter2 adapter;
     private ListView listView;
     private ChatPresenter presenter;
     private ChatInput input;
@@ -121,29 +113,23 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     private VoiceSendingView voiceSendingView;
     private String identify;
     private String userName;
-    private String avatar;
+    //    private String avatar;
     private RecorderUtil recorder = new RecorderUtil();
     private TIMConversationType type;
     private String titleStr;
 
-    private int isPay;
-    private String payCoin;
-    private int sex;
-    private int isAuth;
+    //    private int isPay;
+//    private String payCoin;
+//    private int sex;
+//    private int isAuth;
     private TemplateTitle title;
-    private int follow;
+//    private int follow;
 
-    public static void navToChat(Context context, String identify, String userName, String avatar, int isPay, String payCoin, int sex, int is_auth, int follow, TIMConversationType type) {
-        Intent intent = new Intent(context, ChatActivity.class);
+    public static void navToChat(Context context, String identify, String userName, TIMConversationType type) {
+        Intent intent = new Intent(context, ChatActivity2.class);
         intent.putExtra("identify", identify);
         intent.putExtra("user_nickname", userName);
-        intent.putExtra("avatar", avatar);
         intent.putExtra("type", type);
-        intent.putExtra("is_pay", isPay);
-        intent.putExtra("pay_coin", payCoin);
-        intent.putExtra("sex", sex);
-        intent.putExtra("is_auth", is_auth);
-        intent.putExtra("follow", follow);
         context.startActivity(intent);
     }
 
@@ -166,14 +152,6 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         identify = getIntent().getStringExtra("identify");
         userName = getIntent().getStringExtra("user_nickname");
-        avatar = getIntent().getStringExtra("avatar");
-        isPay = getIntent().getIntExtra("is_pay", 0);
-        payCoin = getIntent().getStringExtra("pay_coin");
-        follow = getIntent().getIntExtra("follow", -1);
-        sex = getIntent().getIntExtra("sex", 1);
-        isAuth = getIntent().getIntExtra("is_auth", isAuth);
-
-        //TIMManagerExt.getInstance().deleteConversationAndLocalMsgs(TIMConversationType.C2C,identify);
         type = (TIMConversationType) getIntent().getSerializableExtra("type");
 
 
@@ -188,12 +166,12 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
         input = (ChatInput) findViewById(R.id.input_panel);
         input.setChatView(this);
         input.setSex(SaveData.getInstance().getUserInfo().getSex());
-        input.setCoinData(StringUtils.toInt(payCoin), RequestConfig.getConfigObj().getCurrency());
+//        input.setCoinData(StringUtils.toInt(payCoin), RequestConfig.getConfigObj().getCurrency());
 
         presenter = new ChatPresenter(this, identify, type);
         presenter.start();
 
-        adapter = new ChatAdapter(this, R.layout.item_message, messageList);
+        adapter = new ChatAdapter2(this, R.layout.item_message, messageList);
         adapter.setChildrenListen(this);
         listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
@@ -236,9 +214,13 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
                 title.setMoreImgAction(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Common.jumpUserPage(ChatActivity.this, identify);
+                        Common.jumpUserPage(ChatActivity2.this, identify);
                     }
                 });
+                title.setTitleText(userName);
+                break;
+            case Group:
+                title.setMoreImg(R.drawable.ic_chat_user_page);
                 title.setTitleText(userName);
                 break;
 
@@ -250,11 +232,11 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
 //            mIvGift.setVisibility(View.GONE);
 //        }
 
-        if (follow == 1) {
-            attributeCv.setVisibility(View.GONE);
-        } else {
-            attributeCv.setVisibility(View.VISIBLE);
-        }
+//        if (follow == 1) {
+//            attributeCv.setVisibility(View.GONE);
+//        } else {
+//            attributeCv.setVisibility(View.VISIBLE);
+//        }
         CuckooApplication.getInstances().setInPrivateChatPage(true);
     }
 
@@ -332,7 +314,7 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
         if (message == null) {
             adapter.notifyDataSetChanged();
         } else {
-            Message mMessage = MessageFactory.getMessage(message);
+            Message2 mMessage = MessageFactory2.getMessage(message);
             if (mMessage != null) {
                 if (messageList.size() == 0) {
                     mMessage.setHasTime(null);
@@ -374,7 +356,7 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     public void showMessage(List<TIMMessage> messages) {
         int newMsgNum = 0;
         for (int i = 0; i < messages.size(); ++i) {
-            Message mMessage = MessageFactory.getMessage(messages.get(i));
+            Message2 mMessage = MessageFactory2.getMessage(messages.get(i));
             if (mMessage == null || messages.get(i).status() == TIMMessageStatus.HasDeleted) {
                 continue;
             }
@@ -396,7 +378,7 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
 
     @Override
     public void showRevokeMessage(TIMMessageLocator timMessageLocator) {
-        for (Message msg : messageList) {
+        for (Message2 msg : messageList) {
             TIMMessageExt ext = new TIMMessageExt(msg.getMessage());
             if (ext.checkEquals(timMessageLocator)) {
                 adapter.notifyDataSetChanged();
@@ -431,7 +413,7 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     @Override
     public void onSendMessageFail(int code, String desc, TIMMessage message) {
         long id = message.getMsgUniqueId();
-        for (Message msg : messageList) {
+        for (Message2 msg : messageList) {
             if (msg.getMessage().getMsgUniqueId() == id) {
                 switch (code) {
                     case 80001:
@@ -613,60 +595,60 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     //检测发送消息条件是否满足
     private boolean checkSendMessage(final int sendType) {
 
-        if (isPay == 1 && StringUtils.toInt(payCoin) != 0) {
+//        if (isPay == 1 && StringUtils.toInt(payCoin) != 0) {
+//
+//            //获取是否显示弹窗
+//            boolean canshow = (boolean) SharedPreferencesUtils.getParam(this, "canShowDialog", true);
+//
+//            if (canshow) {
+//
+//                new MaterialDialog.Builder(this)
+//                        .content("是否花费" + payCoin + RequestConfig.getConfigObj().getCurrency() + "发送付费消息？")
+//                        .positiveText(R.string.agree)
+//                        .negativeText(R.string.disagree)
+//                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+//                            @Override
+//                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                                //弹窗弹出后置为false
+//                                SharedPreferencesUtils.setParam(ChatActivity2.this, "canShowDialog", false);
+//
+//                                toChat(sendType);
+//                            }
+//                        })
+//                        .show();
+//
+//                return false;
+//            } else {
+//
+//                toChat(sendType);
+//
+//                return false;
+//            }
+//
+//        } else if (sex == 2 && isAuth != 1) {
 
-            //获取是否显示弹窗
-            boolean canshow = (boolean) SharedPreferencesUtils.getParam(this, "canShowDialog", true);
-
-            if (canshow) {
-
-                new MaterialDialog.Builder(this)
-                        .content("是否花费" + payCoin + RequestConfig.getConfigObj().getCurrency() + "发送付费消息？")
-                        .positiveText(R.string.agree)
-                        .negativeText(R.string.disagree)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                //弹窗弹出后置为false
-                                SharedPreferencesUtils.setParam(ChatActivity.this, "canShowDialog", false);
-
-                                toChat(sendType);
-                            }
-                        })
-                        .show();
-
-                return false;
-            } else {
-
-                toChat(sendType);
-
-                return false;
-            }
-
-        } else if (sex == 2 && isAuth != 1) {
-
-            DialogHelp.getMessageDialog(ChatActivity.this, "女性需要认证才可以发送消息").show();
-            return false;
-        }
+//            DialogHelp.getMessageDialog(ChatActivity2.this, "女性需要认证才可以发送消息").show();
+//            return false;
+//        }
 
         return true;
     }
 
     private void toChat(final int sendType) {
-        Api.doRequestChatPay(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), identify, new StringCallback() {
-            @Override
-            public void onSuccess(String s, Call call, Response response) {
-
-                JsonRequestPrivateChatPay data = (JsonRequestPrivateChatPay) JsonRequestBase.getJsonObj(s, JsonRequestPrivateChatPay.class);
-                if (data.getCode() == 1) {
-                    doSwitchMessageSend(sendType);
-                } else if (data.getCode() == 10002) {
-                    Common.showRechargeDialog(ChatActivity.this, "余额不足，请先充值！");
-                } else {
-                    ToastUtils.showShort(data.getMsg());
-                }
-            }
-        });
+//        Api.doRequestChatPay(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), identify, new StringCallback() {
+//            @Override
+//            public void onSuccess(String s, Call call, Response response) {
+//
+//                JsonRequestPrivateChatPay data = (JsonRequestPrivateChatPay) JsonRequestBase.getJsonObj(s, JsonRequestPrivateChatPay.class);
+//                if (data.getCode() == 1) {
+        doSwitchMessageSend(sendType);
+//                } else if (data.getCode() == 10002) {
+//                    Common.showRechargeDialog(ChatActivity.this, "余额不足，请先充值！");
+//                } else {
+//                    ToastUtils.showShort(data.getMsg());
+//                }
+//            }
+//        });
     }
 
 
@@ -722,14 +704,14 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        Message message = messageList.get(info.position);
+        Message2 message = messageList.get(info.position);
         menu.add(0, 1, Menu.NONE, getString(R.string.chat_del));
         if (message.isSendFail()) {
             menu.add(0, 2, Menu.NONE, getString(R.string.chat_resend));
         } else if (message.getMessage().isSelf()) {
             menu.add(0, 4, Menu.NONE, getString(R.string.chat_pullback));
         }
-        if (message instanceof ImageMessage || message instanceof FileMessage) {
+        if (message instanceof ImageMessage2 || message instanceof FileMessage2) {
             menu.add(0, 3, Menu.NONE, getString(R.string.chat_save));
         }
     }
@@ -738,7 +720,7 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Message message = messageList.get(info.position);
+        Message2 message = messageList.get(info.position);
         switch (item.getItemId()) {
             case 1:
                 message.remove();
@@ -897,9 +879,9 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     private void clickShowGift() {
         if (giftBottomDialog == null) {
             giftBottomDialog = new GiftBottomDialog(this, identify);
-            if (isAuth == 1) {
-                giftBottomDialog.hideMenu();
-            }
+//            if (isAuth == 1) {
+            giftBottomDialog.hideMenu();
+//            }
             giftBottomDialog.setDoSendGiftListen(this);
         }
         giftBottomDialog.show();
@@ -963,6 +945,6 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     }
 
     public String getAvatar() {
-        return avatar;
+        return "";
     }
 }
