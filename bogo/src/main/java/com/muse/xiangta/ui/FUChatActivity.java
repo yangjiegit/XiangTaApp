@@ -194,6 +194,7 @@ public class FUChatActivity extends RtcBasedActivity implements RtcEngineEventHa
         }
         mVideoManager.stopCapture();
         rtcEngine().leaveChannel();
+        onRemoteUserLeft();
         super.finish();
     }
 
