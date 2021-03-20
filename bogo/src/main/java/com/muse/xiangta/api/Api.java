@@ -2417,12 +2417,39 @@ public class Api {
     }
 
     /*
-     * 创建家族
+     * 家族列表
      * */
     public static void getTaskList(String uid, String token, StringCallback stringCallback) {
         OkGo.post(AppConfig.API_DOMAIN + "/shiyi_api/tasklist")
                 .params("uid", uid)
                 .params("token", token)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 家族成员列表
+     * */
+    public static void getMemberList(String uid, String token, String family_id, String page, String limit, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/family/get_member_list")
+                .params("uid", uid)
+                .params("token", token)
+                .params("family_id", family_id)
+                .params("page", page)
+                .params("limit", limit)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 加入家族
+     * */
+    public static void join(String uid, String token, String family_id, String group_id, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/family/join")
+                .params("uid", uid)
+                .params("token", token)
+                .params("family_id", family_id)
+                .params("group_id", group_id)
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }

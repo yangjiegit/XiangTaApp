@@ -307,7 +307,10 @@
             android:screenOrientation="portrait" /> <!-- 群聊 -->
         <activity
             android:name=".ui.AddFramilyActivity"
-            android:screenOrientation="portrait" /> <!-- 群聊 -->
+            android:screenOrientation="portrait" /> <!-- 添加家族 -->
+        <activity
+            android:name=".ui.FamilyDetailsActivity"
+            android:screenOrientation="portrait" /> <!-- 家族详情 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"

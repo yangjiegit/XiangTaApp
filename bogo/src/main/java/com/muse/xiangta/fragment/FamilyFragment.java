@@ -1,5 +1,6 @@
 package com.muse.xiangta.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.CommonRecyclerViewAdapter;
 import com.muse.xiangta.adapter.CommonRecyclerViewHolder;
 import com.muse.xiangta.base.BaseFragment;
 import com.muse.xiangta.json.FamilyBean;
+import com.muse.xiangta.ui.FamilyDetailsActivity;
 import com.muse.xiangta.utils.GlideImgManager;
 
 import java.io.Serializable;
@@ -68,6 +71,15 @@ public class FamilyFragment extends BaseFragment {
                         + "  " + "活跃度:" + entity.getFamily_activation());
                 holder.setText(R.id.tv_content,
                         entity.getDescription().getDescription());
+
+                TextView tv_dashan = holder.getView(R.id.tv_dashan);
+
+                tv_dashan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
             }
 
             @Override
@@ -77,6 +89,15 @@ public class FamilyFragment extends BaseFragment {
         };
 
         rv_data.setAdapter(mAdapter);
+
+        mAdapter.setOnRecyclerViewItemClickListener(new CommonRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                startActivity(new Intent(
+                        getContext(), FamilyDetailsActivity.class
+                ).putExtra("data", mList.get(position)));
+            }
+        });
     }
 
     @Override
