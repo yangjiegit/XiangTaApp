@@ -653,20 +653,20 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     }
 
     private void toChat(final int sendType) {
-        Api.doRequestChatPay(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), identify, new StringCallback() {
-            @Override
-            public void onSuccess(String s, Call call, Response response) {
-
-                JsonRequestPrivateChatPay data = (JsonRequestPrivateChatPay) JsonRequestBase.getJsonObj(s, JsonRequestPrivateChatPay.class);
-                if (data.getCode() == 1) {
+//        Api.doRequestChatPay(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), identify, new StringCallback() {
+//            @Override
+//            public void onSuccess(String s, Call call, Response response) {
+//
+//                JsonRequestPrivateChatPay data = (JsonRequestPrivateChatPay) JsonRequestBase.getJsonObj(s, JsonRequestPrivateChatPay.class);
+//                if (data.getCode() == 1) {
                     doSwitchMessageSend(sendType);
-                } else if (data.getCode() == 10002) {
-                    Common.showRechargeDialog(ChatActivity.this, "余额不足，请先充值！");
-                } else {
-                    ToastUtils.showShort(data.getMsg());
-                }
-            }
-        });
+//                } else if (data.getCode() == 10002) {
+//                    Common.showRechargeDialog(ChatActivity.this, "余额不足，请先充值！");
+//                } else {
+//                    ToastUtils.showShort(data.getMsg());
+//                }
+//            }
+//        });
     }
 
 

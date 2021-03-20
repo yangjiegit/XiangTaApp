@@ -13,6 +13,7 @@ import com.muse.xiangta.CuckooApplication;
 import com.muse.xiangta.R;
 import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMFileElem;
+import com.tencent.imsdk.TIMGroupTipsElem;
 import com.tencent.imsdk.TIMMessage;
 
 /**
@@ -48,11 +49,11 @@ public class FileMessage extends Message {
 
         setSenderUserInfo(viewHolder,context,null);
 
-        TIMFileElem e = (TIMFileElem) message.getElement(0);
+        TIMGroupTipsElem e = (TIMGroupTipsElem) message.getElement(0);
         TextView tv = new TextView(CuckooApplication.getInstances());
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         tv.setTextColor(CuckooApplication.getInstances().getResources().getColor(isSelf() ? R.color.white : R.color.black));
-        tv.setText(e.getFileName());
+        tv.setText(e.getGroupName());
         getBubbleView(viewHolder).addView(tv);
         showStatus(viewHolder);
     }
