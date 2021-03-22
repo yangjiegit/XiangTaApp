@@ -2468,4 +2468,19 @@ public class Api {
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }
+
+    /*
+     * 购买贵族
+     * */
+    public static void buyNobility(String uid, String token, String user_id, String id, String month, String pid, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/shiyi_api/buyNobility")
+                .params("uid", uid)
+                .params("token", token)
+                .params("user_id", user_id)
+                .params("id", id)
+                .params("pid", pid)
+                .params("month", month)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
 }

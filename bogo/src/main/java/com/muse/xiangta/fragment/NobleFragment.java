@@ -1,5 +1,6 @@
 package com.muse.xiangta.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,9 +17,9 @@ import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.CommonRecyclerViewAdapter;
 import com.muse.xiangta.adapter.CommonRecyclerViewHolder;
 import com.muse.xiangta.api.Api;
-import com.muse.xiangta.audiorecord.util.StringUtil;
 import com.muse.xiangta.base.BaseFragment;
 import com.muse.xiangta.modle.NobleBean;
+import com.muse.xiangta.ui.BuyNobleActivity;
 import com.muse.xiangta.utils.GlideImgManager;
 import com.muse.xiangta.utils.StringUtils;
 
@@ -114,6 +115,15 @@ public class NobleFragment extends BaseFragment {
         };
 
         rv_data2.setAdapter(mAdapter2);
+
+        mAdapter2.setOnRecyclerViewItemClickListener(new CommonRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                startActivity(new Intent(getContext(), BuyNobleActivity.class)
+                        .putExtra("id", id + "")
+                        .putExtra("month", mList2.get(position).getMonth() + ""));
+            }
+        });
     }
 
     private void getNobleData(int id) {
