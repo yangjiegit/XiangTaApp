@@ -209,16 +209,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_30"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_20"
         android:layout_marginBottom="@dimen/dp_10"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20">
 
         <LinearLayout
+            android:id="@+id/ll_tuijian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -226,6 +227,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_tuijian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="推荐"
@@ -233,6 +235,7 @@
                 android:textSize="@dimen/dp_13" />
 
             <View
+                android:id="@+id/view_tuijian"
                 android:layout_width="@dimen/dp_12"
                 android:layout_height="@dimen/dp_2"
                 android:layout_marginTop="@dimen/dp_3"
@@ -241,6 +244,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_fujin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -249,6 +253,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_fujin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="附近"
@@ -256,6 +261,7 @@
                 android:textSize="@dimen/dp_11" />
 
             <View
+                android:id="@+id/view_fujin"
                 android:layout_width="@dimen/dp_12"
                 android:layout_height="@dimen/dp_2"
                 android:layout_marginTop="@dimen/dp_3"

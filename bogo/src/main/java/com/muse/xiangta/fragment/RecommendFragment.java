@@ -11,16 +11,15 @@ import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lzy.okgo.callback.StringCallback;
-import com.muse.xiangta.Constants;
 import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.recycler.RecyclerRecommendAdapter;
 import com.muse.xiangta.api.Api;
@@ -34,12 +33,10 @@ import com.muse.xiangta.json.jsonmodle.TargetUserData;
 import com.muse.xiangta.json.jsonmodle.UserCenterData;
 import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.BannerImgBean;
-import com.muse.xiangta.modle.ConfigModel;
 import com.muse.xiangta.modle.OnKeyCallBean;
 import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.ui.CuckooAuthFormActivity;
 import com.muse.xiangta.ui.DeclarationActivity;
-import com.muse.xiangta.ui.FUChatActivity;
 import com.muse.xiangta.ui.GroupChatActivity;
 import com.muse.xiangta.ui.MatchingActivity;
 import com.muse.xiangta.ui.VideoAuthActivity;
@@ -49,6 +46,7 @@ import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -68,10 +66,16 @@ public class RecommendFragment extends BaseListFragment<TargetUserData> {
     private FrameLayout fl_supei, fl_yuyin, fl_yuehui, fl_qunliao;
     private ImageView call_icon1;
     private ImageView call_icon2;
-    private TextView call_num;
+    private TextView call_num, tv_tuijian, tv_fujin;
+    private LinearLayout ll_tuijian, ll_fujin;
+    private View view_tuijian, view_fujin;
+
+    private List<TextView> mTextList = new ArrayList<>();
+    private List<View> mViewList = new ArrayList<>();
 
     private ArrayList<BannerImgBean> rollImg = new ArrayList<>();
     private RelativeLayout emptyLayout;
+    private int type = 1;
     //    private RecyclerView mBannerRv;
 
 
@@ -135,11 +139,26 @@ public class RecommendFragment extends BaseListFragment<TargetUserData> {
         fl_yuyin = rollView.findViewById(R.id.fl_yuyin);
         fl_yuehui = rollView.findViewById(R.id.fl_yuehui);
         fl_qunliao = rollView.findViewById(R.id.fl_qunliao);
+        ll_tuijian = rollView.findViewById(R.id.ll_tuijian);
+        ll_fujin = rollView.findViewById(R.id.ll_fujin);
+        tv_tuijian = rollView.findViewById(R.id.tv_tuijian);
+        tv_fujin = rollView.findViewById(R.id.tv_fujin);
+        view_tuijian = rollView.findViewById(R.id.view_tuijian);
+        view_fujin = rollView.findViewById(R.id.view_fujin);
+
+        mTextList.clear();
+        mTextList.add(tv_tuijian);
+        mTextList.add(tv_fujin);
+        mViewList.clear();
+        mViewList.add(view_tuijian);
+        mViewList.add(view_fujin);
 
         fl_qunliao.setOnClickListener(this);
         fl_yuehui.setOnClickListener(this);
         fl_supei.setOnClickListener(this);
         fl_yuyin.setOnClickListener(this);
+        ll_tuijian.setOnClickListener(this);
+        ll_fujin.setOnClickListener(this);
 
         emptyLayout = rollView.findViewById(R.id.recommend_empty_layout);
 
@@ -163,8 +182,6 @@ public class RecommendFragment extends BaseListFragment<TargetUserData> {
         //添加头部
         baseQuickAdapter.addHeaderView(rollView);
         baseQuickAdapter.notifyDataSetChanged();
-
-
     }
 
 
@@ -186,6 +203,18 @@ public class RecommendFragment extends BaseListFragment<TargetUserData> {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ll_tuijian:
+                type = 1;
+                page = 1;
+                requestGetData(false);
+                setTextColor(0);
+                break;
+            case R.id.ll_fujin:
+                type = 2;
+                page = 1;
+                requestGetData(false);
+                setTextColor(1);
+                break;
             case R.id.fl_qunliao:
                 startActivity(new Intent(getContext(), GroupChatActivity.class));
 //                Intent intent1 = new Intent(getContext(), FUChatActivity.class);
@@ -203,7 +232,7 @@ public class RecommendFragment extends BaseListFragment<TargetUserData> {
                     return;
                 }
                 if (userCenterData.getIs_auth() == 0) {
-                    Intent intent = new Intent(getContext(), VideoAuthActivity.class);
+                    Intent intent = new Intent(getContext(), CuckooAuthFormActivity.class);
                     intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getUser_auth_status()));
                     startActivity(intent);
                 } else {
@@ -244,7 +273,7 @@ public class RecommendFragment extends BaseListFragment<TargetUserData> {
             return;
         }
         if (userCenterData.getIs_auth() == 0) {
-            Intent intent = new Intent(getContext(), VideoAuthActivity.class);
+            Intent intent = new Intent(getContext(), CuckooAuthFormActivity.class);
             intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getUser_auth_status()));
             startActivity(intent);
         } else {//认证成功
@@ -255,7 +284,6 @@ public class RecommendFragment extends BaseListFragment<TargetUserData> {
 
     //一键约爱
     private void clickOneKeyCall() {
-
         showLoadingDialog("正在接通...");
         Api.doRequestOneKeyCall(
                 SaveData.getInstance().getId(),
@@ -326,36 +354,54 @@ public class RecommendFragment extends BaseListFragment<TargetUserData> {
         });
     }
 
-
     @Override
     protected void requestGetData(boolean isCache) {
-        final int userHeadWidth = ConvertUtils.dp2px(30);
-        Api.getRecommendUserList(
-                uId,
-                uToken,
-                page,
-                new StringCallback() {
+        if (type == 1) {
+            Api.getRecommendUserList(
+                    uId,
+                    uToken,
+                    page,
+                    new StringCallback() {
 
-                    @Override
-                    public void onSuccess(String s, Call call, Response response) {
-                        Log.e("getRecommendUserList", s);
-                        JsonRequestsTarget requestObj = JsonRequestsTarget.getJsonObj(s);
-                        if (requestObj.getCode() == 1) {
-                            call_num.setText(requestObj.getOnline_emcee_count());
-
-                            if (page == 1 && requestObj.getData() != null && requestObj.getData().size() == 0) {
-                                emptyLayout.setVisibility(View.VISIBLE);
+                        @Override
+                        public void onSuccess(String s, Call call, Response response) {
+                            Log.e("getRecommendUserList", s);
+                            JsonRequestsTarget requestObj = JsonRequestsTarget.getJsonObj(s);
+                            if (requestObj.getCode() == 1) {
+                                call_num.setText(requestObj.getOnline_emcee_count());
+                                if (page == 1 && requestObj.getData() != null && requestObj.getData().size() == 0) {
+                                    emptyLayout.setVisibility(View.VISIBLE);
+                                } else {
+                                    emptyLayout.setVisibility(View.GONE);
+                                }
+                                onLoadDataResult(requestObj.getData());
                             } else {
-                                emptyLayout.setVisibility(View.GONE);
+                                onLoadDataError();
+                                showToastMsg(getContext(), requestObj.getMsg());
                             }
-                            onLoadDataResult(requestObj.getData());
-                        } else {
-                            onLoadDataError();
-                            showToastMsg(getContext(), requestObj.getMsg());
                         }
                     }
+            );
+        } else {
+            Api.getNearPeoplePageList(uId, uToken, page, new StringCallback() {
+                @Override
+                public void onSuccess(String s, Call call, Response response) {
+                    JsonRequestsTarget requestObj = JsonRequestsTarget.getJsonObj(s);
+                    if (requestObj.getCode() == 1) {
+                        call_num.setText(requestObj.getOnline_emcee_count());
+                        if (page == 1 && requestObj.getData() != null && requestObj.getData().size() == 0) {
+                            emptyLayout.setVisibility(View.VISIBLE);
+                        } else {
+                            emptyLayout.setVisibility(View.GONE);
+                        }
+                        onLoadDataResult(requestObj.getData());
+                    } else {
+                        onLoadDataError();
+                        showToastMsg(getContext(), requestObj.getMsg());
+                    }
                 }
-        );
+            });
+        }
     }
 
 
@@ -375,7 +421,18 @@ public class RecommendFragment extends BaseListFragment<TargetUserData> {
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
         Common.jumpUserPage(getContext(), dataList.get(position).getId());
+    }
+
+    public void setTextColor(int position) {
+        for (int i = 0; i < mTextList.size(); i++) {
+            if (i == position) {
+                mTextList.get(i).setTextColor(getResources().getColor(R.color.message_check_true));
+                mViewList.get(i).setVisibility(View.VISIBLE);
+            } else {
+                mTextList.get(i).setTextColor(getResources().getColor(R.color.black));
+                mViewList.get(i).setVisibility(View.INVISIBLE);
+            }
+        }
     }
 }

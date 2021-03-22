@@ -6,12 +6,10 @@
     android:gravity="center"
     android:orientation="vertical">
 
-
     <View
         android:layout_width="187dp"
         android:layout_height="145dp"
         android:background="@mipmap/empt_content" />
-
 
     <TextView
         android:id="@+id/hint"
