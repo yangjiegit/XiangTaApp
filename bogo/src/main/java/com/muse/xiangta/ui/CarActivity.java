@@ -1,6 +1,7 @@
 package com.muse.xiangta.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -81,7 +82,6 @@ public class CarActivity extends BaseActivity {
                 TextView tv_text2 = holder.getView(R.id.tv_text2);
                 TextView tv_month1 = holder.getView(R.id.tv_month1);
                 TextView tv_month2 = holder.getView(R.id.tv_month2);
-
                 if (entity.size() > 1) {
                     GlideImgManager.loadImage(CarActivity.this, entity.get(0).getImage(), iv_image1);
                     GlideImgManager.loadImage(CarActivity.this, entity.get(1).getImage(), iv_image2);
@@ -101,6 +101,28 @@ public class CarActivity extends BaseActivity {
                     tv_month1.setVisibility(View.GONE);
                     tv_month2.setVisibility(View.GONE);
                 }
+
+                iv_image1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (entity.size() == 1 || entity.size() > 1) {
+                            startActivity(new Intent(CarActivity.this, BuyMountActivity.class)
+                                    .putExtra("id", entity.get(0).getId() + ""));
+                        }
+                    }
+                });
+
+                iv_image2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (entity.size() > 1) {
+                            startActivity(new Intent(CarActivity.this, BuyMountActivity.class)
+                                    .putExtra("id", entity.get(1).getId() + ""));
+                        }
+                    }
+                });
+
+
             }
 
             @Override
@@ -140,6 +162,26 @@ public class CarActivity extends BaseActivity {
                     tv_month1.setVisibility(View.GONE);
                     tv_month2.setVisibility(View.GONE);
                 }
+
+                iv_image1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (entity.size() == 1 || entity.size() > 1) {
+                            startActivity(new Intent(CarActivity.this, BuyMountActivity.class)
+                                    .putExtra("id", entity.get(0).getId() + ""));
+                        }
+                    }
+                });
+
+                iv_image2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (entity.size() > 1) {
+                            startActivity(new Intent(CarActivity.this, BuyMountActivity.class)
+                                    .putExtra("id", entity.get(1).getId() + ""));
+                        }
+                    }
+                });
             }
 
             @Override
@@ -149,6 +191,13 @@ public class CarActivity extends BaseActivity {
         };
 
         rv_data2.setAdapter(mAdapter2);
+
+        mAdapter2.setOnRecyclerViewItemClickListener(new CommonRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                startActivity(new Intent(CarActivity.this, BuyMountActivity.class));
+            }
+        });
     }
 
     private void getCarListData() {

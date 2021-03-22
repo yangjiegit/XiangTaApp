@@ -2453,4 +2453,19 @@ public class Api {
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }
+
+    /*
+     * 购买座驾
+     * */
+    public static void buyMount(String uid, String token, String user_id, String id, String month, String pid, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/shiyi_api/buyMount")
+                .params("uid", uid)
+                .params("token", token)
+                .params("user_id", user_id)
+                .params("id", id)
+                .params("pid", pid)
+                .params("month", month)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
 }

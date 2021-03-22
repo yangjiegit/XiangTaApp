@@ -321,6 +321,9 @@
             android:name=".ui.LoveDetailsActivity"
             android:screenOrientation="portrait" /> <!-- 爱情故事详情页面 -->
         <activity
+            android:name=".ui.BuyMountActivity"
+            android:screenOrientation="portrait" /> <!-- 爱情故事详情页面 -->
+        <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
