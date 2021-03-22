@@ -32,6 +32,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.muse.chat.model.CustomMessage;
 import com.muse.chat.model.Message;
 import com.muse.tisdk.VideoPreProcessing;
+import com.muse.xiangta.CuckooApplication;
 import com.muse.xiangta.LiveConstant;
 import com.muse.xiangta.PreprocessorFaceUnity;
 import com.muse.xiangta.R;
@@ -321,7 +322,12 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
 
     private void initRoom() {
         initVideoModule();
-        rtcEngine().setVideoSource(new RtcVideoConsumer());
+        if (null == rtcEngine()) {
+            CuckooApplication.getInstance().initRtcEngine();
+            rtcEngine().setVideoSource(new RtcVideoConsumer());
+        } else {
+            rtcEngine().setVideoSource(new RtcVideoConsumer());
+        }
         joinChannel();
     }
 
@@ -897,6 +903,7 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
         leaveChannel();
         RtcEngine.destroy();
 //        mRtcEngine = null;
+        CuckooApplication.getInstance().rtcEngineNull();
     }
 
 
@@ -1045,6 +1052,32 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
     protected void onDestroy() {
         super.onDestroy();
 
+//        if (cuckooVideoLineTimeBusiness != null) {
+//            cuckooVideoLineTimeBusiness.stop();
+//        }
+//
+//        if (getVideoTimeInfoTask != null) {
+//            getVideoTimeInfoTask.stopRunnable();
+//        }
+//        leaveChannel();
+//        RtcEngine.destroy();
+//
+//        if (DialogH5Activity.instance != null) {
+//            DialogH5Activity.instance.finish();
+//        }
+//
+////        if (cuckooCheckRateBusiness != null) {
+////            cuckooCheckRateBusiness.stopCheck();
+////        }
+//
+//        if (tiSDKManager != null) {
+//            // --- boGoBeauty start ---
+////            mVideoPreProcessing.enablePreProcessing(false);
+//            tiSDKManager.destroy();
+//            // --- boGoBeauty end ---
+//        }
+
+
         if (cuckooVideoLineTimeBusiness != null) {
             cuckooVideoLineTimeBusiness.stop();
         }
@@ -1054,6 +1087,7 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
         }
         leaveChannel();
         RtcEngine.destroy();
+        CuckooApplication.getInstance().rtcEngineNull();
 
         if (DialogH5Activity.instance != null) {
             DialogH5Activity.instance.finish();

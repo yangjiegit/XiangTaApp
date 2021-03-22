@@ -179,7 +179,7 @@ public class CuckooApplication extends Application {
         closeAndroidPDialog();
     }
 
-    private void initRtcEngine() {
+    public void initRtcEngine() {
         String appId = getString(R.string.agora_app_id);
         if (TextUtils.isEmpty(appId)) {
             throw new RuntimeException("NEED TO use your App ID, get your own ID at https://dashboard.agora.io/");
@@ -206,6 +206,10 @@ public class CuckooApplication extends Application {
 
     public RtcEngine rtcEngine() {
         return mRtcEngine;
+    }
+
+    public void rtcEngineNull(){
+        mRtcEngine=null;
     }
 
     public void addRtcHandler(RtcEngineEventHandler handler) {
