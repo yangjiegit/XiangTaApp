@@ -185,7 +185,10 @@ dependencies {
     api 'com.github.castorflex.verticalviewpager:library:19.0.1'
     api 'com.hyman:flowlayout-lib:1.1.2'
     api 'com.zhy:percent-support-extends:1.1.1'
-    api 'com.qiniu:qiniu-android-sdk:7.2.+'
+    implementation ('com.qiniu:qiniu-android-sdk:8.2.+'){
+        exclude (group: 'com.squareup.okhttp3', module: 'okhttp')
+    }
+    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
     api 'com.paypal.sdk:paypal-android-sdk:2.16.0'
     api('com.github.bumptech.glide:glide:3.7.0') { // 所加的第三方框架
         exclude group: 'com.github.bumptech.glide', module: 'glide'     // 加载时排除框架中的design包
