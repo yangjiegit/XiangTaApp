@@ -242,7 +242,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
 
     @OnClick({R.id.hoem_page_rank_iv, R.id.list_bar_gift_text, R.id.rl_guardian, R.id.rl_voice_call, R.id.tv_btn_info, R.id.tv_btn_video, R.id.float_back, R.id.float_meun,
             R.id.ll_chat, R.id.ll_gift, R.id.rl_call, R.id.userinfo_bar_loveme, R.id.tv_btn_img, R.id.tv_btn_dynamic, R.id.home_page_qq_contact_ll, R.id.home_page_wechat_contact_ll
-            , R.id.home_page_phone_contact_ll, R.id.ll_tonghua, R.id.ll_sixin, R.id.ll_liwu, R.id.tv_dashan, R.id.tv_guanzhu})
+            , R.id.home_page_phone_contact_ll, R.id.ll_tonghua, R.id.ll_sixin, R.id.ll_liwu, R.id.tv_dashan, R.id.tv_guanzhu, R.id.iv_shouhu})
     @Override
     public void onClick(View v) {
 
@@ -274,8 +274,10 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
                 viewPager.setCurrentItem(1);
                 break;
             //贡献榜按钮
-            case R.id.hoem_page_rank_iv:
-                showContribution();
+            case R.id.hoem_page_rank_iv://守护
+            case R.id.iv_shouhu:
+//                showContribution();
+                startActivity(new Intent(CuckooHomePageActivity.this, UserGuardRankActivity.class));
                 break;
             case R.id.float_back:
                 finish();
@@ -287,14 +289,12 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
                 }
                 showFloatMeun();
                 break;
-
             //修改资料
             case R.id.edit_mine:
                 Intent intent = new Intent(this, EditActivity.class);
                 startActivity(intent);
                 menuDialog.dismiss();
                 break;
-
             //加入黑名单操作
             case R.id.join_black_list:
                 clickBlack();

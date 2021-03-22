@@ -20,6 +20,7 @@ import com.muse.xiangta.adapter.CommonRecyclerViewHolder;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseFragment;
 import com.muse.xiangta.modle.LoveBean;
+import com.muse.xiangta.ui.LoveDetailsActivity;
 import com.muse.xiangta.ui.PushDynamicActivity;
 import com.muse.xiangta.utils.GlideImgManager;
 import com.muse.xiangta.utils.StringUtils;
@@ -67,7 +68,6 @@ public class LoveFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         iv_fabu.setOnClickListener(this);
-        rv_data.setLayoutManager(new GridLayoutManager(getContext(), 2));
     }
 
 
@@ -86,18 +86,23 @@ public class LoveFragment extends BaseFragment {
         sw_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                page = 1;
                 getLoveData();
             }
         });
     }
 
     private void initRecyclerView() {
+        rv_data.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
         mAdapter = new CommonRecyclerViewAdapter<LoveBean.DataBean.ListBean>(getContext(), mList) {
             @Override
             public void convert(CommonRecyclerViewHolder holder, LoveBean.DataBean.ListBean entity, int position) {
                 if (entity.getThumbnailPicUrls().size() > 0) {
                     GlideImgManager.glideLoader(getContext(), entity.getThumbnailPicUrls().get(0),
                             (ImageView) holder.getView(R.id.iv_head), 1);
+                } else {
+                    ((ImageView) holder.getView(R.id.iv_head)).setImageResource(R.mipmap.ic_launcher);
                 }
                 GlideImgManager.glideLoader(getContext(), entity.getUserInfo().getAvatar(),
                         (ImageView) holder.getView(R.id.iv_head2), 1);
@@ -120,6 +125,14 @@ public class LoveFragment extends BaseFragment {
             public void onloadmore() {
                 ++page;
                 getLoveData();
+            }
+        });
+
+        mAdapter.setOnRecyclerViewItemClickListener(new CommonRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                startActivity(new Intent(getContext(), LoveDetailsActivity.class).putExtra("data",
+                        mList.get(position)));
             }
         });
     }

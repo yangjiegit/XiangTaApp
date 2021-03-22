@@ -63,24 +63,24 @@
         <activity android:name=".ui.BindPhoneActivity" /> <!-- 自定义话术添加 -->
         <activity android:name=".ui.CuckooAddCustomMsgActivity" />
         <activity android:name=".ui.WealthDetailedActivity" /> <!-- 入口 -->
-<!--        <activity-->
-<!--            android:name=".ui.GuildActivity"-->
-<!--            android:launchMode="standard"-->
-<!--            android:screenOrientation="portrait">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        <!--        <activity-->
+        <!--            android:name=".ui.GuildActivity"-->
+        <!--            android:launchMode="standard"-->
+        <!--            android:screenOrientation="portrait">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.o" />-->
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.o" />-->
 
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+        <!--                <category android:name="android.intent.category.DEFAULT" />-->
+        <!--                <category android:name="android.intent.category.BROWSABLE" />-->
 
-<!--                <data android:scheme="q1fwid" />-->
-<!--            </intent-filter>-->
-<!--        </activity> &lt;!&ndash; 登录选择页 &ndash;&gt;-->
+        <!--                <data android:scheme="q1fwid" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity> &lt;!&ndash; 登录选择页 &ndash;&gt;-->
         <activity
             android:name=".ui.GuildActivity"
             android:theme="@style/SplashTheme">
@@ -317,6 +317,9 @@
         <activity
             android:name=".ui.MemberListActivity"
             android:screenOrientation="portrait" /> <!-- 家族成员列表 -->
+        <activity
+            android:name=".ui.LoveDetailsActivity"
+            android:screenOrientation="portrait" /> <!-- 爱情故事详情页面 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
