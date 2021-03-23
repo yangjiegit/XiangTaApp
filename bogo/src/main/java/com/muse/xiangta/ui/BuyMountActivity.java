@@ -14,6 +14,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.CommonRecyclerViewAdapter;
 import com.muse.xiangta.adapter.CommonRecyclerViewHolder;
+import com.muse.xiangta.alipay.AlipayService;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseActivity;
 import com.muse.xiangta.json.JsonRequestBase;
@@ -23,6 +24,9 @@ import com.muse.xiangta.modle.PayMenuModel;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
 import com.muse.xiangta.wxpay.WChatPayService;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +40,7 @@ public class BuyMountActivity extends BaseActivity {
 
     private List<PayMenuModel> mRechargePayMenuDataList = new ArrayList<>();
     private CommonRecyclerViewAdapter<PayMenuModel> mAdapter;
-    private int nowSelPayWay = -1;
+    private int nowSelPayWay = 0;
     @BindView(R.id.rv_data)
     RecyclerView rv_data;
 
@@ -112,10 +116,9 @@ public class BuyMountActivity extends BaseActivity {
 
                 JsonRequestGetRechargeRule jsonObj =
                         (JsonRequestGetRechargeRule) JsonRequestBase.getJsonObj(s, JsonRequestGetRechargeRule.class);
-                nowSelPayWay = 0;
                 mRechargePayMenuDataList.clear();
                 mRechargePayMenuDataList.addAll(jsonObj.getPay_list());
-                pid = mRechargePayMenuDataList.get(0).getId();
+                pid = mRechargePayMenuDataList.get(nowSelPayWay).getId();
                 mAdapter.notifyDataSetChanged();
             }
         });
@@ -137,9 +140,18 @@ public class BuyMountActivity extends BaseActivity {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 if (!StringUtils.isEmpty(s)) {
-                    Pay4Bean2 pay4Bean2 = new Gson().fromJson(s, Pay4Bean2.class);
-                    if (pay4Bean2.getCode() == 1) {
-                        urlPay(pay4Bean2);
+                    if (nowSelPayWay == 0) {
+                        Pay4Bean2 pay4Bean2 = new Gson().fromJson(s, Pay4Bean2.class);
+                        if (pay4Bean2.getCode() == 1) {
+                            urlPay(pay4Bean2);
+                        }
+                    } else {
+                        AlipayService alipayService = new AlipayService(BuyMountActivity.this);
+                        try {
+                            alipayService.payV2(new JSONObject(s).getJSONObject("pay").getString("pay_info"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

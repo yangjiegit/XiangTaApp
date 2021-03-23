@@ -727,7 +727,6 @@ public class Api {
 
     //充值规则
     public static void doRequestGetChargeRule(String uId, String uToken, StringCallback callback) {
-
         OkGo.get(AppConfig.API_DOMAIN + "/recharge_api/get_recharge_page_data")
                 .params("uid", uId)
                 .params("token", uToken)
