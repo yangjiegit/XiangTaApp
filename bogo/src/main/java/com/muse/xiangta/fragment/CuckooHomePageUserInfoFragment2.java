@@ -19,7 +19,6 @@ import com.muse.xiangta.adapter.CommonRecyclerViewAdapter;
 import com.muse.xiangta.adapter.CommonRecyclerViewHolder;
 import com.muse.xiangta.base.BaseFragment;
 import com.muse.xiangta.json.jsonmodle.TargetUserData2;
-import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.utils.GlideImgManager;
 
 import java.util.ArrayList;
@@ -45,8 +44,6 @@ public class CuckooHomePageUserInfoFragment2 extends BaseFragment {
 
     public static final String TO_USER_ID = "TO_USER_ID";
     private TargetUserData2 targetUserData2;
-    //    private String toUserId;
-    private int page = 1;
     private int[] color_bg = {R.drawable.button_color_1, R.drawable.button_color_2,
             R.drawable.button_color_3, R.drawable.button_color_4};
     private List<String> mList1 = new ArrayList<>();
@@ -155,11 +152,6 @@ public class CuckooHomePageUserInfoFragment2 extends BaseFragment {
 
     private void initRecyclerView2() {
         mList2.clear();
-//        if (null != targetUserData2.getData()) {
-//            for (int i = 0; i < targetUserData2.getData().getRemarks().size(); i++) {
-//                mList2.add(targetUserData2.getData().getRemarks().get(i));
-//            }
-//        }
 
         mAdapter2 = new CommonRecyclerViewAdapter<String>(getContext(), mList2) {
             @Override

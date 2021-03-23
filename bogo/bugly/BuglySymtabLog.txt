@@ -174,3 +174,11 @@ symbolFile=/Users/joker/Documents/梦竹科技/Android/XiangTa/bogo/bugly/buglyS
 file=/Users/joker/Documents/梦竹科技/Android/XiangTa/bogo/build/intermediates/cmake/xiangta/release/obj/armeabi-v7a/libc++_shared.so
 uuid=e25091fcc1d1d7828ed6f92d0eecc795
 
+symbolFile=/Users/joker/Documents/梦竹科技/Android/想她/XiangTaApp/bogo/bugly/buglySymbol_libapm-plugin-video-preprocessing_armeabi-v7a-54171.zip
+file=/Users/joker/Documents/梦竹科技/Android/想她/XiangTaApp/bogo/build/intermediates/cmake/xiangta/release/obj/armeabi-v7a/libapm-plugin-video-preprocessing.so
+uuid=54171f5c4091a4d3bd3f1a7fed0d7a26
+
+symbolFile=/Users/joker/Documents/梦竹科技/Android/想她/XiangTaApp/bogo/bugly/buglySymbol_libc++_shared_armeabi-v7a-e2509.zip
+file=/Users/joker/Documents/梦竹科技/Android/想她/XiangTaApp/bogo/build/intermediates/cmake/xiangta/release/obj/armeabi-v7a/libc++_shared.so
+uuid=e25091fcc1d1d7828ed6f92d0eecc795
+

@@ -268,3 +268,11 @@ file=/Users/joker/Documents/梦竹科技/Android/XiangTa/bogo/bugly/buglySymbol_
 sha1=c5b2178f74d07debfd1a1297a3538cf980956241
 appId=1400068304
 
+file=/Users/joker/Documents/梦竹科技/Android/想她/XiangTaApp/bogo/bugly/buglySymbol_libapm-plugin-video-preprocessing_armeabi-v7a-54171.zip
+sha1=afa72b4d071d81a258f25d67689bae5373fa827a
+appId=1400068304
+
+file=/Users/joker/Documents/梦竹科技/Android/想她/XiangTaApp/bogo/bugly/buglySymbol_libc++_shared_armeabi-v7a-e2509.zip
+sha1=35134e75584da91701e8d8fd7e7014c842f158e5
+appId=1400068304
+
