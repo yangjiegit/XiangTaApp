@@ -339,6 +339,9 @@
             android:name=".ui.MyCarActivity"
             android:screenOrientation="portrait" /> <!--我的座驾 -->
         <activity
+            android:name=".ui.MemberGroupListActivity"
+            android:screenOrientation="portrait" /> <!--群聊成员列表 -->
+        <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"

@@ -54,6 +54,7 @@ import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
 import com.muse.xiangta.modle.custommsg.InputListenerMsgText;
+import com.muse.xiangta.ui.MemberGroupListActivity;
 import com.muse.xiangta.ui.PrivatePhotoActivity;
 import com.muse.xiangta.ui.common.Common;
 import com.tencent.imsdk.TIMConversationType;
@@ -221,7 +222,14 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                 break;
             case Group:
                 title.setMoreImg(R.drawable.ic_chat_user_page);
-
+                title.setMoreImgAction(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //跳转
+                        startActivity(new Intent(ChatActivity2.this, MemberGroupListActivity.class)
+                                .putExtra("family_id", identify));
+                    }
+                });
                 title.setTitleText(userName);
                 break;
 
