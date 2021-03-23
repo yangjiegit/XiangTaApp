@@ -221,7 +221,7 @@ public class UserPageFragment extends BaseFragment {
             case R.id.ll_noble://贵族
                 startActivity(new Intent(getContext(), NobleActivity.class));
                 break;
-            case R.id.tv_profit:
+            case R.id.tv_profit://收益
                 startActivity(new Intent(getContext(), ProfitActivity.class));
                 break;
             case R.id.ll_grade:

@@ -2482,4 +2482,50 @@ public class Api {
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }
+
+    /*
+     * 展示用户金币、钻石余额
+     * */
+    public static void showUserGoldcoin(String uid, String token, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user/show_user_goldcoin")
+                .params("uid", uid)
+                .params("token", token)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 金币兑换记录
+     * */
+    public static void getGoldcoinLog(String uid, String token, String page, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user/get_goldcoin_log")
+                .params("uid", uid)
+                .params("token", token)
+                .params("page", page)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 金币兑换-产品列表
+     * */
+    public static void getGoldcoinList(String uid, String token, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user/get_goldcoin_list")
+                .params("uid", uid)
+                .params("token", token)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 金币兑换-操作
+     * */
+    public static void goldcoinExchange(String uid, String token, String id, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user/goldcoin_exchange")
+                .params("uid", uid)
+                .params("token", token)
+                .params("id", id)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
 }
