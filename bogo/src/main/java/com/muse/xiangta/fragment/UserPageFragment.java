@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.ToastUtils;
+import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.ApiConstantDefine;
 import com.muse.xiangta.R;
 import com.muse.xiangta.api.Api;
@@ -29,20 +30,20 @@ import com.muse.xiangta.manage.RequestConfig;
 import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.ConfigModel;
 import com.muse.xiangta.modle.UserModel;
-import com.muse.xiangta.msg.ui.AboutFansActivity;
 import com.muse.xiangta.ui.CarActivity;
 import com.muse.xiangta.ui.CuckooAuthFormActivity;
+import com.muse.xiangta.ui.DynamicActivity;
 import com.muse.xiangta.ui.EditActivity;
 import com.muse.xiangta.ui.FamilyActivity;
 import com.muse.xiangta.ui.GuardActivity;
+import com.muse.xiangta.ui.InviteActivityNew;
 import com.muse.xiangta.ui.MyGradeActivity;
 import com.muse.xiangta.ui.MyMessageActivity;
 import com.muse.xiangta.ui.NobleActivity;
-import com.muse.xiangta.ui.ProfitActivity;
-import com.muse.xiangta.ui.RewardActivity;
-import com.muse.xiangta.ui.InviteActivityNew;
 import com.muse.xiangta.ui.PrivatePhotoActivity;
+import com.muse.xiangta.ui.ProfitActivity;
 import com.muse.xiangta.ui.RechargeVipActivity;
+import com.muse.xiangta.ui.RewardActivity;
 import com.muse.xiangta.ui.SettingActivity;
 import com.muse.xiangta.ui.ShortVideoActivity;
 import com.muse.xiangta.ui.ToJoinActivity;
@@ -58,7 +59,6 @@ import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.UIHelp;
 import com.muse.xiangta.utils.Utils;
 import com.muse.xiangta.widget.BGLevelTextView;
-import com.lzy.okgo.callback.StringCallback;
 
 import java.util.Locale;
 
@@ -204,10 +204,13 @@ public class UserPageFragment extends BaseFragment {
 
     @OnClick({R.id.ll_wallet, R.id.iv_user_center_sign, R.id.ll_beauty_setting, R.id.ll_family
             , R.id.tv_reward, R.id.ll_guard, R.id.ll_grade, R.id.tv_profit, R.id.ll_noble,
-            R.id.ll_car, R.id.ll_haoyou, R.id.ll_miyou,R.id.tv_chongzhi})
+            R.id.ll_car, R.id.ll_haoyou, R.id.ll_miyou, R.id.tv_chongzhi, R.id.ll_dynamic})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ll_dynamic://我的动态
+                startActivity(new Intent(getContext(), DynamicActivity.class));
+                break;
             case R.id.tv_chongzhi:
                 //充值
                 WealthDetailedActivity.start(getContext(), WealthDetailedActivity.TYPE_RECHARGE);
@@ -412,8 +415,8 @@ public class UserPageFragment extends BaseFragment {
 //        tv_level.setLevelInfo(userCenterData.getSex(), userCenterData.getLevel());
         //是否认证标识
         userIsVerify.setImageResource(SelectResHelper.getAttestationRes(StringUtils.toInt(userCenterData.getUser_auth_status())));
-        aboutNumber.setText(userCenterData.getAttention_all()+"");
-        fansNumber.setText(userCenterData.getAttention_fans()+"");
+        aboutNumber.setText(userCenterData.getAttention_all() + "");
+        fansNumber.setText(userCenterData.getAttention_fans() + "");
 
         if (StringUtils.toInt(userCenterData.getIs_open_do_not_disturb()) == 1) {
             iv_switch_disturb.setImageResource(R.mipmap.me_icon_disturb_off);
