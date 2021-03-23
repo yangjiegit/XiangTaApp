@@ -61,6 +61,14 @@ public class ExchangeRecordActivity extends BaseActivity {
 
         page = 1;
         getGoldcoinLogData(page);
+
+        sw_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page = 1;
+                getGoldcoinLogData(page);
+            }
+        });
     }
 
     private void getGoldcoinLogData(int page) {
@@ -68,16 +76,22 @@ public class ExchangeRecordActivity extends BaseActivity {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 Log.d("ret", "joker    " + s);
+                sw_layout.setRefreshing(false);
                 if (!StringUtils.isEmpty(s)) {
                     GoldcoinLogBean goldcoinLogBean = new Gson().fromJson(s, GoldcoinLogBean.class);
+                    List<GoldcoinLogBean.DataBean.ListBean> list = new ArrayList<>();
                     if (null != goldcoinLogBean) {
                         if (null != goldcoinLogBean.getData() &&
                                 null != goldcoinLogBean.getData().getList() &&
                                 goldcoinLogBean.getData().getList().size() > 0) {
                             for (int i = 0; i < goldcoinLogBean.getData().getList().size(); i++) {
-                                mList.add(goldcoinLogBean.getData().getList().get(i));
+                                list.add(goldcoinLogBean.getData().getList().get(i));
                             }
-                            mAdapter.notifyDataSetChanged();
+                            if (page == 1) {
+                                mAdapter.refreshDatas(list, true);
+                            } else {
+                                mAdapter.refreshDatas(list, false);
+                            }
                         }
                     }
                 }
