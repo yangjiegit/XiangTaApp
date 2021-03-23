@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.DynamicAdapter;
 import com.muse.xiangta.api.Api;
@@ -19,8 +21,6 @@ import com.muse.xiangta.ui.DynamicDetailActivity;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.utils.DialogHelp;
 import com.muse.xiangta.utils.StringUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.lzy.okgo.callback.StringCallback;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -33,14 +33,9 @@ import okhttp3.Response;
  */
 public class DynamicMyFragment extends BaseListFragment<DynamicListModel> implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemChildClickListener {
 
-    public static final String TO_USER_ID = "TO_USER_ID";
-    private String toUserId;
-
     public static DynamicMyFragment getInstance(String toUserId) {
-
         DynamicMyFragment dynamicMyFragment = new DynamicMyFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(TO_USER_ID, toUserId);
         dynamicMyFragment.setArguments(bundle);
         return dynamicMyFragment;
     }
@@ -48,7 +43,7 @@ public class DynamicMyFragment extends BaseListFragment<DynamicListModel> implem
     @Override
     protected void initView(View view) {
         super.initView(view);
-        toUserId = getArguments().getString(TO_USER_ID);
+//        toUserId = getArguments().getString(TO_USER_ID);
     }
 
     @Override
@@ -59,6 +54,13 @@ public class DynamicMyFragment extends BaseListFragment<DynamicListModel> implem
     @Override
     protected void initDisplayData(View view) {
 
+    }
+
+    @Override
+    protected void initDate(View view) {
+        super.initDate(view);
+        page = 1;
+        requestGetData(true);
     }
 
     @Override
@@ -73,7 +75,7 @@ public class DynamicMyFragment extends BaseListFragment<DynamicListModel> implem
 
     @Override
     protected void requestGetData(boolean isCache) {
-        Api.doRequestGetMyDynamicList(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), toUserId, page, new StringCallback() {
+        Api.doRequestGetMyDynamicList(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), uId, page, new StringCallback() {
 
             @Override
             public void onSuccess(String s, Call call, Response response) {

@@ -1,14 +1,10 @@
 package com.muse.xiangta.ui;
 
 import android.content.Context;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 
 import com.muse.xiangta.R;
 import com.muse.xiangta.base.BaseActivity;
-import com.muse.xiangta.fragment.DynamicNearFragment;
-
-import butterknife.BindView;
+import com.muse.xiangta.fragment.DynamicMyFragment;
 
 public class DynamicActivity extends BaseActivity {
 
@@ -35,7 +31,7 @@ public class DynamicActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fl_layout, new DynamicNearFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_layout, new DynamicMyFragment()).commit();
     }
 
     @Override
