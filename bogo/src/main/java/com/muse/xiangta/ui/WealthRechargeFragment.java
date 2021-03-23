@@ -18,10 +18,12 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.gson.Gson;
 import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.R;
+import com.muse.xiangta.alipay.AlipayService;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseFragment;
 import com.muse.xiangta.json.JsonRequestBase;
 import com.muse.xiangta.json.JsonRequestGetRechargeRule;
+import com.muse.xiangta.json.JsonRequestRecharge;
 import com.muse.xiangta.modle.ConfigModel;
 import com.muse.xiangta.modle.Pay4Bean2;
 import com.muse.xiangta.modle.PayMenuModel;
@@ -32,6 +34,7 @@ import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,17 +163,14 @@ public class WealthRechargeFragment extends BaseFragment {
 
     @OnClick(R.id.to_pay)
     public void startPay() {
-
         if (mRechargeRuleDataList.size() == 0 || nowSelRecharge == -1) {
             ToastUtils.showShort(getString(R.string.please_chose_recharge_rule));
             return;
         }
-
         if (mRechargePayMenuDataList.size() == 0 || nowSelPayWay == -1) {
             ToastUtils.showShort(getString(R.string.please_chose_recharge_type));
             return;
         }
-
         showLoadingDialog(getString(R.string.loading_now_submit_order));
         RechargeRuleModel rechargeRuleModel = mRechargeRuleDataList.get(nowSelRecharge);
         rid = rechargeRuleModel.getId();
@@ -179,21 +179,20 @@ public class WealthRechargeFragment extends BaseFragment {
 
             @Override
             public void onSuccess(String s, Call call, Response response) {
-
                 hideLoadingDialog();
-//                Pay4Bean jsonObj = (Pay4Bean) JsonRequestBase.getJsonObj(s, Pay4Bean.class);
-                Pay4Bean2 pay4Bean2 = new Gson().fromJson(s, Pay4Bean2.class);
-                if (pay4Bean2.getCode() == 1) {
-                    urlPay(pay4Bean2);
-                }
-
-
-                /*JsonRequestRecharge jsonObj = (JsonRequestRecharge) JsonRequestBase.getJsonObj(s, JsonRequestRecharge.class);
-                if (jsonObj.getCode() == 1) {
-                    payService(jsonObj);
+                if (nowSelPayWay == 0) {
+                    Pay4Bean2 pay4Bean2 = new Gson().fromJson(s, Pay4Bean2.class);
+                    if (pay4Bean2.getCode() == 1) {
+                        urlPay(pay4Bean2);
+                    }
                 } else {
-                    ToastUtils.showShort(jsonObj.getMsg());
-                }*/
+                    AlipayService alipayService = new AlipayService(getActivity());
+                    try {
+                        alipayService.payV2(new JSONObject(s).getJSONObject("pay").getString("pay_info"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -206,30 +205,10 @@ public class WealthRechargeFragment extends BaseFragment {
     }
 
     private void urlPay(Pay4Bean2 pay4Bean2) {
-//        String jsonObject=new Gson().toJson(jsonObj.getPay().getPay_info());
-//        startActivity(new Intent(getActivity(),XWebViewActivity.class)
-//                .putExtra("url",jsonObj.getPay().getPay_info().getReturn_msg()));
         WChatPayService alipayService = new WChatPayService(getActivity());
         alipayService.callWxPay(pay4Bean2);
     }
 
-    private void payService(Pay4Bean2 pay4Bean2) {
-
-//        if (StringUtils.toInt(jsonObj.getPay().getIs_wap()) == 1) {
-//            //从其他浏览器打开
-//            Utils.openWeb(getActivity(), jsonObj.getPay().getPost_url());
-//            return;
-//        }
-//
-//        int type = StringUtils.toInt(jsonObj.getPay().getType());
-//        if (type == 1) {
-//            AlipayService alipayService = new AlipayService(getActivity());
-//            alipayService.payV2(jsonObj.getPay().getPay_info());
-//        } else {
-//            WChatPayService alipayService = new WChatPayService(getActivity());
-//            alipayService.callWxPay(pay4Bean2);
-//        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
