@@ -141,7 +141,7 @@ public class CuckooHomePageUserInfoFragment2 extends BaseFragment {
             @Override
             public void convert(CommonRecyclerViewHolder holder, TargetUserData2.DataBean.GuardianUserListBean entity, int position) {
                 GlideImgManager.glideLoader(getContext(),
-                        BuildConfig.SERVER_URL + entity.getAvatar(), (ImageView) holder.getView(R.id.iv_head), 0);
+                        entity.getAvatar(), (ImageView) holder.getView(R.id.iv_head), 0);
             }
 
             @Override
