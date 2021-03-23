@@ -235,13 +235,16 @@ public class CarActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.iv_back)
+    @OnClick({R.id.iv_back, R.id.tv_my_car})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.tv_my_car:
+                startActivity(new Intent(CarActivity.this, MyCarActivity.class));
                 break;
         }
     }

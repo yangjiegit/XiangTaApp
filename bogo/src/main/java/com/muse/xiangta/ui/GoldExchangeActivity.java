@@ -150,6 +150,7 @@ public class GoldExchangeActivity extends BaseActivity {
                 if (!StringUtils.isEmpty(s)) {
                     GoldcoinBean goldcoinBean = new Gson().fromJson(s, GoldcoinBean.class);
                     tv_jinbi.setText(goldcoinBean.getData().getIncome() + "");
+                    mList.clear();
                     if (null != goldcoinBean) {
                         if (null != goldcoinBean.getData() &&
                                 null != goldcoinBean.getData().getList() &&

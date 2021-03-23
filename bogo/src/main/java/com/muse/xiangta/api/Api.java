@@ -2528,4 +2528,28 @@ public class Api {
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }
+
+    /*
+     * 我的座驾
+     * */
+    public static void mycar(String uid, String token, String user_id, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/shiyi_api/mycar")
+                .params("uid", uid)
+                .params("token", token)
+                .params("user_id", user_id)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 骑座驾
+     * */
+    public static void qicar(String uid, String token, String id, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/shiyi_api/qicar")
+                .params("uid", uid)
+                .params("token", token)
+                .params("id", id)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
 }

@@ -336,6 +336,9 @@
             android:name=".ui.GoldExchangeActivity"
             android:screenOrientation="portrait" /> <!-- 金币兑换-产品列表 -->
         <activity
+            android:name=".ui.MyCarActivity"
+            android:screenOrientation="portrait" /> <!--我的座驾 -->
+        <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
