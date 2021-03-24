@@ -52,13 +52,13 @@
 
         <TextView
             android:id="@+id/view3"
-            android:padding="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/view2"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_20"
             android:drawableLeft="@mipmap/iv_shuaxin"
+            android:padding="@dimen/dp_10"
             android:text="换一换"
             android:textColor="#FFBFBFBF"
             android:textSize="@dimen/dp_12" />

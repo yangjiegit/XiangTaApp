@@ -476,6 +476,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/ll_jiaoyou"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_30"
             android:background="#ffF5F6FA"
@@ -506,16 +507,40 @@
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/xuanyan_tv"
+            <RelativeLayout
+                android:id="@+id/rl_yinpin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:textColor="@color/track_matte"
-                android:textSize="13sp"
-                tools:text="@string/redact_sextext" />
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@drawable/bg_yinpin"
+                android:paddingLeft="@dimen/dp_5"
+                android:paddingTop="@dimen/dp_2"
+                android:paddingRight="@dimen/dp_5"
+                android:paddingBottom="@dimen/dp_2"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_yinpin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_10"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/img_yinpin" />
+
+                <TextView
+                    android:id="@+id/tv_yinpin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_toRightOf="@+id/iv_yinpin"
+                    android:textColor="#ffAA41E1"
+                    android:textSize="@dimen/dp_8"
+                    tools:text="15'" />
+
+            </RelativeLayout>
+
         </RelativeLayout>
 
         <LinearLayout
@@ -537,7 +562,7 @@
         <RelativeLayout
             android:id="@+id/redact_fengmian"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="@color/white">
 
             <TextView
@@ -549,16 +574,13 @@
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/fengmian_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/iv_fengmian"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:textColor="@color/track_matte"
-                android:textSize="13sp"
-                tools:text="@string/redact_sextext" />
+                android:layout_margin="@dimen/dp_10"
+                android:scaleType="centerCrop" />
         </RelativeLayout>
 
         <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView

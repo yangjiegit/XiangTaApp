@@ -1,16 +1,25 @@
 package com.muse.xiangta.ui;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -40,6 +49,8 @@ import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -92,6 +103,12 @@ public class EditActivity extends BaseActivity {
     TextView qinggan_tv;
     @BindView(R.id.neixin_et)
     LastInputEditText neixin_et;
+    @BindView(R.id.iv_fengmian)
+    ImageView iv_fengmian;
+    @BindView(R.id.rl_yinpin)
+    RelativeLayout rl_yinpin;
+    @BindView(R.id.tv_yinpin)
+    TextView tv_yinpin;
 
     private File headImgFile;//头像列表
     private ArrayList<File> filesByAll = new ArrayList<>();//要上传的图片
@@ -123,6 +140,8 @@ public class EditActivity extends BaseActivity {
     private String heightStr;
     private String weightStr;
     private String albleIdArr;
+    private String uploadVideoUrl = "";
+    private String uploadImageUrl = "";
 
     @Override
     protected Context getNowContext() {
@@ -132,6 +151,12 @@ public class EditActivity extends BaseActivity {
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_player_redact;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        requestUserData();
     }
 
     @Override
@@ -256,11 +281,19 @@ public class EditActivity extends BaseActivity {
 
     @OnClick({R.id.redact_shengao, R.id.redact_tizhong, R.id.redact_xingzuo,
             R.id.redact_biaoqian, R.id.redact_jieshao, R.id.redact_zhiye, R.id.redact_xueli
-            , R.id.redact_qinggan})
+            , R.id.redact_qinggan, R.id.redact_xuanyan, R.id.redact_fengmian})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.redact_xuanyan:
+                //交友宣言
+                startActivity(new Intent(EditActivity.this, DeclarationActivity.class));
+                break;
+            case R.id.redact_fengmian:
+                //视频封面
+                clickSelectVideo();
+                break;
             case R.id.redact_qinggan:
                 //情感
                 onEmotionPicker();
@@ -320,6 +353,15 @@ public class EditActivity extends BaseActivity {
                 break;
         }
     }
+
+    private void clickSelectVideo() {
+        PictureSelector.create(EditActivity.this)
+                .openGallery(2)
+                .maxSelectNum(1)
+                .previewVideo(true)
+                .recordVideoSecond(60)
+                .forResult(20);
+    }
     //////////////////////////////////////业务处理//////////////////////////////////////////////////
 
     /**
@@ -370,6 +412,19 @@ public class EditActivity extends BaseActivity {
                         shengao_tv.setText(userData.getData().getHeight() + "cm");
                         itemWeight.setDetailText(userData.getData().getWeight() + "kg");
                         tizhong_tv.setText(userData.getData().getWeight() + "kg");
+                        uploadImageUrl = userData.getData().getVideo_img();
+                        uploadVideoUrl = userData.getData().getVideo_url();
+
+                        GlideImgManager.glideLoader(EditActivity.this,
+                                userData.getData().getVideo_img(), iv_fengmian, 1);
+
+                        if (userData.getData().getDeclaration_length() == 0) {
+                            rl_yinpin.setVisibility(View.GONE);
+                        } else {
+                            rl_yinpin.setVisibility(View.VISIBLE);
+                            tv_yinpin.setText(userData.getData().getDeclaration_length() + "\"");
+                        }
+
 //                    itemConstellation.setDetailText(userData.getConstellation());星座
                         xingzuo_tv.setText(userData.getData().getConstellation());
 //                    itemIntroduce.setDetailText(userData.getIntroduce());个人介绍
@@ -468,7 +523,7 @@ public class EditActivity extends BaseActivity {
                 xueli_tv.getText().toString().trim(),
                 qinggan_tv.getText().toString().trim(),
                 neixin_et.getText().toString().trim(),
-                "xuanyan", "shipin",
+                uploadImageUrl, uploadVideoUrl,
                 pageImgList,
                 sign,
                 new JsonCallback() {
@@ -778,7 +833,6 @@ public class EditActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_SELF_INTRODUCE_CODE) {
                 String name = data.getStringExtra(USER_BODY);
@@ -794,7 +848,6 @@ public class EditActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
-
                     if (selectImageType == 0) {
                         selectImageType = 0;
                         headImgFile = new File(PictureSelector.obtainMultipleResult(data).get(0).getCutPath());
@@ -810,6 +863,24 @@ public class EditActivity extends BaseActivity {
 
                         redactAdapter.setList(selectList);
                         redactAdapter.notifyDataSetChanged();
+                    }
+                    break;
+                case 20:
+                    // 图片选择结果回调
+                    selectList = PictureSelector.obtainMultipleResult(data);
+                    for (LocalMedia media : selectList) {
+                        Log.i("图片-----》", media.getPath());
+                        MediaMetadataRetriever media1 = new MediaMetadataRetriever();
+                        media1.setDataSource(media.getPath());// videoPath 本地视频的路径
+                        Bitmap bitmap = media1.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+                        iv_fengmian.setImageBitmap(bitmap);//对应的ImageView赋值图片
+
+                        Uri uri = bitmap2uri(EditActivity.this, bitmap);
+                        File file = uriToFile(uri, EditActivity.this);
+                        Log.d("ret", "joker    转换后的file   " + file.getPath());
+                        showLoadingDialog("加载中...");
+                        uploadVideo(file);
+
                     }
                     break;
                 default:
@@ -949,4 +1020,106 @@ public class EditActivity extends BaseActivity {
                 })
                 .show();
     }
+
+    //上传视频
+    private void uploadVideo(File file) {
+        cuckooQiniuFileUploadUtils.uploadFileLocalMedia(LiveConstant.VIDEO_DIR, selectList, new CuckooQiniuFileUploadUtils.CuckooQiniuFileUploadCallback() {
+            @Override
+            public void onUploadFileSuccess(List<String> fileUrlList) {
+                hideLoadingDialog();
+                if (fileUrlList.size() > 0) {
+                    uploadVideoUrl = fileUrlList.get(0);
+                    Log.d("ret", "joker     ====" + fileUrlList.get(0) + "      " + fileUrlList.size());
+                    uploadImage(file);
+                } else {
+                    ToastUtils.showLong("视频文件上传失败！");
+                }
+            }
+        });
+    }
+
+    //上传视频
+    private void uploadImage(File file) {
+        List<File> list = new ArrayList<>();
+        list.add(file);
+        cuckooQiniuFileUploadUtils.uploadFile(LiveConstant.IMG_DIR, list, new CuckooQiniuFileUploadUtils.CuckooQiniuFileUploadCallback() {
+            @Override
+            public void onUploadFileSuccess(List<String> fileUrlList) {
+//                hideLoadingDialog();
+                if (fileUrlList.size() > 0) {
+                    uploadImageUrl = fileUrlList.get(0);
+                    Log.d("ret", "joker    图片地址" + uploadImageUrl);
+                } else {
+                    ToastUtils.showLong("视频文件上传失败！");
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Bitmap保存成File
+     */
+
+    private Uri bitmap2uri(Context c, Bitmap b) {//c.getCacheDir()
+        //   /Android/data/你的报名/cache/1600739295328.jpg
+        File path = new File(c.getExternalCacheDir() + File.separator + System.currentTimeMillis() + ".jpg");
+        Log.d("ret", "joker      " + path.getAbsolutePath() + "     ===getAbsolutePath===" + path.getParent());
+        try {
+            OutputStream os = new FileOutputStream(path);
+            b.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            os.close();
+            return Uri.fromFile(path);
+        } catch (Exception ignored) {
+        }
+        return null;
+    }
+
+
+    public static File uriToFile(Uri uri, Context context) {
+        String path = null;
+        if ("file".equals(uri.getScheme())) {
+            path = uri.getEncodedPath();
+            if (path != null) {
+                path = Uri.decode(path);
+                ContentResolver cr = context.getContentResolver();
+                StringBuffer buff = new StringBuffer();
+                buff.append("(").append(MediaStore.Images.ImageColumns.DATA).append("=").append("'" + path + "'").append(")");
+                Cursor cur = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[]{MediaStore.Images.ImageColumns._ID, MediaStore.Images.ImageColumns.DATA}, buff.toString(), null, null);
+                int index = 0;
+                int dataIdx = 0;
+                for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
+                    index = cur.getColumnIndex(MediaStore.Images.ImageColumns._ID);
+                    index = cur.getInt(index);
+                    dataIdx = cur.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    path = cur.getString(dataIdx);
+                }
+                cur.close();
+                if (index == 0) {
+                } else {
+                    Uri u = Uri.parse("content://media/external/images/media/" + index);
+                    System.out.println("temp uri is :" + u);
+                }
+            }
+            if (path != null) {
+                return new File(path);
+            }
+        } else if ("content".equals(uri.getScheme())) {
+            // 4.2.2以后
+            String[] proj = {MediaStore.Images.Media.DATA};
+            Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
+            if (cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                path = cursor.getString(columnIndex);
+            }
+            cursor.close();
+
+            return new File(path);
+        } else {
+            //Log.i(TAG, "Uri Scheme:" + uri.getScheme());
+        }
+        return null;
+    }
+
 }
+
