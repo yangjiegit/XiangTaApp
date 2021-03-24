@@ -68,7 +68,7 @@ public class RecyclerRecommendAdapter extends BaseQuickAdapter<TargetUserData, B
         if (item.getDeclaration_type().equals("1")) {
             pagemsg_view_sign.setVisibility(View.GONE);
             rl_yinpin.setVisibility(View.VISIBLE);
-            helper.setText(R.id.tv_yinpin, item.getDeclaration_length());
+            helper.setText(R.id.tv_yinpin, item.getDeclaration_length() + "\"");
         } else {
             //没有音频 显示签名
             pagemsg_view_sign.setVisibility(View.VISIBLE);
