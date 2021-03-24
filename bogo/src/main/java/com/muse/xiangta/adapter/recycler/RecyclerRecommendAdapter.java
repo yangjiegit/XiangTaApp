@@ -3,8 +3,13 @@ package com.muse.xiangta.adapter.recycler;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.muse.xiangta.R;
 import com.muse.xiangta.api.ApiUtils;
 import com.muse.xiangta.json.jsonmodle.TargetUserData;
@@ -12,8 +17,6 @@ import com.muse.xiangta.modle.ConfigModel;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
 import com.muse.xiangta.widget.BGLevelTextView;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
@@ -45,6 +48,9 @@ public class RecyclerRecommendAdapter extends BaseQuickAdapter<TargetUserData, B
 //        params.setMargins(margin, margin, margin, margin);
 //        helper.getConvertView().setLayoutParams(params);
 
+        TextView pagemsg_view_sign = helper.getView(R.id.pagemsg_view_sign);
+        RelativeLayout rl_yinpin = helper.getView(R.id.rl_yinpin);
+
         //初始化数据显示
         if (ApiUtils.isTrueUrl(item.getAvatar())) {
             Utils.loadImg(Utils.getCompleteImgUrl(item.getAvatar()), (ImageView) helper.getView(R.id.pagemsg_background));
@@ -57,11 +63,23 @@ public class RecyclerRecommendAdapter extends BaseQuickAdapter<TargetUserData, B
             helper.setText(R.id.pagemsg_view_nice, item.getCharging_coin() + ConfigModel.getInitData().getCurrency_name() + "/分钟");
         }
 
-        if (!TextUtils.isEmpty(item.getSign())) {
-            helper.setText(R.id.pagemsg_view_sign, item.getSign());
+        helper.setText(R.id.tv_age, item.getAge() + "岁·" + item.getHeight() + "cm");
+
+        if (item.getDeclaration_type().equals("1")) {
+            pagemsg_view_sign.setVisibility(View.GONE);
+            rl_yinpin.setVisibility(View.VISIBLE);
+            helper.setText(R.id.tv_yinpin, item.getDeclaration_length());
         } else {
-            helper.setText(R.id.pagemsg_view_sign, "暂未设置签名");
+            //没有音频 显示签名
+            pagemsg_view_sign.setVisibility(View.VISIBLE);
+            rl_yinpin.setVisibility(View.GONE);
+            if (!TextUtils.isEmpty(item.getSign())) {
+                helper.setText(R.id.pagemsg_view_sign, item.getSign());
+            } else {
+                helper.setText(R.id.pagemsg_view_sign, "暂未设置签名");
+            }
         }
+
 
         ((BGLevelTextView) helper.getView(R.id.tv_level)).setLevelInfo(item.getSex(), item.getLevel());
     }

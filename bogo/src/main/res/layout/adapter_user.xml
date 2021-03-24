@@ -114,14 +114,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/pagemsg_view_name"
+                android:layout_marginTop="@dimen/dp_3"
+                android:layout_marginBottom="@dimen/dp_3"
                 android:gravity="center"
                 android:maxWidth="100dp"
                 android:maxEms="6"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textColor="#FFBBBBBB"
-                android:textSize="@dimen/dp_10"
-                android:textStyle="bold"
+                android:textSize="@dimen/dp_9"
                 tools:text="25岁.165cm" />
 
 
@@ -136,16 +137,54 @@
                 android:visibility="gone" />
 
 
-            <TextView
-                android:id="@+id/pagemsg_view_sign"
+            <FrameLayout
+                android:id="@+id/fl_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_age"
-                android:layout_marginRight="10dp"
-                android:singleLine="true"
-                android:text="暂无签名字段"
-                android:textColor="#ffBBBBBB"
-                android:textSize="@dimen/dp_10" />
+                android:layout_below="@+id/tv_age">
+
+                <TextView
+                    android:id="@+id/pagemsg_view_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:singleLine="true"
+                    android:text="暂无签名字段"
+                    android:textColor="#ffBBBBBB"
+                    android:textSize="@dimen/dp_10"
+                    android:visibility="visible" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_yinpin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_yinpin"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingRight="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/iv_yinpin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_10"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/img_yinpin" />
+
+                    <TextView
+                        android:id="@+id/tv_yinpin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:layout_toRightOf="@+id/iv_yinpin"
+                        android:textColor="#ffAA41E1"
+                        android:textSize="@dimen/dp_8"
+                        tools:text="15'" />
+
+                </RelativeLayout>
+            </FrameLayout>
 
 
             <TextView
@@ -164,7 +203,7 @@
                 android:id="@+id/tv_dashan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/pagemsg_view_sign"
+                android:layout_alignBottom="@+id/fl_layout"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/edit_text_bk_hong"

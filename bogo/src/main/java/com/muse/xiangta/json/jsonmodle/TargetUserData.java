@@ -32,7 +32,11 @@ public class TargetUserData {
     private String split;//分成比例
     private String coin;//总金币
     private String is_online;
+    private String age;
+    private String height;
+    private String declaration_type;
     private String charging_coin;
+    private String declaration_length;
     private String distance;
     private int gift_count;
     private int video_count;
@@ -52,6 +56,38 @@ public class TargetUserData {
     private List<UserModel> guardian_user_list;
     private String signature;
     private String is_vip;
+
+    public String getDeclaration_length() {
+        return declaration_length;
+    }
+
+    public void setDeclaration_length(String declaration_length) {
+        this.declaration_length = declaration_length;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public String getDeclaration_type() {
+        return declaration_type;
+    }
+
+    public void setDeclaration_type(String declaration_type) {
+        this.declaration_type = declaration_type;
+    }
 
     public String getSignature() {
         return signature;

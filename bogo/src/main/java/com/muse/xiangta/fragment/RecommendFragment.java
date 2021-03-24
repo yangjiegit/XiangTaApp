@@ -354,7 +354,7 @@ public class RecommendFragment extends BaseListFragment<TargetUserData> {
     @Override
     protected void requestGetData(boolean isCache) {
         if (type == 1) {
-            Api.getRecommendUserList(
+            Api.recommendUser(
                     uId,
                     uToken,
                     page,

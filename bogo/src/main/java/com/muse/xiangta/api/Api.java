@@ -241,6 +241,23 @@ public class Api {
                 .execute(callback);
         Log.d("api", "获取推荐用户列表####" + "getRecommendUserList");
     }
+    /**
+     * 获取推荐用户列表
+     *
+     * @param uid   用户uid
+     * @param token token
+     * @param page  分页数
+     */
+    public static void recommendUser(String uid, String token, int page, StringCallback callback) {
+        OkGo.get(AppConfig.API_DOMAIN + "/page_data_api/recommend_user_3x")
+                .params("uid", uid)
+                .params("token", token)
+                .params("page", page)
+                .tag("getRecommendUserList")
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(callback);
+        Log.d("api", "获取推荐用户列表####" + "getRecommendUserList");
+    }
 
     /**
      * 执行监听是否在线(进行心跳操作)
