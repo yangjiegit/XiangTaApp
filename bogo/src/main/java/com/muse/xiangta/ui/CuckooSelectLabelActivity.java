@@ -10,17 +10,20 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
+import com.lzy.okgo.callback.StringCallback;
+import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.muse.xiangta.LiveConstant;
 import com.muse.xiangta.R;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseActivity;
 import com.muse.xiangta.modle.LablesBean;
-import com.google.gson.Gson;
-import com.lzy.okgo.callback.StringCallback;
-import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -99,18 +102,32 @@ public class CuckooSelectLabelActivity extends BaseActivity {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 Log.e("updateLableInfo", s);
-                LablesBean bean = new Gson().fromJson(s, LablesBean.class);
-                if (bean.getCode() == 1) {
-                    String image_label = bean.getImage_label();
-                    Intent intent = new Intent();
-                    intent.putExtra(CuckooAuthFormActivity.USER_LABEL, image_label);
-                    setResult(CuckooAuthFormActivity.RESULT_SELF_LABEL, intent);
-                    finish();
-                } else {
-                    ToastUtils.showShort(bean.getMsg());
+//                LablesBean bean = new Gson().fromJson(s, LablesBean.class);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    int code = jsonObject.getInt("code");
+                    if (code == 1) {
+                        Intent intent = new Intent();
+                        String image_label = jsonObject.getString("image_label");
+                        intent.putExtra(CuckooAuthFormActivity.USER_LABEL, image_label);
+                        setResult(CuckooAuthFormActivity.RESULT_SELF_LABEL, intent);
+                        finish();
+                    } else {
+                        ToastUtils.showShort(jsonObject.getString("msg"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+//                if (bean.getCode() == 1) {
+//                    String image_label = bean.getImage_label();
+//                    Intent intent = new Intent();
+//                    intent.putExtra(CuckooAuthFormActivity.USER_LABEL, image_label);
+//                    setResult(CuckooAuthFormActivity.RESULT_SELF_LABEL, intent);
+//                    finish();
+//                } else {
+//                    ToastUtils.showShort(bean.getMsg());
+//                }
             }
-
 
 
             @Override
@@ -161,7 +178,7 @@ public class CuckooSelectLabelActivity extends BaseActivity {
                             TextView tv = (TextView) view;
                             tv.setTextColor(Color.parseColor("#FC5808"));
 
-                            lableList.get(position).setChecked("1");
+                            lableList.get(position).setChecked(1);
                         }
 
                         @Override
@@ -170,7 +187,7 @@ public class CuckooSelectLabelActivity extends BaseActivity {
                             TextView tv = (TextView) view;
                             tv.setTextColor(getResources().getColor(R.color.white));
 
-                            lableList.get(position).setChecked("0");
+                            lableList.get(position).setChecked(0);
                         }
                     });
 

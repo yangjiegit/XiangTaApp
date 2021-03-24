@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -72,9 +73,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_nametext"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_nametext" />
         </RelativeLayout>
 
 
@@ -121,9 +122,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_sextext"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
         </RelativeLayout>
 
         <View
@@ -152,9 +153,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_sextext"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
         </RelativeLayout>
 
         <View
@@ -183,9 +184,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_sextext"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
         </RelativeLayout>
 
         <View
@@ -214,9 +215,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_sextext"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
         </RelativeLayout>
 
         <View
@@ -245,9 +246,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_sextext"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
         </RelativeLayout>
 
         <View
@@ -276,9 +277,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_sextext"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
         </RelativeLayout>
 
         <View
@@ -307,9 +308,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_sextext"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
         </RelativeLayout>
 
         <View
@@ -338,9 +339,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_sextext"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
         </RelativeLayout>
 
         <View
@@ -354,6 +355,7 @@
             android:background="@color/white">
 
             <TextView
+                android:id="@+id/dubai"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -362,16 +364,22 @@
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/neixin_tv"
+            <com.muse.xiangta.ui.view.LastInputEditText
+                android:id="@+id/neixin_et"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_sextext"
+                android:layout_toRightOf="@+id/dubai"
+                android:background="@color/transparent"
+                android:ellipsize="end"
+                android:gravity="right|center_vertical"
+                android:singleLine="true"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
         </RelativeLayout>
 
         <View
@@ -400,9 +408,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_sextext"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
         </RelativeLayout>
 
         <View
@@ -431,9 +439,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_sextext"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
         </RelativeLayout>
 
         <View
@@ -462,9 +470,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_sextext"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
         </RelativeLayout>
 
         <LinearLayout
@@ -505,9 +513,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_sextext"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
         </RelativeLayout>
 
         <LinearLayout
@@ -548,9 +556,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="@string/redact_sextext"
                 android:textColor="@color/track_matte"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
         </RelativeLayout>
 
         <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView

@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -26,11 +26,11 @@ import com.muse.xiangta.api.ApiUtils;
 import com.muse.xiangta.base.BaseActivity;
 import com.muse.xiangta.helper.ImageUtil;
 import com.muse.xiangta.inter.JsonCallback;
-import com.muse.xiangta.json.JsonRequestUser;
 import com.muse.xiangta.json.jsonmodle.UserData;
 import com.muse.xiangta.manage.SaveData;
-import com.muse.xiangta.modle.UserImgModel;
+import com.muse.xiangta.ui.view.LastInputEditText;
 import com.muse.xiangta.utils.CuckooQiniuFileUploadUtils;
+import com.muse.xiangta.utils.GlideImgManager;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -84,10 +84,18 @@ public class EditActivity extends BaseActivity {
     RelativeLayout redact_biaoqian;
     @BindView(R.id.biaoqian_tv)
     TextView biaoqian_tv;
+    @BindView(R.id.xueli_tv)
+    TextView xueli_tv;
+    @BindView(R.id.zhiye_tv)
+    TextView zhiye_tv;
+    @BindView(R.id.qinggan_tv)
+    TextView qinggan_tv;
+    @BindView(R.id.neixin_et)
+    LastInputEditText neixin_et;
 
     private File headImgFile;//头像列表
     private ArrayList<File> filesByAll = new ArrayList<>();//要上传的图片
-    private ArrayList<UserImgModel> imgLoader = new ArrayList<>();//网络图片视图列表
+    private ArrayList<UserData.DataBean.ImgBean> imgLoader = new ArrayList<>();//网络图片视图列表
     private int sex = 0;//性别
 
     //判断信息
@@ -247,14 +255,23 @@ public class EditActivity extends BaseActivity {
     };
 
     @OnClick({R.id.redact_shengao, R.id.redact_tizhong, R.id.redact_xingzuo,
-            R.id.redact_biaoqian, R.id.redact_jieshao, R.id.redact_zhiye})
+            R.id.redact_biaoqian, R.id.redact_jieshao, R.id.redact_zhiye, R.id.redact_xueli
+            , R.id.redact_qinggan})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.redact_qinggan:
+                //情感
+                onEmotionPicker();
+                break;
+            case R.id.redact_xueli:
+                //学历
+                onEducationPicker();
+                break;
             case R.id.redact_zhiye:
                 //职业
-
+                onOccupationPicker();
                 break;
             case R.id.redact_backbtn:
                 finish();
@@ -320,60 +337,57 @@ public class EditActivity extends BaseActivity {
 
             @Override
             public void onSuccess(String s, Call call, Response response) {
-
-                JsonRequestUser userJ = JsonRequestUser.getJsonObj(s);
-                if (userJ.getCode() == 1) {
-                    UserData userData = userJ.getData();
-                    log(userData.toString());
-                    //显示数据
-                    Utils.loadHttpImg(EditActivity.this, Utils.getCompleteImgUrl(userData.getAvatar()), headImg);
-
-                    redactNameText.setText(userData.getUser_nickname());
-                    if (userData.getSex() == 0) {
-                        isAlterSex = true;
-                    }
-                    if (!TextUtils.isEmpty(userData.getSign())) {
-                        signTv.setText(userData.getSign());
+                if (!StringUtils.isEmpty(s)) {
+                    UserData userData = new Gson().fromJson(s, UserData.class);
+                    if (userData.getCode() == 1) {
+                        GlideImgManager.glideLoader(EditActivity.this,
+                                userData.getData().getAvatar(), headImg, 0);
+                        redactNameText.setText(userData.getData().getUser_nickname());
+                        if (userData.getData().getSex() == 0) {
+                            isAlterSex = true;
+                        }
+                        if (!StringUtils.isEmpty(userData.getData().getSign())) {
+                            signTv.setText(userData.getData().getSign());
+                        } else {
+                            signTv.setText("还未设置个性签名");
+                        }
+                        redactSexText.setText(Utils.getSex(userData.getData().getSex()));
+                        sex = userData.getData().getSex();
+                        imgLoader.clear();
+                        imgLoader.addAll(userData.getData().getImg());
+                        if (ApiUtils.isTrueUrl(userData.getData().getAvatar())) {
+                            ApiUtils.getUrlBitmapToSD(userData.getData().getAvatar(), "headImage");
+                        }
+                        isAddPlus = false;
+                        if (StringUtils.toInt(userData.getData().getIs_change_name()) != 1) {
+                            mRlChangeNameLayout.setEnabled(false);
+                        }
+                        zhiye_tv.setText(userData.getData().getOccupation());
+                        xueli_tv.setText(userData.getData().getEducation());
+                        qinggan_tv.setText(userData.getData().getLove_status());
+                        neixin_et.setText(userData.getData().getOverlapping_sound());
+                        itemHeight.setDetailText(userData.getData().getHeight() + "cm");
+                        shengao_tv.setText(userData.getData().getHeight() + "cm");
+                        itemWeight.setDetailText(userData.getData().getWeight() + "kg");
+                        tizhong_tv.setText(userData.getData().getWeight() + "kg");
+//                    itemConstellation.setDetailText(userData.getConstellation());星座
+                        xingzuo_tv.setText(userData.getData().getConstellation());
+//                    itemIntroduce.setDetailText(userData.getIntroduce());个人介绍
+                        jieshao_tv.setText(userData.getData().getIntroduce());
+//                    itemImageLabel.setDetailText(userData.getImage_label());//标签
+                        biaoqian_tv.setText(userData.getData().getImage_label());
+                        selectList.clear();
+                        //网络刷新&&请求图片
+                        for (UserData.DataBean.ImgBean url : userData.getData().getImg()) {
+                            LocalMedia localMedia = new LocalMedia();
+                            localMedia.setPath(url.getImg());
+                            selectList.add(localMedia);
+                        }
+                        redactAdapter.setNewList(selectList);
+                        redactAdapter.notifyDataSetChanged();
                     } else {
-                        signTv.setText("还未设置个性签名");
+                        showToastMsg(userData.getMsg());
                     }
-
-                    redactSexText.setText(Utils.getSex(userData.getSex()));
-                    //保存数据
-                    sex = userData.getSex();
-                    imgLoader.clear();
-                    imgLoader.addAll(userData.getImg());
-
-                    if (ApiUtils.isTrueUrl(userData.getAvatar())) {
-                        ApiUtils.getUrlBitmapToSD(userData.getAvatar(), "headImage");
-                    }
-
-                    isAddPlus = false;
-
-                    if (StringUtils.toInt(userData.getIs_change_name()) != 1) {
-                        mRlChangeNameLayout.setEnabled(false);
-                    }
-
-
-                    itemHeight.setDetailText(userData.getHeight() + "cm");
-                    itemWeight.setDetailText(userData.getWeight() + "kg");
-                    itemConstellation.setDetailText(userData.getConstellation());
-                    itemImageLabel.setDetailText(userData.getImage_label());
-                    itemIntroduce.setDetailText(userData.getIntroduce());
-
-
-                    selectList.clear();
-                    //网络刷新&&请求图片
-                    for (UserImgModel url : userJ.getData().getImg()) {
-                        LocalMedia localMedia = new LocalMedia();
-                        localMedia.setPath(url.getImg());
-                        selectList.add(localMedia);
-                    }
-
-                    redactAdapter.setNewList(selectList);
-                    redactAdapter.notifyDataSetChanged();
-                } else {
-                    showToastMsg(userJ.getMsg());
                 }
             }
 
@@ -438,15 +452,23 @@ public class EditActivity extends BaseActivity {
         Api.saveUserDataAtCompile(
                 heightStr,
                 weightStr,
-                itemConstellation.getDetailText().toString(),
-                itemIntroduce.getDetailText().toString(),
-                itemImageLabel.getDetailText().toString(),
+//                itemConstellation.getDetailText().toString(),
+                xingzuo_tv.getText().toString().trim(),
+//                itemIntroduce.getDetailText().toString(),
+                jieshao_tv.getText().toString().trim(),
+//                itemImageLabel.getDetailText().toString(),
+                biaoqian_tv.getText().toString().trim(),
                 "",
                 uId,
                 uToken,
                 redactNameText.getText().toString(),
                 avatar,
                 sex,
+                zhiye_tv.getText().toString().trim(),
+                xueli_tv.getText().toString().trim(),
+                qinggan_tv.getText().toString().trim(),
+                neixin_et.getText().toString().trim(),
+                "xuanyan", "shipin",
                 pageImgList,
                 sign,
                 new JsonCallback() {
@@ -547,7 +569,6 @@ public class EditActivity extends BaseActivity {
     }
 
     private void clickSelectLabel() {
-
         Intent intent = new Intent(this, CuckooSelectLabelActivity.class);
         startActivityForResult(intent, REQUEST_CODE);
     }
@@ -609,8 +630,135 @@ public class EditActivity extends BaseActivity {
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(int index, String item) {
-                itemConstellation.setDetailText(item);
+//                itemConstellation.setDetailText(item);
                 xingzuo_tv.setText(item);
+            }
+        });
+        picker.show();
+    }
+
+    public void onEducationPicker() {
+        boolean isChinese = Locale.getDefault().getDisplayLanguage().contains("中文");
+        OptionPicker picker = new OptionPicker(this,
+                isChinese ? new String[]{
+                        "小学", "初中", "中专", "高中", "大专", "本科",
+                        "双学士", "硕士", "博士"
+                } : new String[]{
+                        "小学", "初中", "中专", "高中", "大专", "本科",
+                        "双学士", "硕士", "博士"
+                });
+
+        picker.setCycleDisable(false);//不禁用循环
+        picker.setTopBackgroundColor(0xFFEEEEEE);
+        picker.setTopHeight(30);
+        picker.setTopLineColor(getResources().getColor(R.color.line_color));
+        picker.setTopLineHeight(1);
+        picker.setTitleText(isChinese ? "请选择" : "Please pick");
+        picker.setTitleTextColor(getResources().getColor(R.color.picker_color));
+        picker.setTitleTextSize(12);
+        picker.setCancelTextColor(getResources().getColor(R.color.picker_color));
+        picker.setCancelTextSize(13);
+        picker.setSubmitTextColor(getResources().getColor(R.color.picker_color));
+        picker.setSubmitTextSize(13);
+        picker.setTextColor(getResources().getColor(R.color.picker_color), 0xFF999999);
+        WheelView.DividerConfig config = new WheelView.DividerConfig();
+        config.setColor(getResources().getColor(R.color.picker_color));//线颜色
+        config.setAlpha(140);//线透明度
+        config.setRatio((float) (1.0 / 8.0));//线比率
+        picker.setDividerConfig(config);
+        picker.setBackgroundColor(0xFFEEEEEE);
+        //picker.setSelectedItem(isChinese ? "处女座" : "Virgo");
+        picker.setSelectedIndex(7);
+        picker.setCanceledOnTouchOutside(true);
+        picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(int index, String item) {
+//                itemConstellation.setDetailText(item);
+                xueli_tv.setText(item);
+            }
+        });
+        picker.show();
+    }
+
+    public void onOccupationPicker() {
+        boolean isChinese = Locale.getDefault().getDisplayLanguage().contains("中文");
+        OptionPicker picker = new OptionPicker(this,
+                isChinese ? new String[]{
+                        "销售/业务", "人事/行政", "生产贸易", "物流/运输/交通", "服务业", "个体经营",
+                        "高级管理", "金融/投资/保险", "建筑/房地产", "影视/媒体", "广告/市场/公关", "传媒/艺术"
+                } : new String[]{
+                        "销售/业务", "人事/行政", "生产贸易", "物流/运输/交通", "服务业", "个体经营",
+                        "高级管理", "金融/投资/保险", "建筑/房地产", "影视/媒体", "广告/市场/公关", "传媒/艺术"
+                });
+
+        picker.setCycleDisable(false);//不禁用循环
+        picker.setTopBackgroundColor(0xFFEEEEEE);
+        picker.setTopHeight(30);
+        picker.setTopLineColor(getResources().getColor(R.color.line_color));
+        picker.setTopLineHeight(1);
+        picker.setTitleText(isChinese ? "请选择" : "Please pick");
+        picker.setTitleTextColor(getResources().getColor(R.color.picker_color));
+        picker.setTitleTextSize(12);
+        picker.setCancelTextColor(getResources().getColor(R.color.picker_color));
+        picker.setCancelTextSize(13);
+        picker.setSubmitTextColor(getResources().getColor(R.color.picker_color));
+        picker.setSubmitTextSize(13);
+        picker.setTextColor(getResources().getColor(R.color.picker_color), 0xFF999999);
+        WheelView.DividerConfig config = new WheelView.DividerConfig();
+        config.setColor(getResources().getColor(R.color.picker_color));//线颜色
+        config.setAlpha(140);//线透明度
+        config.setRatio((float) (1.0 / 8.0));//线比率
+        picker.setDividerConfig(config);
+        picker.setBackgroundColor(0xFFEEEEEE);
+        //picker.setSelectedItem(isChinese ? "处女座" : "Virgo");
+        picker.setSelectedIndex(7);
+        picker.setCanceledOnTouchOutside(true);
+        picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(int index, String item) {
+//                itemConstellation.setDetailText(item);
+                zhiye_tv.setText(item);
+            }
+        });
+        picker.show();
+    }
+
+    public void onEmotionPicker() {
+        boolean isChinese = Locale.getDefault().getDisplayLanguage().contains("中文");
+        OptionPicker picker = new OptionPicker(this,
+                isChinese ? new String[]{
+                        "单身", "恋爱中", "离异", "丧偶", "已婚", "保密"
+                } : new String[]{
+                        "单身", "恋爱中", "离异", "丧偶", "已婚", "保密"
+                });
+
+        picker.setCycleDisable(false);//不禁用循环
+        picker.setTopBackgroundColor(0xFFEEEEEE);
+        picker.setTopHeight(30);
+        picker.setTopLineColor(getResources().getColor(R.color.line_color));
+        picker.setTopLineHeight(1);
+        picker.setTitleText(isChinese ? "请选择" : "Please pick");
+        picker.setTitleTextColor(getResources().getColor(R.color.picker_color));
+        picker.setTitleTextSize(12);
+        picker.setCancelTextColor(getResources().getColor(R.color.picker_color));
+        picker.setCancelTextSize(13);
+        picker.setSubmitTextColor(getResources().getColor(R.color.picker_color));
+        picker.setSubmitTextSize(13);
+        picker.setTextColor(getResources().getColor(R.color.picker_color), 0xFF999999);
+        WheelView.DividerConfig config = new WheelView.DividerConfig();
+        config.setColor(getResources().getColor(R.color.picker_color));//线颜色
+        config.setAlpha(140);//线透明度
+        config.setRatio((float) (1.0 / 8.0));//线比率
+        picker.setDividerConfig(config);
+        picker.setBackgroundColor(0xFFEEEEEE);
+        //picker.setSelectedItem(isChinese ? "处女座" : "Virgo");
+        picker.setSelectedIndex(7);
+        picker.setCanceledOnTouchOutside(true);
+        picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(int index, String item) {
+//                itemConstellation.setDetailText(item);
+                qinggan_tv.setText(item);
             }
         });
         picker.show();
@@ -634,12 +782,12 @@ public class EditActivity extends BaseActivity {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_SELF_INTRODUCE_CODE) {
                 String name = data.getStringExtra(USER_BODY);
-                itemIntroduce.setDetailText(name);
+                jieshao_tv.setText(name);
             }
 
             if (resultCode == RESULT_SELF_LABEL) {
                 String lableName = data.getStringExtra(USER_LABEL);
-                itemImageLabel.setDetailText(lableName);
+                biaoqian_tv.setText(lableName);
             }
         }
 

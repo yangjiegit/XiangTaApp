@@ -53,7 +53,7 @@ import okhttp3.Response;
  * 消息页面
  * Created by jiahengfei on 2018/1/13 0013.
  */
-public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCallBack{
+public class MsgActivity extends BaseActivity implements TextWatcher, TIMValueCallBack {
     private QMUITopBar topBar;
     private RecyclerView msgRecycler;//列表
     private SwipeRefreshLayout msgRefresh;//下拉刷新
@@ -100,7 +100,7 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
     }
 
     //展开底部目录的类型
-    private enum AddAction{
+    private enum AddAction {
         //emmm表情类型--listimage图片列表
         EMMM,
         LIST_IMAGE
@@ -129,11 +129,11 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
 
     @Override
     protected void initSet() {
-        topBar.addLeftImageButton(R.drawable.icon_back_black,R.id.msg_left_btn).setOnClickListener(this);
-        topBar.addRightImageButton(R.drawable.icon_chat_menu,R.id.msg_right_btn).setOnClickListener(this);
-        setOnclickListener(R.id.msg_grid,R.id.msg_voice,R.id.msg_emmm,R.id.msg_add,R.id.msg_send);
+        topBar.addLeftImageButton(R.drawable.icon_back_black, R.id.msg_left_btn).setOnClickListener(this);
+        topBar.addRightImageButton(R.drawable.icon_chat_menu, R.id.msg_right_btn).setOnClickListener(this);
+        setOnclickListener(R.id.msg_grid, R.id.msg_voice, R.id.msg_emmm, R.id.msg_add, R.id.msg_send);
 
-        gridLayoutManager = new GridLayoutManager(getNowContext(),1);
+        gridLayoutManager = new GridLayoutManager(getNowContext(), 1);
         msgRecycler.setLayoutManager(gridLayoutManager);
 
         //下拉刷新监听
@@ -169,10 +169,10 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
         TIMManager.getInstance().addMessageListener(new TIMMessageListener() {
             @Override
             public boolean onNewMessages(List<TIMMessage> list) {
-                log("TIMM腾讯单聊消息接收--------------------------->"+list.toString());
+                log("TIMM腾讯单聊消息接收--------------------------->" + list.toString());
                 //监听大群组会话信息,不对消息做拦截操作
-                for (TIMMessage message:list) {
-                    for(int i = 0; i < message.getElementCount(); ++i) {
+                for (TIMMessage message : list) {
+                    for (int i = 0; i < message.getElementCount(); ++i) {
                         TIMElem elem = message.getElement(i);
                         TIMElemType elemType = elem.getType();
                         if (elemType == TIMElemType.Text) {
@@ -197,7 +197,7 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
                                 });
                             }
                         }*/
-                        saveMsg(true,1,mesg);
+                        saveMsg(true, 1, mesg);
                         refreshMsgList(20);
                     }
                 }
@@ -214,7 +214,7 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.msg_left_btn:
                 doGoBack();
                 break;
@@ -228,7 +228,7 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
                 doAddAction(AddAction.LIST_IMAGE);
                 break;
             case R.id.msg_send:
-                sendMsg(new Msg(msgText.getText().toString(),TYPE_TEXT));
+                sendMsg(new Msg(msgText.getText().toString(), TYPE_TEXT));
                 msgText.setText("");
                 break;
             case R.id.msg_recycler:
@@ -252,26 +252,26 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
     @Override
     public void onError(int i, String s) {
         //消息发送失败监听        }
-        saveMsg(false, 0,mesg);
+        saveMsg(false, 0, mesg);
         refreshMsgList(20);
-        showToastMsg("消息发送失败:code="+i);
-        log("消息发送失败:==============================?code="+i);
+        showToastMsg("消息发送失败:code=" + i);
+        log("消息发送失败:==============================?code=" + i);
     }
 
     @Override
     public void onSuccess(Object o) {
         //消息发送成功监听
-        saveMsg(true,0,mesg);
+        saveMsg(true, 0, mesg);
         refreshMsgList(20);
     }
 
     @Override
     public void afterTextChanged(Editable s) {
         //文本输入之后监听
-        if (s.length() == 0){
+        if (s.length() == 0) {
             showView(R.id.msg_add);
             concealView(R.id.msg_send);
-        }else if(s.length() >= 1){
+        } else if (s.length() >= 1) {
             showView(R.id.msg_send);
             concealView(R.id.msg_add);
         }
@@ -287,6 +287,7 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
         //文本输入中监听
     }
     /////////////////////////////////////////////业务逻辑处理/////////////////////////////////////////
+
     /**
      * 请求用户数据信息
      */
@@ -301,15 +302,16 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
                     public Context getContextToJson() {
                         return getNowContext();
                     }
+
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
                         super.onSuccess(s, call, response);
                         JsonRequestTarget requestObj = JsonRequestTarget.getJsonObj(s);
-                        if (requestObj.getCode() == 1){
+                        if (requestObj.getCode() == 1) {
                             targetUserData = requestObj.getData();
                             targetUserData.setId(getIntent().getStringExtra("str"));
                             topBar.setTitle(targetUserData.getUser_nickname());
-                            if (ApiUtils.isTrueUrl(targetUserData.getAvatar())){
+                            if (ApiUtils.isTrueUrl(targetUserData.getAvatar())) {
                                 ApiUtils.getUrlBitmap(targetUserData.getAvatar(), new ApiUtils.GetUrlBitMap() {
                                     @Override
                                     public void doThenByBitmap(Bitmap bitmap) {
@@ -318,7 +320,7 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
                                     }
                                 });
                             }
-                        }else{
+                        } else {
                             showToastMsg(requestObj.getMsg());
                         }
                     }
@@ -333,14 +335,15 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
                     public Context getContextToJson() {
                         return getNowContext();
                     }
+
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
                         super.onSuccess(s, call, response);
                         JsonRequestUser requestObj = JsonRequestUser.getJsonObj(s);
-                        if (requestObj.getCode() == 1){
+                        if (requestObj.getCode() == 1) {
                             userData = requestObj.getData();
-                            if (ApiUtils.isTrueUrl(userData.getAvatar())){
-                                ApiUtils.getUrlBitmap(userData.getAvatar(), new ApiUtils.GetUrlBitMap() {
+                            if (ApiUtils.isTrueUrl(userData.getData().getAvatar())) {
+                                ApiUtils.getUrlBitmap(userData.getData().getAvatar(), new ApiUtils.GetUrlBitMap() {
                                     @Override
                                     public void doThenByBitmap(Bitmap bitmap) {
                                         fromBitmap = bitmap;
@@ -348,7 +351,7 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
                                     }
                                 });
                             }
-                        }else{
+                        } else {
                             showToastMsg(requestObj.getMsg());
                         }
                     }
@@ -391,12 +394,13 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
 
     /**
      * 执行底部选择栏动态显示操作
+     *
      * @param addAction 判断类型-确认打开什么
      */
     private void doAddAction(AddAction addAction) {
-        if (addAction != null){
+        if (addAction != null) {
             clearActionLayout();
-            switch (addAction){
+            switch (addAction) {
                 case EMMM:
                     addActionEmmm();
                     break;
@@ -437,7 +441,7 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
             @Override
             public void onItemClick(View view, AdapterOnItemClick.ViewName viewName, int position) {
                 concealView(emmm);
-                showToastMsg("点击了::"+position);
+                showToastMsg("点击了::" + position);
             }
         });
         emmm.addView(msgTypeListLayout);
@@ -446,11 +450,11 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
     /**
      * 显示一个listDialog
      */
-    private void showDialogList(){
-        emmm.addView(view,new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,320));
+    private void showDialogList() {
+        emmm.addView(view, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 320));
         dialogList = showButtomDialogWhite(
                 R.layout.dialog_msg_list,
-                new int[] {R.id.dialog_img_photo,R.id.dialog_img_video,R.id.dialog_img_grid},
+                new int[]{R.id.dialog_img_photo, R.id.dialog_img_video, R.id.dialog_img_grid},
                 0);
         dialogList.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
@@ -463,18 +467,19 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
 
     /**
      * 执行发送信息操作(单聊)
+     *
      * @param msg 消息对象
      */
     private void sendMsg(Msg msg) {
         msgType = msg.getType();
-        switch (msg.getType()){
+        switch (msg.getType()) {
             case 0:
                 //发送一个文本消息
-                MsgTim.getInstaner(targetUserData.getId()).sendMsg(msg.getMsg(),this);
+                MsgTim.getInstaner(targetUserData.getId()).sendMsg(msg.getMsg(), this);
                 break;
             case 1:
                 // 创建一个图片消息
-                MsgTim.getInstaner(targetUserData.getId()).sendImgMsg(msg.getMsg(),this);
+                MsgTim.getInstaner(targetUserData.getId()).sendImgMsg(msg.getMsg(), this);
             case 2:
                 //创建一个语音信息
                 break;
@@ -489,7 +494,7 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
         msgModles = selectMsg(limit);
         //log("msgModles::当前查询到的数据库消息对象解析之后"+msgModles.toString());
         //刷新适配器
-        chatListAdapter = new ChatAdapter(toBitmap,fromBitmap,msgModles);
+        chatListAdapter = new ChatAdapter(toBitmap, fromBitmap, msgModles);
         //chatListAdapter.notifyItemRangeInserted(chatListAdapter.getItemCount(),msgModles.size());
         msgRecycler.setAdapter(chatListAdapter);
         //移动光标到最下
@@ -499,9 +504,9 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
         chatListAdapter.setOnItemClickListener(new AdapterOnItemClick() {
             @Override
             public void onItemClick(View view, ViewName viewName, int position) {
-                if (viewName == ViewName.RETRY){
+                if (viewName == ViewName.RETRY) {
                     anewSend(chatListAdapter.getModle(position).getId());
-                }else {
+                } else {
                     //点击Le消息
                     showToastMsg("点击Le消息");
                 }
@@ -511,28 +516,29 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
 
     /**
      * 保存聊天信息
-     * @param isSend 是否发送成功
+     *
+     * @param isSend       是否发送成功
      * @param msgModleType 消息状态--0发出消息(right_chat),1接受消息(left)
-     * @param msg 消息
+     * @param msg          消息
      */
-    private void saveMsg(boolean isSend, int msgModleType,String msg){
-        Msg msgSave = new Msg(null, SaveData.getInstance().getId(),getIntent().getStringExtra("str"),msg,msgType,msgModleType,new Date(System.currentTimeMillis()),"",isSend?0:1);
+    private void saveMsg(boolean isSend, int msgModleType, String msg) {
+        Msg msgSave = new Msg(null, SaveData.getInstance().getId(), getIntent().getStringExtra("str"), msg, msgType, msgModleType, new Date(System.currentTimeMillis()), "", isSend ? 0 : 1);
         msgDao.insert(msgSave);
     }
 
     /**
      * 查看聊天信息
      */
-    private List<MsgModle> selectMsg(int litim){
+    private List<MsgModle> selectMsg(int litim) {
         List<Msg> msgList = msgDao.queryBuilder()
-                .where(MsgDao.Properties.Account.eq(getIntent().getStringExtra("str")),MsgDao.Properties
-                .MyAccount.eq(SaveData.getInstance().getId()))
+                .where(MsgDao.Properties.Account.eq(getIntent().getStringExtra("str")), MsgDao.Properties
+                        .MyAccount.eq(SaveData.getInstance().getId()))
                 .limit(litim)
                 .orderAsc(MsgDao.Properties.Date)
                 .list();
-        log("msgModles::当前查询到的数据库消息对象"+msgList.toString());
+        log("msgModles::当前查询到的数据库消息对象" + msgList.toString());
         List<MsgModle> selectMsgMoudle = new ArrayList<>();
-        for (Msg msgFor:msgList) {
+        for (Msg msgFor : msgList) {
             selectMsgMoudle.add(analysisMsg(msgFor));
         }
         return selectMsgMoudle;
@@ -541,13 +547,13 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
     /**
      * 查看未发送的聊天信息
      */
-    private List<MsgModle> selectMsgNotSend(){
+    private List<MsgModle> selectMsgNotSend() {
         List<Msg> msgList = msgDao.queryBuilder()
                 .where(MsgDao.Properties.I.eq(1))
                 .orderAsc(MsgDao.Properties.Date)
                 .list();
         List<MsgModle> selectMsgMoudle = new ArrayList<>();
-        for (Msg msgFor:msgList) {
+        for (Msg msgFor : msgList) {
             selectMsgMoudle.add(analysisMsg(msgFor));
         }
         return selectMsgMoudle;
@@ -555,20 +561,22 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
 
     /**
      * 解析Msg对象为MsgModle
+     *
      * @param msgFor Msg对象
      * @return MsgModle
      */
     private MsgModle analysisMsg(Msg msgFor) {
-        return new MsgModle(msgFor.getId(),msgFor.getStatus() == 0 ? MsgModle.Type.Right : MsgModle.Type.Left,msgFor);
+        return new MsgModle(msgFor.getId(), msgFor.getStatus() == 0 ? MsgModle.Type.Right : MsgModle.Type.Left, msgFor);
     }
 
     /**
      * 消息重发
+     *
      * @param id 重发消息id
      */
-    private void anewSend(Long id){
+    private void anewSend(Long id) {
         Msg msg = msgDao.queryBuilder().where(MsgDao.Properties.Id.eq(id)).unique();
-        if (msg != null){
+        if (msg != null) {
             msgDao.deleteByKey(msg.getId());//清除旧记录
             sendMsg(msg);//重新发送消息
         }
@@ -585,7 +593,7 @@ public class MsgActivity extends BaseActivity implements TextWatcher,TIMValueCal
     /**
      * 初始化File对象
      */
-    private void initFiles(){
+    private void initFiles() {
         // 在这里我们创建一个文件，用于保存录制内容
         File fpath = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/data/recondMsg/");
         fpath.mkdirs();// 创建文件夹

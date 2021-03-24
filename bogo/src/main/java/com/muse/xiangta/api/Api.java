@@ -241,6 +241,7 @@ public class Api {
                 .execute(callback);
         Log.d("api", "获取推荐用户列表####" + "getRecommendUserList");
     }
+
     /**
      * 获取推荐用户列表
      *
@@ -374,11 +375,20 @@ public class Api {
     public static void saveUserDataAtCompile(
             String height, String weight, String constellation,
             String introduce, String image_label, String self_label,
-            String uid, String token, String user_nickname, String avatar, int sex, List<String> img, String sign, StringCallback callback) {
+            String uid, String token, String user_nickname, String avatar, int sex,
+            String occupation, String education, String love_status, String overlapping_sound,
+            String coverurl, String video_url,
+            List<String> img, String sign, StringCallback callback) {
         PostRequest postRequest = OkGo.post(AppConfig.API_DOMAIN + "/user_api/update_user_info_190708");
         postRequest.params("uid", uid);
         postRequest.params("token", token);
         postRequest.params("sex", sex);
+        postRequest.params("occupation", occupation);
+        postRequest.params("education", education);
+        postRequest.params("love_status", love_status);
+        postRequest.params("overlapping_sound", overlapping_sound);
+        postRequest.params("coverurl", coverurl);
+        postRequest.params("video_url", video_url);
         postRequest.params("constellation", constellation);
         postRequest.params("user_nickname", user_nickname);
         postRequest.params("sign", sign);
