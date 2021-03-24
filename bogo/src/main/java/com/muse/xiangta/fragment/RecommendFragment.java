@@ -23,7 +23,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.recycler.RecyclerRecommendAdapter;
 import com.muse.xiangta.api.Api;
-import com.muse.xiangta.base.BaseListFragment;
+import com.muse.xiangta.base.BaseListFragment2;
 import com.muse.xiangta.inter.JsonCallback;
 import com.muse.xiangta.json.JsonRequestOneKeyCall;
 import com.muse.xiangta.json.JsonRequestUserCenterInfo;
@@ -39,7 +39,6 @@ import com.muse.xiangta.ui.CuckooAuthFormActivity;
 import com.muse.xiangta.ui.DeclarationActivity;
 import com.muse.xiangta.ui.GroupChatActivity;
 import com.muse.xiangta.ui.MatchingActivity;
-import com.muse.xiangta.ui.VideoAuthActivity;
 import com.muse.xiangta.ui.VideoDatingActivity;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.utils.StringUtils;
@@ -56,7 +55,7 @@ import okhttp3.Response;
  * 推荐
  */
 
-public class RecommendFragment extends BaseListFragment<TargetUserData> {
+public class RecommendFragment extends BaseListFragment2<TargetUserData> {
 
     //轮播图
     //private XBanner recommendRoll;
