@@ -247,11 +247,15 @@ public class EditActivity extends BaseActivity {
     };
 
     @OnClick({R.id.redact_shengao, R.id.redact_tizhong, R.id.redact_xingzuo,
-            R.id.redact_biaoqian, R.id.redact_jieshao})
+            R.id.redact_biaoqian, R.id.redact_jieshao, R.id.redact_zhiye})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.redact_zhiye:
+                //职业
+
+                break;
             case R.id.redact_backbtn:
                 finish();
                 break;

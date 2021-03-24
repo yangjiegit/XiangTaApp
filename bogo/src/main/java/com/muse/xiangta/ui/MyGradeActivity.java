@@ -6,15 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.R;
 import com.muse.xiangta.api.Api;
-import com.muse.xiangta.audiorecord.util.StringUtil;
 import com.muse.xiangta.base.BaseActivity;
 import com.muse.xiangta.fragment.MyGradeFragment;
-import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.LevelBean;
 import com.muse.xiangta.utils.GlideImgManager;
 import com.muse.xiangta.utils.StringUtils;
