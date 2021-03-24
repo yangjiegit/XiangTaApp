@@ -4,11 +4,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.lzy.okgo.callback.StringCallback;
 import com.muse.chat.fragment.ConversationFragment;
 import com.muse.xiangta.R;
 import com.muse.xiangta.api.Api;
@@ -18,9 +21,10 @@ import com.muse.xiangta.json.JsonGetMsgPage;
 import com.muse.xiangta.json.JsonRequestBase;
 import com.muse.xiangta.manage.RequestConfig;
 import com.muse.xiangta.manage.SaveData;
+import com.muse.xiangta.modle.MsgInfoBean;
 import com.muse.xiangta.ui.CuckooSubscribeActivity;
 import com.muse.xiangta.ui.WebViewActivity;
-import com.lzy.okgo.callback.StringCallback;
+import com.muse.xiangta.utils.StringUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -43,12 +47,20 @@ public class MsgFragment extends BaseFragment {
     @BindView(R.id.subscribe_msg_count_tv)
     TextView subscribeMsgCountTv;
 
+    @BindView(R.id.tv_text1)
+    TextView tv_text1;
+    @BindView(R.id.tv_text2)
+    TextView tv_text2;
+    @BindView(R.id.tv_text3)
+    TextView tv_text3;
 
     //功能
     private QMUITopBar msgQMUITopBar;
     private RecyclerView mRecyclerView;
     //RecyclerView的grid视图
     private GridLayoutManager mLayoutManager;
+
+    private MsgInfoBean msgInfoBean;
 
     private ConversationFragment conversationFragment;
 
@@ -68,6 +80,25 @@ public class MsgFragment extends BaseFragment {
 
     @Override
     protected void initDate(View view) {
+        getMsgDescInfoData();
+    }
+
+    private void getMsgDescInfoData() {
+        Api.getMsgDescInfo(uId, uToken, new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                Log.d("ret", "joker      " + s);
+                if (!StringUtils.isEmpty(s)) {
+                    msgInfoBean = new Gson().fromJson(s, MsgInfoBean.class);
+                    if (null != msgInfoBean &&
+                            null != msgInfoBean.getData()) {
+                        tv_text1.setText(msgInfoBean.getData().getSystem());
+                        tv_text2.setText(msgInfoBean.getData().getGroup());
+                        tv_text3.setText(msgInfoBean.getData().getFamily());
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -108,16 +139,24 @@ public class MsgFragment extends BaseFragment {
     ////////////////////////////////////////////本地工具方法//////////////////////////////////////////
 
 
-    @OnClick({R.id.left, R.id.right})
+    @OnClick({R.id.left, R.id.right, R.id.rl_xitong, R.id.rl_qunliao, R.id.rl_jiazu})
     public void top(View v) {
         switch (v.getId()) {
             case R.id.left:
                 //系统消息
                 WebViewActivity.openH5Activity(getContext(), true, "系统消息", RequestConfig.getConfigObj().getSystemMessage());
                 break;
-
             case R.id.right:
                 goActivity(getContext(), CuckooSubscribeActivity.class);
+                break;
+            case R.id.rl_xitong:
+                WebViewActivity.openH5Activity(getContext(), true, "系统消息", RequestConfig.getConfigObj().getSystemMessage());
+                break;
+            case R.id.rl_qunliao:
+
+                break;
+            case R.id.rl_jiazu:
+
                 break;
         }
     }

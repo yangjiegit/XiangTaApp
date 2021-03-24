@@ -2552,4 +2552,15 @@ public class Api {
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }
+
+    /*
+     * 消息首页文字描述
+     * */
+    public static void getMsgDescInfo(String uid, String token, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/page_data_api/get_msg_desc_info")
+                .params("uid", uid)
+                .params("token", token)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
 }
