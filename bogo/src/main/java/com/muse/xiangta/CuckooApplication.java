@@ -43,6 +43,7 @@ import com.muse.xiangta.utils.CuckooLifecycleHandler;
 import com.muse.xiangta.utils.CuckooSharedPreUtil;
 import com.muse.xiangta.utils.SDHandlerManager;
 import com.muse.xiangta.utils.Utils;
+import com.qmuiteam.qmui.BuildConfig;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.tencent.imsdk.TIMConnListener;
 import com.tencent.imsdk.TIMConversation;
@@ -208,8 +209,8 @@ public class CuckooApplication extends Application {
         return mRtcEngine;
     }
 
-    public void rtcEngineNull(){
-        mRtcEngine=null;
+    public void rtcEngineNull() {
+        mRtcEngine = null;
     }
 
     public void addRtcHandler(RtcEngineEventHandler handler) {
@@ -393,6 +394,16 @@ public class CuckooApplication extends Application {
         mLocationListener = new AMapLocationListener() {
             @Override
             public void onLocationChanged(AMapLocation aMapLocation) {
+                if (null != aMapLocation) {
+                    if (aMapLocation.getErrorCode() == 0) {
+                        //可在其中解析amapLocation获取相应内容。
+                    } else {
+                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                        Log.e("AmapError", "location Error, ErrCode:"
+                                + aMapLocation.getErrorCode() + ", errInfo:"
+                                + aMapLocation.getErrorInfo());
+                    }
+                }
 
                 lat = String.valueOf(aMapLocation.getLatitude());//获取纬度
                 lng = String.valueOf(aMapLocation.getLongitude());//获取经度
@@ -419,6 +430,7 @@ public class CuckooApplication extends Application {
         mLocationOption = new AMapLocationClientOption();
         //获取一次定位结果：
         mLocationOption.setOnceLocation(true);
+        mLocationOption.setMockEnable(true);
         //设置定位间隔,单位毫秒,默认为2000ms
         mLocationOption.setInterval(2000);
         //给定位客户端对象设置定位参数
