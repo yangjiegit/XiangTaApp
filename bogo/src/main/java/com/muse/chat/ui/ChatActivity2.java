@@ -67,7 +67,7 @@ import com.tencent.imsdk.ext.message.TIMMessageExt;
 import com.tencent.imsdk.ext.message.TIMMessageLocator;
 import com.tencent.qcloud.presentation.presenter.ChatPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
-import com.tencent.qcloud.ui.ChatInput;
+import com.tencent.qcloud.ui.ChatInput2;
 import com.tencent.qcloud.ui.TemplateTitle;
 import com.tencent.qcloud.ui.VoiceSendingView;
 
@@ -99,7 +99,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     private ChatAdapter2 adapter;
     private ListView listView;
     private ChatPresenter presenter;
-    private ChatInput input;
+    private ChatInput2 input;
     private GiftBottomDialog giftBottomDialog;
 
     private ImageView mIvPrivateChat, mIvGift, mIvVideo;
@@ -142,7 +142,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.activity_chat;
+        return R.layout.activity_chat2;
     }
 
     @Override
@@ -164,7 +164,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         mIvGift.setOnClickListener(this);
         mIvVideo.setOnClickListener(this);
 
-        input = (ChatInput) findViewById(R.id.input_panel);
+        input = (ChatInput2) findViewById(R.id.input_panel);
         input.setChatView(this);
         input.setSex(SaveData.getInstance().getUserInfo().getSex());
 //        input.setCoinData(StringUtils.toInt(payCoin), RequestConfig.getConfigObj().getCurrency());
@@ -182,7 +182,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        input.setInputMode(ChatInput.InputMode.NONE);
+                        input.setInputMode(ChatInput2.InputMode.NONE);
                         break;
                 }
                 return false;

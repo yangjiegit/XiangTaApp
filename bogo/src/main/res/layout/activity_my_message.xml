@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/dp_10"
-            android:src="@mipmap/user_home_back" />
+            android:src="@mipmap/img_back_black" />
 
         <LinearLayout
             android:id="@+id/ll_miyou"

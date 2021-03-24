@@ -1,5 +1,6 @@
 package com.muse.xiangta.fragment;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,6 +24,9 @@ import com.muse.xiangta.manage.RequestConfig;
 import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.MsgInfoBean;
 import com.muse.xiangta.ui.CuckooSubscribeActivity;
+import com.muse.xiangta.ui.FamilyActivity;
+import com.muse.xiangta.ui.GroupChatActivity;
+import com.muse.xiangta.ui.MyMessageActivity;
 import com.muse.xiangta.ui.WebViewActivity;
 import com.muse.xiangta.utils.StringUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -139,9 +143,12 @@ public class MsgFragment extends BaseFragment {
     ////////////////////////////////////////////本地工具方法//////////////////////////////////////////
 
 
-    @OnClick({R.id.left, R.id.right, R.id.rl_xitong, R.id.rl_qunliao, R.id.rl_jiazu})
+    @OnClick({R.id.left, R.id.right, R.id.rl_xitong, R.id.rl_qunliao, R.id.rl_jiazu, R.id.iv_message})
     public void top(View v) {
         switch (v.getId()) {
+            case R.id.iv_message:
+                goMsgListPage(1);
+                break;
             case R.id.left:
                 //系统消息
                 WebViewActivity.openH5Activity(getContext(), true, "系统消息", RequestConfig.getConfigObj().getSystemMessage());
@@ -153,10 +160,10 @@ public class MsgFragment extends BaseFragment {
                 WebViewActivity.openH5Activity(getContext(), true, "系统消息", RequestConfig.getConfigObj().getSystemMessage());
                 break;
             case R.id.rl_qunliao:
-
+                startActivity(new Intent(getContext(), GroupChatActivity.class));
                 break;
             case R.id.rl_jiazu:
-
+                startActivity(new Intent(getContext(), FamilyActivity.class));
                 break;
         }
     }
@@ -187,6 +194,14 @@ public class MsgFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    /**
+     * 前往消息列表页面##0关注页--1粉丝页
+     */
+    private void goMsgListPage(int type) {
+        startActivity(new Intent(getContext(), MyMessageActivity.class)
+                .putExtra("type", type));
     }
 
 
