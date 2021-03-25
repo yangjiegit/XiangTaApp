@@ -27,7 +27,6 @@ import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseListFragment2;
 import com.muse.xiangta.inter.JsonCallback;
 import com.muse.xiangta.json.JsonRequestOneKeyCall;
-import com.muse.xiangta.json.JsonRequestUserCenterInfo;
 import com.muse.xiangta.json.JsonRequestsImage;
 import com.muse.xiangta.json.JsonRequestsTarget;
 import com.muse.xiangta.json.jsonmodle.TargetUserData;
@@ -104,14 +103,15 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
                 new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        JsonRequestUserCenterInfo jsonRequestUserCenterInfo = JsonRequestUserCenterInfo.getJsonObj(s);
-                        if (jsonRequestUserCenterInfo.getCode() == 1) {
-                            userCenterData = jsonRequestUserCenterInfo.getData();
-                            UserModel userModel = SaveData.getInstance().getUserInfo();
+                        if (!StringUtils.isEmpty(s)) {
+                            userCenterData = new Gson().fromJson(s, UserCenterData.class);
+                            if (userCenterData.getCode() == 1) {
+                                UserModel userModel = SaveData.getInstance().getUserInfo();
 //                            userModel.setIs_open_do_not_disturb(userCenterData.getIs_open_do_not_disturb());
-                            userModel.setAvatar(userCenterData.getAvatar());
-                            userModel.setUser_nickname(userCenterData.getUser_nickname());
-                            SaveData.getInstance().saveData(userModel);
+                                userModel.setAvatar(userCenterData.getData().getAvatar());
+                                userModel.setUser_nickname(userCenterData.getData().getUser_nickname());
+                                SaveData.getInstance().saveData(userModel);
+                            }
                         }
                     }
 
@@ -241,12 +241,12 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
                 if (null == userCenterData) {
                     return;
                 }
-                if (userCenterData.getIs_auth() == 0) {
+                if (userCenterData.getData().getIs_auth() == 0) {
                     Intent intent = new Intent(getContext(), CuckooAuthFormActivity.class);
-                    intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getUser_auth_status()));
+                    intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getData().getUser_auth_status()));
                     startActivity(intent);
                 } else {
-                    if (userCenterData.getHas_declaration() == 0) {
+                    if (userCenterData.getData().getHas_declaration() == 0) {
                         //提示录制宣言
                         dialog();
                     } else {
@@ -282,9 +282,9 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
         if (userCenterData == null) {
             return;
         }
-        if (userCenterData.getIs_auth() == 0) {
+        if (userCenterData.getData().getIs_auth() == 0) {
             Intent intent = new Intent(getContext(), CuckooAuthFormActivity.class);
-            intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getUser_auth_status()));
+            intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getData().getUser_auth_status()));
             startActivity(intent);
         } else {//认证成功
             startActivity(new Intent(getContext(), MatchingActivity.class)

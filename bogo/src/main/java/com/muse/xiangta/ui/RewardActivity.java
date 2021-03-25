@@ -16,13 +16,11 @@ import com.muse.xiangta.adapter.CommonRecyclerViewAdapter;
 import com.muse.xiangta.adapter.CommonRecyclerViewHolder;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseActivity;
-import com.muse.xiangta.json.JsonRequestUserCenterInfo;
 import com.muse.xiangta.json.jsonmodle.UserCenterData;
 import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.TaskListBean;
 import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.utils.StringUtils;
-import com.qmuiteam.qmui.widget.QMUITabSegment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,14 +85,15 @@ public class RewardActivity extends BaseActivity {
                 new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        JsonRequestUserCenterInfo jsonRequestUserCenterInfo = JsonRequestUserCenterInfo.getJsonObj(s);
-                        if (jsonRequestUserCenterInfo.getCode() == 1) {
-                            userCenterData = jsonRequestUserCenterInfo.getData();
-                            UserModel userModel = SaveData.getInstance().getUserInfo();
+                        if (!StringUtils.isEmpty(s)) {
+                            userCenterData = new Gson().fromJson(s, UserCenterData.class);
+                            if (userCenterData.getCode() == 1) {
+                                UserModel userModel = SaveData.getInstance().getUserInfo();
 //                            userModel.setIs_open_do_not_disturb(userCenterData.getIs_open_do_not_disturb());
-                            userModel.setAvatar(userCenterData.getAvatar());
-                            userModel.setUser_nickname(userCenterData.getUser_nickname());
-                            SaveData.getInstance().saveData(userModel);
+                                userModel.setAvatar(userCenterData.getData().getAvatar());
+                                userModel.setUser_nickname(userCenterData.getData().getUser_nickname());
+                                SaveData.getInstance().saveData(userModel);
+                            }
                         }
                     }
 
@@ -161,7 +160,7 @@ public class RewardActivity extends BaseActivity {
                         } else if (entity.getBtn_type() == 2) {
                             //认证
                             Intent intent = new Intent(RewardActivity.this, CuckooAuthFormActivity.class);
-                            intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getUser_auth_status()));
+                            intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getData().getUser_auth_status()));
                             startActivity(intent);
                         } else if (entity.getBtn_type() == 3) {
                             //首页

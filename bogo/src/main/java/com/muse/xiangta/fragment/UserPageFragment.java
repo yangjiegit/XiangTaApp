@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
 import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.ApiConstantDefine;
 import com.muse.xiangta.R;
@@ -24,7 +25,6 @@ import com.muse.xiangta.base.BaseFragment;
 import com.muse.xiangta.helper.SelectResHelper;
 import com.muse.xiangta.json.JsonGetIsAuth;
 import com.muse.xiangta.json.JsonRequestBase;
-import com.muse.xiangta.json.JsonRequestUserCenterInfo;
 import com.muse.xiangta.json.jsonmodle.UserCenterData;
 import com.muse.xiangta.manage.RequestConfig;
 import com.muse.xiangta.manage.SaveData;
@@ -54,6 +54,7 @@ import com.muse.xiangta.ui.WebViewActivity;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.ui.common.LoginUtils;
 import com.muse.xiangta.utils.DialogHelp;
+import com.muse.xiangta.utils.GlideImgManager;
 import com.muse.xiangta.utils.SharedPreferencesUtils;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.UIHelp;
@@ -74,7 +75,7 @@ import okhttp3.Response;
 public class UserPageFragment extends BaseFragment {
     private RelativeLayout user_page_my_user_page;
     private BGLevelTextView tv_level;
-
+    private ImageView iv_huizhang;
     private Dialog radioDialog;//分成比例dialog
 
     //显示数据
@@ -133,6 +134,7 @@ public class UserPageFragment extends BaseFragment {
         fansNumber = view.findViewById(R.id.fans_number);
         tv_reward = view.findViewById(R.id.tv_reward);
         tv_profit = view.findViewById(R.id.tv_profit);
+        iv_huizhang = view.findViewById(R.id.iv_huizhang);
 
         ll_car = view.findViewById(R.id.ll_car);
         ll_noble = view.findViewById(R.id.ll_noble);
@@ -266,8 +268,8 @@ public class UserPageFragment extends BaseFragment {
                 //设置
                 Intent intent = new Intent(getContext(), SettingActivity.class);
                 if (userCenterData != null) {
-                    intent.putExtra("state", userCenterData.getUser_auth_status());
-                    intent.putExtra("sex", userCenterData.getSex());
+                    intent.putExtra("state", userCenterData.getData().getUser_auth_status());
+                    intent.putExtra("sex", userCenterData.getData().getSex());
                 }
                 getContext().startActivity(intent);
                 break;
@@ -336,7 +338,7 @@ public class UserPageFragment extends BaseFragment {
                 if (i == 0) {
                     UIHelp.showGuildList(getContext());
                 }
-                if (i == 2 && userCenterData != null && userCenterData.getIs_president() != 1) {
+                if (i == 2 && userCenterData != null && userCenterData.getData().getIs_president() != 1) {
                     ToastUtils.showLong("没有创建公会！");
                 }
             }
@@ -351,16 +353,16 @@ public class UserPageFragment extends BaseFragment {
         }
 
         if (ConfigModel.getInitData().getAuth_type() == 1) {
-            if (StringUtils.toInt(userCenterData.getUser_auth_status()) == 0) {
+            if (StringUtils.toInt(userCenterData.getData().getUser_auth_status()) == 0) {
                 ToastUtils.showLong("正在等待审核！");
                 return;
             }
             Intent intent = new Intent(getContext(), VideoAuthActivity.class);
-            intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getUser_auth_status()));
+            intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getData().getUser_auth_status()));
             startActivity(intent);
         } else {
             Intent intent = new Intent(getContext(), CuckooAuthFormActivity.class);
-            intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getUser_auth_status()));
+            intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getData().getUser_auth_status()));
             startActivity(intent);
         }
     }
@@ -371,7 +373,7 @@ public class UserPageFragment extends BaseFragment {
     private void showDialogRatio() {
         radioDialog = showViewDialog(getContext(), R.layout.dialog_ratio_view, new int[]{R.id.dialog_close, R.id.dialog_left_btn, R.id.dialog_right_btn});
         TextView text = radioDialog.findViewById(R.id.radio_radio_text);
-        text.setText(userCenterData.getSplit());
+        text.setText(userCenterData.getData().getSplit());
     }
 
 
@@ -409,30 +411,34 @@ public class UserPageFragment extends BaseFragment {
      */
     private void refreshUserData() {
 
-        Utils.loadHeadHttpImg(getContext(), Utils.getCompleteImgUrl(userCenterData.getAvatar()), userImg);
+        Utils.loadHeadHttpImg(getContext(), Utils.getCompleteImgUrl(userCenterData.getData().getAvatar()), userImg);
 
-        userName.setText(userCenterData.getUser_nickname());
+        userName.setText(userCenterData.getData().getUser_nickname());
 //        tv_level.setLevelInfo(userCenterData.getSex(), userCenterData.getLevel());
         //是否认证标识
-        userIsVerify.setImageResource(SelectResHelper.getAttestationRes(StringUtils.toInt(userCenterData.getUser_auth_status())));
-        aboutNumber.setText(userCenterData.getAttention_all() + "");
-        fansNumber.setText(userCenterData.getAttention_fans() + "");
+        userIsVerify.setImageResource(SelectResHelper.getAttestationRes(StringUtils.toInt(userCenterData.getData().getUser_auth_status())));
+        aboutNumber.setText(userCenterData.getData().getAttention_all() + "");
+        fansNumber.setText(userCenterData.getData().getAttention_fans() + "");
 
-        if (StringUtils.toInt(userCenterData.getIs_open_do_not_disturb()) == 1) {
+        if (!StringUtils.isEmpty(userCenterData.getData().getNoble())) {
+            GlideImgManager.loadImage(getContext(), userCenterData.getData().getNoble(), iv_huizhang);
+        }
+
+        if (StringUtils.toInt(userCenterData.getData().getIs_open_do_not_disturb()) == 1) {
             iv_switch_disturb.setImageResource(R.mipmap.me_icon_disturb_off);
         } else {
             iv_switch_disturb.setImageResource(R.mipmap.me_icon_disturb_on);
         }
 
-        if (userCenterData.getSex() == 2) {
+        if (userCenterData.getData().getSex() == 2) {
             ll_emcee_menu.setVisibility(View.GONE);
             llGuide.setVisibility(View.GONE);
         }
 
         UserModel userModel = SaveData.getInstance().getUserInfo();
-        userModel.setSex(userCenterData.getSex());
+        userModel.setSex(userCenterData.getData().getSex());
 //        userModel.setLevel(userCenterData.getLevel());
-        userModel.setUser_nickname(userCenterData.getUser_nickname());
+        userModel.setUser_nickname(userCenterData.getData().getUser_nickname());
         SaveData.getInstance().saveData(userModel);
 
 //        if (!userCenterData.isMan()) {
@@ -456,43 +462,38 @@ public class UserPageFragment extends BaseFragment {
                 new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        JsonRequestUserCenterInfo jsonRequestUserCenterInfo = JsonRequestUserCenterInfo.getJsonObj(s);
-                        if (jsonRequestUserCenterInfo.getCode() == 1) {
+                        if (!StringUtils.isEmpty(s)) {
+                            userCenterData = new Gson().fromJson(s, UserCenterData.class);
+                            if (userCenterData.getCode() == 1) {
+                                UserModel userModel = SaveData.getInstance().getUserInfo();
+                                userModel.setAvatar(userCenterData.getData().getAvatar());
+                                userModel.setUser_nickname(userCenterData.getData().getUser_nickname());
+                                SaveData.getInstance().saveData(userModel);
+                                //这里只有实名了的女性 预约我的  其他 我的预约
+                                if (userCenterData.getData().getSex() == 2 && StringUtils.toInt(userCenterData.getData().getUser_auth_status()) == 1) {
+                                    SharedPreferencesUtils.setParam(getContext(), "AccountNature", "anchor");
+                                } else {
+                                    SharedPreferencesUtils.setParam(getContext(), "AccountNature", "boss");
+                                }
+                                refreshUserData();
+                            } else if (userCenterData.getCode() == ApiConstantDefine.ApiCode.LOGIN_INFO_ERROR) {
+                                new MaterialDialog.Builder(getContext())
+                                        .content("您的账号已经在其他手机登陆，即将退出此账号")
+                                        .cancelable(false)
+                                        .positiveText(R.string.agree_ok)
+                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                doLogout();
 
-                            userCenterData = jsonRequestUserCenterInfo.getData();
-                            UserModel userModel = SaveData.getInstance().getUserInfo();
-//                            userModel.setIs_open_do_not_disturb(userCenterData.getIs_open_do_not_disturb());
-                            userModel.setAvatar(userCenterData.getAvatar());
-                            userModel.setUser_nickname(userCenterData.getUser_nickname());
-                            SaveData.getInstance().saveData(userModel);
+                                            }
+                                        })
+                                        .show();
 
-                            //这里只有实名了的女性 预约我的  其他 我的预约
-                            if (userCenterData.getSex() == 2 && StringUtils.toInt(userCenterData.getUser_auth_status()) == 1) {
-                                SharedPreferencesUtils.setParam(getContext(), "AccountNature", "anchor");
+
                             } else {
-                                SharedPreferencesUtils.setParam(getContext(), "AccountNature", "boss");
+                                showToastMsg(getContext(), userCenterData.getMsg());
                             }
-
-                            refreshUserData();
-
-                        } else if (jsonRequestUserCenterInfo.getCode() == ApiConstantDefine.ApiCode.LOGIN_INFO_ERROR) {
-
-                            new MaterialDialog.Builder(getContext())
-                                    .content("您的账号已经在其他手机登陆，即将退出此账号")
-                                    .cancelable(false)
-                                    .positiveText(R.string.agree_ok)
-                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            doLogout();
-
-                                        }
-                                    })
-                                    .show();
-
-
-                        } else {
-                            showToastMsg(getContext(), jsonRequestUserCenterInfo.getMsg());
                         }
                     }
 

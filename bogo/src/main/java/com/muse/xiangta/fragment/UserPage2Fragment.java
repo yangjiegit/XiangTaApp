@@ -13,6 +13,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.ApiConstantDefine;
 import com.muse.xiangta.R;
 import com.muse.xiangta.api.Api;
@@ -40,8 +41,6 @@ import com.muse.xiangta.ui.common.LoginUtils;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
 import com.muse.xiangta.widget.ForScrollViewGridView;
-import com.muse.xiangta.widget.GradeShowLayout;
-import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import java.util.ArrayList;
@@ -231,9 +230,9 @@ public class UserPage2Fragment extends BaseFragment {
                 break;
             case 7:
                 //设置
-                Intent  intent = new Intent(getContext(), SettingActivity.class);
-                intent.putExtra("state", userCenterData.getUser_auth_status());
-                intent.putExtra("sex", userCenterData.getSex());
+                Intent intent = new Intent(getContext(), SettingActivity.class);
+                intent.putExtra("state", userCenterData.getData().getUser_auth_status());
+                intent.putExtra("sex", userCenterData.getData().getSex());
                 getContext().startActivity(intent);
                 break;
 
@@ -250,7 +249,7 @@ public class UserPage2Fragment extends BaseFragment {
         }
 
         Intent intent = new Intent(getContext(), CuckooAuthFormActivity.class);
-        intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getUser_auth_status()));
+        intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getData().getUser_auth_status()));
         startActivity(intent);
     }
 
@@ -356,17 +355,17 @@ public class UserPage2Fragment extends BaseFragment {
     private void refreshOtherData() {
 
         //填充充值列表数据
-        if (userCenterData.getPay_coin() != null) {
+        if (userCenterData.getData().getPay_coin() != null) {
 
-            if (userCenterData.getPay_coin().size() == 1) {
+            if (userCenterData.getData().getPay_coin().size() == 1) {
 //                oneMoney.setText(userCenterData.getPay_coin().get(0).getMoney());
 //                oneMoneyTo.setText(userCenterData.getPay_coin().get(0).getFormatCoin());
-            } else if (userCenterData.getPay_coin().size() == 2) {
+            } else if (userCenterData.getData().getPay_coin().size() == 2) {
 //                oneMoney.setText(userCenterData.getPay_coin().get(0).getMoney());
 //                oneMoneyTo.setText(userCenterData.getPay_coin().get(0).getFormatCoin());
 //                twoMoney.setText(userCenterData.getPay_coin().get(1).getMoney());
 //                twoMoneyTo.setText(userCenterData.getPay_coin().get(1).getFormatCoin());
-            } else if (userCenterData.getPay_coin().size() == 3) {
+            } else if (userCenterData.getData().getPay_coin().size() == 3) {
 //                oneMoney.setText(userCenterData.getPay_coin().get(0).getMoney());
 //                oneMoneyTo.setText(userCenterData.getPay_coin().get(0).getFormatCoin());
 //                twoMoney.setText(userCenterData.getPay_coin().get(1).getMoney());
@@ -385,25 +384,25 @@ public class UserPage2Fragment extends BaseFragment {
     private void showDialogRatio() {
         radioDialog = showViewDialog(getContext(), R.layout.dialog_ratio_view, new int[]{R.id.dialog_close, R.id.dialog_left_btn, R.id.dialog_right_btn});
         TextView text = radioDialog.findViewById(R.id.radio_radio_text);
-        text.setText(userCenterData.getSplit());
+        text.setText(userCenterData.getData().getSplit());
     }
 
     /**
      * 刷新用户资料页面显示
      */
     private void refreshUserData() {
-        if (ApiUtils.isTrueUrl(userCenterData.getAvatar())) {
-            Utils.loadHttpImg(getContext(), Utils.getCompleteImgUrl(userCenterData.getAvatar()), userImg);
+        if (ApiUtils.isTrueUrl(userCenterData.getData().getAvatar())) {
+            Utils.loadHttpImg(getContext(), Utils.getCompleteImgUrl(userCenterData.getData().getAvatar()), userImg);
         }
-        userName.setText(userCenterData.getUser_nickname());
+        userName.setText(userCenterData.getData().getUser_nickname());
 //        gradesLayout.addView(new GradeShowLayout(getContext(), userCenterData.getLevel(), userCenterData.getSex()));//等级-性别
 
         //是否认证标识
-        userIsVerify.setImageResource(SelectResHelper.getAttestationRes(StringUtils.toInt(userCenterData.getUser_auth_status())));
-        aboutNumber.setText(userCenterData.getAttention_all());
-        fansNumber.setText(userCenterData.getAttention_fans());
-        ratioNumber.setText(userCenterData.getSplit());
-        moneyNumber.setText(userCenterData.getCoin());
+        userIsVerify.setImageResource(SelectResHelper.getAttestationRes(StringUtils.toInt(userCenterData.getData().getUser_auth_status())));
+        aboutNumber.setText(userCenterData.getData().getAttention_all());
+        fansNumber.setText(userCenterData.getData().getAttention_fans());
+        ratioNumber.setText(userCenterData.getData().getSplit());
+        moneyNumber.setText(userCenterData.getData().getCoin());
     }
 
     /**
