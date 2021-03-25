@@ -75,6 +75,7 @@
                                                 android:textStyle="bold" />
 
                                             <ImageView
+                                                android:id="@+id/iv_sex"
                                                 android:layout_width="@dimen/dp_15"
                                                 android:layout_height="@dimen/dp_15"
                                                 android:layout_gravity="center"
@@ -86,8 +87,7 @@
                                                 android:layout_width="@dimen/dp_15"
                                                 android:layout_height="@dimen/dp_15"
                                                 android:layout_gravity="center"
-                                                android:layout_marginLeft="@dimen/dp_10"
-                                                android:src="@mipmap/img_huizhang" />
+                                                android:layout_marginLeft="@dimen/dp_10" />
 
                                         </LinearLayout>
 

@@ -82,7 +82,7 @@ public class UserPageFragment extends BaseFragment {
     private CircleImageView userImg;//用户头像
     private TextView userName;//用户名
     private ImageView userIsVerify;//用户是否验证图标
-
+    private ImageView iv_sex;
     private TextView aboutNumber;//关注人数
     private TextView fansNumber;//粉丝数
     private TextView tv_reward, tv_profit;
@@ -135,6 +135,7 @@ public class UserPageFragment extends BaseFragment {
         tv_reward = view.findViewById(R.id.tv_reward);
         tv_profit = view.findViewById(R.id.tv_profit);
         iv_huizhang = view.findViewById(R.id.iv_huizhang);
+        iv_sex = view.findViewById(R.id.iv_sex);
 
         ll_car = view.findViewById(R.id.ll_car);
         ll_noble = view.findViewById(R.id.ll_noble);
@@ -433,6 +434,12 @@ public class UserPageFragment extends BaseFragment {
         if (userCenterData.getData().getSex() == 2) {
             ll_emcee_menu.setVisibility(View.GONE);
             llGuide.setVisibility(View.GONE);
+        }
+
+        if (userCenterData.getData().getSex() == 1) {
+            iv_sex.setImageResource(R.mipmap.img_xingbienan2);
+        } else {
+            iv_sex.setImageResource(R.mipmap.img_xingbie1);
         }
 
         UserModel userModel = SaveData.getInstance().getUserInfo();
