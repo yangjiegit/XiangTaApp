@@ -116,7 +116,7 @@ public class MyMessageActivity extends BaseActivity {
         for (int i = 0; i < mTextViewList.size(); i++) {
             if (i == (type - 1)) {
                 mTextViewList.get((type - 1)).setTextColor(getResources().getColor(R.color.message_check_true));
-                mViewList.get((type - 1)).setVisibility(View.VISIBLE);
+                mViewList.get((type - 1)).setVisibility(View.INVISIBLE);
             } else {
                 mTextViewList.get(i).setTextColor(getResources().getColor(R.color.black));
                 mViewList.get(i).setVisibility(View.INVISIBLE);
