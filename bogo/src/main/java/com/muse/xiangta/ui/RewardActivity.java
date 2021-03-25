@@ -1,11 +1,14 @@
 package com.muse.xiangta.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.R;
@@ -13,8 +16,13 @@ import com.muse.xiangta.adapter.CommonRecyclerViewAdapter;
 import com.muse.xiangta.adapter.CommonRecyclerViewHolder;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseActivity;
+import com.muse.xiangta.json.JsonRequestUserCenterInfo;
+import com.muse.xiangta.json.jsonmodle.UserCenterData;
+import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.TaskListBean;
+import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.utils.StringUtils;
+import com.qmuiteam.qmui.widget.QMUITabSegment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +43,9 @@ public class RewardActivity extends BaseActivity {
     private CommonRecyclerViewAdapter<TaskListBean.DataBean.NewBean> mAdapter1;
     private List<TaskListBean.DataBean.DailyBean> mList2 = new ArrayList<>();
     private CommonRecyclerViewAdapter<TaskListBean.DataBean.DailyBean> mAdapter2;
+
+
+    private UserCenterData userCenterData;//个人中心接口返回信息
 
     @Override
     protected Context getNowContext() {
@@ -62,8 +73,37 @@ public class RewardActivity extends BaseActivity {
     protected void initData() {
         getTaskListData();
 
+        requestUserData();
+
         initRecyclerView1();
         initRecyclerView2();
+    }
+
+
+    private void requestUserData() {
+        Api.getUserDataByMe(
+                uId,
+                uToken,
+                new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        JsonRequestUserCenterInfo jsonRequestUserCenterInfo = JsonRequestUserCenterInfo.getJsonObj(s);
+                        if (jsonRequestUserCenterInfo.getCode() == 1) {
+                            userCenterData = jsonRequestUserCenterInfo.getData();
+                            UserModel userModel = SaveData.getInstance().getUserInfo();
+//                            userModel.setIs_open_do_not_disturb(userCenterData.getIs_open_do_not_disturb());
+                            userModel.setAvatar(userCenterData.getAvatar());
+                            userModel.setUser_nickname(userCenterData.getUser_nickname());
+                            SaveData.getInstance().saveData(userModel);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        ToastUtils.showLong("刷新用户数据失败!");
+                    }
+                }
+        );
     }
 
     private void getTaskListData() {
@@ -104,6 +144,34 @@ public class RewardActivity extends BaseActivity {
                 holder.setText(R.id.tv_name, entity.getTitle());
                 holder.setText(R.id.tv_number, "+" + entity.getNum() + "钻石");
                 holder.setText(R.id.tv_content, entity.getDetails());
+
+                TextView tv_comm = holder.getView(R.id.tv_comm);
+                if (entity.getIs_complete() == 0) {
+                    tv_comm.setVisibility(View.VISIBLE);
+                } else {
+                    tv_comm.setVisibility(View.GONE);
+                }
+
+                tv_comm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (entity.getBtn_type() == 1) {
+                            //修改资料
+                            startActivity(new Intent(RewardActivity.this, EditActivity.class));
+                        } else if (entity.getBtn_type() == 2) {
+                            //认证
+                            Intent intent = new Intent(RewardActivity.this, CuckooAuthFormActivity.class);
+                            intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getUser_auth_status()));
+                            startActivity(intent);
+                        } else if (entity.getBtn_type() == 3) {
+                            //首页
+                            startActivity(new Intent(RewardActivity.this, MainActivity.class));
+                        } else if (entity.getBtn_type() == 4) {
+                            //动态
+                            startActivity(new Intent(RewardActivity.this, MainActivity.class));
+                        }
+                    }
+                });
             }
 
             @Override
