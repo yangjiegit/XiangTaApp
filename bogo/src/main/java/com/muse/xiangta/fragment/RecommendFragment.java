@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,7 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
     //头部布局
     private View rollView;
 
+    private TextView tv_title1;
     private FrameLayout fl_supei, fl_yuyin, fl_yuehui, fl_qunliao;
     private ImageView call_icon1;
     private ImageView call_icon2;
@@ -144,6 +146,7 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
         tv_fujin = rollView.findViewById(R.id.tv_fujin);
         view_tuijian = rollView.findViewById(R.id.view_tuijian);
         view_fujin = rollView.findViewById(R.id.view_fujin);
+        tv_title1 = rollView.findViewById(R.id.tv_title1);
 
         mTextList.clear();
         mTextList.add(tv_tuijian);
@@ -158,6 +161,11 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
         fl_yuyin.setOnClickListener(this);
         ll_tuijian.setOnClickListener(this);
         ll_fujin.setOnClickListener(this);
+
+        String str = "<font color='#FA8599'>有缘千里来相会</font>" + "在" +
+                "<font color='#4C8DF3'>天上人间</font>" + "家族送给" + "<font color='#FA8599'>缘来缘去</font>" +
+                "10个" + "<font color='#BA61E4'>[幸福摩天轮]</font>" + ",一起来祝福他们吧！！！";
+        tv_title1.setText(Html.fromHtml(str));
 
         emptyLayout = rollView.findViewById(R.id.recommend_empty_layout);
 
@@ -202,6 +210,10 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_xiuqiu:
+                requestUserData();//服务端请求用户数据并设置到页面
+                clickVideoAuth();
+                break;
             case R.id.ll_tuijian:
                 type = 1;
                 page = 1;

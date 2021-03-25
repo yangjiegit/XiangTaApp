@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.muse.xiangta.R;
@@ -27,6 +28,9 @@ public abstract class BaseListFragment2<T> extends BaseFragment implements BaseQ
 
     @BindView(R.id.rv_content_list)
     protected RecyclerView mRvContentList;
+
+    @BindView(R.id.iv_xiuqiu)
+    ImageView iv_xiuqiu;
 
     protected int page = 1;
 
@@ -50,9 +54,10 @@ public abstract class BaseListFragment2<T> extends BaseFragment implements BaseQ
         baseQuickAdapter.setOnItemChildClickListener(this);
         baseQuickAdapter.setOnLoadMoreListener(this, mRvContentList);
         baseQuickAdapter.disableLoadMoreIfNotFullPage();
-        if (canHasEmptyLayout()){
+        if (canHasEmptyLayout()) {
             baseQuickAdapter.setEmptyView(R.layout.empt_data_layout);
         }
+        iv_xiuqiu.setOnClickListener(this);
 
     }
 
