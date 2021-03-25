@@ -3,7 +3,7 @@ package com.muse.xiangta.ui;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 
 import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.R;
@@ -16,13 +16,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
+import pl.droidsonroids.gif.GifImageView;
 
 public class MatchingActivity extends BaseActivity {
 
-    @BindView(R.id.iv_image)
-    ImageView iv_image;
+    @BindView(R.id.gv_image)
+    GifImageView gv_image;
+    @BindView(R.id.fl_layout)
+    FrameLayout fl_layout;
 
     private String type;
 
@@ -38,14 +42,18 @@ public class MatchingActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        iv_image.setOnClickListener(this);
+        fl_layout.setOnClickListener(this);
     }
 
+    @OnClick(R.id.iv_back)
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
-            case R.id.iv_image:
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.fl_layout:
                 getVideoCallData();
                 break;
         }

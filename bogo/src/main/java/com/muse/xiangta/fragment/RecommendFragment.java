@@ -221,9 +221,11 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
                 startActivity(new Intent(getContext(), VideoDatingActivity.class));
                 break;
             case R.id.fl_supei:
+                requestUserData();//服务端请求用户数据并设置到页面
                 clickVideoAuth();
                 break;
             case R.id.fl_yuyin:
+                requestUserData();//服务端请求用户数据并设置到页面
                 if (null == userCenterData) {
                     return;
                 }

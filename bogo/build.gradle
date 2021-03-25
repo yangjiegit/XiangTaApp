@@ -185,8 +185,8 @@ dependencies {
     api 'com.github.castorflex.verticalviewpager:library:19.0.1'
     api 'com.hyman:flowlayout-lib:1.1.2'
     api 'com.zhy:percent-support-extends:1.1.1'
-    implementation ('com.qiniu:qiniu-android-sdk:8.2.+'){
-        exclude (group: 'com.squareup.okhttp3', module: 'okhttp')
+    implementation('com.qiniu:qiniu-android-sdk:8.2.+') {
+        exclude(group: 'com.squareup.okhttp3', module: 'okhttp')
     }
     implementation 'com.squareup.okhttp3:okhttp:4.2.2'
     api 'com.paypal.sdk:paypal-android-sdk:2.16.0'
@@ -211,6 +211,8 @@ dependencies {
     api 'io.agora.rtc:full-sdk:3.0.1'
     api 'com.wuyr:pathlayoutmanager:1.0.3'
     api 'org.adw.library:discrete-seekbar:1.0.1'
+
+    api 'pl.droidsonroids.gif:android-gif-drawable:1.2.6'
 
     //流式布局
     api 'com.github.1002326270xc:LayoutManager-FlowLayout:v1.8'
