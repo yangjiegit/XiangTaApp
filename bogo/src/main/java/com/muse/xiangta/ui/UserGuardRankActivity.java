@@ -115,7 +115,7 @@ public class UserGuardRankActivity extends BaseActivity {
         requestGetData();
         Utils.loadUserIcon(SaveData.getInstance().getUserInfo().getAvatar(), tv_me_icon);
         tv_me_name.setText(SaveData.getInstance().getUserInfo().getUser_nickname());
-        tv_guard_buy.setEnabled(false);
+//        tv_guard_buy.setEnabled(false);
     }
 
     @Override
