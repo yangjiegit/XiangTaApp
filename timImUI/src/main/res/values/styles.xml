@@ -3,4 +3,10 @@
     <style name="maskDialog" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen">
         <item name="android:windowBackground">@color/colorMask</item>
     </style>
+
+    <!--屏幕下方弹出的菜单-->
+    <style name="animation_bottom_menu">
+        <item name="android:windowEnterAnimation">@anim/window_up_in</item>
+        <item name="android:windowExitAnimation">@anim/window_down_off</item>
+    </style>
 </resources>

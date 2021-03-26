@@ -1,5 +1,6 @@
 package com.muse.chat.ui;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -10,15 +11,19 @@ import android.support.v7.widget.CardView;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -713,10 +718,61 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
             //选择私照发送
             clickSelectPrivatePhoto();
         } else if (id == R.id.btn_video_call) {
-            Common.callVideo(this, identify, 0);
+//            Common.callVideo(this, identify, 0);
+            dialog();
         }
     }
 
+    private void dialog() {
+        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.show();  //注意：必须在window.setContentView之前show
+        Window window = dialog.getWindow();
+        window.setContentView(R.layout.dialog_tonghua);
+        // 这样子 第二和第三个按钮的空隙才会显示出来
+        window.setGravity(Gravity.BOTTOM);//这个也很重要，将弹出菜单的位置设置为底部
+        window.setWindowAnimations(R.style.animation_bottom_menu);//菜单进入和退出屏幕的动画，实现了上下滑动的动画效果
+        window.setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);//设置菜单的尺寸
+
+        TextView tv_yuyin = dialog.findViewById(R.id.tv_yuyin);
+        TextView tv_shipin = dialog.findViewById(R.id.tv_shipin);
+        TextView tv_quxiao = dialog.findViewById(R.id.tv_quxiao);
+
+        tv_yuyin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callVoice();
+                dialog.dismiss();
+            }
+        });
+
+        tv_shipin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callThisPlayer();
+                dialog.dismiss();
+            }
+        });
+
+        tv_quxiao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+    //拨打音频电话
+    private void callVoice() {
+        showToastMsg(getString(R.string.now_call));
+        Common.callVideo(this, identify, 1);
+    }
+
+    //给这个player打电话
+    private void callThisPlayer() {
+        showToastMsg(getString(R.string.now_call));
+        Common.callVideo(this, identify, 0);
+    }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
