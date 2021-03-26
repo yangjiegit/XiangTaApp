@@ -210,9 +210,8 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_xiuqiu:
-                requestUserData();//服务端请求用户数据并设置到页面
-                clickVideoAuth();
+            case R.id.iv_xiuqiu://抛绣球
+                dialogXiuQiu();
                 break;
             case R.id.ll_tuijian:
                 type = 1;
@@ -258,6 +257,32 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
             default:
                 break;
         }
+    }
+
+    private void dialogXiuQiu() {
+        final AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
+        dialog.show();  //注意：必须在window.setContentView之前show
+        Window window = dialog.getWindow();
+        window.setContentView(R.layout.dialog_xiuqiu);
+        //点击确定按钮让对话框消失
+        TextView tv_luzhi = dialog.findViewById(R.id.tv_luzhi);
+        ImageView iv_cha = dialog.findViewById(R.id.iv_cha);
+
+        iv_cha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        tv_luzhi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestUserData();//服务端请求用户数据并设置到页面
+                clickVideoAuth();
+                dialog.dismiss();
+            }
+        });
     }
 
     private void dialog() {

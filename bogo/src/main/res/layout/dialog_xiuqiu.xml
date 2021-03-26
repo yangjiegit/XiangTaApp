@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp_10"
+    android:background="@drawable/bg_white_bt30">
+
+
+    <ImageView
+        android:id="@+id/iv_cha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/dp_10"
+        android:src="@mipmap/img_cha" />
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_cha"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_15"
+        android:text="向小哥哥跑出绣球，是以视频呼叫的方式，向在线多位小哥哥发起视频呼叫，小哥哥接通后，按50钻石/分钟获得收益"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp_13" />
+
+    <TextView
+        android:id="@+id/tv_luzhi"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_35"
+        android:layout_below="@+id/tv_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_40"
+        android:background="@drawable/bg_main_red"
+        android:gravity="center"
+        android:text="立即抛出"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14" />
+</RelativeLayout>
