@@ -92,20 +92,39 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_dashan"
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/dp_20"
             android:background="@drawable/bg_jianbian1"
-            android:gravity="center"
-            android:paddingLeft="@dimen/dp_35"
-            android:paddingTop="@dimen/dp_7"
-            android:paddingRight="@dimen/dp_35"
-            android:paddingBottom="@dimen/dp_7"
-            android:text="搭讪"
-            android:textColor="@color/white" />
+            android:gravity="center_vertical">
+
+            <pl.droidsonroids.gif.GifImageView
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:scaleType="fitXY"
+                android:src="@mipmap/img_xin1" />
+
+
+            <TextView
+                android:id="@+id/tv_dashan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp_35"
+                android:paddingTop="@dimen/dp_7"
+                android:paddingRight="@dimen/dp_35"
+                android:paddingBottom="@dimen/dp_7"
+                android:text="搭讪"
+                android:textColor="@color/white" />
+
+
+        </RelativeLayout>
 
     </LinearLayout>
 
