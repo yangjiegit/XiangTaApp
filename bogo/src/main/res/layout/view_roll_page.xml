@@ -23,10 +23,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <ImageView
+                <pl.droidsonroids.gif.GifImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/home_spsp" />
+                    android:src="@mipmap/homt_title_img1" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -47,10 +47,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <ImageView
+                <pl.droidsonroids.gif.GifImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/home_yysp" />
+                    android:src="@mipmap/homt_title_img2" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -72,10 +72,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <ImageView
+                <pl.droidsonroids.gif.GifImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/home_qlpd" />
+                    android:src="@mipmap/homt_title_img3" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -97,10 +97,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <ImageView
+                <pl.droidsonroids.gif.GifImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/home_spyh" />
+                    android:src="@mipmap/homt_title_img4" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -116,23 +116,30 @@
 
         </LinearLayout>
 
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_60"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
-            android:background="@drawable/bg_main_title"
-            android:padding="@dimen/dp_10">
+            android:background="@drawable/bg_main_title">
+
+            <pl.droidsonroids.gif.GifImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@mipmap/home_title5" />
 
             <TextView
                 android:id="@+id/tv_title1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|left"
+                android:padding="@dimen/dp_10"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dp_12" />
 
-        </RelativeLayout>
+        </FrameLayout>
 
 
         <RelativeLayout
