@@ -21,6 +21,8 @@
     <color name="gray">#808080</color>
     <color name="gray_black">#323232</color>
     <color name="light_gray3">#CCCCCC</color>
+    
+    <color name="cecece">#ffcecece</color>
 
     <color name="message_check_true">#ffF96881</color>
 

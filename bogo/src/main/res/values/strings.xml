@@ -242,7 +242,7 @@
     <string name="contact_custom_service">联系客服</string>
     <string name="version_to_update">版本更新</string>
     <string name="login_out">退出登录</string>
-    <string name="set_call_mony">设置按时付费价格</string>
+    <string name="set_call_mony">收费设置</string>
     <string name="about_me">关于我们</string>
     <string name="determine_change">确认修改</string>
     <string name="loading_now_change">正在修改...</string>

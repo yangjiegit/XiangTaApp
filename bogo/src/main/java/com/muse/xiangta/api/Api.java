@@ -2590,4 +2590,29 @@ public class Api {
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }
+
+    /*
+     * 获取配置信息
+     * */
+    public static void getSetting(String uid, String token, String group, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user/get_diy_setting")
+                .params("uid", uid)
+                .params("token", token)
+                .params("group", group)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 获取配置信息
+     * */
+    public static void setDiySetting(String uid, String token, String group, String charge, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user/set_diy_setting")
+                .params("uid", uid)
+                .params("token", token)
+                .params("group", group)
+                .params("charge", charge)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
 }

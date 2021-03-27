@@ -232,7 +232,7 @@
     <string name="contact_custom_service">聯繫客服</string>
     <string name="version_to_update">版本更新</string>
     <string name="login_out">退出登錄</string>
-    <string name="set_call_mony">請設置按時付費價格</string>
+    <string name="set_call_mony">收费设置</string>
     <string name="about_me">關於我們</string>
     <string name="determine_change">確定修改</string>
     <string name="loading_now_change">正在修改...</string>

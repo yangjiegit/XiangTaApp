@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.muse.xiangta.R;
 import com.muse.xiangta.base.BaseActivity;
@@ -60,6 +61,8 @@ public class WealthDetailedActivity extends BaseActivity {
     @BindView(R.id.title_right_icon)
     View icon;
     Fragment fragment;
+    @BindView(R.id.text_right)
+    RelativeLayout text_right;
 
     @Override
     protected void initView() {
@@ -91,8 +94,9 @@ public class WealthDetailedActivity extends BaseActivity {
             fragment = new MyLevelFragment();
             Utils.initTransTitleBar(title, "等级详情", this);
         } else if (type == TYPE_VIDEO_SET) {
+            text_right.setVisibility(View.VISIBLE);
             fragment = new VideoChargeSetFragment();
-            Utils.initTransTitleBar(title, "视频收费设置", this);
+            Utils.initTransTitleBar(title, "收费设置", this);
         } else if (type == TYPE_FEED_BACK) {
             fragment = new FeedBackFragment();
             Utils.initTransTitleBar(title, "意见反馈", this);
@@ -118,6 +122,19 @@ public class WealthDetailedActivity extends BaseActivity {
     public void onR() {
         //绑定账户
         start(this, TYPE_BIND);
+    }
+
+    @OnClick(R.id.tv_right)
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()) {
+            case R.id.tv_right:
+                if (type == TYPE_VIDEO_SET) {
+                    ((VideoChargeSetFragment)fragment).setComm();
+                }
+                break;
+        }
     }
 
     @Override

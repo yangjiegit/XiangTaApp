@@ -182,9 +182,9 @@ public class SettingActivity extends BaseActivity {
                 //.addItemView(itemUploadFile, this)
                 .addItemView(itemFeedback, this);
 
-        if (sex == 2 && "1".equals(state)) {
+//        if (sex == 2 && "1".equals(state)) {
             section.addItemView(itemSettingVideoMoney, this);
-        }
+//        }
 
         if (sex == 2) {
             section.addItemView(itemContact, this);
