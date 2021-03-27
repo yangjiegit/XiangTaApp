@@ -51,11 +51,20 @@ public class TargetUserData {
     private List<PicturesBean> pictures;
     private List<ImgBean> img;
     private String sign;
+    private String declaration;
     private String voice_deduction;
     private String is_visible_bottom_btn;
     private List<UserModel> guardian_user_list;
     private String signature;
     private String is_vip;
+
+    public String getDeclaration() {
+        return declaration;
+    }
+
+    public void setDeclaration(String declaration) {
+        this.declaration = declaration;
+    }
 
     public String getDeclaration_length() {
         return declaration_length;

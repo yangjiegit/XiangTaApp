@@ -1,6 +1,8 @@
 package com.muse.xiangta.adapter.recycler;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,12 +14,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.muse.xiangta.R;
 import com.muse.xiangta.api.ApiUtils;
+import com.muse.xiangta.audiorecord.AudioPlaybackManager;
 import com.muse.xiangta.json.jsonmodle.TargetUserData;
 import com.muse.xiangta.modle.ConfigModel;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
 import com.muse.xiangta.widget.BGLevelTextView;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,29 +29,18 @@ import java.util.List;
  * Created by wp on 2017/12/28 0028.
  */
 public class RecyclerRecommendAdapter extends BaseQuickAdapter<TargetUserData, BaseViewHolder> {
+
     private Context context;
-    private int itemWidth;
-    private int itemHeight;
-    private int dp1;
-    private int margin;
-    //private final int margin;
+    protected AnimationDrawable animationDrawable;
 
     //构造方法,用于传入数据参数
     public RecyclerRecommendAdapter(Context context, @Nullable List<TargetUserData> data) {
         super(R.layout.adapter_user, data);
         this.context = context;
-
-//        dp1 = ConvertUtils.dp2px(1);
-//        margin = dp1 * 6;
-//        itemWidth = ScreenUtils.getScreenWidth() / 2 - dp1 * 8;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, TargetUserData item) {
-//        RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, itemWidth + (itemWidth / 3));
-//        params.setMargins(margin, margin, margin, margin);
-//        helper.getConvertView().setLayoutParams(params);
-
         TextView pagemsg_view_sign = helper.getView(R.id.pagemsg_view_sign);
         RelativeLayout rl_yinpin = helper.getView(R.id.rl_yinpin);
 
@@ -79,7 +72,35 @@ public class RecyclerRecommendAdapter extends BaseQuickAdapter<TargetUserData, B
                 helper.setText(R.id.pagemsg_view_sign, "暂未设置签名");
             }
         }
+        animationDrawable = new AnimationDrawable();
 
+        rl_yinpin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //从网路加载音乐
+                try {
+                    AudioPlaybackManager.getInstance().playAudio(item.getDeclaration(), new AudioPlaybackManager.OnPlayingListener() {
+                        @Override
+                        public void onStart() {
+                            animationDrawable.start();
+                        }
+
+                        @Override
+                        public void onStop() {
+                            animationDrawable.stop();
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            animationDrawable.stop();
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
         ((BGLevelTextView) helper.getView(R.id.tv_level)).setLevelInfo(item.getSex(), item.getLevel());
     }

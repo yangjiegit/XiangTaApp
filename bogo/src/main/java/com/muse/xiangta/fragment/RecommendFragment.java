@@ -3,6 +3,7 @@ package com.muse.xiangta.fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -76,8 +77,6 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
     private ArrayList<BannerImgBean> rollImg = new ArrayList<>();
     private RelativeLayout emptyLayout;
     private int type = 1;
-    //    private RecyclerView mBannerRv;
-
 
     private UserCenterData userCenterData;//个人中心接口返回信息
 
