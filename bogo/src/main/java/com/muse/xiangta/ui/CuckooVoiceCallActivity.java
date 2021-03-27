@@ -301,7 +301,7 @@ public class CuckooVoiceCallActivity extends BaseActivity implements GiftBottomD
      * 被呼叫视频通话用户View初始化
      */
     private void initBeCallView() {
-        videoGift.setVisibility(View.GONE);
+        videoGift.setVisibility(View.VISIBLE);
     }
 
     @Override
