@@ -572,102 +572,6 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
 
     }
 
-    //切换视图
-//    private void switchVideoView() {
-//        if (videoViewStatus == 1) {
-//            //ToastUtils.showLong("1");
-//            //surfaceView.setZOrderMediaOverlay(true);
-//            //创建视频渲染视图, 设置本地视频视图##初始化本地视图
-//            SurfaceView surfaceView = RtcEngine.CreateRendererView(getBaseContext());
-//            surfaceView.setTag(videoUid);
-//            video_chat_small.addView(surfaceView);
-//            surfaceView.setZOrderMediaOverlay(true);
-//
-//            //网络放小窗
-//            smallVideoCanvas = new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, videoUid);
-//            rtcEngine().setupRemoteVideo(smallVideoCanvas);
-//
-//
-//            SurfaceView surfaceView2 = RtcEngine.CreateRendererView(getBaseContext());
-//            video_chat_big.addView(surfaceView2);
-//
-//            //本地放大窗
-//            bigVideoCanvas = new VideoCanvas(surfaceView2, VideoCanvas.RENDER_MODE_HIDDEN, 0);
-//            rtcEngine().setupLocalVideo(bigVideoCanvas);
-//
-//            videoViewStatus = 2;
-//
-//        } else {
-//
-//            //ToastUtils.showLong("2");
-//            //创建视频渲染视图, 设置本地视频视图##初始化本地视图
-//            SurfaceView surfaceView = RtcEngine.CreateRendererView(getBaseContext());
-//            video_chat_small.addView(surfaceView);
-//            surfaceView.setZOrderMediaOverlay(true);
-//
-//            //本地放小窗
-//            smallVideoCanvas = new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, 0);
-//            rtcEngine().setupLocalVideo(smallVideoCanvas);
-//
-//            SurfaceView surfaceView2 = RtcEngine.CreateRendererView(getBaseContext());
-//            surfaceView2.setTag(videoUid);
-//            video_chat_big.addView(surfaceView2);
-//
-//            //网络放大窗
-//            bigVideoCanvas = new VideoCanvas(surfaceView2, VideoCanvas.RENDER_MODE_HIDDEN, videoUid);
-//            rtcEngine().setupRemoteVideo(bigVideoCanvas);
-//
-//            videoViewStatus = 1;
-//        }
-//
-//        if (!isOpenCamera) {
-//            if (videoViewStatus == 1) {
-////                smallVideoViewBac.setVisibility(View.VISIBLE);
-////                bigVideoViewBac.setVisibility(View.GONE);
-//            } else {
-////                smallVideoViewBac.setVisibility(View.GONE);
-////                bigVideoViewBac.setVisibility(View.VISIBLE);
-//            }
-//        }
-//    }
-
-    /**
-     * 创建视频渲染视图, 设置远端视频视图
-     * <p>
-     * //     * @param uid 用户uid
-     */
-//    private void setupRemoteVideo(int uid) {
-//        //创建视频渲染视图, 设置远端视频视图
-//        if (video_chat_big.getChildCount() >= 1) {
-//            return;
-//        }
-//        SurfaceView surfaceView = RtcEngine.CreateRendererView(getBaseContext());
-//        surfaceView.setTag(uid);
-//        video_chat_big.addView(surfaceView);
-//        videoUid = uid;
-//
-//        bigVideoCanvas = new VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, uid);
-//        mRtcEngine.setupRemoteVideo(bigVideoCanvas);
-//    }
-
-    //移除目标组件所有视图文件
-//    private void onRemoteUserLeft() {
-//        video_chat_big.removeAllViews();
-//        //hangUpVideo();
-//    }
-
-    //初始化目标视图
-//    private void onRemoteUserVideoMuted(int uid, boolean muted) {
-//        SurfaceView surfaceView = (SurfaceView) video_chat_big.getChildAt(0);
-//        if (surfaceView == null) {
-//            return;
-//        }
-//        Object tag = surfaceView.getTag();
-//        if (tag != null && (Integer) tag == uid) {
-//            surfaceView.setVisibility(muted ? View.GONE : View.VISIBLE);
-//        }
-//    }
-
 
     //开关摄像头
     private void closeCamera() {
@@ -788,82 +692,6 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
         }
     }
 
-
-    /**
-     * 回调监听
-     */
-//    private final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() { // Tutorial Step 1
-//
-//        @Override
-//        public void onFirstRemoteVideoDecoded(final int uid, int width, int height, int elapsed) {
-//            // 在第一个远程的
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    setupRemoteVideo(uid);
-//                }
-//            });
-//        }
-//
-//        @Override
-//        public void onUserOffline(final int uid, int reason) {
-//            //用户不在线
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    if (uid != 1) {
-//                        onRemoteUserLeft();
-//                    }
-//                }
-//            });
-//        }
-//
-//        @Override
-//        public void onUserMuteVideo(final int uid, final boolean muted) {
-//            // 在用户静音视频
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    onRemoteUserVideoMuted(uid, muted);
-//                }
-//            });
-//        }
-//
-//
-//        @Override
-//        public void onUserEnableVideo(int uid, final boolean enabled) {
-//
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    if (enabled) {
-//                        LogUtils.e("agora:" + "onUserEnableVideo" + enabled);
-//                        video_chat_big.setVisibility(View.VISIBLE);
-//                    } else {
-//                        LogUtils.e("agora:" + "onUserEnableVideo" + enabled);
-//                        video_chat_big.setVisibility(View.GONE);
-//                    }
-//                }
-//            });
-//        }
-//
-//        @Override
-//        public void onUserEnableLocalVideo(int uid, final boolean enabled) {
-//
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    if (enabled) {
-//                        LogUtils.e("agora:" + "onUserEnableLocalVideo" + enabled);
-//                        video_chat_big.setVisibility(View.VISIBLE);
-//                    } else {
-//                        LogUtils.e("agora:" + "onUserEnableLocalVideo" + enabled);
-//                        video_chat_big.setVisibility(View.GONE);
-//                    }
-//                }
-//            });
-//        }
-//    };
 
     /**
      * 退出聊天
@@ -1042,31 +870,6 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
     protected void onDestroy() {
         super.onDestroy();
 
-//        if (cuckooVideoLineTimeBusiness != null) {
-//            cuckooVideoLineTimeBusiness.stop();
-//        }
-//
-//        if (getVideoTimeInfoTask != null) {
-//            getVideoTimeInfoTask.stopRunnable();
-//        }
-//        leaveChannel();
-//        RtcEngine.destroy();
-//
-//        if (DialogH5Activity.instance != null) {
-//            DialogH5Activity.instance.finish();
-//        }
-//
-////        if (cuckooCheckRateBusiness != null) {
-////            cuckooCheckRateBusiness.stopCheck();
-////        }
-//
-//        if (tiSDKManager != null) {
-//            // --- boGoBeauty start ---
-////            mVideoPreProcessing.enablePreProcessing(false);
-//            tiSDKManager.destroy();
-//            // --- boGoBeauty end ---
-//        }
-
 
         if (cuckooVideoLineTimeBusiness != null) {
             cuckooVideoLineTimeBusiness.stop();
@@ -1083,15 +886,9 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
             DialogH5Activity.instance.finish();
         }
 
-//        if (cuckooCheckRateBusiness != null) {
-//            cuckooCheckRateBusiness.stopCheck();
-//        }
 
         if (tiSDKManager != null) {
-            // --- boGoBeauty start ---
-//            mVideoPreProcessing.enablePreProcessing(false);
             tiSDKManager.destroy();
-            // --- boGoBeauty end ---
         }
     }
 
@@ -1245,12 +1042,6 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
             UserModel sender = realCustomMsg.getSender();
             String user_nickname = sender.getUser_nickname();
 
-//            String user_nickname = "";
-//            if (timMessage.getSender().equals(chatData.getUserModel().getId())) {
-//                user_nickname = chatData.getUserModel().getUser_nickname();
-//            } else if (timMessage.getSender().equals(SaveData.getInstance().getId())) {
-//                user_nickname = SaveData.getInstance().userModel.getUser_nickname();
-//            }
             if (mGiftAnimationContentView != null) {
                 if (!TextUtils.isEmpty(stringBuilder.toString().trim())) {
                     guardInfoList.add(user_nickname + ":" + stringBuilder.toString());
