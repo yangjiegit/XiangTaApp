@@ -720,7 +720,6 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
         super.doLogout();
         leaveChannel();
         RtcEngine.destroy();
-//        mRtcEngine = null;
         CuckooApplication.getInstance().rtcEngineNull();
     }
 
