@@ -324,6 +324,7 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
         initVideoModule();
         if (null == rtcEngine()) {
             CuckooApplication.getInstance().initRtcEngine();
+            rtcEngine().enableVideo();
             rtcEngine().setVideoSource(new RtcVideoConsumer());
         } else {
             rtcEngine().setVideoSource(new RtcVideoConsumer());

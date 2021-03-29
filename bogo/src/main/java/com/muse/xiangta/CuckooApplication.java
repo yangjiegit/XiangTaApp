@@ -189,7 +189,6 @@ public class CuckooApplication extends Application {
         mRtcEventHandler = new RtcEngineEventHandlerProxy();
         try {
             mRtcEngine = RtcEngine.create(this, appId, mRtcEventHandler);
-            mRtcEngine.enableVideo();
             mRtcEngine.setChannelProfile(io.agora.rtc.Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
         } catch (Exception e) {
             throw new RuntimeException("NEED TO check rtc sdk init fatal error\n" + Log.getStackTraceString(e));
