@@ -673,21 +673,11 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
     private void closeCamera() {
         if (isOpenCamera) {
             //关闭摄像头
-            rtcEngine().enableLocalVideo(false);
-            if (videoViewStatus == 1) {
-//                smallVideoViewBac.setVisibility(View.VISIBLE);
-//                bigVideoViewBac.setVisibility(View.GONE);
-            } else {
-//                smallVideoViewBac.setVisibility(View.GONE);
-//                bigVideoViewBac.setVisibility(View.VISIBLE);
-            }
+            rtcEngine().muteLocalVideoStream(true);
             iv_close_camera.setImageResource(R.mipmap.ic_close_camera);
             ToastUtils.showLong("摄像头已关闭");
         } else {
-            rtcEngine().enableLocalVideo(true);
-//            video_chat_small.setVisibility(View.VISIBLE);
-//            smallVideoViewBac.setVisibility(View.GONE);
-//            bigVideoViewBac.setVisibility(View.GONE);
+            rtcEngine().muteLocalVideoStream(false);
             iv_close_camera.setImageResource(R.mipmap.ic_open_camera);
             ToastUtils.showLong("摄像头已打开");
         }
