@@ -12,6 +12,7 @@ import android.widget.VideoView;
 import com.muse.xiangta.R;
 import com.muse.xiangta.base.BaseActivity;
 import com.muse.xiangta.modle.VideoBean;
+import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.utils.GlideImgManager;
 
 import butterknife.BindView;
@@ -51,6 +52,28 @@ public class VideoDetailsActivity extends BaseActivity {
     protected void initSet() {
 
     }
+
+    /**
+     * 视频播放的位置
+     */
+    private int mVideoCurrantPosition = 0;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //如果视频播放过程中切换到home再次打开继续播放视频
+        videoView.seekTo(mVideoCurrantPosition);
+        videoView.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //在视频播放过程中切换到home停止播放视频，并且记录下当前的播放位置
+        mVideoCurrantPosition = videoView.getCurrentPosition();
+        videoView.pause();
+    }
+
 
     @Override
     protected void initData() {
@@ -158,7 +181,7 @@ public class VideoDetailsActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.iv_back)
+    @OnClick({R.id.iv_back, R.id.ll_button, R.id.tv_message})
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -166,7 +189,22 @@ public class VideoDetailsActivity extends BaseActivity {
             case R.id.iv_back:
                 finish();
                 break;
+            case R.id.ll_button:
+                callThisPlayer();
+                break;
+            case R.id.tv_message:
+                showChatPage();
+                break;
         }
+    }
+
+    private void showChatPage() {
+        Common.startPrivatePage(this, mData.getUid() + "");
+    }
+
+    private void callThisPlayer() {
+        showToastMsg(getString(R.string.now_call));
+        Common.callVideo(this, mData.getUid() + "", 0);
     }
 
     @Override
