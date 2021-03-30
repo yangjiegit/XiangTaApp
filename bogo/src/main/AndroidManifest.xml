@@ -345,6 +345,9 @@
             android:name=".ui.MyCarActivity"
             android:screenOrientation="portrait" /> <!--我的座驾 -->
         <activity
+            android:name=".ui.XieYiActivity"
+            android:screenOrientation="portrait" /> <!--我的座驾 -->
+        <activity
             android:name=".ui.MemberGroupListActivity"
             android:screenOrientation="portrait" /> <!--群聊成员列表 -->
         <activity

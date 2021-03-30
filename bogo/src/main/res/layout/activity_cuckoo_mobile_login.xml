@@ -125,6 +125,17 @@
                 </com.zhy.android.percent.support.PercentRelativeLayout>
 
 
+                <TextView
+                    android:id="@+id/tv_xieyi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp_10"
+                    android:text="登录注册即代表同意《隐私协议》"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp_12" />
+
                 <Button
                     android:id="@+id/btn_submit"
                     android:layout_width="match_parent"

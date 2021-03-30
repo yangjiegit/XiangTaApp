@@ -112,7 +112,8 @@ public class CuckooMobileLoginActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.ll_wechat, R.id.ll_qq, R.id.ll_facebook, R.id.tv_send_code, R.id.btn_submit})
+    @OnClick({R.id.ll_wechat, R.id.ll_qq, R.id.ll_facebook, R.id.tv_send_code, R.id.btn_submit
+            , R.id.tv_xieyi})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -131,7 +132,12 @@ public class CuckooMobileLoginActivity extends BaseActivity {
             case R.id.ll_facebook:
                 clickFacebook();
                 break;
-
+            case R.id.tv_xieyi:
+                String intStr = "7";
+                String url = "http://xiangta.zzmzrj.com/admin/public/index.php/page/article/index/id/" + intStr + ".html";
+                startActivity(new Intent(this, XieYiActivity.class)
+                        .putExtra("title", "隐私协议").putExtra("url", url));
+                break;
             default:
                 break;
         }

@@ -2626,6 +2626,7 @@ public class Api {
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }
+
     /*
      * 申请入驻
      * */
@@ -2636,4 +2637,6 @@ public class Api {
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }
+
+
 }
