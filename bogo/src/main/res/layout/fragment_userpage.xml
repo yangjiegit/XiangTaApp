@@ -339,6 +339,7 @@
 
 
                     <RelativeLayout
+                        android:visibility="gone"
                         android:id="@+id/ll_phone"
                         style="@style/persion_list_ll_style"
                         android:layout_marginLeft="@dimen/dp_10">

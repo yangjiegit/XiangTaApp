@@ -344,6 +344,7 @@ public class CuckooVoiceCallActivity extends BaseActivity implements GiftBottomD
         //初始化RtcEngine对象
         try {
             mRtcEngine = RtcEngine.create(getBaseContext(), ConfigModel.getInitData().getApp_qgorq_key(), mRtcEventHandler);
+            Log.d("ret", "joker       appid     " + ConfigModel.getInitData().getApp_qgorq_key());
         } catch (Exception e) {
             throw new RuntimeException("NEED TO check rtc sdk init fatal error\n" + Log.getStackTraceString(e));
         }

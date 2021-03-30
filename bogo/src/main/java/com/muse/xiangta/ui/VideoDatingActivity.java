@@ -1,6 +1,7 @@
 package com.muse.xiangta.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -136,6 +137,14 @@ public class VideoDatingActivity extends BaseActivity {
                 ++page;
                 limit = 10;
                 getUserVideoData(page, limit);
+            }
+        });
+
+        mAdapter.setOnRecyclerViewItemClickListener(new CommonRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                startActivity(new Intent(VideoDatingActivity.this, VideoDetailsActivity.class)
+                        .putExtra("data", mList.get(position)));
             }
         });
     }
