@@ -577,6 +577,12 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
     private void initDisplayData() {
         initViewPagerData();
 
+        if (Integer.valueOf(uId) == targetUserData.getData().getId()) {
+            tv_guanzhu.setVisibility(View.GONE);
+        } else {
+            tv_guanzhu.setVisibility(View.VISIBLE);
+        }
+
         tv_user_id.setText("ID:" + targetUserData.getData().getId() + "   |   粉丝:"
                 + targetUserData.getData().getAttention_fans() + "   |   " +
                 targetUserData.getData().getAddress());
@@ -736,14 +742,14 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
                     public void onSuccess(String s, Call call, Response response) {
                         super.onSuccess(s, call, response);
                         if (!StringUtils.isEmpty(s)) {
-//                            targetUserData = new Gson().fromJson(s, TargetUserData2.class);
                             try {
                                 int code = new JSONObject(s).getInt("code");
+                                int follow = new JSONObject(s).getInt("follow");
                                 if (code == 1) {
-                                    if (StringUtils.toInt(targetUserData.getData().getAttention()) == 1) {
-//                                        targetUserData.getData().setAttention("0");
+                                    if (follow == 1) {
+                                        targetUserData.getData().setAttention(1);
                                     } else {
-//                                        targetUserData.getData().setAttention("1");
+                                        targetUserData.getData().setAttention(0);
                                     }
                                     userLoveMe.setBackgroundResource(StringUtils.toInt(targetUserData.getData().getAttention()) == 1 ? R.mipmap.followed_bat : R.mipmap.follow_bat);
                                     if (StringUtils.toInt(targetUserData.getData().getAttention()) == 1) {
