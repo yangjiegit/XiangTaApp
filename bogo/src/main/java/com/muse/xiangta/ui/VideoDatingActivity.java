@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -154,12 +155,16 @@ public class VideoDatingActivity extends BaseActivity {
 
     }
 
+    @OnClick(R.id.tv_apply)
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.tv_apply:
+                startActivity(new Intent(this, ApplyActivity.class));
                 break;
         }
     }

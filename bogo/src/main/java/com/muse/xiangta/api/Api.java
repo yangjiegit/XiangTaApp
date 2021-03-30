@@ -2604,7 +2604,7 @@ public class Api {
     }
 
     /*
-     * 获取配置信息
+     *
      * */
     public static void setDiySetting(String uid, String token, String group, String charge, StringCallback stringCallback) {
         OkGo.post(AppConfig.API_DOMAIN + "/user/set_diy_setting")
@@ -2612,6 +2612,27 @@ public class Api {
                 .params("token", token)
                 .params("group", group)
                 .params("charge", charge)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 申请入驻页面
+     * */
+    public static void applyInfo(String uid, String token, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user_video_api/apply_info")
+                .params("uid", uid)
+                .params("token", token)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+    /*
+     * 申请入驻
+     * */
+    public static void apply(String uid, String token, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user_video_api/apply")
+                .params("uid", uid)
+                .params("token", token)
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }
