@@ -44,15 +44,25 @@ android {
         flavorDimensions "versionCode"
     }
 
-    //签名
-//    signingConfigs {
-//        release {
-//            storeFile file("../muse.jks")
-//            storePassword "123456"
-//            keyAlias "muse"
-//            keyPassword "123456"
-//        }
-//    }
+
+    signingConfigs {
+
+        debug {
+            storeFile file("yunmeibao.jks")
+            storePassword "123456"
+            keyAlias "yunmeibao"
+            keyPassword "123456"
+        }
+
+        release {
+            storeFile file("yunmeibao.jks")
+            storePassword "123456"
+            keyAlias "yunmeibao"
+            keyPassword "123456"
+        }
+
+    }
+
 
     // --- boGoBeauty start ---
     externalNativeBuild {

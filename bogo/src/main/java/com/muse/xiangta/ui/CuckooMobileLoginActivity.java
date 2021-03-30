@@ -11,6 +11,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.fm.openinstall.OpenInstall;
+import com.fm.openinstall.listener.AppInstallAdapter;
+import com.fm.openinstall.model.AppData;
+import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.muse.xiangta.R;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.api.ApiUtils;
@@ -21,16 +25,17 @@ import com.muse.xiangta.modle.ConfigModel;
 import com.muse.xiangta.modle.CuckooOpenInstallModel;
 import com.muse.xiangta.ui.common.LoginUtils;
 import com.muse.xiangta.utils.Utils;
-import com.fm.openinstall.OpenInstall;
-import com.fm.openinstall.listener.AppInstallAdapter;
-import com.fm.openinstall.model.AppData;
-import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jiguang.verifysdk.api.AuthPageEventListener;
+import cn.jiguang.verifysdk.api.JVerificationInterface;
+import cn.jiguang.verifysdk.api.LoginSettings;
+import cn.jiguang.verifysdk.api.PreLoginListener;
+import cn.jiguang.verifysdk.api.VerifyListener;
 import cn.sharesdk.facebook.Facebook;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
@@ -79,7 +84,7 @@ public class CuckooMobileLoginActivity extends BaseActivity {
         //QMUIStatusBarHelper.translucent(this); // 沉浸式状态栏
         //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getTopBar().setTitle(getString(R.string.login));
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.admin_color), 0);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.transparent), 0);
         //StatusBarUtil.setColor(this,getResources().getColor(R.color.white));
         QMUIStatusBarHelper.setStatusBarLightMode(this);
         ConfigModel config = ConfigModel.getInitData();
@@ -113,10 +118,13 @@ public class CuckooMobileLoginActivity extends BaseActivity {
     }
 
     @OnClick({R.id.ll_wechat, R.id.ll_qq, R.id.ll_facebook, R.id.tv_send_code, R.id.btn_submit
-            , R.id.tv_xieyi})
+            , R.id.tv_xieyi, R.id.tv_login_type})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_login_type:
+                yijian();
+                break;
             case R.id.tv_send_code:
                 clickSendCode();
                 break;
@@ -141,6 +149,44 @@ public class CuckooMobileLoginActivity extends BaseActivity {
             default:
                 break;
         }
+    }
+
+    private void yijian() {
+//        JVerificationInterface.getToken(this, 5000, new VerifyListener() {
+//            @Override
+//            public void onResult(int code, String content, String operator) {
+//                if (code == 2000) {
+//                    Log.d("ret", "joker   token=" + content + ", operator=" + operator);
+//                } else {
+//                    Log.d("ret", "joker   code=" + code + ", message=" + content);
+//                }
+//            }
+//        });
+//        JVerificationInterface.preLogin(this, 5000, new PreLoginListener() {
+//            @Override
+//            public void onResult(final int code, final String content) {
+//                Log.d("ret", "joker     [" + code + "]message=" + content);
+//            }
+//        });
+        LoginSettings settings = new LoginSettings();
+        settings.setAutoFinish(true);//设置登录完成后是否自动关闭授权页
+        settings.setTimeout(15 * 1000);//设置超时时间，单位毫秒。 合法范围（0，30000],范围以外默认设置为10000
+        settings.setAuthPageEventListener(new AuthPageEventListener() {
+            @Override
+            public void onEvent(int cmd, String msg) {
+                //do something...
+            }
+        });//设置授权页事件监听
+        JVerificationInterface.loginAuth(this, settings, new VerifyListener() {
+            @Override
+            public void onResult(int code, String content, String operator) {
+                if (code == 6000) {
+                    Log.d("ret", "joker  code=" + code + ", token=" + content + " ,operator=" + operator);
+                } else {
+                    Log.d("ret", "joker  code=" + code + ", message=" + content);
+                }
+            }
+        });
     }
 
     private void clickDoLogin() {
