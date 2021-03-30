@@ -26,9 +26,9 @@ android {
         }
 
         manifestPlaceholders = [
-                JPUSH_PKGNAME : applicationId,
+                JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "49f23fe0d4983b1bec8f0382", //Portal上注册的包名对应的 appKey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
 
         //--- boGoBeauty start ---
@@ -220,8 +220,8 @@ dependencies {
 
     api 'pl.droidsonroids.gif:android-gif-drawable:1.2.6'
 
-    api 'cn.jiguang.sdk:jverification:2.6.4'  // 此处以2.6.4 版本为例。
-    api 'cn.jiguang.sdk:jcore:2.3.4'  // 此处以JCore 2.3.4 版本为例。
+    api 'cn.jiguang.sdk:jverification:2.6.9'  // 此处以2.6.4 版本为例。
+    api 'cn.jiguang.sdk:jcore:2.7.6'  // 此处以JCore 2.3.4 版本为例。
 
     //流式布局
     api 'com.github.1002326270xc:LayoutManager-FlowLayout:v1.8'

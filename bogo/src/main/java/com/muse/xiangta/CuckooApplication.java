@@ -78,6 +78,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 
+import cn.jiguang.verifysdk.api.JVerificationInterface;
+import cn.jiguang.verifysdk.api.RequestCallback;
 import io.agora.capture.video.camera.CameraVideoManager;
 import io.agora.rtc.RtcEngine;
 
@@ -159,6 +161,7 @@ public class CuckooApplication extends Application {
         mMainThread = Thread.currentThread();
         mMainHandler = new Handler();
 
+        initJiGuang();
         initTbs();
         //初始化库
         initOpenInstall();
@@ -178,6 +181,15 @@ public class CuckooApplication extends Application {
         registerActivityLifecycleCallbacks(new CuckooLifecycleHandler());
         //registerActivityLifecycleCallbacks(new ActivityHelper());
         closeAndroidPDialog();
+    }
+
+    private void initJiGuang() {
+        JVerificationInterface.init(this, 5000, new RequestCallback<String>() {
+            @Override
+            public void onResult(int code, String msg) {
+                Log.d("ret", "joker       code = " + code + " msg = " + msg);
+            }
+        });
     }
 
     public void initRtcEngine() {
