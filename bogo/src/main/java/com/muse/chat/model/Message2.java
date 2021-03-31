@@ -24,6 +24,10 @@ public abstract class Message2 {
 
     TIMMessage message;
 
+    private String name;
+
+    private String avatar;
+
     public boolean hasTime;
 
     /**
@@ -35,6 +39,11 @@ public abstract class Message2 {
     public TIMMessage getMessage() {
 
         return message;
+    }
+
+    public void setSendData(String name, String avatar) {
+        this.name = name;
+        this.avatar = avatar;
     }
 
 
@@ -80,8 +89,8 @@ public abstract class Message2 {
             viewHolder.sender.setText(SaveData.getInstance().getUserInfo().getUser_nickname());
             Utils.loadHttpImg(SaveData.getInstance().getUserInfo().getAvatar(), viewHolder.rightAvatar);
         } else {
-            viewHolder.sender.setText(((ChatActivity2) context).getUserName());
-            Utils.loadHttpImg(((ChatActivity2) context).getAvatar(), viewHolder.leftAvatar);
+            viewHolder.sender.setText(name);
+            Utils.loadHttpImg(avatar, viewHolder.leftAvatar);
         }
 
 //        viewHolder.sender.setText(userModel.getUser_nickname());

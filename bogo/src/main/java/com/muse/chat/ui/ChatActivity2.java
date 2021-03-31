@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.support.v7.widget.CardView;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.muse.chat.adapter.ChatAdapter2;
@@ -51,6 +53,7 @@ import com.muse.xiangta.inter.JsonCallback;
 import com.muse.xiangta.json.JsonRequest;
 import com.muse.xiangta.json.JsonRequestDoPrivateSendGif;
 import com.muse.xiangta.manage.SaveData;
+import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
 import com.muse.xiangta.modle.custommsg.InputListenerMsgText;
@@ -73,6 +76,8 @@ import com.tencent.qcloud.ui.VoiceSendingView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -366,6 +371,37 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         int newMsgNum = 0;
         for (int i = 0; i < messages.size(); ++i) {
             Message2 mMessage = MessageFactory2.getMessage(messages.get(i));
+
+            String name = messages.get(i).getSenderGroupMemberProfile().getUser();
+
+            Api.getUserHomePageInfo(name, uId, uToken, new JsonCallback() {
+                @Override
+                public void onSuccess(String s, Call call, Response response) {
+                    super.onSuccess(s, call, response);
+                    Log.d("ret", "joker     查询数据==" + s);
+                    if (!StringUtils.isEmpty(s)) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(s);
+                            JSONObject jsonData = jsonObject.getJSONObject("data");
+                            String name = jsonData.getString("user_nickname");
+                            String avatar = jsonData.getString("avatar");
+                            mMessage.setSendData(name, avatar);
+                            adapter.notifyDataSetChanged();
+                            Log.d("ret", "joker     发送者名字===" + name + "     头像" + avatar);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public Context getContextToJson() {
+
+                    return null;
+                }
+            });
+
+
             if (mMessage == null || messages.get(i).status() == TIMMessageStatus.HasDeleted) {
                 continue;
             }
