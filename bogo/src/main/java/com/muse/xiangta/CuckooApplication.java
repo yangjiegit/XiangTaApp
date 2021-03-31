@@ -544,6 +544,7 @@ public class CuckooApplication extends Application {
                                 for (int i = 0; i < message.getElementCount(); ++i) {
 
                                     TIMElem elem = message.getElement(i);
+                                    Log.d("ret", "joker      聊天  " + message.getSender());
                                     LogUtils.i("msg发送方" + message.getSender());
 //                                    if (message.getSender().equals("admin")) {
 //                                        return;

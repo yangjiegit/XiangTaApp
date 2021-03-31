@@ -9,14 +9,14 @@ public class JsonRequestDoGetVideoEndInfo extends JsonRequestBase {
     private String video_count;
     private String gift_count;
     private String total_count;
-    private String is_follow;
+    private String is_call_be_user;
 
     public String getIs_follow() {
-        return is_follow;
+        return is_call_be_user;
     }
 
     public void setIs_follow(String is_follow) {
-        this.is_follow = is_follow;
+        this.is_call_be_user = is_follow;
     }
 
     public String getVideo_count() {
