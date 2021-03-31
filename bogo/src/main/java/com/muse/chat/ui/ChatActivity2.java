@@ -335,7 +335,8 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                 } else {
                     mMessage.setHasTime(messageList.get(messageList.size() - 1).getMessage());
                 }
-                if (!StringUtils.isEmpty(mMessage.getSender())) {
+                boolean flag = mMessage.getSender().contains("@");
+                if (!StringUtils.isEmpty(mMessage.getSender()) && !flag) {
                     messageList.add(mMessage);
                 }
                 adapter.notifyDataSetChanged();
@@ -414,8 +415,9 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                 ++newMsgNum;
                 if (i != messages.size() - 1) {
                     mMessage.setHasTime(messages.get(i + 1));
+                    boolean flag = mMessage.getSender().contains("@");
                     Log.d("ret", "joker     发送者   " + mMessage.getSender());
-                    if (!StringUtils.isEmpty(mMessage.getSender())) {
+                    if (!StringUtils.isEmpty(mMessage.getSender()) && !flag) {
                         messageList.add(0, mMessage);
                     }
                 } else {
