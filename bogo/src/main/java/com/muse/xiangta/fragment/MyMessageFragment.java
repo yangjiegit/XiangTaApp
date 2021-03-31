@@ -17,6 +17,7 @@ import com.muse.xiangta.adapter.CommonRecyclerViewHolder;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseFragment;
 import com.muse.xiangta.modle.MessageBean;
+import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.utils.GlideImgManager;
 import com.muse.xiangta.utils.StringUtils;
 
@@ -99,6 +100,13 @@ public class MyMessageFragment extends BaseFragment {
         };
 
         rv_data.setAdapter(mAdapter);
+
+        mAdapter.setOnRecyclerViewItemClickListener(new CommonRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Common.jumpUserPage(getContext(), String.valueOf(mList.get(position).getId()));
+            }
+        });
     }
 
     @Override
