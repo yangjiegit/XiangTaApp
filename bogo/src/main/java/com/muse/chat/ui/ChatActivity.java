@@ -501,10 +501,10 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
             return;
         }
 
-//        if (!Utils.dirtyWordFilter(input.getText().toString())) {
-//            showToast("发送内容包含敏感词汇!");
-//            return;
-//        }
+        if (!Utils.dirtyWordFilter(input.getText().toString())) {
+            showToast("发送内容包含敏感词汇!");
+            return;
+        }
 
         if (!checkSendMessage(SEND_TEXT_MESSAGE)) {
             return;

@@ -1,13 +1,13 @@
 package com.muse.xiangta.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.muse.xiangta.R;
 import com.muse.xiangta.base.BaseActivity;
-import com.muse.xiangta.fragment.GuardFragment;
 import com.muse.xiangta.fragment.MyMessageFragment;
 
 import java.util.ArrayList;
@@ -59,11 +59,17 @@ public class GuardActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.ll_wo, R.id.ll_ta})
+    @OnClick({R.id.ll_wo, R.id.ll_ta, R.id.iv_web})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.iv_web:
+                String intStr = "17";
+                String url = "http://xiangta.zzmzrj.com/admin/public/index.php/page/article/index/id/" + intStr + ".html";
+                startActivity(new Intent(this, XieYiActivity.class)
+                        .putExtra("title", "守护规则").putExtra("url", url));
+                break;
             case R.id.ll_wo:
                 setColor(0);
                 page = 1;

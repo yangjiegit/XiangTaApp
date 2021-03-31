@@ -63,7 +63,7 @@ public class ApplyActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        getApplyInfoData();
     }
 
     private void getApplyInfoData() {
@@ -142,7 +142,7 @@ public class ApplyActivity extends BaseActivity {
             case R.id.rl_check2:
             case R.id.rl_check3:
             case R.id.rl_check4:
-                startActivity(new Intent(this, EditActivity.class));
+                startActivityForResult(new Intent(this, EditActivity.class), 10);
                 break;
         }
     }
@@ -164,6 +164,16 @@ public class ApplyActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 10:
+                getApplyInfoData();
+                break;
+        }
     }
 
     @Override

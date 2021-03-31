@@ -53,13 +53,13 @@ import com.muse.xiangta.inter.JsonCallback;
 import com.muse.xiangta.json.JsonRequest;
 import com.muse.xiangta.json.JsonRequestDoPrivateSendGif;
 import com.muse.xiangta.manage.SaveData;
-import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
 import com.muse.xiangta.modle.custommsg.InputListenerMsgText;
 import com.muse.xiangta.ui.MemberGroupListActivity;
 import com.muse.xiangta.ui.PrivatePhotoActivity;
 import com.muse.xiangta.ui.common.Common;
+import com.muse.xiangta.utils.Utils;
 import com.tencent.imsdk.TIMConversationType;
 import com.tencent.imsdk.TIMCustomElem;
 import com.tencent.imsdk.TIMElem;
@@ -523,10 +523,10 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
             return;
         }
 
-//        if (!Utils.dirtyWordFilter(input.getText().toString())) {
-//            showToast("发送内容包含敏感词汇!");
-//            return;
-//        }
+        if (!Utils.dirtyWordFilter(input.getText().toString())) {
+            showToast("发送内容包含敏感词汇!");
+            return;
+        }
 
         if (!checkSendMessage(SEND_TEXT_MESSAGE)) {
             return;
