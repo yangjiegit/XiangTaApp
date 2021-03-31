@@ -47,6 +47,7 @@ import com.qmuiteam.qmui.BuildConfig;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.tencent.imsdk.TIMConnListener;
 import com.tencent.imsdk.TIMConversation;
+import com.tencent.imsdk.TIMConversationType;
 import com.tencent.imsdk.TIMElem;
 import com.tencent.imsdk.TIMElemType;
 import com.tencent.imsdk.TIMGroupReceiveMessageOpt;
@@ -73,6 +74,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -530,6 +532,16 @@ public class CuckooApplication extends Application {
             @Override
             public boolean onNewMessages(final List<TIMMessage> list) {
                 LogUtils.i("msg发送方" + list.size());
+
+                List<TIMMessage> mList=new ArrayList<>();
+                for (int i = 0; i < list.size(); i++) {
+                    if(list.get(i).getConversation().getType().name().equals("C2C")){
+                        mList.add(list.get(i));
+                    }
+                }
+                list.clear();
+                list.addAll(mList);
+
                 if (list != null) {
                     SDHandlerManager.getBackgroundHandler().post(new Runnable() {
                         @Override
