@@ -335,7 +335,9 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                 } else {
                     mMessage.setHasTime(messageList.get(messageList.size() - 1).getMessage());
                 }
-                messageList.add(mMessage);
+                if (!StringUtils.isEmpty(mMessage.getSender())) {
+                    messageList.add(mMessage);
+                }
                 adapter.notifyDataSetChanged();
                 listView.setSelection(adapter.getCount() - 1);
 
@@ -369,52 +371,61 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     @Override
     public void showMessage(List<TIMMessage> messages) {
         int newMsgNum = 0;
-        for (int i = 0; i < messages.size(); ++i) {
-            Message2 mMessage = MessageFactory2.getMessage(messages.get(i));
+        if (messages.size() > 0) {
+            for (int i = 0; i < messages.size(); ++i) {
+                Message2 mMessage = MessageFactory2.getMessage(messages.get(i));
 
-            String name = messages.get(i).getSenderGroupMemberProfile().getUser();
-
-            Api.getUserHomePageInfo(name, uId, uToken, new JsonCallback() {
-                @Override
-                public void onSuccess(String s, Call call, Response response) {
-                    super.onSuccess(s, call, response);
-                    Log.d("ret", "joker     查询数据==" + s);
-                    if (!StringUtils.isEmpty(s)) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(s);
-                            JSONObject jsonData = jsonObject.getJSONObject("data");
-                            String name = jsonData.getString("user_nickname");
-                            String avatar = jsonData.getString("avatar");
-                            mMessage.setSendData(name, avatar);
-                            adapter.notifyDataSetChanged();
-                            Log.d("ret", "joker     发送者名字===" + name + "     头像" + avatar);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                if (null != messages.get(i).getSenderGroupMemberProfile()) {
+                    String name = messages.get(i).getSenderGroupMemberProfile().getUser();
+                    Api.getUserHomePageInfo(name, uId, uToken, new JsonCallback() {
+                        @Override
+                        public void onSuccess(String s, Call call, Response response) {
+                            super.onSuccess(s, call, response);
+                            Log.d("ret", "joker     查询数据==" + s);
+                            if (!StringUtils.isEmpty(s)) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(s);
+                                    JSONObject jsonData = jsonObject.getJSONObject("data");
+                                    String name = jsonData.getString("user_nickname");
+                                    String avatar = jsonData.getString("avatar");
+                                    mMessage.setSendData(name, avatar);
+                                    adapter.notifyDataSetChanged();
+                                    Log.d("ret", "joker     发送者名字===" + name + "     头像" + avatar);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
-                    }
+
+                        @Override
+                        public Context getContextToJson() {
+
+                            return null;
+                        }
+                    });
                 }
 
-                @Override
-                public Context getContextToJson() {
-
-                    return null;
+                if (mMessage == null || messages.get(i).status() == TIMMessageStatus.HasDeleted) {
+                    continue;
                 }
-            });
-
-
-            if (mMessage == null || messages.get(i).status() == TIMMessageStatus.HasDeleted) {
-                continue;
-            }
             /*if (mMessage instanceof CustomMessage && LiveConstant.mapCustomMsgClass.get(((CustomMessage)mMessage).getType()) == null){
                 continue;
             }*/
-            ++newMsgNum;
-            if (i != messages.size() - 1) {
-                mMessage.setHasTime(messages.get(i + 1));
-                messageList.add(0, mMessage);
-            } else {
-                mMessage.setHasTime(null);
-                messageList.add(0, mMessage);
+                ++newMsgNum;
+                if (i != messages.size() - 1) {
+                    mMessage.setHasTime(messages.get(i + 1));
+                    Log.d("ret", "joker     发送者   " + mMessage.getSender());
+                    if (!StringUtils.isEmpty(mMessage.getSender())) {
+                        messageList.add(0, mMessage);
+                    }
+                } else {
+                    mMessage.setHasTime(null);
+                    Log.d("ret", "joker     发送者   " + mMessage.getSender());
+                    boolean flag = mMessage.getSender().contains("@");
+                    if (!StringUtils.isEmpty(mMessage.getSender()) && !flag) {
+                        messageList.add(0, mMessage);
+                    }
+                }
             }
         }
         adapter.notifyDataSetChanged();
