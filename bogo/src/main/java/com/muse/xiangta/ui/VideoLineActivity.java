@@ -264,6 +264,9 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
     private int mCameraFace = FURenderer.CAMERA_FACING_FRONT;
     private SensorManager mSensorManager;
 
+
+    private RtcEngine mRtcEngine;
+
     /**
      * 美颜
      */
@@ -322,12 +325,12 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
 
     private void initRoom() {
         initVideoModule();
-        if (null == rtcEngine()) {
-            CuckooApplication.getInstance().initRtcEngine();
-            rtcEngine().enableVideo();
-            rtcEngine().setVideoSource(new RtcVideoConsumer());
+        if (null == mRtcEngine) {
+            mRtcEngine = CuckooApplication.getInstance().initRtcEngine();
+            mRtcEngine.enableVideo();
+            mRtcEngine.setVideoSource(new RtcVideoConsumer());
         } else {
-            rtcEngine().setVideoSource(new RtcVideoConsumer());
+            mRtcEngine.setVideoSource(new RtcVideoConsumer());
         }
         joinChannel();
     }
@@ -578,11 +581,11 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
     private void closeCamera() {
         if (isOpenCamera) {
             //关闭摄像头
-            rtcEngine().muteLocalVideoStream(true);
+            mRtcEngine.muteLocalVideoStream(true);
             iv_close_camera.setImageResource(R.mipmap.ic_close_camera);
             ToastUtils.showLong("摄像头已关闭");
         } else {
-            rtcEngine().muteLocalVideoStream(false);
+            mRtcEngine.muteLocalVideoStream(false);
             iv_close_camera.setImageResource(R.mipmap.ic_open_camera);
             ToastUtils.showLong("摄像头已打开");
         }
@@ -592,14 +595,14 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
 
     //发起会话通道名额外的可选的数据--uid(uid为空时自动赋予)
     private void joinChannel() {
-        rtcEngine().setVideoEncoderConfiguration(new VideoEncoderConfiguration(
+        mRtcEngine.setVideoEncoderConfiguration(new VideoEncoderConfiguration(
                 VideoEncoderConfiguration.VD_640x360,
                 VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_24,
                 VideoEncoderConfiguration.STANDARD_BITRATE,
                 VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT));
-        rtcEngine().setClientRole(io.agora.rtc.Constants.CLIENT_ROLE_BROADCASTER);
-        rtcEngine().enableLocalAudio(true);
-        rtcEngine().joinChannel(null, chatData.getChannelName(), null, 0);
+        mRtcEngine.setClientRole(io.agora.rtc.Constants.CLIENT_ROLE_BROADCASTER);
+        mRtcEngine.enableLocalAudio(true);
+        mRtcEngine.joinChannel(null, chatData.getChannelName(), null, 0);
     }
 
     //本地音频静音
@@ -611,7 +614,7 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
             isSoundOut.setSelected(true);
             isSoundOut.setImageResource(R.drawable.icon_call_muted);
         }
-        rtcEngine().muteLocalAudioStream(isSoundOut.isSelected());
+        mRtcEngine.muteLocalAudioStream(isSoundOut.isSelected());
     }
 
     /**
@@ -624,16 +627,16 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
     }
 
     private void operationVideoAndAudio(boolean muted) {
-        rtcEngine().muteLocalAudioStream(muted);
-        rtcEngine().muteLocalVideoStream(muted);
-        rtcEngine().muteAllRemoteVideoStreams(muted);
-        rtcEngine().muteAllRemoteAudioStreams(muted);
+        mRtcEngine.muteLocalAudioStream(muted);
+        mRtcEngine.muteLocalVideoStream(muted);
+        mRtcEngine.muteAllRemoteVideoStreams(muted);
+        mRtcEngine.muteAllRemoteAudioStreams(muted);
     }
 
     //销毁操作
     private void leaveChannel() {
         if (rtcEngine() != null) {
-            rtcEngine().leaveChannel();
+            mRtcEngine.leaveChannel();
         }
     }
 
@@ -1143,7 +1146,7 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
 
     private void setRemoteVideoView(int uid) {
         SurfaceView surfaceView = RtcEngine.CreateRendererView(this);
-        rtcEngine().setupRemoteVideo(new VideoCanvas(
+        mRtcEngine.setupRemoteVideo(new VideoCanvas(
                 surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, uid));
         mRemoteViewContainer.addView(surfaceView);
     }
@@ -1186,7 +1189,7 @@ public class VideoLineActivity extends BaseActivity2 implements SensorEventListe
             e.printStackTrace();
         }
         mVideoManager.stopCapture();
-        rtcEngine().leaveChannel();
+        mRtcEngine.leaveChannel();
         super.finish();
     }
 }

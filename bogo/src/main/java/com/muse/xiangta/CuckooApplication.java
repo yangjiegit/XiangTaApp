@@ -194,7 +194,7 @@ public class CuckooApplication extends Application {
         });
     }
 
-    public void initRtcEngine() {
+    public RtcEngine initRtcEngine() {
         String appId = getString(R.string.agora_app_id);
         if (TextUtils.isEmpty(appId)) {
             throw new RuntimeException("NEED TO use your App ID, get your own ID at https://dashboard.agora.io/");
@@ -207,6 +207,7 @@ public class CuckooApplication extends Application {
         } catch (Exception e) {
             throw new RuntimeException("NEED TO check rtc sdk init fatal error\n" + Log.getStackTraceString(e));
         }
+        return mRtcEngine;
     }
 
     private void initVideoCaptureAsync() {
