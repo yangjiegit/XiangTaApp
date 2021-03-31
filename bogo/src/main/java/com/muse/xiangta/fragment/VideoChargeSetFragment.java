@@ -77,8 +77,8 @@ public class VideoChargeSetFragment extends BaseFragment {
 
     private void setSettingData() {
         tv_message.setText(mSettingBean.getData().getCharge().getMessage_chat().getVal() + "钻石/条");
-        tv_voice.setText(mSettingBean.getData().getCharge().getVoice_chat().getVal() + "钻石/条");
-        tv_video.setText(mSettingBean.getData().getCharge().getVideo_chat().getVal() + "钻石/条");
+        tv_voice.setText(mSettingBean.getData().getCharge().getVoice_chat().getVal() + "钻石/分钟");
+        tv_video.setText(mSettingBean.getData().getCharge().getVideo_chat().getVal() + "钻石/分钟");
 
         ChargeBean bean1 = new ChargeBean();
         bean1.setCode("voice_chat");
@@ -203,12 +203,12 @@ public class VideoChargeSetFragment extends BaseFragment {
                 switch (type) {
                     case 0:
                         mList.get(type).setVal(Integer.valueOf(item));
-                        tv_voice.setText(item + "钻石/条");
+                        tv_voice.setText(item + "钻石/分钟");
                         mSettingBean.getData().getCharge().getVoice_chat().setVal(Integer.valueOf(item));
                         break;
                     case 1:
                         mList.get(type).setVal(Integer.valueOf(item));
-                        tv_video.setText(item + "钻石/条");
+                        tv_video.setText(item + "钻石/分钟");
                         mSettingBean.getData().getCharge().getVideo_chat().setVal(Integer.valueOf(item));
                         break;
                     case 2:
