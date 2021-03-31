@@ -2638,5 +2638,16 @@ public class Api {
                 .execute(stringCallback);
     }
 
+    /*
+     * 一键登录
+     * */
+    public static void jgLogin(String token, String uuid, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/login_api/jg_login")
+                .params("token", token)
+                .params("uuid", uuid)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
 
 }

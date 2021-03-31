@@ -33,8 +33,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.jiguang.verifysdk.api.AuthPageEventListener;
 import cn.jiguang.verifysdk.api.JVerificationInterface;
+import cn.jiguang.verifysdk.api.JVerifyUIConfig;
 import cn.jiguang.verifysdk.api.LoginSettings;
-import cn.jiguang.verifysdk.api.PreLoginListener;
 import cn.jiguang.verifysdk.api.VerifyListener;
 import cn.sharesdk.facebook.Facebook;
 import cn.sharesdk.framework.Platform;
@@ -168,6 +168,13 @@ public class CuckooMobileLoginActivity extends BaseActivity {
 //                Log.d("ret", "joker     [" + code + "]message=" + content);
 //            }
 //        });
+
+        JVerifyUIConfig portrait = new JVerifyUIConfig.Builder()
+                .setNavText("一键登录")
+                .setLogBtnText("一键登录")
+                .build();
+        JVerificationInterface.setCustomUIWithConfig(portrait);
+
         LoginSettings settings = new LoginSettings();
         settings.setAutoFinish(true);//设置登录完成后是否自动关闭授权页
         settings.setTimeout(15 * 1000);//设置超时时间，单位毫秒。 合法范围（0，30000],范围以外默认设置为10000
@@ -182,11 +189,49 @@ public class CuckooMobileLoginActivity extends BaseActivity {
             public void onResult(int code, String content, String operator) {
                 if (code == 6000) {
                     Log.d("ret", "joker  code=" + code + ", token=" + content + " ,operator=" + operator);
+                    //获取OpenInstall安装数据
+                    Api.jgLogin(content,  Utils.getUniquePsuedoID(), new JsonCallback() {
+                        @Override
+                        public Context getContextToJson() {
+                            return getNowContext();
+                        }
+
+                        @Override
+                        public void onSuccess(String s, Call call, Response response) {
+
+                            hideLoadingDialog();
+                            JsonRequestUserBase requestObj = JsonRequestUserBase.getJsonObj(s);
+                            if (requestObj.getCode() == 1) {
+
+                                //是否完善资料
+                                if (requestObj.getData().getIs_reg_perfect() == 1) {
+                                    LoginUtils.doLogin(CuckooMobileLoginActivity.this, requestObj.getData());
+//                                finish();
+                                } else {
+                                    Intent intent = new Intent(getNowContext(), PerfectRegisterInfoActivity.class);
+                                    intent.putExtra(PerfectRegisterInfoActivity.USER_LOGIN_INFO, requestObj.getData());
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
+                            showToastMsg(requestObj.getMsg());
+                        }
+
+                        @Override
+                        public void onError(Call call, Response response, Exception e) {
+                            super.onError(call, response, e);
+                            hideLoadingDialog();
+                        }
+                    });
+
                 } else {
                     Log.d("ret", "joker  code=" + code + ", message=" + content);
+
                 }
             }
         });
+
+
     }
 
     private void clickDoLogin() {
