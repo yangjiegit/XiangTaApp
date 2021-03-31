@@ -218,6 +218,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/yellow_white_fifty_corners_bac"
                 android:gravity="center"
+                android:visibility="gone"
                 android:text="@string/evaluate"
                 android:textColor="@color/admin_color" />
 

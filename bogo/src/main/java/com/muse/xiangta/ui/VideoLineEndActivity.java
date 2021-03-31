@@ -113,7 +113,7 @@ public class VideoLineEndActivity extends BaseActivity {
             tv_video_name.setText("通话收益");
             mTvTypeName.setText("总收益");
         } else {
-            tv_evaluate.setVisibility(View.VISIBLE);
+            tv_evaluate.setVisibility(View.GONE);
             tv_gift_name.setText("礼物消费");
             tv_video_name.setText("通话消费");
             mTvTypeName.setText("总消费");
@@ -134,9 +134,9 @@ public class VideoLineEndActivity extends BaseActivity {
         mTvLongTime.setText(getIntent().getStringExtra(LIVE_LINE_TIME));
 
         if (isFabulous == 0) {
-            mTvZan.setVisibility(View.VISIBLE);
+            mTvZan.setVisibility(View.GONE);
         }
-        mTvZan.setVisibility(View.VISIBLE);
+        mTvZan.setVisibility(View.GONE);
 
         if (userAvatar != null) {
 
