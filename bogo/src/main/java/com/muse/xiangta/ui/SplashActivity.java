@@ -193,7 +193,6 @@ public class SplashActivity extends BaseActivity implements BGTimedTaskManage.BG
 
     //检查权限
     private void checkPermissionStatus() {
-
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED
@@ -201,14 +200,11 @@ public class SplashActivity extends BaseActivity implements BGTimedTaskManage.BG
                 ContextCompat.checkSelfPermission(this,
                         Manifest.permission.RECORD_AUDIO)
                         != PackageManager.PERMISSION_GRANTED) {
-
-
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_COARSE_LOCATION},
                     MY_PERMISSIONS_REQUEST);
-            SETTING_PERMISSION = true;
+//            SETTING_PERMISSION = true;
         } else {
-
             startMainActivity();
         }
     }
