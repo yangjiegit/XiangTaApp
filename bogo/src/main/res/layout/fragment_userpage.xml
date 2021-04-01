@@ -174,6 +174,7 @@
                     android:background="@mipmap/my_title_baise">
 
                     <TextView
+                        android:id="@+id/iv_yaoqing"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

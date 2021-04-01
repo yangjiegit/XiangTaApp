@@ -142,7 +142,7 @@ public class TargetUserData2 implements Serializable {
          */
 
         private List<GuardianUserListBean> guardian_user_list;
-        private List<String> img;
+        private List<ImgBean> img;
 
         public int getId() {
             return id;
@@ -384,12 +384,39 @@ public class TargetUserData2 implements Serializable {
             this.guardian_user_list = guardian_user_list;
         }
 
-        public List<String> getImg() {
+        public List<ImgBean> getImg() {
             return img;
         }
 
-        public void setImg(List<String> img) {
+        public void setImg(List<ImgBean> img) {
             this.img = img;
+        }
+
+        public static class ImgBean implements Serializable{
+
+            /**
+             * id : 512
+             * img : http://xta.zzmzrj.com/avatar/1617183317929_Screenshot_2021-02-28-15-26-09-30.jpg
+             */
+
+            private int id;
+            private String img;
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getImg() {
+                return img;
+            }
+
+            public void setImg(String img) {
+                this.img = img;
+            }
         }
 
         public static class GiftBean implements Serializable {

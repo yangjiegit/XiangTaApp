@@ -11,10 +11,11 @@
 
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/dp_10"
+            android:padding="@dimen/dp_10"
             android:src="@mipmap/img_back_black" />
 
         <LinearLayout
@@ -44,6 +45,7 @@
                 android:background="#ffF96881" />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/ll_fensi"
             android:layout_width="0dp"
@@ -72,7 +74,6 @@
                 android:visibility="invisible" />
 
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -135,14 +136,13 @@
         </LinearLayout>
 
 
-
         <ImageView
-            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="@dimen/dp_10"
-            android:src="@mipmap/img_wen" />
+            android:src="@mipmap/img_wen"
+            android:visibility="gone" />
 
     </LinearLayout>
 

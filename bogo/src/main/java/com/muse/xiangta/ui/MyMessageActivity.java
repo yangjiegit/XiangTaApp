@@ -1,14 +1,11 @@
 package com.muse.xiangta.ui;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.R;
-import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseActivity;
 import com.muse.xiangta.fragment.MyMessageFragment;
 
@@ -16,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import okhttp3.Call;
-import okhttp3.Response;
+import butterknife.OnClick;
 
 public class MyMessageActivity extends BaseActivity {
 
@@ -116,7 +112,7 @@ public class MyMessageActivity extends BaseActivity {
         for (int i = 0; i < mTextViewList.size(); i++) {
             if (i == (type - 1)) {
                 mTextViewList.get((type - 1)).setTextColor(getResources().getColor(R.color.message_check_true));
-                mViewList.get((type - 1)).setVisibility(View.INVISIBLE);
+                mViewList.get((type - 1)).setVisibility(View.VISIBLE);
             } else {
                 mTextViewList.get(i).setTextColor(getResources().getColor(R.color.black));
                 mViewList.get(i).setVisibility(View.INVISIBLE);
@@ -124,10 +120,14 @@ public class MyMessageActivity extends BaseActivity {
         }
     }
 
+    @OnClick(R.id.iv_back)
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
             case R.id.ll_miyou:
                 type = 1;
                 page = 1;

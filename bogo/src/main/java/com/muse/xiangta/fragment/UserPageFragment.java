@@ -207,10 +207,13 @@ public class UserPageFragment extends BaseFragment {
 
     @OnClick({R.id.ll_wallet, R.id.iv_user_center_sign, R.id.ll_beauty_setting, R.id.ll_family
             , R.id.tv_reward, R.id.ll_guard, R.id.ll_grade, R.id.tv_profit, R.id.ll_noble,
-            R.id.ll_car, R.id.ll_haoyou, R.id.ll_miyou, R.id.tv_chongzhi, R.id.ll_dynamic})
+            R.id.ll_car, R.id.ll_haoyou, R.id.ll_miyou, R.id.tv_chongzhi, R.id.ll_dynamic, R.id.iv_yaoqing})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_yaoqing:
+                showToastMsg(getContext(),"该功能暂未开放");
+                break;
             case R.id.ll_dynamic://我的动态
                 startActivity(new Intent(getContext(), DynamicActivity.class));
                 break;
