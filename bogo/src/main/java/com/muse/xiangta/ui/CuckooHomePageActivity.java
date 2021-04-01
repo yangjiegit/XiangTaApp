@@ -292,7 +292,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
             //修改资料
             case R.id.edit_mine:
                 Intent intent = new Intent(this, EditActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,20);
                 menuDialog.dismiss();
                 break;
             //加入黑名单操作
@@ -576,6 +576,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
      */
     private void initDisplayData() {
         initViewPagerData();
+        rollPath.clear();
 
         if (Integer.valueOf(uId) == targetUserData.getData().getId()) {
             tv_guanzhu.setVisibility(View.GONE);
@@ -892,5 +893,15 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
     public void onStop() {
         super.onStop();
         homePageWallpaper.stopAutoPlay();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 20:
+                requestTargetUserData();
+                break;
+        }
     }
 }
