@@ -181,7 +181,10 @@ public class ConversationFragment extends Fragment implements ConversationView, 
                 case Group:
                     if (!item.getPeer().equals(RequestConfig.getConfigObj().getGroupId())) {
                         //填充数据
-                        this.conversationList.add(new NomalConversation(item));
+                        NomalConversation nomalConversation=new NomalConversation(item);
+                        if(nomalConversation.getType()!=TIMConversationType.Group){
+                            this.conversationList.add(new NomalConversation(item));
+                        }
 //                    groupList.add(item.getPeer());
                     }
                     break;
@@ -223,7 +226,9 @@ public class ConversationFragment extends Fragment implements ConversationView, 
         }
         conversation.setLastMessage(MessageFactory.getMessage(message));
         if (!conversation.getIdentify().equals(RequestConfig.getConfigObj().getGroupId())) {
-            conversationList.add(conversation);
+            if(conversation.getType()!=TIMConversationType.Group){
+                conversationList.add(conversation);
+            }
         }
         Collections.sort(conversationList);
         refresh();
