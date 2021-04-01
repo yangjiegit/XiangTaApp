@@ -534,14 +534,14 @@ public class CuckooApplication extends Application {
             public boolean onNewMessages(final List<TIMMessage> list) {
                 LogUtils.i("msg发送方" + list.size());
 
-                List<TIMMessage> mList=new ArrayList<>();
-                for (int i = 0; i < list.size(); i++) {
-                    if(list.get(i).getConversation().getType().name().equals("C2C")){
-                        mList.add(list.get(i));
-                    }
-                }
-                list.clear();
-                list.addAll(mList);
+//                List<TIMMessage> mList=new ArrayList<>();
+//                for (int i = 0; i < list.size(); i++) {
+//                    if(list.get(i).getConversation().getType().name().equals("C2C")){
+//                        mList.add(list.get(i));
+//                    }
+//                }
+//                list.clear();
+//                list.addAll(mList);
 
                 if (list != null) {
                     SDHandlerManager.getBackgroundHandler().post(new Runnable() {

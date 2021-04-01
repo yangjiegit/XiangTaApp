@@ -328,7 +328,40 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         if (message == null) {
             adapter.notifyDataSetChanged();
         } else {
+            Log.d("ret", "joker    接受到的消息 ");
             Message2 mMessage = MessageFactory2.getMessage(message);
+
+            if (null != message.getSenderGroupMemberProfile()) {
+                String name = message.getSenderGroupMemberProfile().getUser();
+                Api.getUserHomePageInfo(name, uId, uToken, new JsonCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        super.onSuccess(s, call, response);
+                        Log.d("ret", "joker     查询数据==" + s);
+                        if (!StringUtils.isEmpty(s)) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(s);
+                                JSONObject jsonData = jsonObject.getJSONObject("data");
+                                String name = jsonData.getString("user_nickname");
+                                String avatar = jsonData.getString("avatar");
+                                mMessage.setSendData(name, avatar);
+                                adapter.notifyDataSetChanged();
+                                Log.d("ret", "joker     发送者名字===" + name + "     头像" + avatar);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public Context getContextToJson() {
+
+                        return null;
+                    }
+                });
+            }
+
+
             if (mMessage != null) {
                 if (messageList.size() == 0) {
                     mMessage.setHasTime(null);
