@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -66,7 +67,12 @@ public class CuckooMobileLoginActivity extends BaseActivity {
     @BindView(R.id.ll_facebook)
     RelativeLayout ll_facebook;
 
+    @BindView(R.id.iv_check)
+    ImageView iv_check;
+
     private String uuid;
+
+    private boolean check = false;
 
     @Override
     protected Context getNowContext() {
@@ -118,21 +124,42 @@ public class CuckooMobileLoginActivity extends BaseActivity {
     }
 
     @OnClick({R.id.ll_wechat, R.id.ll_qq, R.id.ll_facebook, R.id.tv_send_code, R.id.btn_submit
-            , R.id.tv_xieyi, R.id.tv_login_type})
+            , R.id.tv_xieyi, R.id.tv_login_type, R.id.iv_check})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_check:
+                if (check == false) {
+                    check = true;
+                    iv_check.setImageResource(R.mipmap.img_check_true);
+                } else {
+                    check = false;
+                    iv_check.setImageResource(R.mipmap.img_check_false);
+                }
+                break;
             case R.id.tv_login_type:
-                yijian();
+                if (check == true) {
+                    yijian();
+                } else {
+                    showToastMsg("请查看勾选协议");
+                }
                 break;
             case R.id.tv_send_code:
                 clickSendCode();
                 break;
             case R.id.btn_submit:
-                clickDoLogin();
+                if (check == true) {
+                    clickDoLogin();
+                } else {
+                    showToastMsg("请查看勾选协议");
+                }
                 break;
             case R.id.ll_wechat:
-                clickWeChat();
+                if (check == true) {
+                    clickWeChat();
+                } else {
+                    showToastMsg("请查看勾选协议");
+                }
                 break;
             case R.id.ll_qq:
                 clickQQ();
@@ -190,7 +217,7 @@ public class CuckooMobileLoginActivity extends BaseActivity {
                 if (code == 6000) {
                     Log.d("ret", "joker  code=" + code + ", token=" + content + " ,operator=" + operator);
                     //获取OpenInstall安装数据
-                    Api.jgLogin(content,  Utils.getUniquePsuedoID(), new JsonCallback() {
+                    Api.jgLogin(content, Utils.getUniquePsuedoID(), new JsonCallback() {
                         @Override
                         public Context getContextToJson() {
                             return getNowContext();
