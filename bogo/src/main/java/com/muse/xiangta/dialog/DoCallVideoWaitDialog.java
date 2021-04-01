@@ -183,7 +183,7 @@ public class DoCallVideoWaitDialog extends BGDialogBase implements View.OnClickL
                                 dismiss();
                                 return;
                             }
-                            jumpVideoCallActivity();
+                            jumpVideoCallActivity(false);
                         }
                     });
 
@@ -208,7 +208,7 @@ public class DoCallVideoWaitDialog extends BGDialogBase implements View.OnClickL
 
 
     //跳转视频通话页面
-    private void jumpVideoCallActivity() {
+    private void jumpVideoCallActivity(boolean flag) {
 
         Api.doCheckIsNeedCharging(SaveData.getInstance().getId(), callUserInfo.getId(), new StringCallback() {
 
@@ -223,7 +223,7 @@ public class DoCallVideoWaitDialog extends BGDialogBase implements View.OnClickL
                         userChatData.setChannelName(channelId);
                         userChatData.setUserModel(callUserInfo);
 
-                        UIHelp.startVideoLineActivity(getContext(), 0, jsonObj.getResolving_power(), jsonObj.getIs_need_charging(),
+                        UIHelp.startVideoLineActivity(getContext(), 0, jsonObj.getResolving_power(), flag,
                                 jsonObj.getVideo_deduction(),jsonObj.getFree_time(), userChatData);
                         dismiss();
                     }

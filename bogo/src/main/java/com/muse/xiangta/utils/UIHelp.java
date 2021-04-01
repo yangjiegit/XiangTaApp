@@ -35,14 +35,14 @@ public class UIHelp {
 
     /**
      * @param callType       视频或音频
-     * @param isNeedCharging 是否是需要扣费
+     * @param flag 是否是需要扣费
      * @param resolvingPower 视频的分辨率
      * @param userChatData   用户信息
      * @param videoDeduction 价格
      * @param freeTime       免费时长（s）
      * @dw 跳转视频通话或者音频通话页面
      */
-    public static void startVideoLineActivity(Context context, int callType, String resolvingPower, int isNeedCharging, String videoDeduction, int freeTime, UserChatData userChatData) {
+    public static void startVideoLineActivity(Context context, int callType, String resolvingPower, boolean flag, String videoDeduction, int freeTime, UserChatData userChatData) {
 
         Intent intent;
 
@@ -53,7 +53,7 @@ public class UIHelp {
         }
         intent.putExtra(VideoLineActivity.CALL_USER_DATA, userChatData);
         intent.putExtra(VideoLineActivity.VIDEO_PX, resolvingPower);
-        intent.putExtra(VideoLineActivity.IS_NEED_CHARGE, isNeedCharging == 1);
+        intent.putExtra(VideoLineActivity.IS_NEED_CHARGE, flag);
         intent.putExtra(VideoLineActivity.IS_BE_CALL, true);
         intent.putExtra(VideoLineActivity.VIDEO_DEDUCTION, videoDeduction);
         intent.putExtra(VideoLineActivity.CALL_TYPE, callType);

@@ -214,7 +214,7 @@ public class PlayerCallActivity extends BaseActivity {
 
                         int type = getIntent().getIntExtra(CALL_TYPE, 0);
 
-                        UIHelp.startVideoLineActivity(PlayerCallActivity.this, type, jsonObj.getResolving_power(), jsonObj.getIs_need_charging(),
+                        UIHelp.startVideoLineActivity(PlayerCallActivity.this, type, jsonObj.getResolving_power(), true,
                                 jsonObj.getVideo_deduction(), jsonObj.getFree_time(), userChatData);
                         finish();
                     }

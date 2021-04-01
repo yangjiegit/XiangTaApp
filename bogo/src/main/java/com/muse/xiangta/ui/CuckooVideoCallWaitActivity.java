@@ -273,7 +273,7 @@ public class CuckooVideoCallWaitActivity extends BaseActivity {
 
                         int type = getIntent().getIntExtra(CALL_TYPE, 0);
 
-                        UIHelp.startVideoLineActivity(CuckooVideoCallWaitActivity.this, type, jsonObj.getResolving_power(), jsonObj.getIs_need_charging()
+                        UIHelp.startVideoLineActivity(CuckooVideoCallWaitActivity.this, type, jsonObj.getResolving_power(),false
                                 , jsonObj.getVideo_deduction(), jsonObj.getFree_time(), userChatData);
                         finish();
                     }
