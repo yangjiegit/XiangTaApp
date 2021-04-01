@@ -156,7 +156,7 @@ public class EditActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        requestUserData();
+//        requestUserData();
     }
 
     @Override
