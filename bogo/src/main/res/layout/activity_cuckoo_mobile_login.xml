@@ -130,8 +130,8 @@
                     <ImageView
                         android:id="@+id/iv_check"
                         android:layout_width="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:padding="@dimen/dp_10"
                         android:src="@mipmap/img_check_false" />
 
@@ -140,10 +140,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:padding="@dimen/dp_10"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_10"
+                        android:paddingBottom="@dimen/dp_10"
                         android:text="登录注册即代表同意《隐私协议》"
                         android:textColor="@color/white"
                         android:textSize="@dimen/dp_12" />
+
+                    <TextView
+                        android:id="@+id/tv_yonghu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_10"
+                        android:paddingBottom="@dimen/dp_10"
+                        android:text="《用户协议》"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp_12" />
+
 
                 </LinearLayout>
 

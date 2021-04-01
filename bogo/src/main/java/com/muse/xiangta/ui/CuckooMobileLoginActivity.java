@@ -124,10 +124,16 @@ public class CuckooMobileLoginActivity extends BaseActivity {
     }
 
     @OnClick({R.id.ll_wechat, R.id.ll_qq, R.id.ll_facebook, R.id.tv_send_code, R.id.btn_submit
-            , R.id.tv_xieyi, R.id.tv_login_type, R.id.iv_check})
+            , R.id.tv_xieyi, R.id.tv_login_type, R.id.iv_check, R.id.tv_yonghu})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_yonghu:
+                String intStr1 = "12";
+                String url1 = "http://xiangta.zzmzrj.com/admin/public/index.php/page/article/index/id/" + intStr1 + ".html";
+                startActivity(new Intent(this, XieYiActivity.class)
+                        .putExtra("title", "用户协议").putExtra("url", url1));
+                break;
             case R.id.iv_check:
                 if (check == false) {
                     check = true;
