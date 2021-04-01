@@ -156,7 +156,7 @@ public class EditActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        requestUserData();
+        requestUserData();
     }
 
     @Override
@@ -382,8 +382,12 @@ public class EditActivity extends BaseActivity {
                 if (!StringUtils.isEmpty(s)) {
                     UserData userData = new Gson().fromJson(s, UserData.class);
                     if (userData.getCode() == 1) {
-                        GlideImgManager.glideLoader(EditActivity.this,
-                                userData.getData().getAvatar(), headImg, 0);
+                        if (null != headImgFile) {
+                            headImg.setImageBitmap(ImageUtil.getBitmapByPath(headImgFile.getAbsolutePath()));
+                        } else {
+                            GlideImgManager.glideLoader(EditActivity.this,
+                                    userData.getData().getAvatar(), headImg, 0);
+                        }
                         redactNameText.setText(userData.getData().getUser_nickname());
                         if (userData.getData().getSex() == 0) {
                             isAlterSex = true;
