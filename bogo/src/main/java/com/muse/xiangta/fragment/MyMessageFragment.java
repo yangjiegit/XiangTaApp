@@ -101,7 +101,7 @@ public class MyMessageFragment extends BaseFragment {
             public void convert(CommonRecyclerViewHolder holder, MessageBean.DataBean entity, int position) {
 //                GlideImgManager.glideLoader(getContext(), entity.getAvatar(), (ImageView) holder.getView(R.id.pagemsg_background), 0);
 //                holder.setText(R.id.pagemsg_view_name, entity.getUser_nickname());
-//                holder.setText(R.id.tv_address, entity.getAddress());
+                holder.setText(R.id.tv_address, entity.getCity());
 
                 TextView pagemsg_view_sign = holder.getView(R.id.pagemsg_view_sign);
                 RelativeLayout rl_yinpin = holder.getView(R.id.rl_yinpin);

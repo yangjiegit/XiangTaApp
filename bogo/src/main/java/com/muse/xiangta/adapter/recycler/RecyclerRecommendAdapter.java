@@ -48,6 +48,8 @@ public class RecyclerRecommendAdapter extends BaseQuickAdapter<TargetUserData, B
         if (ApiUtils.isTrueUrl(item.getAvatar())) {
             Utils.loadImg(Utils.getCompleteImgUrl(item.getAvatar()), (ImageView) helper.getView(R.id.pagemsg_background));
         }
+
+        helper.setText(R.id.tv_address,item.getCity());
         helper.setImageResource(R.id.pagemsg_view_dian, StringUtils.toInt(item.getIs_online()) == 1 ? R.mipmap.on_line : R.mipmap.not_online);
         helper.setImageResource(R.id.pagemsg_view_isvip, StringUtils.toInt(item.getIs_vip()) == 1 ? R.mipmap.vip_image_bac : 0);
         helper.setText(R.id.pagemsg_view_name, item.getUser_nickname());

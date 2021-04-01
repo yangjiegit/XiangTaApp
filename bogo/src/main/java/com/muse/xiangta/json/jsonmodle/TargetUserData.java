@@ -31,6 +31,7 @@ public class TargetUserData {
     private String evaluation;//好评百分比(30%)
     private String split;//分成比例
     private String coin;//总金币
+    private String city;
     private String is_online;
     private String age;
     private String height;
@@ -57,6 +58,14 @@ public class TargetUserData {
     private List<UserModel> guardian_user_list;
     private String signature;
     private String is_vip;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public String getDeclaration() {
         return declaration;
