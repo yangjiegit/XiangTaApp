@@ -124,11 +124,14 @@ public class ApplyActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.tv_comm, R.id.rl_check1, R.id.rl_check2, R.id.rl_check3, R.id.rl_check4})
+    @OnClick({R.id.tv_comm, R.id.rl_check1, R.id.rl_check2, R.id.rl_check3, R.id.rl_check4, R.id.iv_back})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
             case R.id.tv_comm:
                 //提交
                 if (mApplyBean.getData().getIs_auth() == 1 &&
