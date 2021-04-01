@@ -15,16 +15,15 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.lzy.okgo.callback.StringCallback;
 import com.muse.chat.model.CustomMessage;
 import com.muse.chat.model.Message;
-import com.muse.xiangta.CuckooApplication;
 import com.muse.xiangta.LiveConstant;
 import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.GiftInfoAdapter;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.api.ApiUtils;
 import com.muse.xiangta.base.BaseActivity;
-import com.muse.xiangta.base.BaseActivity2;
 import com.muse.xiangta.business.CuckooVideoLineTimeBusiness;
 import com.muse.xiangta.dialog.GiftBottomDialog;
 import com.muse.xiangta.event.EImOnCloseVideoLine;
@@ -51,7 +50,6 @@ import com.muse.xiangta.utils.DialogHelp;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
 import com.muse.xiangta.widget.GiftAnimationContentView;
-import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.tencent.imsdk.TIMConversation;
 import com.tencent.imsdk.TIMConversationType;
@@ -65,11 +63,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.CountDownLatch;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import okhttp3.Call;
@@ -80,7 +76,7 @@ import okhttp3.Response;
  * 视频通话页面
  */
 
-public class CuckooVoiceCallActivity extends BaseActivity2 implements GiftBottomDialog.DoSendGiftListen, CuckooVideoLineTimeBusiness.VideoLineTimeBusinessCallback {
+public class CuckooVoiceCallActivity2 extends BaseActivity implements GiftBottomDialog.DoSendGiftListen, CuckooVideoLineTimeBusiness.VideoLineTimeBusinessCallback {
 
     public static final String IS_BE_CALL = "IS_BE_CALL";
     public static final String IS_NEED_CHARGE = "IS_NEED_CHARGE";
@@ -162,11 +158,9 @@ public class CuckooVoiceCallActivity extends BaseActivity2 implements GiftBottom
     private List<String> guardInfoList = new ArrayList<>();
     private GiftInfoAdapter giftInfoAdaper;
 
-    private int mRemoteUid = -1;
-
     @Override
     protected Context getNowContext() {
-        return CuckooVoiceCallActivity.this;
+        return CuckooVoiceCallActivity2.this;
     }
 
     @Override
@@ -333,7 +327,7 @@ public class CuckooVoiceCallActivity extends BaseActivity2 implements GiftBottom
                 onLocalAudioMuteClicked();
                 break;
             case R.id.this_player_img:
-                Common.jumpUserPage(CuckooVoiceCallActivity.this, chatData.getUserModel().getId());
+                Common.jumpUserPage(CuckooVoiceCallActivity2.this, chatData.getUserModel().getId());
                 break;
             case R.id.videochat_lucky_corn:
                 Intent intent = new Intent(this, DialogH5Activity.class);
@@ -349,8 +343,7 @@ public class CuckooVoiceCallActivity extends BaseActivity2 implements GiftBottom
     private void initAgoraVoiceEngineAndJoinChannel() {
         //初始化RtcEngine对象
         try {
-            mRtcEngine = CuckooApplication.getInstance().initRtcEngine();
-            mRtcEngine.setChannelProfile(Constants.CHANNEL_PROFILE_COMMUNICATION);
+            mRtcEngine = RtcEngine.create(getBaseContext(), ConfigModel.getInitData().getApp_qgorq_key(), mRtcEventHandler);
             Log.d("ret", "joker       appid     " + ConfigModel.getInitData().getApp_qgorq_key());
         } catch (Exception e) {
             throw new RuntimeException("NEED TO check rtc sdk init fatal error\n" + Log.getStackTraceString(e));
@@ -548,12 +541,6 @@ public class CuckooVoiceCallActivity extends BaseActivity2 implements GiftBottom
 
     }
 
-    @Override
-    public void finish() {
-        mRtcEngine.leaveChannel();
-        super.finish();
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCloseVideoEvent(EImOnCloseVideoLine var1) {
 
@@ -660,7 +647,7 @@ public class CuckooVoiceCallActivity extends BaseActivity2 implements GiftBottom
                         if (requestObj.getCode() == 1) {
                             TargetUserData targetUserData = requestObj.getData();
                             if (ApiUtils.isTrueUrl(targetUserData.getAvatar())) {
-                                Utils.loadHttpImg(CuckooVoiceCallActivity.this, Utils.getCompleteImgUrl(targetUserData.getAvatar()), headImage);
+                                Utils.loadHttpImg(CuckooVoiceCallActivity2.this, Utils.getCompleteImgUrl(targetUserData.getAvatar()), headImage);
                             }
                             nickName.setText(targetUserData.getUser_nickname());
                             thisPlayerLoveme.setImageResource("0".equals(targetUserData.getAttention()) ? R.drawable.menu_no_attantion : R.drawable.menu_attationed);
@@ -819,31 +806,5 @@ public class CuckooVoiceCallActivity extends BaseActivity2 implements GiftBottom
     @Override
     public void onFreeTimeEnd() {
 
-    }
-
-    @Override
-    public void onJoinChannelSuccess(String channel, int uid, int elapsed) {
-
-    }
-
-    @Override
-    public void onUserOffline(int uid, int reason) {
-
-    }
-
-    @Override
-    public void onUserJoined(int uid, int elapsed) {
-
-    }
-
-    @Override
-    public void onRemoteVideoStateChanged(int uid, int state, int reason, int elapsed) {
-//        Log.i(TAG, "onRemoteVideoStateChanged " + (uid & 0xFFFFFFFFL) + " " + state + " " + reason);
-        if (mRemoteUid == -1 && state == io.agora.rtc.Constants.REMOTE_VIDEO_STATE_DECODING) {
-            runOnUiThread(() -> {
-                mRemoteUid = uid;
-//                setRemoteVideoView(uid);
-            });
-        }
     }
 }
