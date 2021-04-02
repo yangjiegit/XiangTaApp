@@ -222,7 +222,7 @@ public class PushDynamicActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.rl_input, R.id.btn_voice_record, R.id.tv_push, R.id.tv_cancel, R.id.btn_video_record
+    @OnClick({R.id.rl_input, R.id.btn_voice_record, R.id.tv_push, R.id.iv_cancel, R.id.btn_video_record
             , R.id.ll_title1, R.id.ll_title2, R.id.ll_title3, R.id.ll_title4})
     @Override
     public void onClick(View v) {
@@ -247,7 +247,7 @@ public class PushDynamicActivity extends BaseActivity {
             case R.id.rl_input:
                 KeyboardUtils.showSoftInput(mEtInput);
                 break;
-            case R.id.tv_cancel:
+            case R.id.iv_cancel:
                 finish();
                 break;
             case R.id.tv_push:
