@@ -432,7 +432,9 @@ public class EditActivity extends BaseActivity {
 //                    itemConstellation.setDetailText(userData.getConstellation());星座
                         xingzuo_tv.setText(userData.getData().getConstellation());
 //                    itemIntroduce.setDetailText(userData.getIntroduce());个人介绍
-                        jieshao_tv.setText(userData.getData().getIntroduce());
+                        if (StringUtils.isEmpty(jieshao_tv.getText().toString().trim())) {
+                            jieshao_tv.setText(userData.getData().getIntroduce());
+                        }
 //                    itemImageLabel.setDetailText(userData.getImage_label());//标签
                         biaoqian_tv.setText(userData.getData().getImage_label());
                         selectList.clear();
