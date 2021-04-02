@@ -303,6 +303,8 @@ public class SettingActivity extends BaseActivity {
                                     dialog.dismiss();
                                     showToastMsg("注销成功");
                                     loginOut();
+                                } else {
+                                    showToastMsg(new JSONObject(s).getString("msg"));
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

@@ -12,26 +12,35 @@
         android:background="@mipmap/img_title_shouyi"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
-            android:orientation="horizontal">
+            android:layout_height="@dimen/dp_50">
+
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dp_10"
+                android:src="@mipmap/img_back_bai" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:text="收益"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/dp_14" />
-        </LinearLayout>
+        </RelativeLayout>
 
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/white" />
+            android:background="@color/white"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -155,6 +164,7 @@
         android:layout_marginLeft="@dimen/dp_5"
         android:layout_marginRight="@dimen/dp_5"
         android:background="#ffEEEEEE" />
+
     <LinearLayout
         android:id="@+id/ll_zhichu"
         android:layout_width="match_parent"
