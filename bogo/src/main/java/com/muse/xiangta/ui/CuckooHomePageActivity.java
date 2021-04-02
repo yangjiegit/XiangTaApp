@@ -32,6 +32,7 @@ import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseActivity;
 import com.muse.xiangta.fragment.CuckooHomePageUserInfoFragment2;
 import com.muse.xiangta.fragment.DynamicMyFragment;
+import com.muse.xiangta.fragment.DynamicMyFragment2;
 import com.muse.xiangta.helper.SelectResHelper;
 import com.muse.xiangta.inter.JsonCallback;
 import com.muse.xiangta.json.JsonRequestBase;
@@ -715,7 +716,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
 
     private void initViewPagerData() {
         fragmentList.add(CuckooHomePageUserInfoFragment2.getInstance(targetUserData));
-        fragmentList.add(DynamicMyFragment.getInstance(targetUserId));
+        fragmentList.add(DynamicMyFragment2.getInstance(targetUserId));
 
         viewPager.setOffscreenPageLimit(1);
         mInfoTabFragAdapter = new FragAdapter(getSupportFragmentManager(), fragmentList);
