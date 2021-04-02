@@ -75,6 +75,11 @@ public class WealthDetailFragment extends BaseListFragment<IncomeBean.DataBean> 
         helper.setText(R.id.sr_title, item.getContent())
                 .setText(R.id.sr_time, TimeUtil.format(item.getCreate_time()))
                 .setText(R.id.sr_num, "+" + item.getProfit());
+        if (type == 0) {
+            helper.setText(R.id.sr_type, "金币");
+        } else {
+            helper.setText(R.id.sr_type, "钻石");
+        }
     }
 
     void convertZC(BaseViewHolder helper, IncomeBean.DataBean item) {
@@ -82,6 +87,11 @@ public class WealthDetailFragment extends BaseListFragment<IncomeBean.DataBean> 
         helper.setText(R.id.sr_title, item.getContent())
                 .setText(R.id.sr_time, TimeUtil.format(item.getCreate_time()))
                 .setText(R.id.sr_num, "-" + item.getCoin());
+        if (type == 0) {
+            helper.setText(R.id.sr_type, "金币");
+        } else {
+            helper.setText(R.id.sr_type, "钻石");
+        }
     }
 
     void convertTx(BaseViewHolder helper, IncomeBean.DataBean item) {
@@ -133,6 +143,7 @@ public class WealthDetailFragment extends BaseListFragment<IncomeBean.DataBean> 
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         switch (type) {
             case TYPE_SR:
+            case TYPE_ZC:
                 onSRItemClick(adapter, view, position);
                 break;
         }

@@ -85,13 +85,18 @@ public class ProfitActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.ll_mingxi, R.id.ll_jilu, R.id.tv_comm})
+    @OnClick({R.id.ll_mingxi, R.id.ll_jilu, R.id.tv_comm, R.id.ll_zhichu})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.ll_mingxi:
-                startActivity(new Intent(ProfitActivity.this, WealthDetailedActivity.class));
+                startActivity(new Intent(ProfitActivity.this, WealthDetailedActivity.class)
+                        .putExtra("type", 0));
+                break;
+            case R.id.ll_zhichu:
+                startActivity(new Intent(ProfitActivity.this, WealthDetailedActivity.class)
+                        .putExtra("type", 1));
                 break;
             case R.id.ll_jilu:
                 startActivity(new Intent(ProfitActivity.this, ExchangeRecordActivity.class));
