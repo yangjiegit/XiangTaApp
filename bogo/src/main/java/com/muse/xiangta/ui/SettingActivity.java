@@ -1,5 +1,6 @@
 package com.muse.xiangta.ui;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,11 +9,15 @@ import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.Window;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.lzy.okgo.callback.StringCallback;
+import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.muse.xiangta.R;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseActivity;
@@ -25,12 +30,14 @@ import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.ui.common.LoginUtils;
 import com.muse.xiangta.utils.CuckooSharedPreUtil;
 import com.muse.xiangta.utils.DialogHelp;
+import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.UIHelp;
-import com.lzy.okgo.callback.StringCallback;
-import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -159,6 +166,10 @@ public class SettingActivity extends BaseActivity {
         itemContact.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemContact.setId(R.id.setting_contact);
 
+        QMUICommonListItemView itemCancellation = groupListView.createItemView("注销账号");
+        itemCancellation.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+        itemCancellation.setId(R.id.cancellation);
+
 //        QMUICommonListItemView itemDoNotView = groupListView.createItemView("免打扰");
 //        itemDoNotView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
 //        itemDoNotView.setId(R.id.sett_do_not);
@@ -183,7 +194,7 @@ public class SettingActivity extends BaseActivity {
                 .addItemView(itemFeedback, this);
 
 //        if (sex == 2 && "1".equals(state)) {
-            section.addItemView(itemSettingVideoMoney, this);
+        section.addItemView(itemSettingVideoMoney, this);
 //        }
 
         if (sex == 2) {
@@ -195,6 +206,8 @@ public class SettingActivity extends BaseActivity {
             section.addItemView(itemSetCustomSayHiMsg, this);
         }
 
+
+        section.addItemView(itemCancellation, this);
 
         section.addItemView(itemLoginOutView, this);
         section.addTo(groupListView);
@@ -210,7 +223,9 @@ public class SettingActivity extends BaseActivity {
     public void onClick(View v) {
 
         switch (v.getId()) {
-
+            case R.id.cancellation:
+                dialog();
+                break;
             case R.id.custom_qq:
                 openCustomServiceQQ();
                 break;
@@ -264,6 +279,46 @@ public class SettingActivity extends BaseActivity {
             default:
                 break;
         }
+    }
+
+    private void dialog() {
+        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.show();  //注意：必须在window.setContentView之前show
+        Window window = dialog.getWindow();
+        window.setContentView(R.layout.dialog_zhuxiao);
+        //点击确定按钮让对话框消失
+        TextView tv_quxiao = dialog.findViewById(R.id.tv_quxiao);
+        TextView tv_queding = dialog.findViewById(R.id.tv_queding);
+
+        tv_queding.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Api.destroyAccount(uId, uToken, new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        if (!StringUtils.isEmpty(s)) {
+                            try {
+                                int code = new JSONObject(s).getInt("code");
+                                if (code == 1) {
+                                    dialog.dismiss();
+                                    showToastMsg("注销成功");
+                                    loginOut();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }
+                });
+            }
+        });
+        tv_quxiao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 
     private void clickSetCustomSayHiMsg() {

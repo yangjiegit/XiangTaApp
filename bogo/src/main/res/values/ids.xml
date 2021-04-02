@@ -60,4 +60,6 @@
     <item name="set_custom_say_hi_msg" type="id"/>
 
     <item name="setting_contact" type="id"/>
+
+    <item name="cancellation" type="id"/>
 </resources>

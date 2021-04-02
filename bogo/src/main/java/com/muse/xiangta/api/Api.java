@@ -2649,5 +2649,16 @@ public class Api {
                 .execute(stringCallback);
     }
 
+    /*
+     * 注销
+     * */
+    public static void destroyAccount(String token, String uuid, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user_api/destroy_account")
+                .params("token", token)
+                .params("uuid", uuid)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
 
 }
