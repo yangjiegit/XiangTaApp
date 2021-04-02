@@ -12,44 +12,57 @@ public class UserCenterData implements Serializable {
     /**
      * code : 1
      * msg :
-     * data : {"sex":2,"user_nickname":"江晚吟","avatar":"http://xta.zzmzrj.com/avatar/1616582505248_1616582503544.jpg","coin":999949,"user_status":2,"level":1,"is_open_do_not_disturb":0,"is_open_auto_see_hi":0,"is_vip":0,"signature":"还未设置个性签名","is_auth":1,"age":18,"noble":"","image_label":"逗比","user_auth_status":1,"split":0,"attention_fans":13,"attention_all":0,"friends_all":0,"private_friends_all":0,"pay_coin":[],"has_declaration":1,"declaration":"http://xta.zzmzrj.com/audio/1615348420556_ceca9683-6274-4ad1-8bd1-e9fe2c7d69831615348412980.aac","overlapping_sound":"魔道祖师天下第一","education":"硕士","love_status":"单身","occupation":"金融/投资/保险","is_settled":2,"declaration_length":5,"video_url":"http://xta.zzmzrj.com/video/1616585305722_VID_20210324_172328.mp4","video_img":"http://xta.zzmzrj.com/img/1616585314213_1616585305574.jpg","is_president":0}
+     * data : {"sex":1,"user_nickname":"薛洋","avatar":"http://xta.zzmzrj.com/avatar/1617345382567_1617345380702.jpg","coin":9999374,"user_status":2,"level":3,"is_open_do_not_disturb":0,"is_open_auto_see_hi":0,"is_vip":0,"signature":"都得死","is_auth":1,"age":18,"noble":"","image_label":["呵呵哒","哇塞"],"remark_type_1":"","remark_type_2":"","remark_type_3":"","remark_type_4":"","remark_type_5":"","remark_type_6":"","juzhuqingkuang":"","huanqiantongju":"","jieshouyuehui":"","shifougoufang":"","shifougouche":"","car":"","user_auth_status":1,"split":0,"attention_fans":2,"attention_all":3,"friends_all":0,"private_friends_all":0,"pay_coin":[],"has_declaration":1,"declaration":"http://xta.zzmzrj.com/audio/1617265259472_306eb320-c037-49bf-8144-e2561b89e6d21617265253293.aac","overlapping_sound":"内心独白","education":"","love_status":"","occupation":"","is_settled":0,"declaration_length":6,"video_url":"","video_img":"","is_president":0,"remarks":[]}
      */
 
     private int code;
     private String msg;
     /**
-     * sex : 2
-     * user_nickname : 江晚吟
-     * avatar : http://xta.zzmzrj.com/avatar/1616582505248_1616582503544.jpg
-     * coin : 999949
+     * sex : 1
+     * user_nickname : 薛洋
+     * avatar : http://xta.zzmzrj.com/avatar/1617345382567_1617345380702.jpg
+     * coin : 9999374
      * user_status : 2
-     * level : 1
+     * level : 3
      * is_open_do_not_disturb : 0
      * is_open_auto_see_hi : 0
      * is_vip : 0
-     * signature : 还未设置个性签名
+     * signature : 都得死
      * is_auth : 1
      * age : 18
      * noble :
-     * image_label : 逗比
+     * image_label : ["呵呵哒","哇塞"]
+     * remark_type_1 :
+     * remark_type_2 :
+     * remark_type_3 :
+     * remark_type_4 :
+     * remark_type_5 :
+     * remark_type_6 :
+     * juzhuqingkuang :
+     * huanqiantongju :
+     * jieshouyuehui :
+     * shifougoufang :
+     * shifougouche :
+     * car :
      * user_auth_status : 1
      * split : 0
-     * attention_fans : 13
-     * attention_all : 0
+     * attention_fans : 2
+     * attention_all : 3
      * friends_all : 0
      * private_friends_all : 0
      * pay_coin : []
      * has_declaration : 1
-     * declaration : http://xta.zzmzrj.com/audio/1615348420556_ceca9683-6274-4ad1-8bd1-e9fe2c7d69831615348412980.aac
-     * overlapping_sound : 魔道祖师天下第一
-     * education : 硕士
-     * love_status : 单身
-     * occupation : 金融/投资/保险
-     * is_settled : 2
-     * declaration_length : 5
-     * video_url : http://xta.zzmzrj.com/video/1616585305722_VID_20210324_172328.mp4
-     * video_img : http://xta.zzmzrj.com/img/1616585314213_1616585305574.jpg
+     * declaration : http://xta.zzmzrj.com/audio/1617265259472_306eb320-c037-49bf-8144-e2561b89e6d21617265253293.aac
+     * overlapping_sound : 内心独白
+     * education :
+     * love_status :
+     * occupation :
+     * is_settled : 0
+     * declaration_length : 6
+     * video_url :
+     * video_img :
      * is_president : 0
+     * remarks : []
      */
 
     private DataBean data;
@@ -92,7 +105,18 @@ public class UserCenterData implements Serializable {
         private int is_auth;
         private int age;
         private String noble;
-        private String image_label;
+        private String remark_type_1;
+        private String remark_type_2;
+        private String remark_type_3;
+        private String remark_type_4;
+        private String remark_type_5;
+        private String remark_type_6;
+        private String juzhuqingkuang;
+        private String huanqiantongju;
+        private String jieshouyuehui;
+        private String shifougoufang;
+        private String shifougouche;
+        private String car;
         private int user_auth_status;
         private int split;
         private int attention_fans;
@@ -110,7 +134,9 @@ public class UserCenterData implements Serializable {
         private String video_url;
         private String video_img;
         private int is_president;
+        private List<String> image_label;
         private List<?> pay_coin;
+        private List<?> remarks;
 
         public int getSex() {
             return sex;
@@ -216,12 +242,100 @@ public class UserCenterData implements Serializable {
             this.noble = noble;
         }
 
-        public String getImage_label() {
-            return image_label;
+        public String getRemark_type_1() {
+            return remark_type_1;
         }
 
-        public void setImage_label(String image_label) {
-            this.image_label = image_label;
+        public void setRemark_type_1(String remark_type_1) {
+            this.remark_type_1 = remark_type_1;
+        }
+
+        public String getRemark_type_2() {
+            return remark_type_2;
+        }
+
+        public void setRemark_type_2(String remark_type_2) {
+            this.remark_type_2 = remark_type_2;
+        }
+
+        public String getRemark_type_3() {
+            return remark_type_3;
+        }
+
+        public void setRemark_type_3(String remark_type_3) {
+            this.remark_type_3 = remark_type_3;
+        }
+
+        public String getRemark_type_4() {
+            return remark_type_4;
+        }
+
+        public void setRemark_type_4(String remark_type_4) {
+            this.remark_type_4 = remark_type_4;
+        }
+
+        public String getRemark_type_5() {
+            return remark_type_5;
+        }
+
+        public void setRemark_type_5(String remark_type_5) {
+            this.remark_type_5 = remark_type_5;
+        }
+
+        public String getRemark_type_6() {
+            return remark_type_6;
+        }
+
+        public void setRemark_type_6(String remark_type_6) {
+            this.remark_type_6 = remark_type_6;
+        }
+
+        public String getJuzhuqingkuang() {
+            return juzhuqingkuang;
+        }
+
+        public void setJuzhuqingkuang(String juzhuqingkuang) {
+            this.juzhuqingkuang = juzhuqingkuang;
+        }
+
+        public String getHuanqiantongju() {
+            return huanqiantongju;
+        }
+
+        public void setHuanqiantongju(String huanqiantongju) {
+            this.huanqiantongju = huanqiantongju;
+        }
+
+        public String getJieshouyuehui() {
+            return jieshouyuehui;
+        }
+
+        public void setJieshouyuehui(String jieshouyuehui) {
+            this.jieshouyuehui = jieshouyuehui;
+        }
+
+        public String getShifougoufang() {
+            return shifougoufang;
+        }
+
+        public void setShifougoufang(String shifougoufang) {
+            this.shifougoufang = shifougoufang;
+        }
+
+        public String getShifougouche() {
+            return shifougouche;
+        }
+
+        public void setShifougouche(String shifougouche) {
+            this.shifougouche = shifougouche;
+        }
+
+        public String getCar() {
+            return car;
+        }
+
+        public void setCar(String car) {
+            this.car = car;
         }
 
         public int getUser_auth_status() {
@@ -360,12 +474,28 @@ public class UserCenterData implements Serializable {
             this.is_president = is_president;
         }
 
+        public List<String> getImage_label() {
+            return image_label;
+        }
+
+        public void setImage_label(List<String> image_label) {
+            this.image_label = image_label;
+        }
+
         public List<?> getPay_coin() {
             return pay_coin;
         }
 
         public void setPay_coin(List<?> pay_coin) {
             this.pay_coin = pay_coin;
+        }
+
+        public List<?> getRemarks() {
+            return remarks;
+        }
+
+        public void setRemarks(List<?> remarks) {
+            this.remarks = remarks;
         }
     }
 }

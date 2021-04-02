@@ -618,43 +618,44 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     //检测发送消息条件是否满足
     private boolean checkSendMessage(final int sendType) {
 
-        if (isPay == 1 && StringUtils.toInt(payCoin) != 0) {
+//        if (isPay == 1 && StringUtils.toInt(payCoin) != 0) {
+//
+//            //获取是否显示弹窗
+//            boolean canshow = (boolean) SharedPreferencesUtils.getParam(this, "canShowDialog", true);
+//
+//            if (canshow) {
+//
+//                new MaterialDialog.Builder(this)
+//                        .content("是否花费" + payCoin + RequestConfig.getConfigObj().getCurrency() + "发送付费消息？")
+//                        .positiveText(R.string.agree)
+//                        .negativeText(R.string.disagree)
+//                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+//                            @Override
+//                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                                //弹窗弹出后置为false
+//                                SharedPreferencesUtils.setParam(ChatActivity.this, "canShowDialog", false);
+//
+//                                toChat(sendType);
+//                            }
+//                        })
+//                        .show();
+//
+//                return false;
+//            } else {
+//
+//                toChat(sendType);
+//
+//                return false;
+//            }
+//
+//        } else
 
-            //获取是否显示弹窗
-            boolean canshow = (boolean) SharedPreferencesUtils.getParam(this, "canShowDialog", true);
-
-            if (canshow) {
-
-                new MaterialDialog.Builder(this)
-                        .content("是否花费" + payCoin + RequestConfig.getConfigObj().getCurrency() + "发送付费消息？")
-                        .positiveText(R.string.agree)
-                        .negativeText(R.string.disagree)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                //弹窗弹出后置为false
-                                SharedPreferencesUtils.setParam(ChatActivity.this, "canShowDialog", false);
-
-                                toChat(sendType);
-                            }
-                        })
-                        .show();
-
-                return false;
-            } else {
-
-                toChat(sendType);
-
-                return false;
-            }
-
-        } else if (sex == 2 && isAuth != 1) {
-
+        toChat(sendType);
+        if (sex == 2 && isAuth != 1) {
             DialogHelp.getMessageDialog(ChatActivity.this, "女性需要认证才可以发送消息").show();
             return false;
         }
-
-        return true;
+        return false;
     }
 
     private void toChat(final int sendType) {
