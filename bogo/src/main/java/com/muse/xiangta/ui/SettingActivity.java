@@ -391,29 +391,6 @@ public class SettingActivity extends BaseActivity {
 
     private void clickCustomVideoCoin() {
         WealthDetailedActivity.start(this, WealthDetailedActivity.TYPE_VIDEO_SET);
-        //WebViewActivity.openH5Activity(this, true, getString(R.string.about_me), ConfigModel.getInitData().getApp_h5().getUser_fee());
-//        final QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(getNowContext());
-//        builder.setTitle(getString(R.string.change_mony))
-//                .setPlaceholder("0代表系统默认价格")
-//                .setInputType(InputType.TYPE_CLASS_NUMBER)
-//                .addAction(getString(R.string.not_change), new QMUIDialogAction.ActionListener() {
-//                    @Override
-//                    public void onClick(QMUIDialog dialog, int index) {
-//
-//                        dialog.dismiss();
-//                    }
-//                })
-//                .addAction(getString(R.string.determine_change), new QMUIDialogAction.ActionListener() {
-//                    @Override
-//                    public void onClick(QMUIDialog dialog, int index) {
-//                        CharSequence text = builder.getEditText().getText();
-//
-//                        changeVideoCoin(text.toString());
-//                        dialog.dismiss();
-//
-//                    }
-//                }).show();
-
     }
 
     private void changeVideoCoin(String coin) {
