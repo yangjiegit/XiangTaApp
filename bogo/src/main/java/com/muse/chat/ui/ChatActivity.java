@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -26,10 +25,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.ToastUtils;
+import com.lzy.okgo.callback.StringCallback;
+import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.muse.chat.adapter.ChatAdapter;
 import com.muse.chat.model.CustomMessage;
 import com.muse.chat.model.FileMessage;
@@ -64,11 +63,8 @@ import com.muse.xiangta.modle.custommsg.InputListenerMsgText;
 import com.muse.xiangta.ui.PrivatePhotoActivity;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.utils.DialogHelp;
-import com.muse.xiangta.utils.SharedPreferencesUtils;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
-import com.lzy.okgo.callback.StringCallback;
-import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.tencent.imsdk.TIMConversationType;
 import com.tencent.imsdk.TIMCustomElem;
 import com.tencent.imsdk.TIMElem;
@@ -114,7 +110,7 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     private ChatInput input;
     private GiftBottomDialog giftBottomDialog;
 
-    private ImageView mIvPrivateChat, mIvGift, mIvVideo;
+//    private ImageView mIvPrivateChat, mIvGift, mIvVideo;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int IMAGE_STORE = 200;
     private static final int FILE_CODE = 300;
@@ -182,13 +178,13 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
         type = (TIMConversationType) getIntent().getSerializableExtra("type");
 
 
-        mIvPrivateChat = findViewById(R.id.iv_private_img);
-        mIvGift = findViewById(R.id.iv_gift);
-        mIvVideo = findViewById(R.id.iv_video);
-        findViewById(R.id.iv_reward).setOnClickListener(this);
-        mIvPrivateChat.setOnClickListener(this);
-        mIvGift.setOnClickListener(this);
-        mIvVideo.setOnClickListener(this);
+//        mIvPrivateChat = findViewById(R.id.iv_private_img);
+//        mIvGift = findViewById(R.id.iv_gift);
+//        mIvVideo = findViewById(R.id.iv_video);
+//        findViewById(R.id.iv_reward).setOnClickListener(this); 礼物
+//        mIvPrivateChat.setOnClickListener(this);私照
+//        mIvGift.setOnClickListener(this);礼物
+//        mIvVideo.setOnClickListener(this);视频
 
         input = (ChatInput) findViewById(R.id.input_panel);
         input.setChatView(this);
@@ -710,17 +706,12 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
 
     @Override
     public void onAction(int id) {
-        if (id == R.id.btn_gift) {
+        if (id == R.id.iv_liwu) {//礼物
             clickShowGift();
-        } else if (id == R.id.btn_image) {
-
-        } else if (id == R.id.btn_private_img) {
-
-            //选择私照发送
-            clickSelectPrivatePhoto();
-        } else if (id == R.id.btn_video_call) {
-//            Common.callVideo(this, identify, 0);
-            dialog();
+        } else if (id == R.id.iv_video) {//视频
+            callThisPlayer();
+        } else if (id == R.id.iv_call) {//电话
+            callVoice();
         }
     }
 
