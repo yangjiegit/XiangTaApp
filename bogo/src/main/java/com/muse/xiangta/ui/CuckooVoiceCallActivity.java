@@ -87,6 +87,9 @@ public class CuckooVoiceCallActivity extends BaseActivity2 implements GiftBottom
     public static final String VIDEO_DEDUCTION = "VIDEO_DEDUCTION";
     public static final String CALL_TYPE = "CALL_TYPE";
 
+    @BindView(R.id.iv_sheng)
+    ImageView iv_sheng;
+
     @BindView(R.id.videochat_voice)
     ImageView isSoundOut;//是否关闭声音
 
@@ -131,6 +134,8 @@ public class CuckooVoiceCallActivity extends BaseActivity2 implements GiftBottom
 
     @BindView(R.id.voice_call_sign_tv)
     TextView signTv;
+
+    private boolean is_voice = true;
 
     //标记
     private static final int PERMISSION_REQ_ID_RECORD_AUDIO = 22;
@@ -182,6 +187,7 @@ public class CuckooVoiceCallActivity extends BaseActivity2 implements GiftBottom
         iv_lucky = findViewById(R.id.videochat_lucky_corn);
         findViewById(R.id.close_video_chat).setOnClickListener(this);
         iv_lucky.setOnClickListener(this);
+        iv_sheng.setOnClickListener(this);
 
         mGiftAnimationContentView.startHandel();
 
@@ -319,6 +325,19 @@ public class CuckooVoiceCallActivity extends BaseActivity2 implements GiftBottom
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.iv_sheng:
+                if (null != mRtcEngine) {
+                    if (is_voice == true) {
+                        iv_sheng.setImageResource(R.mipmap.img_shengyin2);
+                        mRtcEngine.setEnableSpeakerphone(false);
+                        is_voice = false;
+                    } else {
+                        iv_sheng.setImageResource(R.mipmap.img_shengyin1);
+                        mRtcEngine.setEnableSpeakerphone(true);
+                        is_voice = true;
+                    }
+                }
+                break;
             case R.id.videochat_gift:
                 clickOpenGiftDialog();
                 break;
