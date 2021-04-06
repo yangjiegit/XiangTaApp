@@ -1,9 +1,9 @@
 package com.muse.xiangta.fragment;
 
 
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +43,7 @@ public class CuckooHomePageUserInfoFragment2 extends BaseFragment {
     TextView tv_shouhu;
 
     public static final String TO_USER_ID = "TO_USER_ID";
-    private TargetUserData2 targetUserData2;
+    private static TargetUserData2 targetUserData2;
     private int[] color_bg = {R.drawable.button_color_1, R.drawable.button_color_2,
             R.drawable.button_color_3, R.drawable.button_color_4};
     private List<String> mList1 = new ArrayList<>();
@@ -60,14 +60,22 @@ public class CuckooHomePageUserInfoFragment2 extends BaseFragment {
         return inflater.inflate(R.layout.fragment_cuckoo_home_page_user_info2, null);
     }
 
-    public static CuckooHomePageUserInfoFragment2 getInstance(TargetUserData2 targetUserData2) {
+    public static CuckooHomePageUserInfoFragment2 getInstance(TargetUserData2 targetUserData) {
+        Log.d("ret", "joker     传递数据");
         CuckooHomePageUserInfoFragment2 cuckooHomePageUserInfoFragment = new CuckooHomePageUserInfoFragment2();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("data", targetUserData2);
-        cuckooHomePageUserInfoFragment.setArguments(bundle);
+        targetUserData2 = targetUserData;
         return cuckooHomePageUserInfoFragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        initRecyclerView1();
+        initRecyclerView2();
+        initRecyclerView3();
+        initRecyclerView4();
+    }
 
     @Override
     protected void initView(View view) {
@@ -87,9 +95,6 @@ public class CuckooHomePageUserInfoFragment2 extends BaseFragment {
 
     @Override
     protected void initDate(View view) {
-//        toUserId = getArguments().getString(TO_USER_ID);
-        targetUserData2 = (TargetUserData2) getArguments().getSerializable("data");
-//        requestGetInfo();
         initRecyclerView1();
         initRecyclerView2();
         initRecyclerView3();
