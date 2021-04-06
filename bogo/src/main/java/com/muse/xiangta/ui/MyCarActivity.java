@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -171,6 +172,17 @@ public class MyCarActivity extends BaseActivity {
                 getMyCarData();
             }
         });
+    }
+
+    @OnClick(R.id.iv_back)
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()){
+            case R.id.iv_back:
+                finish();
+                break;
+        }
     }
 
     @Override

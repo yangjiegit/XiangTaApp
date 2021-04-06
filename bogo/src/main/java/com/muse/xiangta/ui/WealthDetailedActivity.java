@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.muse.xiangta.R;
 import com.muse.xiangta.base.BaseActivity;
@@ -63,6 +64,8 @@ public class WealthDetailedActivity extends BaseActivity {
     Fragment fragment;
     @BindView(R.id.text_right)
     RelativeLayout text_right;
+    @BindView(R.id.tv_right)
+    TextView tv_right;
 
     @Override
     protected void initView() {
@@ -77,6 +80,8 @@ public class WealthDetailedActivity extends BaseActivity {
         } else if (type == TYPE_RECHARGE) {
             fragment = new WealthRechargeFragment();
             Utils.initTransTitleBar(title, "充值", this);
+            text_right.setVisibility(View.VISIBLE);
+            tv_right.setText("充值记录");
         } else if (type == TYPE_DRAWING) {
             icon.setBackgroundResource(R.mipmap.bind_acct);
             icon.setVisibility(View.VISIBLE);
@@ -131,7 +136,11 @@ public class WealthDetailedActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.tv_right:
                 if (type == TYPE_VIDEO_SET) {
-                    ((VideoChargeSetFragment)fragment).setComm();
+                    ((VideoChargeSetFragment) fragment).setComm();
+                } else if (type == TYPE_RECHARGE) {
+                    //充值记录
+                    startActivity(new Intent(WealthDetailedActivity.this, WealthDetailedActivity.class)
+                            .putExtra("type", 3));
                 }
                 break;
         }
