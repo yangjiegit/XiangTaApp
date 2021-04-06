@@ -663,9 +663,9 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
 
         userNickname.setText(targetUserData.getData().getUser_nickname());
 //        userTimeText.setText(getString(R.string.call) + targetUserData.getCall()); TODO 赋值
-        userTimeText.setText("财富:" + targetUserData.getData().getWealth_level() + "");
+        userTimeText.setText("财富:LV." + targetUserData.getData().getWealth_level() + "");
 //        userGoodText.setVisibility(View.GONE); TODO 赋值
-        userGoodText.setText("魅力:" + targetUserData.getData().getGlamour_level() + "");
+        userGoodText.setText("魅力:LV." + targetUserData.getData().getGlamour_level() + "");
 //        userGoodText.setText(getString(R.string.praise) + targetUserData.getEvaluation());
 
         if (!TextUtils.isEmpty(targetUserData.getData().getAddress())) {
