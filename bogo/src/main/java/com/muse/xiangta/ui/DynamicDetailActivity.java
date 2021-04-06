@@ -28,6 +28,7 @@ import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.DynamicCommonListModel;
 import com.muse.xiangta.modle.DynamicListModel;
 import com.muse.xiangta.modle.UserModel;
+import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -51,6 +52,7 @@ public class DynamicDetailActivity extends BaseActivity implements BaseQuickAdap
     private TextView tv_name;
     private TextView tv_time;
     private TextView tv_content;
+    private ImageView iv_sex;
 
     private CircleImageView iv_avatar;
     private RecyclerView rv_photo_list;
@@ -107,9 +109,11 @@ public class DynamicDetailActivity extends BaseActivity implements BaseQuickAdap
         headView = LayoutInflater.from(this).inflate(R.layout.dynamic_datail_layout, null);
 
         tv_name = headView.findViewById(R.id.item_tv_name);
+        iv_sex = headView.findViewById(R.id.iv_sex);
         tv_content = headView.findViewById(R.id.item_tv_content);
         tv_time = headView.findViewById(R.id.item_tv_time);
         iv_avatar = headView.findViewById(R.id.item_iv_avatar);
+        iv_avatar.setOnClickListener(this);
         pp_sound_item_view = headView.findViewById(R.id.pp_sound_item_view);
         videoplayer_rl = headView.findViewById(R.id.videoplayer_rl);
         video = headView.findViewById(R.id.videoplayer);
@@ -127,10 +131,16 @@ public class DynamicDetailActivity extends BaseActivity implements BaseQuickAdap
         item_tv_like_count.setOnClickListener(this);
 
         UserModel userInfo = dynamicListModel.getUserInfo();
-        if (userInfo!=null){
+        if (userInfo != null) {
             tv_name.setText(userInfo.getUser_nickname());
             Utils.loadHttpIconImg(this, userInfo.getAvatar(), iv_avatar, 0);
 
+        }
+
+        if (dynamicListModel.getUserInfo().getSex() == 1) {
+            iv_sex.setImageResource(R.mipmap.img_xingbienan2);
+        } else {
+            iv_sex.setImageResource(R.mipmap.img_xingbie1);
         }
 
         tv_content.setText(dynamicListModel.getMsg_content());
@@ -144,7 +154,6 @@ public class DynamicDetailActivity extends BaseActivity implements BaseQuickAdap
             location.setVisibility(View.VISIBLE);
 
         }
-
 
 
         AudioEntity audioEntity = new AudioEntity();
@@ -249,6 +258,9 @@ public class DynamicDetailActivity extends BaseActivity implements BaseQuickAdap
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.item_iv_avatar:
+                Common.jumpUserPage(DynamicDetailActivity.this, dynamicListModel.getUserInfo().getId());
+                break;
             case R.id.btn_publish_common:
 
                 clickPublishCommon();

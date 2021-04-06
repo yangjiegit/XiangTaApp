@@ -47,6 +47,14 @@ public class DynamicAdapter extends BaseQuickAdapter<DynamicListModel, BaseViewH
             location.setText(item.getCity());
         }
 
+        ImageView iv_sex = helper.getView(R.id.iv_sex);
+
+        if (item.getUserInfo().getSex() == 1) {
+            iv_sex.setImageResource(R.mipmap.img_xingbienan2);
+        } else {
+            iv_sex.setImageResource(R.mipmap.img_xingbie1);
+        }
+
 
         UserModel userInfo = item.getUserInfo();
 
@@ -138,7 +146,7 @@ public class DynamicAdapter extends BaseQuickAdapter<DynamicListModel, BaseViewH
 
         BGLevelTextView level = helper.getView(R.id.tv_level);
         if (item.getUserInfo() != null) {
-            level.setVisibility(View.VISIBLE);
+            level.setVisibility(View.GONE);
             level.setLevelInfo(item.getUserInfo().getSex(), item.getUserInfo().getLevel());
         } else {
             level.setVisibility(View.GONE);

@@ -186,6 +186,8 @@ public class DynamicNearFragment extends BaseFragment implements BaseQuickAdapte
         } else if (view.getId() == R.id.item_tv_chat) {
             //撩他
             Common.startPrivatePage(getContext(), list.get(position).getUid());
+        } else if (view.getId() == R.id.item_iv_avatar) {
+            Common.jumpUserPage(getContext(), list.get(position).getUserInfo().getId());
         }
     }
 
