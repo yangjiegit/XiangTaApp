@@ -128,9 +128,17 @@ public class CuckooHomePageUserInfoFragment2 extends BaseFragment {
                 mList3.add(targetUserData2.getData().getGuardian_user_list().get(i));
             }
             if (mList3.size() > 0) {
-                tv_shouhu.setText("她的守护(" + mList3.size() + "人)");
+                if (targetUserData2.getData().getSex() == 1) {
+                    tv_shouhu.setText("他的守护(" + mList3.size() + "人)");
+                } else {
+                    tv_shouhu.setText("她的守护(" + mList3.size() + "人)");
+                }
             } else {
-                tv_shouhu.setText("她的守护");
+                if (targetUserData2.getData().getSex() == 1) {
+                    tv_shouhu.setText("他的守护");
+                } else {
+                    tv_shouhu.setText("她的守护");
+                }
             }
         }
 

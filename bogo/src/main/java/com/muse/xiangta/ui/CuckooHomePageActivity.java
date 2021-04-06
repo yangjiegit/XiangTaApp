@@ -149,13 +149,14 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
 
     private QuickDialog rankDialog;
 
+    private ImageView iv_sex;
     private TextView userNickname; //当前player名称
     private TextView userTimeText; //通话x小时
     private TextView userGoodText;//好评
     private TextView userLocationText;//当前player位置
     private TextView fansNumber;//粉丝数量
     private TextView listBarGiftText;//礼物数量
-    private ImageView userIsonLine;//是否在线图标
+    //    private ImageView userIsonLine;//是否在线图标
     private ImageView iv_auth_status;//是否认证
     private XBanner homePageWallpaper;//轮播组件
     private ImageView userLoveMe;//关注这个player
@@ -185,7 +186,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
 
         QMUIStatusBarHelper.translucent(this); // 沉浸式状态栏
         Utils.initTransP(top);
-        userIsonLine = findViewById(R.id.userinfo_bar_isonLine);
+//        userIsonLine = findViewById(R.id.userinfo_bar_isonLine);
         iv_auth_status = findViewById(R.id.iv_auth_status);
         userNickname = findViewById(R.id.userinfo_bar_userid);
         userTimeText = findViewById(R.id.userinfo_bar_time_text);
@@ -201,6 +202,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
         chatLl = findViewById(R.id.chat_ll);
         dynamicTv = findViewById(R.id.tv_btn_dynamic);
         myPrivateImg = findViewById(R.id.tv_btn_img);
+        iv_sex = findViewById(R.id.iv_sex);
 
         initXbanner();
 
@@ -293,7 +295,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
             //修改资料
             case R.id.edit_mine:
                 Intent intent = new Intent(this, EditActivity.class);
-                startActivityForResult(intent,20);
+                startActivityForResult(intent, 20);
                 menuDialog.dismiss();
                 break;
             //加入黑名单操作
@@ -685,8 +687,14 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
 //        fansNumber.setText(getString(R.string.fans) + ":" + targetUserData.getAttention_fans()); TODO 赋值
         fansNumber.setText("获赞:" + targetUserData.getData().getAttention_fans() + "");
 
+        if (targetUserData.getData().getSex() == 1) {
+            iv_sex.setImageResource(R.mipmap.img_xingbienan2);
+        } else {
+            iv_sex.setImageResource(R.mipmap.img_xingbie1);
+        }
+
         //是否在线
-        userIsonLine.setImageResource(StringUtils.toInt(targetUserData.getData().getIs_online()) == 1 ? R.mipmap.on_line : R.mipmap.not_online);
+//        userIsonLine.setImageResource(StringUtils.toInt(targetUserData.getData().getIs_online()) == 1 ? R.mipmap.on_line : R.mipmap.not_online);
 
         if (targetUserData.getData().getImg() != null) {
 //            for (TargetUserData2.DataBean.ImgBean img : targetUserData.getData().getImg()) {
@@ -899,7 +907,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+        switch (requestCode) {
             case 20:
                 requestTargetUserData();
                 break;

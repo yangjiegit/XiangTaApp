@@ -358,6 +358,7 @@ public class CuckooVoiceCallActivity extends BaseActivity2 implements GiftBottom
 
         mRtcEngine.disableVideo();
         mRtcEngine.enableAudio();
+        mRtcEngine.setEnableSpeakerphone(true);
     }
 
 

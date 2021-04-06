@@ -26,6 +26,7 @@ import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.DynamicListModel;
 import com.muse.xiangta.ui.DynamicDetailActivity;
 import com.muse.xiangta.ui.DynamicImagePreviewActivity;
+import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.utils.DialogHelp;
 import com.muse.xiangta.utils.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -116,7 +117,7 @@ public class DynamicNearFragment extends BaseFragment implements BaseQuickAdapte
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 swipeRefreshLayout.setRefreshing(false);
-                Log.e("NearDynamicList",s);
+                Log.e("NearDynamicList", s);
                 JsonRequestDoGetDynamicList data = (JsonRequestDoGetDynamicList) JsonRequestBase.getJsonObj(s, JsonRequestDoGetDynamicList.class);
                 if (StringUtils.toInt(data.getCode()) == 1) {
                     if (page == 1) {
@@ -140,7 +141,7 @@ public class DynamicNearFragment extends BaseFragment implements BaseQuickAdapte
             public void onError(Call call, Response response, Exception e) {
                 super.onError(call, response, e);
                 swipeRefreshLayout.setRefreshing(false);
-                Log.e("NearDynamicList",e.toString());
+                Log.e("NearDynamicList", e.toString());
             }
         });
     }
@@ -182,6 +183,9 @@ public class DynamicNearFragment extends BaseFragment implements BaseQuickAdapte
                     clickDelDynamic(position);
                 }
             }).show();
+        } else if (view.getId() == R.id.item_tv_chat) {
+            //撩他
+            Common.startPrivatePage(getContext(), list.get(position).getUid());
         }
     }
 
