@@ -2652,10 +2652,10 @@ public class Api {
     /*
      * 注销
      * */
-    public static void destroyAccount(String token, String uuid, StringCallback stringCallback) {
+    public static void destroyAccount(String uid, String token, StringCallback stringCallback) {
         OkGo.post(AppConfig.API_DOMAIN + "/user_api/destroy_account")
+                .params("uid", uid)
                 .params("token", token)
-                .params("uuid", uuid)
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }
