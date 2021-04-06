@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
@@ -124,9 +125,21 @@ public class MainActivity extends BaseActivity implements PermissionUtils.OnPerm
     }
 
 
+    private Handler handler = new Handler();
+
+    private Runnable task = new Runnable() {
+        public void run() {
+            // TODOAuto-generated method stub
+            handler.postDelayed(this, 20 * 1000);//设置延迟时间，此处是5秒
+            //需要执行的代码
+            CuckooApplication.getInstance().initAmap();
+        }
+    };
+
     @Override
     protected void initData() {
 
+        handler.post(task);//立即调用
         //检查邀请码
 //        InviteCodeDialog.checkInviteCode(this);
 

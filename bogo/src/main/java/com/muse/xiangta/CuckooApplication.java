@@ -403,7 +403,7 @@ public class CuckooApplication extends Application {
     }
 
     ////////////////////////////////////////配置高德地图//////////////////////////////////////////////
-    private void initAmap() {
+    public void initAmap() {
         ///回调监听
         mLocationListener = new AMapLocationListener() {
             @Override
@@ -422,6 +422,8 @@ public class CuckooApplication extends Application {
                 lat = String.valueOf(aMapLocation.getLatitude());//获取纬度
                 lng = String.valueOf(aMapLocation.getLongitude());//获取经度
                 city = aMapLocation.getCity();
+
+                Log.d("ret", "joker    定位   ");
 
                 LocalEvent event = new LocalEvent();
                 EventBus.getDefault().post(event);
