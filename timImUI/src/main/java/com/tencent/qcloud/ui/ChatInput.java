@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Build;
-import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -26,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 
@@ -42,7 +40,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
 
     private static final String TAG = "ChatInput";
 
-    private ImageButton btnAdd, btnSend, btnVoice, btnKeyboard, btnEmotion;
+    private ImageButton btnKeyboard,btnVoice;
     private EditText editText;
     private boolean isSendVisible, isHoldVoiceBtn, isEmoticonReady;
     private InputMode inputMode = InputMode.NONE;
@@ -53,7 +51,6 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
     private final int REQUEST_CODE_ASK_PERMISSIONS = 100;
     private float startY;
     private boolean mCancelSend;
-    private LinearLayout imgLl;
 
     public ChatInput(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -64,23 +61,8 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
 
     private void initView() {
         textPanel = (LinearLayout) findViewById(R.id.text_panel);
-        btnAdd = (ImageButton) findViewById(R.id.btn_add);
-        btnAdd.setOnClickListener(this);
-        btnSend = (ImageButton) findViewById(R.id.btn_send);
-        btnSend.setOnClickListener(this);
+        morePanel = (LinearLayout) findViewById(R.id.morePanel);//功能列表
         btnVoice = (ImageButton) findViewById(R.id.btn_voice);
-        btnVoice.setOnClickListener(this);
-        btnEmotion = (ImageButton) findViewById(R.id.btnEmoticon);
-        btnEmotion.setOnClickListener(this);
-        morePanel = (LinearLayout) findViewById(R.id.morePanel);
-        LinearLayout BtnImage = (LinearLayout) findViewById(R.id.btn_photo);
-        BtnImage.setOnClickListener(this);
-        LinearLayout BtnPhoto = (LinearLayout) findViewById(R.id.btn_image);
-        BtnPhoto.setOnClickListener(this);
-        LinearLayout btnVideo = (LinearLayout) findViewById(R.id.btn_video);
-        btnVideo.setOnClickListener(this);
-        LinearLayout btnFile = (LinearLayout) findViewById(R.id.btn_file);
-        btnFile.setOnClickListener(this);
         setSendBtn();
         btnKeyboard = (ImageButton) findViewById(R.id.btn_keyboard);
         btnKeyboard.setOnClickListener(this);
@@ -127,19 +109,27 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
         emoticonPanel = (LinearLayout) findViewById(R.id.emoticonPanel);
 
 
-        findViewById(R.id.btn_gift).setOnClickListener(this);
+        findViewById(R.id.iv_image).setOnClickListener(this);
+        findViewById(R.id.iv_add_img).setOnClickListener(this);
+        findViewById(R.id.iv_call).setOnClickListener(this);
+        findViewById(R.id.iv_video).setOnClickListener(this);
+        findViewById(R.id.iv_hong).setOnClickListener(this);
+        findViewById(R.id.iv_liwu).setOnClickListener(this);
+        findViewById(R.id.iv_cai).setOnClickListener(this);
+        findViewById(R.id.iv_shai).setOnClickListener(this);
+        findViewById(R.id.btn_add).setOnClickListener(this);
+        findViewById(R.id.btnEmoticon).setOnClickListener(this);
+        findViewById(R.id.btn_send).setOnClickListener(this);
+        findViewById(R.id.btn_voice).setOnClickListener(this);
 
-        imgLl = (LinearLayout) findViewById(R.id.btn_private_img);
-        imgLl.setOnClickListener(this);
-        findViewById(R.id.btn_video_call).setOnClickListener(this);
     }
 
 
     public void setSex(int sex) {
-        if (sex == 1) {
-            imgLl.setVisibility(GONE);
+        if (sex == 1) {//判断私照
+//            imgLl.setVisibility(GONE);
         } else {
-            imgLl.setVisibility(GONE);
+//            imgLl.setVisibility(GONE);
         }
     }
 
@@ -344,7 +334,8 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
     public void onClick(View v) {
         Activity activity = (Activity) getContext();
         int id = v.getId();
-        if (v.getId() == R.id.btn_video_call || v.getId() == R.id.btn_private_img || v.getId() == R.id.btn_gift) {
+        //视频  电话  礼物
+        if (v.getId() == R.id.iv_video || v.getId() == R.id.iv_call || v.getId() == R.id.iv_liwu) {
             chatView.onAction(v.getId());
             return;
         }
@@ -354,44 +345,44 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
         if (id == R.id.btn_add) {
             updateView(inputMode == InputMode.MORE ? InputMode.TEXT : InputMode.MORE);
         }
-        if (id == R.id.btn_photo) {
+        if (id == R.id.iv_add_img) { //拍照
             if (activity != null && requestCamera(activity)) {
                 chatView.sendPhoto();
             }
         }
-        if (id == R.id.btn_image) {
+        if (id == R.id.iv_image) {//图片
             if (activity != null && requestStorage(activity)) {
                 chatView.sendImage();
             }
         }
-        if (id == R.id.btn_voice) {
+        if (id == R.id.btn_voice) {//语音消息
             if (activity != null && requestAudio(activity)) {
                 updateView(InputMode.VOICE);
             }
         }
-        if (id == R.id.btn_keyboard) {
+        if (id == R.id.btn_keyboard) {//语音文字切换
             updateView(InputMode.TEXT);
         }
-        if (id == R.id.btn_video) {
-            if (getContext() instanceof FragmentActivity) {
-                FragmentActivity fragmentActivity = (FragmentActivity) getContext();
-                if (requestVideo(fragmentActivity)) {
-//                    VideoInputDialog.show(fragmentActivity.getSupportFragmentManager());
-                    if (requestRtmp()) {
-                        chatView.videoAction();
-                    } else {
-                        Toast.makeText(activity, "系统版本太低", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-            }
-        }
-        if (id == R.id.btnEmoticon) {
+//        if (id == R.id.btn_video) {//小视频
+//            if (getContext() instanceof FragmentActivity) {
+//                FragmentActivity fragmentActivity = (FragmentActivity) getContext();
+//                if (requestVideo(fragmentActivity)) {
+////                    VideoInputDialog.show(fragmentActivity.getSupportFragmentManager());
+//                    if (requestRtmp()) {
+//                        chatView.videoAction();
+//                    } else {
+//                        Toast.makeText(activity, "系统版本太低", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                }
+//            }
+//        }
+        if (id == R.id.btnEmoticon) {//表情
             updateView(inputMode == InputMode.EMOTICON ? InputMode.TEXT : InputMode.EMOTICON);
         }
-        if (id == R.id.btn_file) {
-            chatView.sendFile();
-        }
+//        if (id == R.id.btn_file) {//文件
+//            chatView.sendFile();
+//        }
     }
 
 
