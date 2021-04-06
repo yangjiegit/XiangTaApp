@@ -82,6 +82,7 @@ public class TargetUserData2 implements Serializable {
     public static class DataBean implements Serializable {
         private int id;
         private int sex;
+        private int is_auth;
         private String user_nickname;
         private String avatar;
         private String address;
@@ -107,6 +108,15 @@ public class TargetUserData2 implements Serializable {
         private String declaration;
         private String overlapping_sound;
         private List<String> information;
+
+        public int getIs_auth() {
+            return is_auth;
+        }
+
+        public void setIs_auth(int is_auth) {
+            this.is_auth = is_auth;
+        }
+
         /**
          * id : 1
          * name : 小幽灵
@@ -118,6 +128,8 @@ public class TargetUserData2 implements Serializable {
          * is_all_notify : 0
          * gift_count : 21
          */
+
+
 
         private List<GiftBean> gift;
         /**

@@ -31,7 +31,6 @@ import com.muse.xiangta.adapter.FragAdapter;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseActivity;
 import com.muse.xiangta.fragment.CuckooHomePageUserInfoFragment2;
-import com.muse.xiangta.fragment.DynamicMyFragment;
 import com.muse.xiangta.fragment.DynamicMyFragment2;
 import com.muse.xiangta.helper.SelectResHelper;
 import com.muse.xiangta.inter.JsonCallback;
@@ -77,6 +76,9 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
 
     @BindView(R.id.tv_user_id)
     TextView tv_user_id;
+
+    @BindView(R.id.ll_renzheng)
+    LinearLayout ll_renzheng;
 
     @BindView(R.id.rl_guardian)
     RelativeLayout rl_guardian;
@@ -245,11 +247,16 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
 
     @OnClick({R.id.hoem_page_rank_iv, R.id.list_bar_gift_text, R.id.rl_guardian, R.id.rl_voice_call, R.id.tv_btn_info, R.id.tv_btn_video, R.id.float_back, R.id.float_meun,
             R.id.ll_chat, R.id.ll_gift, R.id.rl_call, R.id.userinfo_bar_loveme, R.id.tv_btn_img, R.id.tv_btn_dynamic, R.id.home_page_qq_contact_ll, R.id.home_page_wechat_contact_ll
-            , R.id.home_page_phone_contact_ll, R.id.ll_tonghua, R.id.ll_sixin, R.id.ll_liwu, R.id.tv_dashan, R.id.tv_guanzhu, R.id.iv_shouhu})
+            , R.id.home_page_phone_contact_ll, R.id.ll_tonghua, R.id.ll_sixin, R.id.ll_liwu, R.id.tv_dashan, R.id.tv_guanzhu, R.id.iv_shouhu, R.id.ll_renzheng})
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.ll_renzheng:
+                Intent intent1 = new Intent(CuckooHomePageActivity.this, CuckooAuthFormActivity.class);
+                intent1.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(targetUserData.getData().getIs_auth()));
+                startActivity(intent1);
+                break;
             case R.id.tv_guanzhu:
                 loveThisPlayer();
                 break;
@@ -590,6 +597,12 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
         tv_user_id.setText("ID:" + targetUserData.getData().getId() + "   |   粉丝:"
                 + targetUserData.getData().getAttention_fans() + "   |   " +
                 targetUserData.getData().getAddress());
+//        getIs_auth
+        if (targetUserData.getData().getIs_auth() == 0) {
+            ll_renzheng.setVisibility(View.VISIBLE);
+        } else {
+            ll_renzheng.setVisibility(View.GONE);
+        }
 
         GlideImgManager.glideLoader(this, targetUserData.getData().getAvatar()
                 , iv_head, 0);

@@ -329,10 +329,37 @@
 
 
     <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/ll_renzheng"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_below="@+id/user_location_info_attr_rl"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:text="真人认证"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:text="去认证" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/contact_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/user_location_info_attr_rl"
+        android:layout_below="@+id/ll_renzheng"
         android:layout_margin="10dp"
         android:background="@drawable/withe_corin_bac"
         android:orientation="vertical"
