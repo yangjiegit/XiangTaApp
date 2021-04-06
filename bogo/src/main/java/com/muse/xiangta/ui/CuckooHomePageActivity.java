@@ -287,7 +287,8 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
             case R.id.hoem_page_rank_iv://守护
             case R.id.iv_shouhu:
 //                showContribution();
-                startActivity(new Intent(CuckooHomePageActivity.this, UserGuardRankActivity.class));
+                startActivity(new Intent(CuckooHomePageActivity.this, UserGuardRankActivity.class)
+                .putExtra("TO_USER_ID",targetUserId));
                 break;
             case R.id.float_back:
                 finish();
