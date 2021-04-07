@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 
@@ -40,7 +41,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
 
     private static final String TAG = "ChatInput";
 
-    private ImageButton btnKeyboard,btnVoice;
+    private ImageButton btnKeyboard, btnVoice;
     private EditText editText;
     private boolean isSendVisible, isHoldVoiceBtn, isEmoticonReady;
     private InputMode inputMode = InputMode.NONE;
@@ -110,8 +111,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
 
 
         findViewById(R.id.iv_image).setOnClickListener(this);
-        findViewById(R.id.iv_add_img).setOnClickListener(this);
-        findViewById(R.id.iv_call).setOnClickListener(this);
+        findViewById(R.id.iv_si).setOnClickListener(this);
         findViewById(R.id.iv_video).setOnClickListener(this);
         findViewById(R.id.iv_hong).setOnClickListener(this);
         findViewById(R.id.iv_liwu).setOnClickListener(this);
@@ -334,8 +334,8 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
     public void onClick(View v) {
         Activity activity = (Activity) getContext();
         int id = v.getId();
-        //视频  电话  礼物
-        if (v.getId() == R.id.iv_video || v.getId() == R.id.iv_call || v.getId() == R.id.iv_liwu) {
+        //视频    礼物
+        if (v.getId() == R.id.iv_video || v.getId() == R.id.iv_liwu || v.getId() == R.id.iv_si) {
             chatView.onAction(v.getId());
             return;
         }
@@ -345,11 +345,12 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
         if (id == R.id.btn_add) {
             updateView(inputMode == InputMode.MORE ? InputMode.TEXT : InputMode.MORE);
         }
-        if (id == R.id.iv_add_img) { //拍照
-            if (activity != null && requestCamera(activity)) {
-                chatView.sendPhoto();
-            }
-        }
+//        if (id == R.id.iv_add_img) { //拍照
+//            if (activity != null && requestCamera(activity)) {
+////                chatView.sendPhoto();
+//                Toast.makeText(getContext(), "该功能尚未开放", Toast.LENGTH_SHORT).show();
+//            }
+//        }
         if (id == R.id.iv_image) {//图片
             if (activity != null && requestStorage(activity)) {
                 chatView.sendImage();
@@ -379,6 +380,9 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
 //        }
         if (id == R.id.btnEmoticon) {//表情
             updateView(inputMode == InputMode.EMOTICON ? InputMode.TEXT : InputMode.EMOTICON);
+        }
+        if (id == R.id.iv_hong || id == R.id.iv_cai || id == R.id.iv_shai) {
+            Toast.makeText(getContext(), "该功能尚未开放", Toast.LENGTH_SHORT).show();
         }
 //        if (id == R.id.btn_file) {//文件
 //            chatView.sendFile();
@@ -415,7 +419,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
      */
     public void setCoinData(int coin, String name) {
         if (coin != 0) {
-            editText.setHint(coin + name + "/次");
+//            editText.setHint(coin + name + "/次");
         }
     }
 

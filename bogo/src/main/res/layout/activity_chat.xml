@@ -127,9 +127,10 @@
         <LinearLayout
             android:id="@+id/morePanel"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical"
+            android:paddingBottom="@dimen/dp_10"
             android:visibility="gone">
 
             <LinearLayout
@@ -144,28 +145,28 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@mipmap/img_message_image" />
+                    android:src="@mipmap/img_tupian" />
 
                 <ImageView
-                    android:id="@+id/iv_add_img"
+                    android:id="@+id/iv_si"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@mipmap/img_message_pai" />
+                    android:src="@mipmap/img_sizhao" />
 
                 <ImageView
-                    android:id="@+id/iv_call"
+                    android:id="@+id/iv_liwu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@mipmap/img_message_phone" />
+                    android:src="@mipmap/img_liwu" />
 
                 <ImageView
                     android:id="@+id/iv_video"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@mipmap/img_message_video" />
+                    android:src="@mipmap/img_shipin" />
 
             </LinearLayout>
 
@@ -181,31 +182,30 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@mipmap/img_message_hongbao" />
-
-                <ImageView
-                    android:id="@+id/iv_liwu"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@mipmap/img_message_liwu" />
+                    android:src="@mipmap/img_hongbao" />
 
                 <ImageView
                     android:id="@+id/iv_cai"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@mipmap/img_message_cai" />
+                    android:src="@mipmap/img_caiquan" />
 
                 <ImageView
                     android:id="@+id/iv_shai"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@mipmap/img_message_shai" />
+                    android:src="@mipmap/img_shaizi" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@mipmap/img_message_shai"
+                    android:visibility="invisible" />
 
             </LinearLayout>
-
 
         </LinearLayout>
 

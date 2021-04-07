@@ -110,7 +110,7 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     private ChatInput input;
     private GiftBottomDialog giftBottomDialog;
 
-//    private ImageView mIvPrivateChat, mIvGift, mIvVideo;
+    //    private ImageView mIvPrivateChat, mIvGift, mIvVideo;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int IMAGE_STORE = 200;
     private static final int FILE_CODE = 300;
@@ -709,9 +709,10 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
         if (id == R.id.iv_liwu) {//礼物
             clickShowGift();
         } else if (id == R.id.iv_video) {//视频
-            callThisPlayer();
-        } else if (id == R.id.iv_call) {//电话
-            callVoice();
+            dialog();
+        } else if (id == R.id.iv_si) {
+            //选择私照发送
+            clickSelectPrivatePhoto();
         }
     }
 
