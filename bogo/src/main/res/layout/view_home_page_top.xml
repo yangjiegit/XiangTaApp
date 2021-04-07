@@ -166,6 +166,15 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:src="@mipmap/img_xingbie1" />
 
+
+                    <ImageView
+                        android:id="@+id/iv_v"
+                        android:layout_width="@dimen/dp_12"
+                        android:layout_height="@dimen/dp_12"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:src="@mipmap/img_v"
+                        android:visibility="gone" />
+
                 </LinearLayout>
 
                 <LinearLayout

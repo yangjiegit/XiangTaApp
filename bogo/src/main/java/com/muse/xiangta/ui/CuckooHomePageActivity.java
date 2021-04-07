@@ -95,6 +95,9 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
     @BindView(R.id.tv_video_money_minute)
     TextView videoChatMoney;
 
+    @BindView(R.id.iv_v)
+    ImageView iv_v;
+
     @BindView(R.id.iv_auth_status_tv)
     TextView iv_auth_statusTv;
 
@@ -288,7 +291,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
             case R.id.iv_shouhu:
 //                showContribution();
                 startActivity(new Intent(CuckooHomePageActivity.this, UserGuardRankActivity.class)
-                .putExtra("TO_USER_ID",targetUserId));
+                        .putExtra("TO_USER_ID", targetUserId));
                 break;
             case R.id.float_back:
                 finish();
@@ -593,6 +596,12 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
             tv_guanzhu.setVisibility(View.GONE);
         } else {
             tv_guanzhu.setVisibility(View.VISIBLE);
+        }
+
+        if (targetUserData.getData().getIs_auth() == 1) {
+            iv_v.setVisibility(View.VISIBLE);
+        } else {
+            iv_v.setVisibility(View.GONE);
         }
 
         tv_user_id.setText("ID:" + targetUserData.getData().getId() + "   |   粉丝:"
