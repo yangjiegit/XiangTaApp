@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -89,7 +90,21 @@ public class DynamicDetailActivity extends BaseActivity implements BaseQuickAdap
     protected void initView() {
         getTopBar().setTitle("动态详情");
         getTopBar().setBackgroundColor(getResources().getColor(R.color.admin_color));
+
+        et_input.setFocusable(true);
+        et_input.setFocusableInTouchMode(true);
+        showInputTips(et_input);
+
         initData();
+    }
+
+    private void showInputTips(EditText et_text) {
+        et_text.setFocusable(true);
+        et_text.setFocusableInTouchMode(true);
+        et_text.requestFocus();
+        InputMethodManager inputManager =
+                (InputMethodManager) et_text.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.showSoftInput(et_text, 0);
     }
 
     @Override
