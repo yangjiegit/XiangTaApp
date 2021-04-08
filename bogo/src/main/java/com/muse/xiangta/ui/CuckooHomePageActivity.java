@@ -80,6 +80,9 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
     @BindView(R.id.ll_renzheng)
     LinearLayout ll_renzheng;
 
+    @BindView(R.id.iv_renzheng)
+    ImageView iv_renzheng;
+
     @BindView(R.id.tv_renzheng)
     TextView tv_renzheng;
 
@@ -616,12 +619,18 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
         if (targetUserData.getData().getIs_auth() == 0) {
 //            ll_renzheng.setVisibility(View.VISIBLE);
             if (uId.equals(targetUserId)) {
+                ll_renzheng.setEnabled(true);
                 tv_renzheng.setText("去认证");
+                iv_renzheng.setVisibility(View.VISIBLE);
             } else {
+                ll_renzheng.setEnabled(false);
                 tv_renzheng.setText("未认证");
+                iv_renzheng.setVisibility(View.GONE);
             }
         } else {
 //            ll_renzheng.setVisibility(View.GONE);
+            iv_renzheng.setVisibility(View.GONE);
+            ll_renzheng.setEnabled(false);
             tv_renzheng.setText("已认证");
         }
 
