@@ -1,9 +1,11 @@
 package com.muse.xiangta.ui;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -16,9 +18,12 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.fm.openinstall.OpenInstall;
 import com.fm.openinstall.listener.AppWakeUpAdapter;
 import com.fm.openinstall.model.AppData;
+import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.R;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseActivity;
@@ -30,10 +35,8 @@ import com.muse.xiangta.manage.RequestConfig;
 import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.ConfigModel;
 import com.muse.xiangta.utils.BGTimedTaskManage;
+import com.muse.xiangta.utils.GlideImgManager;
 import com.muse.xiangta.utils.Utils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.tencent.imsdk.TIMCallBack;
@@ -123,7 +126,6 @@ public class SplashActivity extends BaseActivity implements BGTimedTaskManage.BG
 
     @Override
     protected void initData() {
-
         LogUtils.i(Utils.sHA1(this));
         Utils.getSign(this);
         //SqlScoutServer.create(this, getPackageName());
@@ -244,29 +246,30 @@ public class SplashActivity extends BaseActivity implements BGTimedTaskManage.BG
                 new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        Log.e("set_contact", s);
+                        Log.d("ret", "joker     系统信息" + s);
                         JsonRequestConfig requestObj = JsonRequestConfig.getJsonObj(s);
                         if (requestObj.getCode() == 1) {
                             ConfigModel configObj = requestObj.getData();
                             //showToastMsg("获取配置信息成功");
-
                             //存储初始化信息到数据库中
                             ConfigModel.saveInitData(configObj);
-
                             //设置底部商标
                             splashBottomText.setText(configObj.getSplash_content());
-
                             //启动图
                             if (configObj.getSplash_img_url() != null) {
-                                RequestOptions options = new RequestOptions();
-                                options.error(R.color.white);
-                                Glide.with(SplashActivity.this).load(Utils.getCompleteImgUrl(configObj.getSplash_img_url())).apply(options).into(splashImg);
+                                if (!isDestroy((Activity) SplashActivity.this)) {
+                                    Log.d("ret","joker    未进入");
+                                    RoundedCorners roundedCorners = new RoundedCorners(20);
+                                    RequestOptions options = new RequestOptions().bitmapTransform(roundedCorners);
+                                    options.error(R.color.white);
+                                    GlideImgManager.loadImage(SplashActivity.this, configObj.getSplash_img_url(), splashImg);
+                                }else{
+                                    Log.d("ret","joker    进入");
+                                }
                             }
-
                             isLoadingConfigSuccess = true;
-
                             //做延时操作
-                            timer.start();
+//                            timer.start();
                             requestStatus = 1;
                         } else {
                             showToastMsg(requestObj.getMsg());
@@ -276,7 +279,6 @@ public class SplashActivity extends BaseActivity implements BGTimedTaskManage.BG
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         requestStatus = 2;
-
                         ToastUtils.showLong(R.string.request_service_error);
                     }
                 }
@@ -343,13 +345,14 @@ public class SplashActivity extends BaseActivity implements BGTimedTaskManage.BG
         super.onResume();
         if (SETTING_PERMISSION) {
             checkPermissionStatus();
+        } else {
+            startMainActivity();
         }
     }
 
     @Override
     public void onRunTask() {
         if (requestStatus == 2) {
-
             requestConfigData();
         }
     }
@@ -397,5 +400,18 @@ public class SplashActivity extends BaseActivity implements BGTimedTaskManage.BG
         wakeUpAdapter = null;
     }
 
+    /**
+     * 判断Activity是否Destroy
+     *
+     * @param mActivity
+     * @return
+     */
+    public static boolean isDestroy(Activity mActivity) {
+        if (mActivity == null || mActivity.isFinishing() || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && mActivity.isDestroyed())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
