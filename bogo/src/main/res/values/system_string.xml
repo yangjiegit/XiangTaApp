@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="tencent_sdk_app_id">1400488910</integer>
+    <integer name="tencent_sdk_app_id">1400504512</integer>
 
     <string name="amap_key">a24fb7d867d4a102468b7a35ab878e7c</string>
     <string name="umeng_appkey">5df87be70cafb2a520000fa1</string>
