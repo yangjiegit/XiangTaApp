@@ -1,6 +1,7 @@
 package com.muse.xiangta.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -118,6 +119,9 @@ public class WithdrawalActivity extends BaseActivity {
                 } else {
                     if (is_check == 2) {
                         withdrawData("wx");
+                    } else if (is_check == 1) {
+                        //支付宝
+                        withdrawData("zfb");
                     }
                 }
                 break;
@@ -137,7 +141,8 @@ public class WithdrawalActivity extends BaseActivity {
                                 clickWeChat();
                             } else if (code2 == 3) {
                                 //支付宝授权
-
+                                startActivityForResult(new Intent(WithdrawalActivity.this, ZhiFuBaoActivity.class)
+                                        , 80);
                             } else {
                                 showToastMsg("提现成功");
                                 finish();
@@ -162,7 +167,6 @@ public class WithdrawalActivity extends BaseActivity {
         plat.setPlatformActionListener(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int action, HashMap<String, Object> hashMap) {
-
                 //用户资源都保存到res
                 //通过打印res数据看看有哪些数据是你想要的
                 if (action == Platform.ACTION_USER_INFOR) {
@@ -172,7 +176,7 @@ public class WithdrawalActivity extends BaseActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            doPlatLogin(platDB.getUserId(), 3);
+                            doPlatLogin(platDB.getUserId());
                         }
                     });
                 }
@@ -192,7 +196,7 @@ public class WithdrawalActivity extends BaseActivity {
     }
 
     //三方授权登录
-    private void doPlatLogin(final String platId, final int loginway) {
+    private void doPlatLogin(final String platId) {
         Api.bindWx(uId, uToken, platId, new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
@@ -210,6 +214,16 @@ public class WithdrawalActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case 40:
+                withdrawData("zfb");
+                break;
+        }
     }
 
     @Override

@@ -2685,5 +2685,18 @@ public class Api {
                 .execute(stringCallback);
     }
 
+    /*
+     * 绑定支付宝
+     * */
+    public static void bindAli(String uid, String token, String alipay_account, String real_name, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user_api/bind_ali")
+                .params("uid", uid)
+                .params("token", token)
+                .params("alipay_account", alipay_account)
+                .params("real_name", real_name)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
 
 }
