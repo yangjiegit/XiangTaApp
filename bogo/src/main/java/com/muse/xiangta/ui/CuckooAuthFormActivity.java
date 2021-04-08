@@ -227,11 +227,11 @@ public class CuckooAuthFormActivity extends BaseActivity {
             tv_success.setText("恭喜您，认证成功！");
         } else if (status == 0) {
             //审核中
-            rl_success.setVisibility(View.VISIBLE);
-            rl_page_2.setVisibility(View.GONE);
-            view_from.setVisibility(View.GONE);
+//            rl_success.setVisibility(View.VISIBLE);
+//            rl_page_2.setVisibility(View.GONE);
+//            view_from.setVisibility(View.GONE);
 
-            tv_success.setText("审核中");
+//            tv_success.setText("审核中");
         }
 
         tv_qq.setText(ConfigModel.getInitData().getCustom_service_qq());
@@ -381,7 +381,7 @@ public class CuckooAuthFormActivity extends BaseActivity {
                 if (StringUtils.toInt(data.getCode()) == 1) {
                     finish();
                 }
-                showToastMsg(data.getMsg());
+                showToastMsg("提交成功");
             }
 
             @Override

@@ -338,14 +338,14 @@
 
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/ll_renzheng"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         android:layout_below="@+id/user_location_info_attr_rl"
         android:layout_marginTop="@dimen/dp_5"
         android:layout_marginBottom="@dimen/dp_5"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="visible">
 
         <TextView
             android:layout_width="0dp"
@@ -357,9 +357,12 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/tv_renzheng"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="@dimen/dp_10"
+            android:drawableRight="@drawable/icon_arrow_right"
+            android:drawablePadding="@dimen/dp_10"
             android:gravity="center_vertical"
             android:text="去认证" />
     </LinearLayout>

@@ -80,6 +80,9 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
     @BindView(R.id.ll_renzheng)
     LinearLayout ll_renzheng;
 
+    @BindView(R.id.tv_renzheng)
+    TextView tv_renzheng;
+
     @BindView(R.id.rl_guardian)
     RelativeLayout rl_guardian;
 
@@ -256,9 +259,11 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
 
         switch (v.getId()) {
             case R.id.ll_renzheng:
-                Intent intent1 = new Intent(CuckooHomePageActivity.this, CuckooAuthFormActivity.class);
-                intent1.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(targetUserData.getData().getIs_auth()));
-                startActivity(intent1);
+                if (uId.equals(targetUserId)) {
+                    Intent intent1 = new Intent(CuckooHomePageActivity.this, CuckooAuthFormActivity.class);
+                    intent1.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(targetUserData.getData().getIs_auth()));
+                    startActivity(intent1);
+                }
                 break;
             case R.id.tv_guanzhu:
                 loveThisPlayer();
@@ -609,9 +614,15 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
                 targetUserData.getData().getAddress());
 //        getIs_auth
         if (targetUserData.getData().getIs_auth() == 0) {
-            ll_renzheng.setVisibility(View.VISIBLE);
+//            ll_renzheng.setVisibility(View.VISIBLE);
+            if (uId.equals(targetUserId)) {
+                tv_renzheng.setText("去认证");
+            } else {
+                tv_renzheng.setText("未认证");
+            }
         } else {
-            ll_renzheng.setVisibility(View.GONE);
+//            ll_renzheng.setVisibility(View.GONE);
+            tv_renzheng.setText("已认证");
         }
 
         GlideImgManager.glideLoader(this, targetUserData.getData().getAvatar()
