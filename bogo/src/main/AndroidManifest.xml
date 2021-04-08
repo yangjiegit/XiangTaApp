@@ -468,6 +468,9 @@
             android:name=".ui.CuckooChangeUserRatioActivity"
             android:screenOrientation="portrait" /> <!-- 选择提现规则 -->
         <activity
+            android:name=".ui.WithdrawalActivity"
+            android:screenOrientation="portrait" /> <!-- 提现 -->
+        <activity
             android:name=".ui.CuckooSelectIncomeLogActivity"
             android:screenOrientation="portrait" />
         <activity

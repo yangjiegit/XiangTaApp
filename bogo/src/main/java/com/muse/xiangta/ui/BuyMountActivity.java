@@ -124,11 +124,14 @@ public class BuyMountActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.to_pay)
+    @OnClick({R.id.to_pay,R.id.iv_back})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
             case R.id.to_pay:
                 buyMountData();
                 break;

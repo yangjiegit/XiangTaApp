@@ -1,16 +1,14 @@
 package com.muse.xiangta.ui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 
 import com.muse.xiangta.R;
 import com.muse.xiangta.base.BaseActivity;
-import com.muse.xiangta.fragment.DynamicMyFragment;
 
 import butterknife.OnClick;
 
-public class DynamicActivity extends BaseActivity {
+public class WithdrawalActivity extends BaseActivity {
 
 
     @Override
@@ -20,7 +18,7 @@ public class DynamicActivity extends BaseActivity {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.activity_dynamic;
+        return R.layout.activity_withdrawal;
     }
 
     @Override
@@ -33,7 +31,12 @@ public class DynamicActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.tv_fabu,R.id.iv_back})
+    @Override
+    protected void initData() {
+
+    }
+
+    @OnClick(R.id.iv_back)
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -41,17 +44,7 @@ public class DynamicActivity extends BaseActivity {
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.tv_fabu:
-                Intent intent = new Intent(DynamicActivity.this, PushDynamicActivity.class);
-                intent.putExtra("type", 2);
-                startActivity(intent);
-                break;
         }
-    }
-
-    @Override
-    protected void initData() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fl_layout, new DynamicMyFragment()).commit();
     }
 
     @Override

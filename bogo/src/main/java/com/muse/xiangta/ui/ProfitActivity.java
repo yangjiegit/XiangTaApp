@@ -85,11 +85,15 @@ public class ProfitActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.ll_mingxi, R.id.ll_jilu, R.id.tv_comm, R.id.ll_zhichu, R.id.iv_back})
+    @OnClick({R.id.ll_mingxi, R.id.ll_jilu, R.id.tv_comm, R.id.ll_zhichu, R.id.iv_back, R.id.tv_tixian})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.tv_tixian:
+                //提现
+                startActivity(new Intent(ProfitActivity.this, WithdrawalActivity.class));
+                break;
             case R.id.iv_back:
                 finish();
                 break;

@@ -119,7 +119,7 @@ public class WealthDetailFragment extends BaseListFragment<IncomeBean.DataBean> 
         helper.setTextColor(R.id.sr_num, Color.parseColor("#FC5808"));
 //        helper.setText(R.id.sr_title, "充值" + ("0".equals(item.getStatus()) ? "成功" : "失败"))
         helper.setText(R.id.sr_title, "充值成功")
-                .setText(R.id.sr_time, TimeUtil.format(item.getCreate_time()))
+                .setText(R.id.sr_time, TimeUtil.format(item.getAddtime()))
                 .setText(R.id.sr_num, "+" + item.getCoin());
     }
 

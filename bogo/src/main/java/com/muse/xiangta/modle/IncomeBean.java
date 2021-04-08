@@ -87,7 +87,13 @@ public class IncomeBean {
 
         private String addtime;
 
+        public String getAddtime() {
+            return addtime;
+        }
 
+        public void setAddtime(String addtime) {
+            this.addtime = addtime;
+        }
 
         public String getIncome() {
             return income;
