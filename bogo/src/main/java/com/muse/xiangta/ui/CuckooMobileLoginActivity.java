@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSON;
 import com.fm.openinstall.OpenInstall;
 import com.fm.openinstall.listener.AppInstallAdapter;
 import com.fm.openinstall.model.AppData;
+import com.lzy.okgo.callback.StringCallback;
 import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.muse.xiangta.R;
 import com.muse.xiangta.api.Api;
@@ -25,8 +26,12 @@ import com.muse.xiangta.json.JsonRequestUserBase;
 import com.muse.xiangta.modle.ConfigModel;
 import com.muse.xiangta.modle.CuckooOpenInstallModel;
 import com.muse.xiangta.ui.common.LoginUtils;
+import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -528,41 +533,60 @@ public class CuckooMobileLoginActivity extends BaseActivity {
                     inviteCode = data.getInvite_code();
                     agent = data.getAgent();
                 }
-
-                Api.doPlatAuthLogin(platId, inviteCode, agent, uuid, loginway, new JsonCallback() {
-                    @Override
-                    public Context getContextToJson() {
-                        return getNowContext();
-                    }
-
+                //判断是否绑定手机号
+                String finalInviteCode = inviteCode;
+                String finalAgent = agent;
+                Api.chkPhone(platId, new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
+                        if (!StringUtils.isEmpty(s)) {
+                            try {
+                                int code = new JSONObject(s).getInt("code");
+                                if (code == 1) {
+                                    int code2 = new JSONObject(s).getJSONObject("data").getInt("code");
+                                    if (code2 == 1) {
+                                        Api.doPlatAuthLogin(platId, finalInviteCode, finalAgent, uuid, loginway, new JsonCallback() {
+                                            @Override
+                                            public Context getContextToJson() {
+                                                return getNowContext();
+                                            }
 
-                        hideLoadingDialog();
-                        JsonRequestUserBase requestObj = JsonRequestUserBase.getJsonObj(s);
-                        if (requestObj.getCode() == 1) {
+                                            @Override
+                                            public void onSuccess(String s, Call call, Response response) {
+                                                hideLoadingDialog();
+                                                JsonRequestUserBase requestObj = JsonRequestUserBase.getJsonObj(s);
+                                                if (requestObj.getCode() == 1) {
+                                                    //是否完善资料
+                                                    if (requestObj.getData().getIs_reg_perfect() == 1) {
+                                                        LoginUtils.doLogin(CuckooMobileLoginActivity.this, requestObj.getData());
+                                                    } else {
+                                                        Intent intent = new Intent(getNowContext(), PerfectRegisterInfoActivity.class);
+                                                        intent.putExtra(PerfectRegisterInfoActivity.USER_LOGIN_INFO, requestObj.getData());
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                }
+                                                showToastMsg(requestObj.getMsg());
+                                            }
 
-                            //是否完善资料
-                            if (requestObj.getData().getIs_reg_perfect() == 1) {
-
-                                LoginUtils.doLogin(CuckooMobileLoginActivity.this, requestObj.getData());
-                            } else {
-                                Intent intent = new Intent(getNowContext(), PerfectRegisterInfoActivity.class);
-                                intent.putExtra(PerfectRegisterInfoActivity.USER_LOGIN_INFO, requestObj.getData());
-                                startActivity(intent);
-                                finish();
+                                            @Override
+                                            public void onError(Call call, Response response, Exception e) {
+                                                super.onError(call, response, e);
+                                                hideLoadingDialog();
+                                            }
+                                        });
+                                    } else {
+                                        Intent intent = new Intent(CuckooMobileLoginActivity.this, BindPhoneActivity.class);
+                                        intent.putExtra("open_id",platId);
+                                        startActivity(intent);
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         }
-                        showToastMsg(requestObj.getMsg());
-                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        super.onError(call, response, e);
-                        hideLoadingDialog();
                     }
                 });
-
                 Log.d("OpenInstall", "getInstall : installData = " + appData.toString());
             }
         });

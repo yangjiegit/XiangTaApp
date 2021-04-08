@@ -1101,9 +1101,20 @@ public class Api {
     }
 
     public static void doPlatAuthLogin(String platId, String inviteCode, String agent, String uuid, int loginway, JsonCallback callback) {
-
-
         OkGo.get(AppConfig.API_DOMAIN + "/login_api/auth_login")
+                .params("plat_id", platId)
+                .params("invite_code", inviteCode)
+                .params("agent", agent)
+                .params("uuid", uuid)
+                .params("login_way", loginway)
+                .tag("doPlatAuthLogin")
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(callback);
+    }
+
+    public static void doPlatAuthLogin1(String mobile,String platId, String inviteCode, String agent, String uuid, int loginway, JsonCallback callback) {
+        OkGo.get(AppConfig.API_DOMAIN + "/login_api/auth_login")
+                .params("mobile",mobile)
                 .params("plat_id", platId)
                 .params("invite_code", inviteCode)
                 .params("agent", agent)
@@ -2097,19 +2108,28 @@ public class Api {
                 .execute(stringCallback);
     }
 
-    public static void getIsBindPhone(StringCallback callback) {
-        OkGo.get(AppConfig.API_DOMAIN + "/user_api/is_binding_mobile")
-                .params("uid", SaveData.getInstance().getId())
-                .params("token", SaveData.getInstance().getToken())
-                .cacheMode(CacheMode.DEFAULT)
-                .execute(callback);
-    }
+//    public static void getIsBindPhone(StringCallback callback) {
+//        OkGo.get(AppConfig.API_DOMAIN + "/user_api/is_binding_mobile")
+//                .params("uid", SaveData.getInstance().getId())
+//                .params("token", SaveData.getInstance().getToken())
+//                .cacheMode(CacheMode.DEFAULT)
+//                .execute(callback);
+//    }
 
     //绑定手机号
     public static void bindMobile(String mobile, String code, StringCallback callback) {
         OkGo.get(AppConfig.API_DOMAIN + "/user_api/binging_mobile")
                 .params("uid", SaveData.getInstance().getId())
                 .params("token", SaveData.getInstance().getToken())
+                .params("mobile", mobile)
+                .params("code", code)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(callback);
+    }
+
+    //绑定手机号
+    public static void chkCode(String mobile, String code, StringCallback callback) {
+        OkGo.get(AppConfig.API_DOMAIN + "/login_api/chk_code")
                 .params("mobile", mobile)
                 .params("code", code)
                 .cacheMode(CacheMode.DEFAULT)
@@ -2694,6 +2714,16 @@ public class Api {
                 .params("token", token)
                 .params("alipay_account", alipay_account)
                 .params("real_name", real_name)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 微信 是否绑定手机号
+     * */
+    public static void chkPhone(String plat_id, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/login_api/chk_phone")
+                .params("plat_id", plat_id)
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }

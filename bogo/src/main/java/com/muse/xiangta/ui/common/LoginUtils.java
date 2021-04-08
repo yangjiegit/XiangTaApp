@@ -8,6 +8,9 @@ import android.util.Log;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.fm.openinstall.OpenInstall;
+import com.google.gson.Gson;
+import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.CuckooApplication;
 import com.muse.xiangta.R;
 import com.muse.xiangta.api.Api;
@@ -20,9 +23,6 @@ import com.muse.xiangta.ui.BindPhoneActivity;
 import com.muse.xiangta.ui.CuckooMobileLoginActivity;
 import com.muse.xiangta.ui.MainActivity;
 import com.muse.xiangta.utils.SharedPreferencesUtils;
-import com.fm.openinstall.OpenInstall;
-import com.google.gson.Gson;
-import com.lzy.okgo.callback.StringCallback;
 import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMOfflinePushSettings;
 import com.umeng.analytics.MobclickAgent;
@@ -43,7 +43,6 @@ public class LoginUtils {
     private static Intent intent;
 
     public static void doLogin(final Context context, final UserModel userData) {
-
         TxLogin.loginIm(
                 userData.getId(),
                 userData.getUser_sign(),
@@ -52,7 +51,7 @@ public class LoginUtils {
                     @Override
                     public void onError(int i, String s) {
                         //登录失败
-                        LogUtils.i(s+"腾讯云登录有误!"+i);
+                        LogUtils.i(s + "腾讯云登录有误!" + i);
                         ToastUtils.showLong(s);
 
                     }
@@ -85,46 +84,52 @@ public class LoginUtils {
                         //统计友盟注册用户数据
                         MobclickAgent.onProfileSignIn(userData.getId());
 
+                        intent = new Intent(context, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        context.startActivity(intent);
+                        ((Activity) context).finish();
+
                         //绑定手机号
-                        Api.getIsBindPhone(new StringCallback() {
-                            @Override
-                            public void onSuccess(String s, Call call, Response response) {
-                                Log.e("getIsBindPhone", s);
-                                IsBindPhoneBean bean = new Gson().fromJson(s, IsBindPhoneBean.class);
-                                if (bean.getCode() == 1) {
-                                    String forceBind = bean.getIs_force_binding_mobile();
-                                    String is_binding_mobile = bean.getIs_binding_mobile();
-                                    //"0未绑定手机号1已绑定
-                                    switch (is_binding_mobile) {
-                                        case "0":
-
-                                            intent = new Intent(context, BindPhoneActivity.class);
-                                            intent.putExtra("state", forceBind);
-                                            context.startActivity(intent);
-                                            break;
-                                        case "1":
-
-                                            //跳转页面
-                                            ToastUtils.showLong(R.string.login_success);
-
-                                            intent = new Intent(context, MainActivity.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                                                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                            context.startActivity(intent);
-                                            ((Activity) context).finish();
-
-                                            break;
-
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onError(Call call, Response response, Exception e) {
-                                super.onError(call, response, e);
-                                ToastUtils.showLong("绑定手机信息获取失败");
-                            }
-                        });
+//                        Api.getIsBindPhone(new StringCallback() {
+//                            @Override
+//                            public void onSuccess(String s, Call call, Response response) {
+//                                Log.e("getIsBindPhone", s);
+//                                IsBindPhoneBean bean = new Gson().fromJson(s, IsBindPhoneBean.class);
+//                                if (bean.getCode() == 1) {
+//                                    String forceBind = bean.getIs_force_binding_mobile();
+//                                    String is_binding_mobile = bean.getIs_binding_mobile();
+//                                    //"0未绑定手机号1已绑定
+//                                    switch (is_binding_mobile) {
+//                                        case "0":
+//
+//                                            intent = new Intent(context, BindPhoneActivity.class);
+//                                            intent.putExtra("state", forceBind);
+//                                            context.startActivity(intent);
+//                                            break;
+//                                        case "1":
+//
+//                                            //跳转页面
+//                                            ToastUtils.showLong(R.string.login_success);
+//
+//                                            intent = new Intent(context, MainActivity.class);
+//                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+//                                                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                            context.startActivity(intent);
+//                                            ((Activity) context).finish();
+//
+//                                            break;
+//
+//                                    }
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onError(Call call, Response response, Exception e) {
+//                                super.onError(call, response, e);
+//                                ToastUtils.showLong("绑定手机信息获取失败");
+//                            }
+//                        });
 
 
                     }
