@@ -2660,5 +2660,30 @@ public class Api {
                 .execute(stringCallback);
     }
 
+    /*
+     * 绑定微信
+     * */
+    public static void bindWx(String uid, String token, String plat_id, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user_api/bind_wx")
+                .params("uid", uid)
+                .params("token", token)
+                .params("plat_id", plat_id)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 提现
+     * */
+    public static void withdraw(String uid, String token, String type, String amount, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user_api/withdraw")
+                .params("uid", uid)
+                .params("token", token)
+                .params("type", type)
+                .params("amount", amount)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
 
 }

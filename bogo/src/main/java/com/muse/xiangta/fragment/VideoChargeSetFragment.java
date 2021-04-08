@@ -161,18 +161,18 @@ public class VideoChargeSetFragment extends BaseFragment {
         switch (type) {
             case 0:
                 picker = new OptionPicker(getActivity(),
-                        mSettingBean.getData().getCharge_rule().getMessage_chat().toArray
-                                (new String[mSettingBean.getData().getCharge_rule().getMessage_chat().size()]));
-                break;
-            case 1:
-                picker = new OptionPicker(getActivity(),
                         mSettingBean.getData().getCharge_rule().getVoice_chat().toArray
                                 (new String[mSettingBean.getData().getCharge_rule().getVoice_chat().size()]));
                 break;
-            case 2:
+            case 1:
                 picker = new OptionPicker(getActivity(),
                         mSettingBean.getData().getCharge_rule().getVideo_chat().toArray
                                 (new String[mSettingBean.getData().getCharge_rule().getVideo_chat().size()]));
+                break;
+            case 2:
+                picker = new OptionPicker(getActivity(),
+                        mSettingBean.getData().getCharge_rule().getMessage_chat().toArray
+                                (new String[mSettingBean.getData().getCharge_rule().getMessage_chat().size()]));
                 break;
         }
         picker.setCycleDisable(true);//不禁用循环

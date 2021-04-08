@@ -3,55 +3,54 @@ package com.muse.xiangta.modle;
 import java.io.Serializable;
 
 public class LevelBean implements Serializable {
-
     /**
      * code : 1
      * msg :
-     * data : {"id":102597,"user_type":2,"sex":2,"birthday":0,"last_login_time":1616566211,"score":0,"user_money":25,"coin_system":0,"coin":999959,"create_time":"2021-03-01 16:56:12","user_status":2,"user_login":"","user_pass":"","user_nickname":"Joker","user_email":"","user_url":"","avatar":"http://xta.zzmzrj.com/avatar/1616397194924_1616397191882.png","signature":"还未设置个性签名","last_login_ip":"117.136.104.159","user_activation_key":"","mobile":"15137113302","more":null,"token":"5f251275ae0cca3a541229071f3b4b44","address":"","level":1,"noble_level":0,"status":1,"teacher":0,"income":110999510,"income_total":111000050,"last_remove_message_time":1616501813,"fabulous":0,"is_reg_perfect":1,"custom_video_charging_coin":0,"is_open_do_not_disturb":0,"login_type":1,"plat_id":"o14DKt1bRJ0dnfd7c5gplsi0cjOY","reference":1,"last_change_name_time":0,"is_use_free_time":0,"is_online":1,"vip_end_time":0,"link_id":"0","invitation_coin":"0.00","alipay_account":"","sort":0,"is_auth":1,"alipay_account_name":"","host_bay_video_proportion":"0","host_bay_phone_proportion":"0","host_bay_gift_proportion":"0","host_one_video_proportion":"0","host_direct_messages":"0","device_uuid":"2830b200bad4df46","host_guardian_proportion":"0","invite_buckle_probability":0,"invite_buckle_recharge_probability":0,"host_turntable_ratio":"0","province":"","city":"","is_open_auto_see_hi":0,"wx_number":"","qq_number":"","phone_number":"","wx_price":0,"qq_price":0,"phone_price":0,"orderno":0,"shielding_time":0,"login_way":3,"lat":"0.0","lng":"0.0","height":"0","weight":"","constellation":"","image_label":"","introduce":"","host_bay_contact_proportion":"","diamond":0,"diamond_system":0,"glamour":0,"glamour_level_id":1,"wealth":6,"wealth_level_id":5,"has_declaration":1,"declaration":"http://xta.zzmzrj.com/audio/1615348420556_ceca9683-6274-4ad1-8bd1-e9fe2c7d69831615348412980.aac","overlapping_sound":"","love_status":"","declaration_length":5,"education":"","occupation":"","is_settled":2,"upgrade_wealth":299994,"upgrade_wealth_percent":2.0E-5,"upgrade_glamour":100,"upgrade_glamour_percent":0,"wealth_level_data":{"wealth_level_id":5,"level_name":"天极领主","min_value":30001,"max_value":300000,"create_time":"2021-03-23 14:59:16"},"glamour_level_data":{"glamour_level_id":1,"level_name":"水萌星","min_value":0,"max_value":100,"create_time":"2021-03-23 14:56:20"}}
+     * data : {"id":102722,"user_type":2,"sex":1,"birthday":0,"last_login_time":1617869983,"score":0,"user_money":0,"coin_system":0,"coin":1020,"create_time":"2021-04-08 14:19:11","user_status":2,"user_login":"","user_pass":"","user_nickname":"王尼玛2？","user_email":"","user_url":"","avatar":"http://xta.zzmzrj.com/67e60202104081457141958.jpg","signature":"大地之子","last_login_ip":"171.8.113.147","user_activation_key":"","mobile":"13580524919","more":null,"token":"43bd70e03eef0bc28f085d25c5d32661","address":"","level":1,"noble_level":0,"status":1,"teacher":0,"income":12,"income_total":12,"last_remove_message_time":1617866159,"fabulous":0,"is_reg_perfect":1,"custom_video_charging_coin":0,"is_open_do_not_disturb":0,"login_type":0,"plat_id":"","reference":1,"last_change_name_time":1617863240,"is_use_free_time":0,"is_online":1,"vip_end_time":0,"link_id":"0","invitation_coin":"0.00","alipay_account":"","sort":0,"is_auth":1,"alipay_account_name":"","host_bay_video_proportion":"0","host_bay_phone_proportion":"0","host_bay_gift_proportion":"0","host_one_video_proportion":"0","host_direct_messages":"0","device_uuid":"c9e2871e88e2d571","host_guardian_proportion":"0","invite_buckle_probability":0,"invite_buckle_recharge_probability":0,"host_turntable_ratio":"0","province":"","city":"","is_open_auto_see_hi":0,"wx_number":"","qq_number":"","phone_number":"","wx_price":0,"qq_price":0,"phone_price":0,"orderno":0,"shielding_time":0,"login_way":1,"lat":"0.0","lng":"0.0","height":"172","weight":"100","constellation":"","image_label":"萌萌哒-强啊","introduce":"","host_bay_contact_proportion":"","diamond":0,"diamond_system":0,"glamour":6,"glamour_level_id":1,"wealth":8,"wealth_level_id":1,"has_declaration":0,"declaration":"","overlapping_sound":"","love_status":"","declaration_length":0,"education":"","occupation":"","is_settled":0,"remark_type_1":"","remark_type_2":"","remark_type_3":"","remark_type_4":"","remark_type_5":"","remark_type_6":"","juzhuqingkuang":"","huanqiantongju":"","jieshouyuehui":"","shifougoufang":"","shifougouche":"","update_nickname_time":0,"is_delete":0,"real_name":"","upgrade_wealth":92,"upgrade_wealth_percent":0.08,"upgrade_glamour":94,"upgrade_glamour_percent":0.06,"wealth_level_data":{"wealth_level_id":1,"level_name":"蓝卫兵","min_value":0,"max_value":100,"create_time":"2021-03-23 14:58:35"},"glamour_level_data":{"glamour_level_id":1,"level_name":"水萌星","min_value":0,"max_value":100,"create_time":"2021-03-23 14:56:20"}}
      */
 
     private int code;
     private String msg;
     /**
-     * id : 102597
+     * id : 102722
      * user_type : 2
-     * sex : 2
+     * sex : 1
      * birthday : 0
-     * last_login_time : 1616566211
+     * last_login_time : 1617869983
      * score : 0
-     * user_money : 25
+     * user_money : 0
      * coin_system : 0
-     * coin : 999959
-     * create_time : 2021-03-01 16:56:12
+     * coin : 1020
+     * create_time : 2021-04-08 14:19:11
      * user_status : 2
      * user_login :
      * user_pass :
-     * user_nickname : Joker
+     * user_nickname : 王尼玛2？
      * user_email :
      * user_url :
-     * avatar : http://xta.zzmzrj.com/avatar/1616397194924_1616397191882.png
-     * signature : 还未设置个性签名
-     * last_login_ip : 117.136.104.159
+     * avatar : http://xta.zzmzrj.com/67e60202104081457141958.jpg
+     * signature : 大地之子
+     * last_login_ip : 171.8.113.147
      * user_activation_key :
-     * mobile : 15137113302
+     * mobile : 13580524919
      * more : null
-     * token : 5f251275ae0cca3a541229071f3b4b44
+     * token : 43bd70e03eef0bc28f085d25c5d32661
      * address :
      * level : 1
      * noble_level : 0
      * status : 1
      * teacher : 0
-     * income : 110999510
-     * income_total : 111000050
-     * last_remove_message_time : 1616501813
+     * income : 12
+     * income_total : 12
+     * last_remove_message_time : 1617866159
      * fabulous : 0
      * is_reg_perfect : 1
      * custom_video_charging_coin : 0
      * is_open_do_not_disturb : 0
-     * login_type : 1
-     * plat_id : o14DKt1bRJ0dnfd7c5gplsi0cjOY
+     * login_type : 0
+     * plat_id :
      * reference : 1
-     * last_change_name_time : 0
+     * last_change_name_time : 1617863240
      * is_use_free_time : 0
      * is_online : 1
      * vip_end_time : 0
@@ -66,7 +65,7 @@ public class LevelBean implements Serializable {
      * host_bay_gift_proportion : 0
      * host_one_video_proportion : 0
      * host_direct_messages : 0
-     * device_uuid : 2830b200bad4df46
+     * device_uuid : c9e2871e88e2d571
      * host_guardian_proportion : 0
      * invite_buckle_probability : 0
      * invite_buckle_recharge_probability : 0
@@ -82,34 +81,48 @@ public class LevelBean implements Serializable {
      * phone_price : 0
      * orderno : 0
      * shielding_time : 0
-     * login_way : 3
+     * login_way : 1
      * lat : 0.0
      * lng : 0.0
-     * height : 0
-     * weight :
+     * height : 172
+     * weight : 100
      * constellation :
-     * image_label :
+     * image_label : 萌萌哒-强啊
      * introduce :
      * host_bay_contact_proportion :
      * diamond : 0
      * diamond_system : 0
-     * glamour : 0
+     * glamour : 6
      * glamour_level_id : 1
-     * wealth : 6
-     * wealth_level_id : 5
-     * has_declaration : 1
-     * declaration : http://xta.zzmzrj.com/audio/1615348420556_ceca9683-6274-4ad1-8bd1-e9fe2c7d69831615348412980.aac
+     * wealth : 8
+     * wealth_level_id : 1
+     * has_declaration : 0
+     * declaration :
      * overlapping_sound :
      * love_status :
-     * declaration_length : 5
+     * declaration_length : 0
      * education :
      * occupation :
-     * is_settled : 2
-     * upgrade_wealth : 299994
-     * upgrade_wealth_percent : 2.0E-5
-     * upgrade_glamour : 100
-     * upgrade_glamour_percent : 0
-     * wealth_level_data : {"wealth_level_id":5,"level_name":"天极领主","min_value":30001,"max_value":300000,"create_time":"2021-03-23 14:59:16"}
+     * is_settled : 0
+     * remark_type_1 :
+     * remark_type_2 :
+     * remark_type_3 :
+     * remark_type_4 :
+     * remark_type_5 :
+     * remark_type_6 :
+     * juzhuqingkuang :
+     * huanqiantongju :
+     * jieshouyuehui :
+     * shifougoufang :
+     * shifougouche :
+     * update_nickname_time : 0
+     * is_delete : 0
+     * real_name :
+     * upgrade_wealth : 92
+     * upgrade_wealth_percent : 0.08
+     * upgrade_glamour : 94
+     * upgrade_glamour_percent : 0.06
+     * wealth_level_data : {"wealth_level_id":1,"level_name":"蓝卫兵","min_value":0,"max_value":100,"create_time":"2021-03-23 14:58:35"}
      * glamour_level_data : {"glamour_level_id":1,"level_name":"水萌星","min_value":0,"max_value":100,"create_time":"2021-03-23 14:56:20"}
      */
 
@@ -232,16 +245,30 @@ public class LevelBean implements Serializable {
         private String education;
         private String occupation;
         private int is_settled;
+        private String remark_type_1;
+        private String remark_type_2;
+        private String remark_type_3;
+        private String remark_type_4;
+        private String remark_type_5;
+        private String remark_type_6;
+        private String juzhuqingkuang;
+        private String huanqiantongju;
+        private String jieshouyuehui;
+        private String shifougoufang;
+        private String shifougouche;
+        private int update_nickname_time;
+        private int is_delete;
+        private String real_name;
         private int upgrade_wealth;
         private double upgrade_wealth_percent;
         private int upgrade_glamour;
-        private int upgrade_glamour_percent;
+        private double upgrade_glamour_percent;
         /**
-         * wealth_level_id : 5
-         * level_name : 天极领主
-         * min_value : 30001
-         * max_value : 300000
-         * create_time : 2021-03-23 14:59:16
+         * wealth_level_id : 1
+         * level_name : 蓝卫兵
+         * min_value : 0
+         * max_value : 100
+         * create_time : 2021-03-23 14:58:35
          */
 
         private WealthLevelDataBean wealth_level_data;
@@ -991,6 +1018,118 @@ public class LevelBean implements Serializable {
             this.is_settled = is_settled;
         }
 
+        public String getRemark_type_1() {
+            return remark_type_1;
+        }
+
+        public void setRemark_type_1(String remark_type_1) {
+            this.remark_type_1 = remark_type_1;
+        }
+
+        public String getRemark_type_2() {
+            return remark_type_2;
+        }
+
+        public void setRemark_type_2(String remark_type_2) {
+            this.remark_type_2 = remark_type_2;
+        }
+
+        public String getRemark_type_3() {
+            return remark_type_3;
+        }
+
+        public void setRemark_type_3(String remark_type_3) {
+            this.remark_type_3 = remark_type_3;
+        }
+
+        public String getRemark_type_4() {
+            return remark_type_4;
+        }
+
+        public void setRemark_type_4(String remark_type_4) {
+            this.remark_type_4 = remark_type_4;
+        }
+
+        public String getRemark_type_5() {
+            return remark_type_5;
+        }
+
+        public void setRemark_type_5(String remark_type_5) {
+            this.remark_type_5 = remark_type_5;
+        }
+
+        public String getRemark_type_6() {
+            return remark_type_6;
+        }
+
+        public void setRemark_type_6(String remark_type_6) {
+            this.remark_type_6 = remark_type_6;
+        }
+
+        public String getJuzhuqingkuang() {
+            return juzhuqingkuang;
+        }
+
+        public void setJuzhuqingkuang(String juzhuqingkuang) {
+            this.juzhuqingkuang = juzhuqingkuang;
+        }
+
+        public String getHuanqiantongju() {
+            return huanqiantongju;
+        }
+
+        public void setHuanqiantongju(String huanqiantongju) {
+            this.huanqiantongju = huanqiantongju;
+        }
+
+        public String getJieshouyuehui() {
+            return jieshouyuehui;
+        }
+
+        public void setJieshouyuehui(String jieshouyuehui) {
+            this.jieshouyuehui = jieshouyuehui;
+        }
+
+        public String getShifougoufang() {
+            return shifougoufang;
+        }
+
+        public void setShifougoufang(String shifougoufang) {
+            this.shifougoufang = shifougoufang;
+        }
+
+        public String getShifougouche() {
+            return shifougouche;
+        }
+
+        public void setShifougouche(String shifougouche) {
+            this.shifougouche = shifougouche;
+        }
+
+        public int getUpdate_nickname_time() {
+            return update_nickname_time;
+        }
+
+        public void setUpdate_nickname_time(int update_nickname_time) {
+            this.update_nickname_time = update_nickname_time;
+        }
+
+        public int getIs_delete() {
+            return is_delete;
+        }
+
+        public void setIs_delete(int is_delete) {
+            this.is_delete = is_delete;
+        }
+
+        public String getReal_name() {
+            return real_name;
+        }
+
+        public void setReal_name(String real_name) {
+            this.real_name = real_name;
+        }
+
         public int getUpgrade_wealth() {
             return upgrade_wealth;
         }
@@ -1015,11 +1154,11 @@ public class LevelBean implements Serializable {
             this.upgrade_glamour = upgrade_glamour;
         }
 
-        public int getUpgrade_glamour_percent() {
+        public double getUpgrade_glamour_percent() {
             return upgrade_glamour_percent;
         }
 
-        public void setUpgrade_glamour_percent(int upgrade_glamour_percent) {
+        public void setUpgrade_glamour_percent(double upgrade_glamour_percent) {
             this.upgrade_glamour_percent = upgrade_glamour_percent;
         }
 
