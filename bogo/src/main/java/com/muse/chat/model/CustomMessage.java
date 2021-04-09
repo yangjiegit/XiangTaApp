@@ -23,6 +23,7 @@ import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.modle.custommsg.CustomMsg;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
+import com.muse.xiangta.modle.custommsg.CustomMsgRedEnvelopes;
 import com.muse.xiangta.utils.Utils;
 import com.tencent.imsdk.TIMCustomElem;
 import com.tencent.imsdk.TIMMessage;
@@ -50,7 +51,9 @@ public class CustomMessage extends Message {
 
         switch (type) {
             case LiveConstant.CustomMsgType.MSG_PRIVATE_GIFT:
-
+                message = customMsg.parseToTIMMessage(message);
+                break;
+            case LiveConstant.CustomMsgType.MSG_ALL_RED_ENVELOPES:
                 message = customMsg.parseToTIMMessage(message);
                 break;
             default:
@@ -97,6 +100,14 @@ public class CustomMessage extends Message {
                     if (customMsgPrivateGift != null) {
                         // 私聊消息类型
                         setPrivateMsgType(viewHolder, context, customMsgPrivateGift);
+                    }
+                    break;
+
+                case LiveConstant.CustomMsgType.MSG_ALL_RED_ENVELOPES:
+                    //红包
+                    CustomMsgRedEnvelopes customMsgRedEnvelopes = getCustomMsgReal();
+                    if (null != customMsgRedEnvelopes) {
+                        setPrivateMsgRedEnvelopes(viewHolder, context, customMsgRedEnvelopes);
                     }
                     break;
 
@@ -185,7 +196,7 @@ public class CustomMessage extends Message {
 
         TextView tv = new TextView(CuckooApplication.getInstances());
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        tv.setPadding(10,8,10,8);
+        tv.setPadding(10, 8, 10, 8);
         tv.setTextColor(CuckooApplication.getInstances().getResources().getColor(isSelf() ? R.color.admin_color : R.color.admin_color));
         if (message.isSelf()) {
             viewHolder.leftPanel.setVisibility(View.GONE);
@@ -228,7 +239,7 @@ public class CustomMessage extends Message {
             tv.setBackgroundResource(R.drawable.chat_send_gift_right_yellow_bac);
 
             viewHolder.rightMessage.setBackgroundResource(0);
-            viewHolder.rightMessage.setPadding(0,0,0,0);
+            viewHolder.rightMessage.setPadding(0, 0, 0, 0);
             viewHolder.rightMessage.addView(view_private_msg_view);
 
         } else {
@@ -243,10 +254,44 @@ public class CustomMessage extends Message {
             tv.setBackgroundResource(R.drawable.chat_send_gift_left_white_bac);
 
             viewHolder.leftMessage.setBackgroundResource(0);
-            viewHolder.leftMessage.setPadding(0,0,0,0);
+            viewHolder.leftMessage.setPadding(0, 0, 0, 0);
             viewHolder.leftMessage.addView(view_private_msg_view);
         }
         setSenderUserInfo(viewHolder, context, customMsgPrivateGift.getSender());
+        showStatus(viewHolder);
+    }
+
+    private void setPrivateMsgRedEnvelopes(ChatAdapter.ViewHolder viewHolder, Context context, CustomMsgRedEnvelopes customMsgRedEnvelopes) {
+        clearView(viewHolder);
+        if (checkRevoke(viewHolder)) {
+            return;
+        }
+        viewHolder.systemMessage.setVisibility(hasTime ? View.VISIBLE : View.GONE);
+        viewHolder.systemMessage.setText(TimeUtil.getChatTimeStr(message.timestamp()));
+        if (message.isSelf()) {
+            View view_private_msg_view = getView(R.layout.view_private_send_red_envelopes);//发送
+            TextView tv_title = view_private_msg_view.findViewById(R.id.tv_title);
+            initLayoutRedEnvelopes(customMsgRedEnvelopes, tv_title);
+            viewHolder.leftPanel.setVisibility(View.GONE);
+            viewHolder.rightPanel.setVisibility(View.VISIBLE);
+
+            viewHolder.rightMessage.setBackgroundResource(0);
+            viewHolder.rightMessage.setPadding(0, 0, 0, 0);
+            viewHolder.rightMessage.addView(view_private_msg_view);
+
+        } else {
+            View view_private_msg_view = getView(R.layout.view_private_recived_red_envelopes);//接受
+            TextView tv_title = view_private_msg_view.findViewById(R.id.tv_title);
+            initLayoutRedEnvelopes(customMsgRedEnvelopes, tv_title);
+
+            viewHolder.leftPanel.setVisibility(View.VISIBLE);
+            viewHolder.rightPanel.setVisibility(View.GONE);
+
+            viewHolder.leftMessage.setBackgroundResource(0);
+            viewHolder.leftMessage.setPadding(0, 0, 0, 0);
+            viewHolder.leftMessage.addView(view_private_msg_view);
+        }
+        setSenderUserInfo(viewHolder, context, customMsgRedEnvelopes.getSender());
         showStatus(viewHolder);
     }
 
@@ -254,6 +299,10 @@ public class CustomMessage extends Message {
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         tv.setTextColor(CuckooApplication.getInstances().getResources().getColor(isSelf() ? R.color.gray_black : R.color.gift_msg_color));
         Utils.loadHttpImg(customMsgPrivateGift.getProp_icon(), iv_gift);
+    }
+
+    private void initLayoutRedEnvelopes(CustomMsgRedEnvelopes customMsgRedEnvelopes, TextView tv) {
+        tv.setText(customMsgRedEnvelopes.getRptit());
     }
 
     private View getView(int res) {

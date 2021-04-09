@@ -19,7 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -54,14 +54,17 @@ import com.muse.xiangta.inter.JsonCallback;
 import com.muse.xiangta.json.JsonRequest;
 import com.muse.xiangta.json.JsonRequestBase;
 import com.muse.xiangta.json.JsonRequestDoPrivateSendGif;
+import com.muse.xiangta.json.JsonRequestDoPrivateSendRedEnvelopes;
 import com.muse.xiangta.json.JsonRequestPrivateChatPay;
 import com.muse.xiangta.manage.RequestConfig;
 import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
+import com.muse.xiangta.modle.custommsg.CustomMsgRedEnvelopes;
 import com.muse.xiangta.modle.custommsg.InputListenerMsgText;
 import com.muse.xiangta.ui.PrivatePhotoActivity;
 import com.muse.xiangta.ui.common.Common;
+import com.muse.xiangta.ui.view.LastInputEditText;
 import com.muse.xiangta.utils.DialogHelp;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
@@ -81,6 +84,8 @@ import com.tencent.qcloud.ui.VoiceSendingView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -713,7 +718,74 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
         } else if (id == R.id.iv_si) {
             //选择私照发送
             clickSelectPrivatePhoto();
+        } else if (id == R.id.iv_hong) {
+            //红包
+            dialog_hongbao();
         }
+    }
+
+    private void dialog_hongbao() {
+        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.show();  //注意：必须在window.setContentView之前show
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        Window window = dialog.getWindow();
+        window.setContentView(R.layout.dialog_hongbao);
+        // 这样子 第二和第三个按钮的空隙才会显示出来
+//        window.setGravity(Gravity.BOTTOM);//这个也很重要，将弹出菜单的位置设置为底部
+        window.setWindowAnimations(R.style.animation_bottom_menu);//菜单进入和退出屏幕的动画，实现了上下滑动的动画效果
+        window.setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);//设置菜单的尺寸
+
+        FrameLayout fl_comm = dialog.findViewById(R.id.fl_comm);//发红包
+        LastInputEditText et_title = dialog.findViewById(R.id.et_title);//标题
+        LastInputEditText et_number = dialog.findViewById(R.id.et_number);//钻石数量
+
+        fl_comm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (StringUtils.isEmpty(et_number.getText().toString().trim())
+                        && (Integer.valueOf(et_number.getText().toString().trim()) > 100)) {
+                    showToast("请输入有效钻石金额");
+                    return;
+                } else {
+                    if (StringUtils.isEmpty(et_title.getText().toString().trim())) {
+                        distribute("恭喜发财",
+                                et_number.getText().toString().trim());
+                    } else {
+                        distribute(et_title.getText().toString().trim(),
+                                et_number.getText().toString().trim());
+                    }
+                }
+            }
+        });
+    }
+
+    private void distribute(final String title, String amount) {
+        Api.distribute(uId, uToken, title, amount, new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                if (!StringUtils.isEmpty(s)) {
+                    try {
+                        int code = new JSONObject(s).getInt("code");
+                        if (code == 1) {
+                            String red_envelope_id = new JSONObject(s).getJSONObject("data").getString("red_envelope_id");
+                            JsonRequestDoPrivateSendRedEnvelopes.SendBean sendBean = new JsonRequestDoPrivateSendRedEnvelopes.SendBean();
+                            sendBean.setRpID(red_envelope_id);
+                            sendBean.setRptit(title);
+                            sendBean.setRpnum(amount);
+                            sendBean.setRppnum("1");
+                            sendBean.setRptype("1");
+                            CustomMsgRedEnvelopes customMsgRedEnvelopes = new CustomMsgRedEnvelopes();
+                            customMsgRedEnvelopes.fillData(sendBean);
+                            Message message = new CustomMessage(customMsgRedEnvelopes, LiveConstant.CustomMsgType.MSG_ALL_RED_ENVELOPES);
+                            presenter.sendMessage(message.getMessage());
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
     }
 
     private void dialog() {

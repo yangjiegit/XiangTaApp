@@ -1112,9 +1112,9 @@ public class Api {
                 .execute(callback);
     }
 
-    public static void doPlatAuthLogin1(String mobile,String platId, String inviteCode, String agent, String uuid, int loginway, JsonCallback callback) {
+    public static void doPlatAuthLogin1(String mobile, String platId, String inviteCode, String agent, String uuid, int loginway, JsonCallback callback) {
         OkGo.get(AppConfig.API_DOMAIN + "/login_api/auth_login")
-                .params("mobile",mobile)
+                .params("mobile", mobile)
                 .params("plat_id", platId)
                 .params("invite_code", inviteCode)
                 .params("agent", agent)
@@ -2724,6 +2724,21 @@ public class Api {
     public static void chkPhone(String plat_id, StringCallback stringCallback) {
         OkGo.post(AppConfig.API_DOMAIN + "/login_api/chk_phone")
                 .params("plat_id", plat_id)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 发送红包
+     * */
+    public static void distribute(String uid, String token, String title, String amount, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/red_envelope/distribute")
+                .params("uid", uid)
+                .params("token", token)
+                .params("title", title)
+                .params("amount", amount)
+                .params("type", "1")
+                .params("count", "1")
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }

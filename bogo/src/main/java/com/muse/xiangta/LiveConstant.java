@@ -6,6 +6,7 @@ import com.muse.xiangta.modle.custommsg.CustomMsgCloseVideo;
 import com.muse.xiangta.modle.custommsg.CustomMsgOpenVip;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
+import com.muse.xiangta.modle.custommsg.CustomMsgRedEnvelopes;
 import com.muse.xiangta.modle.custommsg.CustomMsgVideoCall;
 import com.muse.xiangta.modle.custommsg.CustomMsgVideoCallEnd;
 import com.muse.xiangta.modle.custommsg.CustomMsgVideoCallReply;
@@ -132,6 +133,8 @@ public class LiveConstant {
          */
         public static final int MSG_ALL_OPEN_VIP = 778;
 
+        public static final int MSG_ALL_RED_ENVELOPES = 800;//红包
+
 
     }
 
@@ -147,6 +150,7 @@ public class LiveConstant {
         mapCustomMsgClass.put(CustomMsgType.MSG_CLOSE_VIDEO_LINE, CustomMsgCloseVideo.class);
         mapCustomMsgClass.put(CustomMsgType.MSG_ALL_GIFT, CustomMsgAllGift.class);
         mapCustomMsgClass.put(CustomMsgType.MSG_ALL_OPEN_VIP, CustomMsgOpenVip.class);
+        mapCustomMsgClass.put(CustomMsgType.MSG_ALL_RED_ENVELOPES, CustomMsgRedEnvelopes.class);
     }
 
     /**
