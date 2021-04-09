@@ -185,7 +185,7 @@
     <string name="edit_info">编辑资料</string>
     <string name="save">保存</string>
     <string name="loading_upload_data">正在提交数据...</string>
-    <string name="submit_success">提交成功</string>
+    <string name="submit_success">保存成功</string>
     <string name="head_img">头像</string>
     <string name="sex_not_change">性别不可修改!</string>
     <string name="not_change">不可修改</string>

@@ -50,6 +50,7 @@ import com.muse.xiangta.base.BaseActivity;
 import com.muse.xiangta.dialog.CuckooRewardCoinDialog;
 import com.muse.xiangta.dialog.GiftBottomDialog;
 import com.muse.xiangta.event.EventChatClickPrivateImgMessage;
+import com.muse.xiangta.event.EventChatClickPrivateRedEnvelopesMessage;
 import com.muse.xiangta.inter.JsonCallback;
 import com.muse.xiangta.json.JsonRequest;
 import com.muse.xiangta.json.JsonRequestBase;
@@ -63,6 +64,7 @@ import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
 import com.muse.xiangta.modle.custommsg.CustomMsgRedEnvelopes;
 import com.muse.xiangta.modle.custommsg.InputListenerMsgText;
 import com.muse.xiangta.ui.PrivatePhotoActivity;
+import com.muse.xiangta.ui.RedEnvelopesDetailsActivity;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.ui.view.LastInputEditText;
 import com.muse.xiangta.utils.DialogHelp;
@@ -759,6 +761,7 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
         });
     }
 
+
     private void distribute(final String title, String amount) {
         Api.distribute(uId, uToken, title, amount, new StringCallback() {
             @Override
@@ -1045,6 +1048,28 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventClickPrivateImg(EventChatClickPrivateImgMessage var1) {
         Common.requestSelectPic(this, var1.getId());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventClickPrivateRedEnvelopes(EventChatClickPrivateRedEnvelopesMessage var1) {
+        Api.red_envelope_receive(uId, uToken, var1.getId(), new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                if (!StringUtils.isEmpty(s)) {
+                    try {
+                        int code = new JSONObject(s).getInt("code");
+                        if (code == 1) {
+                            //领取成功
+//                            跳转到红包详情
+                            startActivity(new Intent(ChatActivity.this, RedEnvelopesDetailsActivity.class)
+                                    .putExtra("red_envelope_id", var1.getId()));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     /**

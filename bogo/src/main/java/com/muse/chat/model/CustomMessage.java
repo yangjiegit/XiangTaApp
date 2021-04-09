@@ -5,6 +5,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.muse.xiangta.ICustomMsg;
 import com.muse.xiangta.LiveConstant;
 import com.muse.xiangta.R;
 import com.muse.xiangta.event.EventChatClickPrivateImgMessage;
+import com.muse.xiangta.event.EventChatClickPrivateRedEnvelopesMessage;
 import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.modle.custommsg.CustomMsg;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
@@ -34,7 +36,6 @@ import org.greenrobot.eventbus.EventBus;
  * 自定义消息
  */
 public class CustomMessage extends Message {
-
 
     private String TAG = getClass().getSimpleName();
 
@@ -270,10 +271,21 @@ public class CustomMessage extends Message {
         viewHolder.systemMessage.setText(TimeUtil.getChatTimeStr(message.timestamp()));
         if (message.isSelf()) {
             View view_private_msg_view = getView(R.layout.view_private_send_red_envelopes);//发送
+            FrameLayout fl_layout = view_private_msg_view.findViewById(R.id.fl_layout);
             TextView tv_title = view_private_msg_view.findViewById(R.id.tv_title);
             initLayoutRedEnvelopes(customMsgRedEnvelopes, tv_title);
             viewHolder.leftPanel.setVisibility(View.GONE);
             viewHolder.rightPanel.setVisibility(View.VISIBLE);
+
+            fl_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EventChatClickPrivateRedEnvelopesMessage event = new EventChatClickPrivateRedEnvelopesMessage();
+                    event.setId(customMsgRedEnvelopes.getRpID());
+                    EventBus.getDefault().post(event);
+                }
+            });
+
 
             viewHolder.rightMessage.setBackgroundResource(0);
             viewHolder.rightMessage.setPadding(0, 0, 0, 0);
@@ -281,11 +293,21 @@ public class CustomMessage extends Message {
 
         } else {
             View view_private_msg_view = getView(R.layout.view_private_recived_red_envelopes);//接受
+            FrameLayout fl_layout = view_private_msg_view.findViewById(R.id.fl_layout);
             TextView tv_title = view_private_msg_view.findViewById(R.id.tv_title);
             initLayoutRedEnvelopes(customMsgRedEnvelopes, tv_title);
 
             viewHolder.leftPanel.setVisibility(View.VISIBLE);
             viewHolder.rightPanel.setVisibility(View.GONE);
+
+            fl_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EventChatClickPrivateRedEnvelopesMessage event = new EventChatClickPrivateRedEnvelopesMessage();
+                    event.setId(customMsgRedEnvelopes.getRpID());
+                    EventBus.getDefault().post(event);
+                }
+            });
 
             viewHolder.leftMessage.setBackgroundResource(0);
             viewHolder.leftMessage.setPadding(0, 0, 0, 0);
@@ -424,4 +446,6 @@ public class CustomMessage extends Message {
         }
         return model;
     }
+
+
 }

@@ -574,6 +574,7 @@ public class EditActivity extends BaseActivity {
         PictureSelector.create(this)
                 .openGallery(PictureMimeType.ofImage())
                 .maxSelectNum(maxCount)
+                .isCamera(false)
                 .enableCrop(true)// 是否裁剪 true or false
                 .hideBottomControls(false)// 是否显示uCrop工具栏，默认不显示 true or false
                 .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false

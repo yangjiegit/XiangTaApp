@@ -176,6 +176,9 @@
             android:name=".ui.ZhiFuBaoActivity"
             android:screenOrientation="portrait" /> <!-- 支付宝绑定 -->
         <activity
+            android:name=".ui.RedEnvelopesDetailsActivity"
+            android:screenOrientation="portrait" /> <!-- 红包详情 -->
+        <activity
             android:name=".ui.FUChatActivity"
             android:screenOrientation="portrait" /> <!-- 测试页 -->
         <activity
