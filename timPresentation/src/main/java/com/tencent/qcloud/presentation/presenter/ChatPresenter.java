@@ -31,9 +31,9 @@ public class ChatPresenter implements Observer {
     private final int LAST_MESSAGE_NUM = 20;
     private final static String TAG = "ChatPresenter";
 
-    public ChatPresenter(ChatView view,String identify,TIMConversationType type){
+    public ChatPresenter(ChatView view, String identify, TIMConversationType type) {
         this.view = view;
-        conversation = TIMManager.getInstance().getConversation(type,identify);
+        conversation = TIMManager.getInstance().getConversation(type, identify);
     }
 
 
@@ -46,7 +46,7 @@ public class ChatPresenter implements Observer {
         RefreshEvent.getInstance().addObserver(this);
         getMessage(null);
         TIMConversationExt timConversationExt = new TIMConversationExt(conversation);
-        if (timConversationExt.hasDraft()){
+        if (timConversationExt.hasDraft()) {
             view.showDraft(timConversationExt.getDraft());
         }
     }
@@ -64,7 +64,7 @@ public class ChatPresenter implements Observer {
     /**
      * 获取聊天TIM会话
      */
-    public TIMConversation getConversation(){
+    public TIMConversation getConversation() {
         return conversation;
     }
 
@@ -80,12 +80,14 @@ public class ChatPresenter implements Observer {
             public void onError(int code, String desc) {//发送消息失败
                 //错误码code和错误描述desc，可用于定位请求失败原因
                 //错误码code含义请参见错误码表
+                Log.d("ret", "joker   发送自定义消息  失败" + message.toString());
                 view.onSendMessageFail(code, desc, message);
             }
 
             @Override
             public void onSuccess(TIMMessage msg) {
                 //发送消息成功,消息状态已在sdk中修改，此时只需更新界面
+                Log.d("ret", "joker   发送自定义消息  成功");
                 MessageEvent.getInstance().onNewMessage(null);
 
             }
@@ -100,7 +102,7 @@ public class ChatPresenter implements Observer {
      *
      * @param message 发送的消息
      */
-    public void sendOnlineMessage(final TIMMessage message){
+    public void sendOnlineMessage(final TIMMessage message) {
         conversation.sendOnlineMessage(message, new TIMValueCallBack<TIMMessage>() {
             @Override
             public void onError(int i, String s) {
@@ -124,18 +126,17 @@ public class ChatPresenter implements Observer {
         timConversationExt.revokeMessage(message, new TIMCallBack() {
             @Override
             public void onError(int i, String s) {
-                Log.d(TAG,"revoke error " + i);
+                Log.d(TAG, "revoke error " + i);
                 view.showToast("revoke error " + s);
             }
 
             @Override
             public void onSuccess() {
-                Log.d(TAG,"revoke success");
+                Log.d(TAG, "revoke success");
                 MessageEvent.getInstance().onNewMessage(null);
             }
         });
     }
-
 
 
     /**
@@ -148,20 +149,20 @@ public class ChatPresenter implements Observer {
      */
     @Override
     public void update(Observable observable, Object data) {
-        if (observable instanceof MessageEvent){
+        if (observable instanceof MessageEvent) {
             if (data instanceof TIMMessage || data == null) {
                 TIMMessage msg = (TIMMessage) data;
-                if (msg==null||msg.getConversation().getPeer().equals(conversation.getPeer())&&msg.getConversation().getType()==conversation.getType()){
+                if (msg == null || msg.getConversation().getPeer().equals(conversation.getPeer()) && msg.getConversation().getType() == conversation.getType()) {
                     view.showMessage(msg);
                     //当前聊天界面已读上报，用于多终端登录时未读消息数同步
                     readMessages();
                 }
-            }else if (data instanceof TIMMessageLocator) {
+            } else if (data instanceof TIMMessageLocator) {
                 TIMMessageLocator msg = (TIMMessageLocator) data;
                 view.showRevokeMessage(msg);
             }
 
-        }else if (observable instanceof RefreshEvent){
+        } else if (observable instanceof RefreshEvent) {
             view.clearAllMessage();
             getMessage(null);
         }
@@ -173,15 +174,15 @@ public class ChatPresenter implements Observer {
      *
      * @param message 最后一条消息
      */
-    public void getMessage(@Nullable TIMMessage message){
-        if (!isGetingMessage){
+    public void getMessage(@Nullable TIMMessage message) {
+        if (!isGetingMessage) {
             isGetingMessage = true;
             TIMConversationExt timConversationExt = new TIMConversationExt(conversation);
             timConversationExt.getMessage(LAST_MESSAGE_NUM, message, new TIMValueCallBack<List<TIMMessage>>() {
                 @Override
                 public void onError(int i, String s) {
                     isGetingMessage = false;
-                    Log.e(TAG,"get message error"+s);
+                    Log.e(TAG, "get message error" + s);
                 }
 
                 @Override
@@ -196,9 +197,8 @@ public class ChatPresenter implements Observer {
 
     /**
      * 设置会话为已读
-     *
      */
-    public void readMessages(){
+    public void readMessages() {
         TIMConversationExt timConversationExt = new TIMConversationExt(conversation);
         timConversationExt.setReadMessage(null, null);
     }
@@ -209,21 +209,18 @@ public class ChatPresenter implements Observer {
      *
      * @param message 消息数据
      */
-    public void saveDraft(TIMMessage message){
+    public void saveDraft(TIMMessage message) {
         TIMConversationExt timConversationExt = new TIMConversationExt(conversation);
         timConversationExt.setDraft(null);
-        if (message != null && message.getElementCount() > 0){
+        if (message != null && message.getElementCount() > 0) {
             TIMMessageDraft draft = new TIMMessageDraft();
-            for (int i = 0; i < message.getElementCount(); ++i){
+            for (int i = 0; i < message.getElementCount(); ++i) {
                 draft.addElem(message.getElement(i));
             }
             timConversationExt.setDraft(draft);
         }
 
     }
-
-
-
 
 
 }

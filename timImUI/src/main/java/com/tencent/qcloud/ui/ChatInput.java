@@ -335,7 +335,8 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
         Activity activity = (Activity) getContext();
         int id = v.getId();
         //视频    礼物
-        if (v.getId() == R.id.iv_video || v.getId() == R.id.iv_liwu || v.getId() == R.id.iv_si) {
+        if (v.getId() == R.id.iv_video || v.getId() == R.id.iv_liwu || v.getId() == R.id.iv_si
+                || v.getId() == R.id.iv_hong) {
             chatView.onAction(v.getId());
             return;
         }
