@@ -191,7 +191,7 @@
                     android:layout_height="@dimen/dp_30"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:src="@mipmap/img_caiquan" />
+                    android:src="@mipmap/img_caiquan_dong" />
 
                 <ImageView
                     android:id="@+id/iv_shai"

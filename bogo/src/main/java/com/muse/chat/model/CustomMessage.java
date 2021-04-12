@@ -1,6 +1,9 @@
 package com.muse.chat.model;
 
 import android.content.Context;
+import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,12 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.muse.chat.adapter.ChatAdapter;
 import com.muse.chat.utils.TimeUtil;
 import com.muse.xiangta.BuildConfig;
@@ -44,8 +53,23 @@ public class CustomMessage extends Message {
 
     private CustomMsg customMsg;
 
+    private ImageView iv_cai, iv_dong;
+
     private int[] caiquan = {R.mipmap.img_shitou, R.mipmap.img_jiandao, R.mipmap.img_bu};
     private String[] caiquanStr = {"ysh_chat_shitou", "ysh_chat_jiandao", "ysh_chat_bu"};
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    iv_dong.setVisibility(View.GONE);
+                    iv_cai.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+    };
 
     public CustomMessage(TIMMessage message) {
         this.message = message;
@@ -339,7 +363,38 @@ public class CustomMessage extends Message {
         viewHolder.systemMessage.setText(TimeUtil.getChatTimeStr(message.timestamp()));
         if (message.isSelf()) {
             View view_private_msg_view = getView(R.layout.view_private_send_guessing);//发送
-            ImageView iv_cai = view_private_msg_view.findViewById(R.id.iv_cai);
+
+            iv_cai = view_private_msg_view.findViewById(R.id.iv_cai);
+            iv_dong = view_private_msg_view.findViewById(R.id.iv_dong);
+            Glide.with(context).asGif().load(R.mipmap.img_caiquan_dong).listener(new RequestListener<GifDrawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
+                    Log.d("ret", "joker   动画播放完毕");
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                sleep(2000);
+                                android.os.Message msg = new android.os.Message();
+                                msg.what = 1;
+                                handler.sendMessage(msg);
+//                                iv_dong.setVisibility(View.GONE);
+//                                iv_cai.setVisibility(View.VISIBLE);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
+                    return false;
+                }
+            }).into(iv_dong);
+
             switch (customMsgGuessing.getStaticimg()) {
                 case "ysh_chat_shitou":
                     iv_cai.setImageResource(R.mipmap.img_shitou);
@@ -357,7 +412,38 @@ public class CustomMessage extends Message {
             viewHolder.rightMessage.addView(view_private_msg_view);
         } else {
             View view_private_msg_view = getView(R.layout.view_private_send_guessing);//接受
-            ImageView iv_cai = view_private_msg_view.findViewById(R.id.iv_cai);
+
+            iv_cai = view_private_msg_view.findViewById(R.id.iv_cai);
+            iv_dong = view_private_msg_view.findViewById(R.id.iv_dong);
+            Glide.with(context).asGif().load(R.mipmap.img_caiquan_dong).listener(new RequestListener<GifDrawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
+                    Log.d("ret", "joker   动画播放完毕");
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                sleep(2000);
+                                android.os.Message msg = new android.os.Message();
+                                msg.what = 1;
+                                handler.sendMessage(msg);
+//                                iv_dong.setVisibility(View.GONE);
+//                                iv_cai.setVisibility(View.VISIBLE);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
+                    return false;
+                }
+            }).into(iv_dong);
+
             switch (customMsgGuessing.getStaticimg()) {
                 case "ysh_chat_shitou":
                     iv_cai.setImageResource(R.mipmap.img_shitou);
