@@ -751,10 +751,10 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
                 } else {
                     if (StringUtils.isEmpty(et_title.getText().toString().trim())) {
                         distribute("恭喜发财",
-                                et_number.getText().toString().trim());
+                                et_number.getText().toString().trim(), dialog);
                     } else {
                         distribute(et_title.getText().toString().trim(),
-                                et_number.getText().toString().trim());
+                                et_number.getText().toString().trim(), dialog);
                     }
                 }
             }
@@ -762,7 +762,7 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     }
 
 
-    private void distribute(final String title, String amount) {
+    private void distribute(final String title, String amount, AlertDialog dialog) {
         Api.distribute(uId, uToken, title, amount, new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
@@ -781,6 +781,9 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
                             customMsgRedEnvelopes.fillData(sendBean);
                             Message message = new CustomMessage(customMsgRedEnvelopes, LiveConstant.CustomMsgType.MSG_ALL_RED_ENVELOPES);
                             presenter.sendMessage(message.getMessage());
+                            if (null != dialog) {
+                                dialog.dismiss();
+                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

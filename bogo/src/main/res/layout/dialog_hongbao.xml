@@ -60,6 +60,7 @@
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_10"
             android:singleLine="true"
+            android:text="恭喜发财"
             android:textColor="@color/black"
             android:textSize="@dimen/dp_12" />
 
@@ -91,14 +92,15 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dp_10"
-            android:inputType="phone"
             android:layout_marginRight="@dimen/dp_10"
             android:background="@color/transparent"
             android:gravity="right|center_vertical"
             android:hint="100钻石起"
+            android:inputType="phone"
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_10"
             android:singleLine="true"
+            android:text="100"
             android:textColor="@color/black"
             android:textSize="@dimen/dp_12" />
 
