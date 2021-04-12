@@ -61,6 +61,7 @@ import com.muse.xiangta.json.JsonRequestDoPrivateSendRedEnvelopes;
 import com.muse.xiangta.json.JsonRequestPrivateChatPay;
 import com.muse.xiangta.manage.RequestConfig;
 import com.muse.xiangta.manage.SaveData;
+import com.muse.xiangta.modle.custommsg.CustomMsgDice;
 import com.muse.xiangta.modle.custommsg.CustomMsgGuessing;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
@@ -145,10 +146,8 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     private TemplateTitle title;
     private int follow;
 
-    private int[] caiquan = {R.mipmap.img_shitou, R.mipmap.img_jiandao, R.mipmap.img_bu};
-//    [@"ysh_chat_bu",@"ysh_chat_jiandao",@"ysh_chat_shitou"];
-
     private String[] caiquanStr = {"ysh_chat_shitou", "ysh_chat_jiandao", "ysh_chat_bu"};
+    private String[] shaiziStr = {"ysh_chat_dian1", "ysh_chat_dian2", "ysh_chat_dian3", "ysh_chat_dian4", "ysh_chat_dian5", "ysh_chat_dian6"};
 
     public static void navToChat(Context context, String identify, String userName, String avatar, int isPay, String payCoin, int sex, int is_auth, int follow, TIMConversationType type) {
         Intent intent = new Intent(context, ChatActivity.class);
@@ -735,6 +734,9 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
         } else if (id == R.id.iv_cai) {
             //猜拳
             caiquan();
+        } else if (id == R.id.iv_shai) {
+            //筛子
+            shaizi();
         }
     }
 
@@ -748,6 +750,19 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
         CustomMsgGuessing customMsgGuessing = new CustomMsgGuessing();
         customMsgGuessing.fillData(sendBean);
         Message message = new CustomMessage(customMsgGuessing, LiveConstant.CustomMsgType.CY_CHAT_CAIQUAN);
+        presenter.sendMessage(message.getMessage());
+    }
+
+    private void shaizi() {
+        Random rand = new Random();
+        int suiji = rand.nextInt(5);
+        Log.d("ret", "joker    随机数==" + rand.nextInt(5));
+        JsonRequestDoPrivateSendGuessing.SendBean sendBean = new JsonRequestDoPrivateSendGuessing.SendBean();
+        sendBean.setGifimg("");
+        sendBean.setStaticimg(shaiziStr[suiji]);
+        CustomMsgDice customMsgGuessing = new CustomMsgDice();
+        customMsgGuessing.fillData(sendBean);
+        Message message = new CustomMessage(customMsgGuessing, LiveConstant.CustomMsgType.CY_CHAT_SHAIZI);
         presenter.sendMessage(message.getMessage());
     }
 

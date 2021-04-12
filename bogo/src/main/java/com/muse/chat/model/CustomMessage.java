@@ -32,6 +32,7 @@ import com.muse.xiangta.event.EventChatClickPrivateImgMessage;
 import com.muse.xiangta.event.EventChatClickPrivateRedEnvelopesMessage;
 import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.modle.custommsg.CustomMsg;
+import com.muse.xiangta.modle.custommsg.CustomMsgDice;
 import com.muse.xiangta.modle.custommsg.CustomMsgGuessing;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
@@ -55,8 +56,6 @@ public class CustomMessage extends Message {
 
     private ImageView iv_cai, iv_dong;
 
-    private int[] caiquan = {R.mipmap.img_shitou, R.mipmap.img_jiandao, R.mipmap.img_bu};
-    private String[] caiquanStr = {"ysh_chat_shitou", "ysh_chat_jiandao", "ysh_chat_bu"};
 
     private Handler handler = new Handler() {
         @Override
@@ -87,6 +86,10 @@ public class CustomMessage extends Message {
                 break;
             case LiveConstant.CustomMsgType.CY_CHAT_CAIQUAN:
                 //猜拳
+                message = customMsg.parseToTIMMessage(message);
+                break;
+            case LiveConstant.CustomMsgType.CY_CHAT_SHAIZI:
+                //骰子
                 message = customMsg.parseToTIMMessage(message);
                 break;
             default:
@@ -147,6 +150,12 @@ public class CustomMessage extends Message {
                     CustomMsgGuessing customMsgGuessing = getCustomMsgReal();
                     if (null != customMsgGuessing) {
                         setPrivateMsgGuessing(viewHolder, context, customMsgGuessing);
+                    }
+                    break;
+                case LiveConstant.CustomMsgType.CY_CHAT_SHAIZI://骰子
+                    CustomMsgDice customMsgDice = getCustomMsgReal();
+                    if (null != customMsgDice) {
+                        setPrivateMsgDice(viewHolder, context, customMsgDice);
                     }
                     break;
                 case LiveConstant.CustomMsgType.MSG_VIDEO_LINE_CALL:
@@ -461,6 +470,134 @@ public class CustomMessage extends Message {
             viewHolder.leftMessage.addView(view_private_msg_view);
         }
         setSenderUserInfo(viewHolder, context, customMsgGuessing.getSender());
+        showStatus(viewHolder);
+    }
+
+    private void setPrivateMsgDice(ChatAdapter.ViewHolder viewHolder, Context context, CustomMsgDice customMsgDice) {
+        clearView(viewHolder);
+        if (checkRevoke(viewHolder)) {
+            return;
+        }
+        viewHolder.systemMessage.setVisibility(hasTime ? View.VISIBLE : View.GONE);
+        viewHolder.systemMessage.setText(TimeUtil.getChatTimeStr(message.timestamp()));
+        if (message.isSelf()) {
+            View view_private_msg_view = getView(R.layout.view_private_send_guessing);//发送
+
+            iv_cai = view_private_msg_view.findViewById(R.id.iv_cai);
+            iv_dong = view_private_msg_view.findViewById(R.id.iv_dong);
+            Glide.with(context).asGif().load(R.mipmap.img_shai_dong).listener(new RequestListener<GifDrawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
+                    Log.d("ret", "joker   动画播放完毕");
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                sleep(2000);
+                                android.os.Message msg = new android.os.Message();
+                                msg.what = 1;
+                                handler.sendMessage(msg);
+//                                iv_dong.setVisibility(View.GONE);
+//                                iv_cai.setVisibility(View.VISIBLE);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
+                    return false;
+                }
+            }).into(iv_dong);
+
+            switch (customMsgDice.getStaticimg()) {
+                case "ysh_chat_dian1":
+                    iv_cai.setImageResource(R.mipmap.img_shai1);
+                    break;
+                case "ysh_chat_dian2":
+                    iv_cai.setImageResource(R.mipmap.img_shai2);
+                    break;
+                case "ysh_chat_dian3":
+                    iv_cai.setImageResource(R.mipmap.img_shai3);
+                    break;
+                case "ysh_chat_dian4":
+                    iv_cai.setImageResource(R.mipmap.img_shai4);
+                    break;
+                case "ysh_chat_dian5":
+                    iv_cai.setImageResource(R.mipmap.img_shai5);
+                    break;
+                case "ysh_chat_dian6":
+                    iv_cai.setImageResource(R.mipmap.img_shai6);
+                    break;
+            }
+
+            viewHolder.rightMessage.setBackgroundResource(0);
+            viewHolder.rightMessage.setPadding(0, 0, 0, 0);
+            viewHolder.rightMessage.addView(view_private_msg_view);
+        } else {
+            View view_private_msg_view = getView(R.layout.view_private_send_guessing);//接受
+
+            iv_cai = view_private_msg_view.findViewById(R.id.iv_cai);
+            iv_dong = view_private_msg_view.findViewById(R.id.iv_dong);
+            Glide.with(context).asGif().load(R.mipmap.img_shai_dong).listener(new RequestListener<GifDrawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
+                    Log.d("ret", "joker   动画播放完毕");
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                sleep(2000);
+                                android.os.Message msg = new android.os.Message();
+                                msg.what = 1;
+                                handler.sendMessage(msg);
+//                                iv_dong.setVisibility(View.GONE);
+//                                iv_cai.setVisibility(View.VISIBLE);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
+                    return false;
+                }
+            }).into(iv_dong);
+
+            switch (customMsgDice.getStaticimg()) {
+                case "ysh_chat_dian1":
+                    iv_cai.setImageResource(R.mipmap.img_shai1);
+                    break;
+                case "ysh_chat_dian2":
+                    iv_cai.setImageResource(R.mipmap.img_shai2);
+                    break;
+                case "ysh_chat_dian3":
+                    iv_cai.setImageResource(R.mipmap.img_shai3);
+                    break;
+                case "ysh_chat_dian4":
+                    iv_cai.setImageResource(R.mipmap.img_shai4);
+                    break;
+                case "ysh_chat_dian5":
+                    iv_cai.setImageResource(R.mipmap.img_shai5);
+                    break;
+                case "ysh_chat_dian6":
+                    iv_cai.setImageResource(R.mipmap.img_shai6);
+                    break;
+            }
+
+            viewHolder.leftMessage.setBackgroundResource(0);
+            viewHolder.leftMessage.setPadding(0, 0, 0, 0);
+            viewHolder.leftMessage.addView(view_private_msg_view);
+        }
+        setSenderUserInfo(viewHolder, context, customMsgDice.getSender());
         showStatus(viewHolder);
     }
 

@@ -3,6 +3,7 @@ package com.muse.xiangta;
 
 import com.muse.xiangta.modle.custommsg.CustomMsgAllGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgCloseVideo;
+import com.muse.xiangta.modle.custommsg.CustomMsgDice;
 import com.muse.xiangta.modle.custommsg.CustomMsgGuessing;
 import com.muse.xiangta.modle.custommsg.CustomMsgOpenVip;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
@@ -159,7 +160,7 @@ public class LiveConstant {
         //猜拳
         mapCustomMsgClass.put(CustomMsgType.CY_CHAT_CAIQUAN, CustomMsgGuessing.class);
         //筛子
-        mapCustomMsgClass.put(CustomMsgType.CY_CHAT_SHAIZI, CustomMsgRedEnvelopes.class);
+        mapCustomMsgClass.put(CustomMsgType.CY_CHAT_SHAIZI, CustomMsgDice.class);
     }
 
     /**
