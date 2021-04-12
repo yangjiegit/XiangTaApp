@@ -336,7 +336,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
         int id = v.getId();
         //视频    礼物
         if (v.getId() == R.id.iv_video || v.getId() == R.id.iv_liwu || v.getId() == R.id.iv_si
-                || v.getId() == R.id.iv_hong) {
+                || v.getId() == R.id.iv_hong || v.getId() == R.id.iv_cai || v.getId() == R.id.iv_shai) {
             chatView.onAction(v.getId());
             return;
         }
@@ -382,9 +382,9 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
         if (id == R.id.btnEmoticon) {//表情
             updateView(inputMode == InputMode.EMOTICON ? InputMode.TEXT : InputMode.EMOTICON);
         }
-        if (id == R.id.iv_hong || id == R.id.iv_cai || id == R.id.iv_shai) {
-            Toast.makeText(getContext(), "该功能尚未开放", Toast.LENGTH_SHORT).show();
-        }
+//        if (id == R.id.iv_hong) {
+//            Toast.makeText(getContext(), "该功能尚未开放", Toast.LENGTH_SHORT).show();
+//        }
 //        if (id == R.id.btn_file) {//文件
 //            chatView.sendFile();
 //        }
