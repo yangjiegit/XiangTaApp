@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.v7.widget.CardView;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.Menu;
@@ -55,10 +56,12 @@ import com.muse.xiangta.inter.JsonCallback;
 import com.muse.xiangta.json.JsonRequest;
 import com.muse.xiangta.json.JsonRequestBase;
 import com.muse.xiangta.json.JsonRequestDoPrivateSendGif;
+import com.muse.xiangta.json.JsonRequestDoPrivateSendGuessing;
 import com.muse.xiangta.json.JsonRequestDoPrivateSendRedEnvelopes;
 import com.muse.xiangta.json.JsonRequestPrivateChatPay;
 import com.muse.xiangta.manage.RequestConfig;
 import com.muse.xiangta.manage.SaveData;
+import com.muse.xiangta.modle.custommsg.CustomMsgGuessing;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
 import com.muse.xiangta.modle.custommsg.CustomMsgRedEnvelopes;
@@ -92,6 +95,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -140,6 +144,11 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
     private int isAuth;
     private TemplateTitle title;
     private int follow;
+
+    private int[] caiquan = {R.mipmap.img_shitou, R.mipmap.img_jiandao, R.mipmap.img_bu};
+//    [@"ysh_chat_bu",@"ysh_chat_jiandao",@"ysh_chat_shitou"];
+
+    private String[] caiquanStr = {"ysh_chat_shitou", "ysh_chat_jiandao", "ysh_chat_bu"};
 
     public static void navToChat(Context context, String identify, String userName, String avatar, int isPay, String payCoin, int sex, int is_auth, int follow, TIMConversationType type) {
         Intent intent = new Intent(context, ChatActivity.class);
@@ -723,7 +732,23 @@ public class ChatActivity extends BaseActivity implements ChatView, View.OnClick
         } else if (id == R.id.iv_hong) {
             //红包
             dialog_hongbao();
+        } else if (id == R.id.iv_cai) {
+            //猜拳
+            caiquan();
         }
+    }
+
+    private void caiquan() {
+        Random rand = new Random();
+        int suiji = rand.nextInt(3);
+        Log.d("ret", "joker    随机数==" + rand.nextInt(3));
+        JsonRequestDoPrivateSendGuessing.SendBean sendBean = new JsonRequestDoPrivateSendGuessing.SendBean();
+        sendBean.setGifimg("");
+        sendBean.setStaticimg(caiquanStr[suiji]);
+        CustomMsgGuessing customMsgGuessing = new CustomMsgGuessing();
+        customMsgGuessing.fillData(sendBean);
+        Message message = new CustomMessage(customMsgGuessing, LiveConstant.CustomMsgType.CY_CHAT_CAIQUAN);
+        presenter.sendMessage(message.getMessage());
     }
 
     private void dialog_hongbao() {

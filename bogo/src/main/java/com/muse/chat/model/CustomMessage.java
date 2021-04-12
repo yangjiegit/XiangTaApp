@@ -23,6 +23,7 @@ import com.muse.xiangta.event.EventChatClickPrivateImgMessage;
 import com.muse.xiangta.event.EventChatClickPrivateRedEnvelopesMessage;
 import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.modle.custommsg.CustomMsg;
+import com.muse.xiangta.modle.custommsg.CustomMsgGuessing;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
 import com.muse.xiangta.modle.custommsg.CustomMsgRedEnvelopes;
@@ -43,6 +44,9 @@ public class CustomMessage extends Message {
 
     private CustomMsg customMsg;
 
+    private int[] caiquan = {R.mipmap.img_shitou, R.mipmap.img_jiandao, R.mipmap.img_bu};
+    private String[] caiquanStr = {"ysh_chat_shitou", "ysh_chat_jiandao", "ysh_chat_bu"};
+
     public CustomMessage(TIMMessage message) {
         this.message = message;
     }
@@ -55,6 +59,10 @@ public class CustomMessage extends Message {
                 message = customMsg.parseToTIMMessage(message);
                 break;
             case LiveConstant.CustomMsgType.MSG_ALL_RED_ENVELOPES:
+                message = customMsg.parseToTIMMessage(message);
+                break;
+            case LiveConstant.CustomMsgType.CY_CHAT_CAIQUAN:
+                //猜拳
                 message = customMsg.parseToTIMMessage(message);
                 break;
             default:
@@ -111,7 +119,12 @@ public class CustomMessage extends Message {
                         setPrivateMsgRedEnvelopes(viewHolder, context, customMsgRedEnvelopes);
                     }
                     break;
-
+                case LiveConstant.CustomMsgType.CY_CHAT_CAIQUAN://猜拳
+                    CustomMsgGuessing customMsgGuessing = getCustomMsgReal();
+                    if (null != customMsgGuessing) {
+                        setPrivateMsgGuessing(viewHolder, context, customMsgGuessing);
+                    }
+                    break;
                 case LiveConstant.CustomMsgType.MSG_VIDEO_LINE_CALL:
 
                     setVideoLinMsgType(viewHolder, context, customMsg.getSender(), "拨打视频通话");
@@ -314,6 +327,54 @@ public class CustomMessage extends Message {
             viewHolder.leftMessage.addView(view_private_msg_view);
         }
         setSenderUserInfo(viewHolder, context, customMsgRedEnvelopes.getSender());
+        showStatus(viewHolder);
+    }
+
+    private void setPrivateMsgGuessing(ChatAdapter.ViewHolder viewHolder, Context context, CustomMsgGuessing customMsgGuessing) {
+        clearView(viewHolder);
+        if (checkRevoke(viewHolder)) {
+            return;
+        }
+        viewHolder.systemMessage.setVisibility(hasTime ? View.VISIBLE : View.GONE);
+        viewHolder.systemMessage.setText(TimeUtil.getChatTimeStr(message.timestamp()));
+        if (message.isSelf()) {
+            View view_private_msg_view = getView(R.layout.view_private_send_guessing);//发送
+            ImageView iv_cai = view_private_msg_view.findViewById(R.id.iv_cai);
+            switch (customMsgGuessing.getStaticimg()) {
+                case "ysh_chat_shitou":
+                    iv_cai.setImageResource(R.mipmap.img_shitou);
+                    break;
+                case "ysh_chat_jiandao":
+                    iv_cai.setImageResource(R.mipmap.img_jiandao);
+                    break;
+                case "ysh_chat_bu":
+                    iv_cai.setImageResource(R.mipmap.img_bu);
+                    break;
+            }
+
+            viewHolder.rightMessage.setBackgroundResource(0);
+            viewHolder.rightMessage.setPadding(0, 0, 0, 0);
+            viewHolder.rightMessage.addView(view_private_msg_view);
+        } else {
+            View view_private_msg_view = getView(R.layout.view_private_send_guessing);//接受
+            ImageView iv_cai = view_private_msg_view.findViewById(R.id.iv_cai);
+            switch (customMsgGuessing.getStaticimg()) {
+                case "ysh_chat_shitou":
+                    iv_cai.setImageResource(R.mipmap.img_shitou);
+                    break;
+                case "ysh_chat_jiandao":
+                    iv_cai.setImageResource(R.mipmap.img_jiandao);
+                    break;
+                case "ysh_chat_bu":
+                    iv_cai.setImageResource(R.mipmap.img_bu);
+                    break;
+            }
+
+            viewHolder.leftMessage.setBackgroundResource(0);
+            viewHolder.leftMessage.setPadding(0, 0, 0, 0);
+            viewHolder.leftMessage.addView(view_private_msg_view);
+        }
+        setSenderUserInfo(viewHolder, context, customMsgGuessing.getSender());
         showStatus(viewHolder);
     }
 
