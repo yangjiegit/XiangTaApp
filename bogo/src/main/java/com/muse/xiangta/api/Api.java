@@ -2746,7 +2746,7 @@ public class Api {
     /*
      * 领红包
      * */
-    public static void red_envelope_receive(String uid, String token, String red_envelope_id,  StringCallback stringCallback) {
+    public static void red_envelope_receive(String uid, String token, String red_envelope_id, StringCallback stringCallback) {
         OkGo.post(AppConfig.API_DOMAIN + "/red_envelope/receive")
                 .params("uid", uid)
                 .params("token", token)
@@ -2758,11 +2758,20 @@ public class Api {
     /*
      * 红包详情
      * */
-    public static void red_envelope_detail(String uid, String token, String red_envelope_id,  StringCallback stringCallback) {
+    public static void red_envelope_detail(String uid, String token, String red_envelope_id, StringCallback stringCallback) {
         OkGo.post(AppConfig.API_DOMAIN + "/red_envelope/detail")
                 .params("uid", uid)
                 .params("token", token)
                 .params("red_envelope_id", red_envelope_id)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 首页礼物通知
+     * */
+    public static void getMsg(StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/tv_wall_api/get_msg")
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }

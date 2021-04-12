@@ -3,7 +3,8 @@ package com.muse.xiangta.fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -34,6 +35,7 @@ import com.muse.xiangta.json.jsonmodle.TargetUserData;
 import com.muse.xiangta.json.jsonmodle.UserCenterData;
 import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.BannerImgBean;
+import com.muse.xiangta.modle.MsgBean;
 import com.muse.xiangta.modle.OnKeyCallBean;
 import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.ui.CuckooAuthFormActivity;
@@ -62,14 +64,14 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
     //private XBanner recommendRoll;
     //头部布局
     private View rollView;
-
-    private TextView tv_title1;
+    private TextView tv_title1, tv_time1;
     private FrameLayout fl_supei, fl_yuyin, fl_yuehui, fl_qunliao;
     private ImageView call_icon1;
     private ImageView call_icon2;
     private TextView call_num, tv_tuijian, tv_fujin;
     private LinearLayout ll_tuijian, ll_fujin;
     private View view_tuijian, view_fujin;
+    private int time = 15;
 
     private List<TextView> mTextList = new ArrayList<>();
     private List<View> mViewList = new ArrayList<>();
@@ -79,6 +81,8 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
     private int type = 1;
 
     private UserCenterData userCenterData;//个人中心接口返回信息
+
+    private Handler handler = new Handler();
 
     @Override
     protected BaseQuickAdapter getBaseQuickAdapter() {
@@ -93,7 +97,43 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
     @Override
     protected void initDate(View view) {
         requestUserData();//服务端请求用户数据并设置到页面
+
+        handler.postDelayed(runnable, 1000);
     }
+
+    private void getMsg() {
+        Api.getMsg(new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                Log.d("ret", "joker     " + s);
+                if (!StringUtils.isEmpty(s)) {
+                    MsgBean msgBean = new Gson().fromJson(s, MsgBean.class);
+
+                    String str = "<font color='#FA8599'>" + msgBean.getData().getFrom_user() + "</font>" + "在" +
+                            "<font color='#4C8DF3'>" + msgBean.getData().getGroup_name() + "</font>" +
+                            "家族送给" + "<font color='#FA8599'>" + msgBean.getData().getTo_user() + "</font>" +
+                            msgBean.getData().getCount() + "<font color='#BA61E4'>" +
+                            msgBean.getData().getGift_name() + "</font>" + ",一起来祝福他们吧！！！";
+                    tv_title1.setText(Html.fromHtml(str));
+                }
+            }
+        });
+    }
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (time == 1) {
+                time = 15;
+                tv_time1.setText("锁定屏幕" + time + "s");
+                getMsg();
+            } else {
+                --time;
+                tv_time1.setText("锁定屏幕" + time + "s");
+            }
+            handler.postDelayed(runnable, 1000);//每1000毫秒执行一次run方法
+        }
+    };
 
     private void requestUserData() {
         Api.getUserDataByMe(
@@ -146,6 +186,7 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
         view_tuijian = rollView.findViewById(R.id.view_tuijian);
         view_fujin = rollView.findViewById(R.id.view_fujin);
         tv_title1 = rollView.findViewById(R.id.tv_title1);
+        tv_time1 = rollView.findViewById(R.id.tv_time1);
 
         mTextList.clear();
         mTextList.add(tv_tuijian);
@@ -161,10 +202,8 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
         ll_tuijian.setOnClickListener(this);
         ll_fujin.setOnClickListener(this);
 
-        String str = "<font color='#FA8599'>有缘千里来相会</font>" + "在" +
-                "<font color='#4C8DF3'>天上人间</font>" + "家族送给" + "<font color='#FA8599'>缘来缘去</font>" +
-                "10个" + "<font color='#BA61E4'>[幸福摩天轮]</font>" + ",一起来祝福他们吧！！！";
-        tv_title1.setText(Html.fromHtml(str));
+        getMsg();
+
 
         emptyLayout = rollView.findViewById(R.id.recommend_empty_layout);
 
