@@ -53,7 +53,10 @@ public class TeenagersActivity extends BaseActivity {
                             SPHelper.getString(TeenagersActivity.this, "pass")
                     )) {
                         //解除青少年模式
+                        SPHelper.setString(this, "pass", "");
                         finish();
+                    } else {
+                        showToastMsg("密码错误");
                     }
                 }
                 break;

@@ -17,6 +17,7 @@ import com.muse.xiangta.api.ApiUtils;
 import com.muse.xiangta.audiorecord.AudioPlaybackManager;
 import com.muse.xiangta.json.jsonmodle.TargetUserData;
 import com.muse.xiangta.modle.ConfigModel;
+import com.muse.xiangta.utils.GlideImgManager;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
 import com.muse.xiangta.widget.BGLevelTextView;
@@ -43,6 +44,7 @@ public class RecyclerRecommendAdapter extends BaseQuickAdapter<TargetUserData, B
     protected void convert(BaseViewHolder helper, TargetUserData item) {
         TextView pagemsg_view_sign = helper.getView(R.id.pagemsg_view_sign);
         RelativeLayout rl_yinpin = helper.getView(R.id.rl_yinpin);
+        ImageView iv_vip = helper.getView(R.id.iv_vip);
 
         //初始化数据显示
         if (ApiUtils.isTrueUrl(item.getAvatar())) {
@@ -60,6 +62,10 @@ public class RecyclerRecommendAdapter extends BaseQuickAdapter<TargetUserData, B
         helper.setImageResource(R.id.pagemsg_view_dian, StringUtils.toInt(item.getIs_online()) == 1 ? R.mipmap.on_line : R.mipmap.not_online);
         helper.setImageResource(R.id.pagemsg_view_isvip, StringUtils.toInt(item.getIs_vip()) == 1 ? R.mipmap.vip_image_bac : 0);
         helper.setText(R.id.pagemsg_view_name, item.getUser_nickname());
+
+        if (!StringUtils.isEmpty(item.getNob())) {
+            GlideImgManager.loadImage(context, item.getNob(), iv_vip);
+        }
 
         if (StringUtils.toInt(item.getSex()) == 2) {
             helper.setText(R.id.pagemsg_view_nice, item.getCharging_coin() + ConfigModel.getInitData().getCurrency_name() + "/分钟");

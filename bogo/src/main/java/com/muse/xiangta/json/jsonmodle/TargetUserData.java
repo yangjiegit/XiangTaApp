@@ -33,6 +33,7 @@ public class TargetUserData {
     private String coin;//总金币
     private String city;
     private String is_online;
+    private String nob;
     private String age;
     private String height;
     private String declaration_type;
@@ -58,6 +59,14 @@ public class TargetUserData {
     private List<UserModel> guardian_user_list;
     private String signature;
     private String is_vip;
+
+    public String getNob() {
+        return nob;
+    }
+
+    public void setNob(String nob) {
+        this.nob = nob;
+    }
 
     public String getCity() {
         return city;
