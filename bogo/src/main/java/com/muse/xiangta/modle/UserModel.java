@@ -21,7 +21,16 @@ public class UserModel implements Parcelable {
     private String user_sign;
 //    private String is_open_do_not_disturb;
     private String level;
+    private String noble;
     private String follow;
+
+    public String getNoble() {
+        return noble;
+    }
+
+    public void setNoble(String noble) {
+        this.noble = noble;
+    }
 
     public String getFollow() {
         return follow;

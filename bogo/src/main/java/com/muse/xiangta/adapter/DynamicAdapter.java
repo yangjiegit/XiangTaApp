@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.muse.xiangta.R;
 import com.muse.xiangta.audiorecord.entity.AudioEntity;
 import com.muse.xiangta.audiorecord.view.CommonSoundItemView;
@@ -18,6 +19,7 @@ import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.DynamicListModel;
 import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.ui.CuckooSmallVideoPlayerActivity;
+import com.muse.xiangta.utils.GlideImgManager;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
 import com.muse.xiangta.widget.BGLevelTextView;
@@ -39,6 +41,18 @@ public class DynamicAdapter extends BaseQuickAdapter<DynamicListModel, BaseViewH
     @Override
     protected void convert(BaseViewHolder helper, final DynamicListModel item) {
         TextView location = helper.getView(R.id.location);
+        ImageView iv_vip = helper.getView(R.id.iv_vip);
+        TextView tv_live = helper.getView(R.id.tv_live);
+
+        tv_live.setText("lv:" + item.getUserInfo().getLevel());
+
+        if (StringUtils.isEmpty(item.getUserInfo().getNoble())) {
+            iv_vip.setVisibility(View.GONE);
+        } else {
+            iv_vip.setVisibility(View.VISIBLE);
+            GlideImgManager.loadImage(mContext, item.getUserInfo().getNoble(), iv_vip);
+        }
+
         if (!TextUtils.isEmpty(item.getCity())) {
             location.setVisibility(View.VISIBLE);
             location.setText(item.getCity());
@@ -50,8 +64,10 @@ public class DynamicAdapter extends BaseQuickAdapter<DynamicListModel, BaseViewH
         ImageView iv_sex = helper.getView(R.id.iv_sex);
 
         if (item.getUserInfo().getSex() == 1) {
+            tv_live.setBackgroundResource(R.drawable.bg_main_nan);
             iv_sex.setImageResource(R.mipmap.img_xingbienan2);
         } else {
+            tv_live.setBackgroundResource(R.drawable.bg_main_nv);
             iv_sex.setImageResource(R.mipmap.img_xingbie1);
         }
 
