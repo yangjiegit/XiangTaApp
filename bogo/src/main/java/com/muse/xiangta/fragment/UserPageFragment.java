@@ -425,7 +425,10 @@ public class UserPageFragment extends BaseFragment {
         fansNumber.setText(userCenterData.getData().getAttention_fans() + "");
 
         if (!StringUtils.isEmpty(userCenterData.getData().getNoble())) {
+            iv_huizhang.setVisibility(View.VISIBLE);
             GlideImgManager.loadImage(getContext(), userCenterData.getData().getNoble(), iv_huizhang);
+        }else{
+            iv_huizhang.setVisibility(View.GONE);
         }
 
         if (StringUtils.toInt(userCenterData.getData().getIs_open_do_not_disturb()) == 1) {
