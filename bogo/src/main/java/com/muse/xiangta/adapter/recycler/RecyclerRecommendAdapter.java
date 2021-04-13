@@ -64,7 +64,10 @@ public class RecyclerRecommendAdapter extends BaseQuickAdapter<TargetUserData, B
         helper.setText(R.id.pagemsg_view_name, item.getUser_nickname());
 
         if (!StringUtils.isEmpty(item.getNob())) {
+            iv_vip.setVisibility(View.VISIBLE);
             GlideImgManager.loadImage(context, item.getNob(), iv_vip);
+        } else {
+            iv_vip.setVisibility(View.GONE);
         }
 
         if (StringUtils.toInt(item.getSex()) == 2) {
