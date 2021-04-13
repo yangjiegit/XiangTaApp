@@ -108,6 +108,15 @@ public class TargetUserData2 implements Serializable {
         private String declaration;
         private String overlapping_sound;
         private List<String> information;
+        private String noble;
+
+        public String getNoble() {
+            return noble;
+        }
+
+        public void setNoble(String noble) {
+            this.noble = noble;
+        }
 
         public int getIs_auth() {
             return is_auth;

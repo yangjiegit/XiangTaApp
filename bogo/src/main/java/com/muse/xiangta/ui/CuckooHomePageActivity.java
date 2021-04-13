@@ -95,6 +95,9 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
     @BindView(R.id.tv_voice_money_minute)
     TextView voiceChatMoney;
 
+    @BindView(R.id.iv_vip)
+    ImageView iv_vip;
+
     @BindView(R.id.iv_head)
     ImageView iv_head;
 
@@ -636,6 +639,13 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
 
         GlideImgManager.glideLoader(this, targetUserData.getData().getAvatar()
                 , iv_head, 0);
+
+        if (StringUtils.isEmpty(targetUserData.getData().getNoble())) {
+            iv_vip.setVisibility(View.GONE);
+        } else {
+            iv_vip.setVisibility(View.VISIBLE);
+            GlideImgManager.loadImage(this, targetUserData.getData().getNoble(), iv_vip);
+        }
 
         if (StringUtils.toInt(targetUserData.getData().getIs_visible_bottom_btn()) == 0) {
             chatLl.setVisibility(View.GONE);
