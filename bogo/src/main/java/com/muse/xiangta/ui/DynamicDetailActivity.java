@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.DynamicCommonAdapter;
 import com.muse.xiangta.adapter.DynamicImgAdapter;
@@ -30,10 +32,9 @@ import com.muse.xiangta.modle.DynamicCommonListModel;
 import com.muse.xiangta.modle.DynamicListModel;
 import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.ui.common.Common;
+import com.muse.xiangta.utils.GlideImgManager;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.lzy.okgo.callback.StringCallback;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -119,7 +120,7 @@ public class DynamicDetailActivity extends BaseActivity implements BaseQuickAdap
 
     protected void initData() {
 
-        dynamicListModel = getIntent().getParcelableExtra(DYNAMIC_DATA);
+        dynamicListModel = (DynamicListModel) getIntent().getSerializableExtra(DYNAMIC_DATA);
 
         headView = LayoutInflater.from(this).inflate(R.layout.dynamic_datail_layout, null);
 
@@ -136,16 +137,17 @@ public class DynamicDetailActivity extends BaseActivity implements BaseQuickAdap
         location = headView.findViewById(R.id.location);
 
 
+        ImageView iv_vip = headView.findViewById(R.id.iv_vip);
+        TextView tv_live = headView.findViewById(R.id.tv_live);
+
         TextView tv_common_count = headView.findViewById(R.id.item_tv_common_count);
         TextView item_tv_like_count = headView.findViewById(R.id.item_tv_like_count);
-        tv_common_count.setText(dynamicListModel.getComment_count());
-        item_tv_like_count.setText(dynamicListModel.getLike_count());
 
         changeLikeStatus();
 
         item_tv_like_count.setOnClickListener(this);
 
-        UserModel userInfo = dynamicListModel.getUserInfo();
+        DynamicListModel.UserInfoBean userInfo = dynamicListModel.getUserInfo();
         if (userInfo != null) {
             tv_name.setText(userInfo.getUser_nickname());
             Utils.loadHttpIconImg(this, userInfo.getAvatar(), iv_avatar, 0);
@@ -153,10 +155,24 @@ public class DynamicDetailActivity extends BaseActivity implements BaseQuickAdap
         }
 
         if (dynamicListModel.getUserInfo().getSex() == 1) {
+            tv_live.setBackgroundResource(R.drawable.bg_main_nan);
             iv_sex.setImageResource(R.mipmap.img_xingbienan2);
         } else {
+            tv_live.setBackgroundResource(R.drawable.bg_main_nv);
             iv_sex.setImageResource(R.mipmap.img_xingbie1);
         }
+
+        tv_common_count.setText(dynamicListModel.getComment_count() + "");
+        item_tv_like_count.setText(dynamicListModel.getLike_count() + "");
+
+        if (StringUtils.isEmpty(dynamicListModel.getUserInfo().getNoble())) {
+            iv_vip.setVisibility(View.GONE);
+        } else {
+            iv_vip.setVisibility(View.VISIBLE);
+            GlideImgManager.loadImage(this, dynamicListModel.getUserInfo().getNoble(), iv_vip);
+        }
+
+        tv_live.setText("lv:" + dynamicListModel.getUserInfo().getLevel());
 
         tv_content.setText(dynamicListModel.getMsg_content());
 
@@ -232,7 +248,7 @@ public class DynamicDetailActivity extends BaseActivity implements BaseQuickAdap
 
     private void requestGetData() {
 
-        Api.doRequestGetDynamicCommonList(dynamicListModel.getId(), SaveData.getInstance().getId(), SaveData.getInstance().getToken(), page, new StringCallback() {
+        Api.doRequestGetDynamicCommonList(String.valueOf(dynamicListModel.getId()), SaveData.getInstance().getId(), SaveData.getInstance().getToken(), page, new StringCallback() {
 
             @Override
             public void onSuccess(String s, Call call, Response response) {
@@ -274,7 +290,7 @@ public class DynamicDetailActivity extends BaseActivity implements BaseQuickAdap
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.item_iv_avatar:
-                Common.jumpUserPage(DynamicDetailActivity.this, dynamicListModel.getUserInfo().getId());
+                Common.jumpUserPage(DynamicDetailActivity.this, String.valueOf(dynamicListModel.getUserInfo().getId()));
                 break;
             case R.id.btn_publish_common:
 
@@ -294,17 +310,17 @@ public class DynamicDetailActivity extends BaseActivity implements BaseQuickAdap
         headView.findViewById(R.id.item_iv_like_ll).setOnClickListener(this);
         ImageView like_iv = headView.findViewById(R.id.item_iv_like_count);
 
-        if (StringUtils.toInt(dynamicListModel.getIs_like()) == 1) {
+        if (dynamicListModel.getIs_like().equals("1")) {
             like_iv.setBackgroundResource(R.mipmap.ic_dynamic_thumbs_up_s);
         } else {
             like_iv.setBackgroundResource(R.mipmap.ic_dynamic_thumbs_up_n);
         }
 
-        item_tv_like_count.setText(dynamicListModel.getLike_count());
+        item_tv_like_count.setText(dynamicListModel.getLike_count() + "");
     }
 
     private void clickLike() {
-        Api.doRequestDynamicLike(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), dynamicListModel.getId(), new StringCallback() {
+        Api.doRequestDynamicLike(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), String.valueOf(dynamicListModel.getId()), new StringCallback() {
 
             @Override
             public void onSuccess(String s, Call call, Response response) {
@@ -333,7 +349,7 @@ public class DynamicDetailActivity extends BaseActivity implements BaseQuickAdap
             return;
         }
 
-        Api.doRequestPublishCommon(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), msgContent, dynamicListModel.getId(), new StringCallback() {
+        Api.doRequestPublishCommon(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), msgContent, String.valueOf(dynamicListModel.getId()), new StringCallback() {
 
             @Override
             public void onSuccess(String s, Call call, Response response) {

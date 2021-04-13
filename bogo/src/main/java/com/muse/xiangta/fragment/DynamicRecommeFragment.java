@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.DynamicAdapter;
 import com.muse.xiangta.api.Api;
@@ -19,8 +21,6 @@ import com.muse.xiangta.ui.DynamicDetailActivity;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.utils.DialogHelp;
 import com.muse.xiangta.utils.StringUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.lzy.okgo.callback.StringCallback;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -68,7 +68,7 @@ public class DynamicRecommeFragment extends BaseListFragment<DynamicListModel> i
 
             @Override
             public void onSuccess(String s, Call call, Response response) {
-                Log.e("DynamicList",s);
+                Log.e("DynamicList", s);
                 JsonRequestDoGetDynamicList data = (JsonRequestDoGetDynamicList) JsonRequestBase.getJsonObj(s, JsonRequestDoGetDynamicList.class);
                 if (StringUtils.toInt(data.getCode()) == 1) {
                     onLoadDataResult(data.getList());
@@ -96,7 +96,7 @@ public class DynamicRecommeFragment extends BaseListFragment<DynamicListModel> i
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, final int position) {
         if (view.getId() == R.id.item_iv_like_count) {
-            Api.doRequestDynamicLike(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), dataList.get(position).getId(), new StringCallback() {
+            Api.doRequestDynamicLike(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), String.valueOf(dataList.get(position).getId()), new StringCallback() {
 
                 @Override
                 public void onSuccess(String s, Call call, Response response) {
@@ -123,9 +123,9 @@ public class DynamicRecommeFragment extends BaseListFragment<DynamicListModel> i
                 }
             }).show();
         } else if (view.getId() == R.id.item_tv_chat) {
-            Common.startPrivatePage(getContext(), dataList.get(position).getUserInfo().getId());
+            Common.startPrivatePage(getContext(), String.valueOf(dataList.get(position).getUserInfo().getId()));
         } else if (view.getId() == R.id.item_iv_avatar) {
-            Common.jumpUserPage(getContext(), dataList.get(position).getUserInfo().getId());
+            Common.jumpUserPage(getContext(), String.valueOf(dataList.get(position).getUserInfo().getId()));
         }
     }
 
@@ -141,7 +141,7 @@ public class DynamicRecommeFragment extends BaseListFragment<DynamicListModel> i
     private void clickDelDynamic(final int position) {
 
         showLoadingDialog("正在操作...");
-        Api.doRequestDelDynamic(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), dataList.get(position).getId(), new StringCallback() {
+        Api.doRequestDelDynamic(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), String.valueOf(dataList.get(position).getId()), new StringCallback() {
 
             @Override
             public void onSuccess(String s, Call call, Response response) {

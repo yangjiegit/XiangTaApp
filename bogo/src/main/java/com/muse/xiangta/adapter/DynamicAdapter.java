@@ -72,7 +72,7 @@ public class DynamicAdapter extends BaseQuickAdapter<DynamicListModel, BaseViewH
         }
 
 
-        UserModel userInfo = item.getUserInfo();
+        DynamicListModel.UserInfoBean userInfo = item.getUserInfo();
 
         TextView content = helper.getView(R.id.item_tv_content);
         if (!TextUtils.isEmpty(item.getMsg_content())) {
@@ -90,9 +90,9 @@ public class DynamicAdapter extends BaseQuickAdapter<DynamicListModel, BaseViewH
 
         helper.setText(R.id.item_tv_time, item.getPublish_time());
         //回复
-        helper.setText(R.id.item_tv_common_count, item.getComment_count());
+        helper.setText(R.id.item_tv_common_count, item.getComment_count() + "");
         //点赞
-        helper.setText(R.id.item_tv_like_count, item.getLike_count());
+        helper.setText(R.id.item_tv_like_count, item.getLike_count() + "");
 
         RecyclerView rv = helper.getView(R.id.rv_photo_list);
         RelativeLayout video = helper.getView(R.id.videoplayer);
@@ -163,7 +163,7 @@ public class DynamicAdapter extends BaseQuickAdapter<DynamicListModel, BaseViewH
         BGLevelTextView level = helper.getView(R.id.tv_level);
         if (item.getUserInfo() != null) {
             level.setVisibility(View.GONE);
-            level.setLevelInfo(item.getUserInfo().getSex(), item.getUserInfo().getLevel());
+            level.setLevelInfo(item.getUserInfo().getSex(), String.valueOf(item.getUserInfo().getLevel()));
         } else {
             level.setVisibility(View.GONE);
         }

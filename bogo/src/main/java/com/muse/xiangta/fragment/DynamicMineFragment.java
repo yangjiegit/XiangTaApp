@@ -153,7 +153,7 @@ public class DynamicMineFragment extends BaseFragment implements BaseQuickAdapte
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, final int position) {
         if (view.getId() == R.id.item_iv_like_count) {
-            Api.doRequestDynamicLike(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), list.get(position).getId(), new StringCallback() {
+            Api.doRequestDynamicLike(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), String.valueOf(list.get(position).getId()), new StringCallback() {
 
                 @Override
                 public void onSuccess(String s, Call call, Response response) {
@@ -207,7 +207,7 @@ public class DynamicMineFragment extends BaseFragment implements BaseQuickAdapte
     private void clickDelDynamic(final int position) {
 
         showLoadingDialog("正在操作...");
-        Api.doRequestDelDynamic(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), list.get(position).getId(), new StringCallback() {
+        Api.doRequestDelDynamic(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), String.valueOf(list.get(position).getId()), new StringCallback() {
 
             @Override
             public void onSuccess(String s, Call call, Response response) {

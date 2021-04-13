@@ -25,6 +25,8 @@ import com.muse.xiangta.utils.StringUtils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.Serializable;
+
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -106,7 +108,7 @@ public class DynamicMyFragment extends BaseListFragment<DynamicListModel> implem
     @Override
     public void onItemChildClick(final BaseQuickAdapter adapter, View view, final int position) {
         if (view.getId() == R.id.item_iv_like_count) {
-            Api.doRequestDynamicLike(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), dataList.get(position).getId(), new StringCallback() {
+            Api.doRequestDynamicLike(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), String.valueOf(dataList.get(position).getId()), new StringCallback() {
 
                 @Override
                 public void onSuccess(String s, Call call, Response response) {
@@ -134,9 +136,9 @@ public class DynamicMyFragment extends BaseListFragment<DynamicListModel> implem
                 }
             }).show();
         } else if (view.getId() == R.id.item_tv_chat) {
-            Common.startPrivatePage(getContext(), dataList.get(position).getUserInfo().getId());
+            Common.startPrivatePage(getContext(), String.valueOf(dataList.get(position).getUserInfo().getId()));
         } else if (view.getId() == R.id.item_iv_avatar) {
-            Common.jumpUserPage(getContext(), dataList.get(position).getUserInfo().getId());
+            Common.jumpUserPage(getContext(), String.valueOf(dataList.get(position).getUserInfo().getId()));
         }
     }
 
@@ -151,7 +153,7 @@ public class DynamicMyFragment extends BaseListFragment<DynamicListModel> implem
     private void clickDelDynamic(final int position) {
 
         showLoadingDialog("正在操作...");
-        Api.doRequestDelDynamic(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), dataList.get(position).getId(), new StringCallback() {
+        Api.doRequestDelDynamic(SaveData.getInstance().getId(), SaveData.getInstance().getToken(), String.valueOf(dataList.get(position).getId()), new StringCallback() {
 
             @Override
             public void onSuccess(String s, Call call, Response response) {
