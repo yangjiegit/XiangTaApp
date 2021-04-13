@@ -77,8 +77,17 @@ public class MessageBean implements Serializable {
         private int declaration_length;
         private int focus;
         private int age;
+        private String sign;
         private String nob;
         private int declaration_type;
+
+        public String getSign() {
+            return sign;
+        }
+
+        public void setSign(String sign) {
+            this.sign = sign;
+        }
 
         public int getId() {
             return id;

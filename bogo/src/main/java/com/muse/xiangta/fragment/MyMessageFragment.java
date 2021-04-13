@@ -22,7 +22,6 @@ import com.muse.xiangta.api.Api;
 import com.muse.xiangta.api.ApiUtils;
 import com.muse.xiangta.audiorecord.AudioPlaybackManager;
 import com.muse.xiangta.base.BaseFragment;
-import com.muse.xiangta.modle.ConfigModel;
 import com.muse.xiangta.modle.MessageBean;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.utils.GlideImgManager;
@@ -98,41 +97,54 @@ public class MyMessageFragment extends BaseFragment {
     private void initRecyclerView() {
         mAdapter = new CommonRecyclerViewAdapter<MessageBean.DataBean>(getContext(), mList) {
             @Override
-            public void convert(CommonRecyclerViewHolder holder, MessageBean.DataBean entity, int position) {
-//                GlideImgManager.glideLoader(getContext(), entity.getAvatar(), (ImageView) holder.getView(R.id.pagemsg_background), 0);
-//                holder.setText(R.id.pagemsg_view_name, entity.getUser_nickname());
-                holder.setText(R.id.tv_address, entity.getCity());
-
-                TextView pagemsg_view_sign = holder.getView(R.id.pagemsg_view_sign);
-                RelativeLayout rl_yinpin = holder.getView(R.id.rl_yinpin);
+            public void convert(CommonRecyclerViewHolder helper, MessageBean.DataBean item, int position) {
+                TextView pagemsg_view_sign = helper.getView(R.id.pagemsg_view_sign);
+                RelativeLayout rl_yinpin = helper.getView(R.id.rl_yinpin);
+                ImageView iv_vip = helper.getView(R.id.iv_vip);
 
                 //初始化数据显示
-                if (ApiUtils.isTrueUrl(entity.getAvatar())) {
-                    Utils.loadImg(Utils.getCompleteImgUrl(entity.getAvatar()), holder.getView(R.id.pagemsg_background));
+                if (ApiUtils.isTrueUrl(item.getAvatar())) {
+                    Utils.loadImg(Utils.getCompleteImgUrl(item.getAvatar()), (ImageView) helper.getView(R.id.pagemsg_background));
                 }
-//                holder.setImageResource(R.id.pagemsg_view_dian, StringUtils.toInt(item.getIs_online()) == 1 ? R.mipmap.on_line : R.mipmap.not_online);
-//                holder.setImageResource(R.id.pagemsg_view_isvip, StringUtils.toInt(item.getIs_vip()) == 1 ? R.mipmap.vip_image_bac : 0);
-                holder.setText(R.id.pagemsg_view_name, entity.getUser_nickname());
 
-//                if (StringUtils.toInt(entity.getSex()) == 2) {
-//                    holder.setText(R.id.pagemsg_view_nice, entity.getCharging_coin() + ConfigModel.getInitData().getCurrency_name() + "/分钟");
+                ImageView iv_v = helper.getView(R.id.iv_v);
+                if (item.getIs_auth() == 1) {
+                    iv_v.setVisibility(View.VISIBLE);
+                } else {
+                    iv_v.setVisibility(View.GONE);
+                }
+
+                helper.setText(R.id.tv_address, item.getCity());
+//                helper.setImageResource(R.id.pagemsg_view_dian, StringUtils.toInt(item.getIs_online()) == 1 ? R.mipmap.on_line : R.mipmap.not_online);
+//                helper.setImageResource(R.id.pagemsg_view_isvip, StringUtils.toInt(item.getIs_vip()) == 1 ? R.mipmap.vip_image_bac : 0);
+                helper.setText(R.id.pagemsg_view_name, item.getUser_nickname());
+
+                if (!StringUtils.isEmpty(item.getNob())) {
+                    iv_vip.setVisibility(View.VISIBLE);
+                    GlideImgManager.loadImage(context, item.getNob(), iv_vip);
+                } else {
+                    iv_vip.setVisibility(View.GONE);
+                }
+
+//                if (StringUtils.toInt(item.getSex()) == 2) {
+//                    helper.setText(R.id.pagemsg_view_nice, item.getCharging_coin() + ConfigModel.getInitData().getCurrency_name() + "/分钟");
 //                }
 
-                holder.setText(R.id.tv_age, entity.getAge() + "岁·" + entity.getHeight() + "cm");
+                helper.setText(R.id.tv_age, item.getAge() + "岁·" + item.getHeight() + "cm");
 
-                if (entity.getDeclaration_type() == 1) {
+                if (item.getDeclaration_type() == 1) {
                     pagemsg_view_sign.setVisibility(View.GONE);
                     rl_yinpin.setVisibility(View.VISIBLE);
-                    holder.setText(R.id.tv_yinpin, entity.getDeclaration_length() + "\"");
+                    helper.setText(R.id.tv_yinpin, item.getDeclaration_length() + "\"");
                 } else {
                     //没有音频 显示签名
                     pagemsg_view_sign.setVisibility(View.VISIBLE);
                     rl_yinpin.setVisibility(View.GONE);
-//                    if (!TextUtils.isEmpty(entity.getSign())) {
-//                        holder.setText(R.id.pagemsg_view_sign, entity.getSign());
-//                    } else {
-//                        holder.setText(R.id.pagemsg_view_sign, "暂未设置签名");
-//                    }
+                    if (!TextUtils.isEmpty(item.getSign())) {
+                        helper.setText(R.id.pagemsg_view_sign, item.getSign());
+                    } else {
+                        helper.setText(R.id.pagemsg_view_sign, "暂未设置签名");
+                    }
                 }
                 animationDrawable = new AnimationDrawable();
 
@@ -141,7 +153,7 @@ public class MyMessageFragment extends BaseFragment {
                     public void onClick(View view) {
                         //从网路加载音乐
                         try {
-                            AudioPlaybackManager.getInstance().playAudio(entity.getDeclaration(), new AudioPlaybackManager.OnPlayingListener() {
+                            AudioPlaybackManager.getInstance().playAudio(item.getDeclaration(), new AudioPlaybackManager.OnPlayingListener() {
                                 @Override
                                 public void onStart() {
                                     animationDrawable.start();
@@ -164,7 +176,7 @@ public class MyMessageFragment extends BaseFragment {
                     }
                 });
 
-                ((BGLevelTextView) holder.getView(R.id.tv_level)).setLevelInfo(entity.getSex(), String.valueOf(entity.getLevel()));
+                ((BGLevelTextView) helper.getView(R.id.tv_level)).setLevelInfo(item.getSex(), String.valueOf(item.getLevel()));
             }
 
             @Override

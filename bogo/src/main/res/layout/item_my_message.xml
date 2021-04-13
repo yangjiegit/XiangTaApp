@@ -3,18 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dp_10">
+    android:layout_margin="@dimen/dp_5">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_70">
 
-        <com.muse.xiangta.widget.RoundImageView
-            android:id="@+id/pagemsg_background"
-            android:layout_width="@dimen/dp_44"
-            android:layout_height="@dimen/dp_44"
-            android:layout_centerVertical="true"
-            android:scaleType="centerCrop" />
+        <FrameLayout
+            android:id="@+id/fl_layout_2"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true">
+
+            <com.muse.xiangta.widget.RoundImageView
+                android:id="@+id/pagemsg_background"
+                android:layout_width="@dimen/dp_42"
+                android:layout_height="@dimen/dp_42"
+                android:layout_gravity="center"
+                android:scaleType="fitXY" />
+
+            <ImageView
+                android:id="@+id/iv_v"
+                android:layout_width="@dimen/dp_15"
+                android:layout_height="@dimen/dp_15"
+                android:layout_gravity="right|bottom"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:src="@mipmap/img_v"
+                android:visibility="gone" />
+
+        </FrameLayout>
 
         <ImageView
             android:id="@+id/pagemsg_view_isvip"
@@ -78,38 +95,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/pagemsg_background"
+            android:layout_toRightOf="@+id/fl_layout_2"
             android:background="@color/white"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
-                android:id="@+id/pagemsg_view_name"
+            <LinearLayout
+                android:id="@+id/ll_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:maxWidth="100dp"
-                android:maxEms="6"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="布谷小美"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dp_12"
-                android:textStyle="bold" />
+                android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/pagemsg_view_name"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_toRightOf="@+id/pagemsg_view_name"
-                android:src="@mipmap/img_huizhang" />
+                <TextView
+                    android:id="@+id/pagemsg_view_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxWidth="100dp"
+                    android:maxEms="6"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="布谷小美"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp_12"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/iv_vip"
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_15"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_5" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pagemsg_view_name"
+                android:layout_below="@+id/ll_name"
                 android:layout_marginTop="@dimen/dp_3"
                 android:layout_marginBottom="@dimen/dp_3"
                 android:gravity="center"
@@ -128,7 +152,7 @@
                 android:layout_height="14dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="12dp"
-                android:layout_toRightOf="@+id/pagemsg_view_name"
+                android:layout_toRightOf="@+id/ll_name"
                 android:textSize="8dp"
                 android:visibility="gone" />
 
@@ -187,7 +211,7 @@
                 android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/pagemsg_view_name"
+                android:layout_alignTop="@+id/ll_name"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
                 android:singleLine="true"
