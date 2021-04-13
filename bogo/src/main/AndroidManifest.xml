@@ -185,6 +185,15 @@
             android:name=".ui.VideoDetailsActivity"
             android:screenOrientation="portrait" /> <!-- 测试页 -->
         <activity
+            android:name=".ui.SetTeenagersActivity"
+            android:screenOrientation="portrait" /> <!-- 青少年模式 -->
+        <activity
+            android:name=".ui.SetTeenagersPassActivity"
+            android:screenOrientation="portrait" /> <!-- 青少年模式设置密码 -->
+        <activity
+            android:name=".ui.TeenagersActivity"
+            android:screenOrientation="portrait" /> <!-- 青少年模式 -->
+        <activity
             android:name=".ui.ApplyActivity"
             android:screenOrientation="portrait" /> <!-- 申请入驻页面 -->
         <activity

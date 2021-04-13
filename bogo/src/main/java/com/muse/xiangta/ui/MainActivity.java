@@ -42,6 +42,7 @@ import com.muse.xiangta.modle.custommsg.CustomMsg;
 import com.muse.xiangta.modle.custommsg.CustomMsgVideoCall;
 import com.muse.xiangta.utils.CuckooSharedPreUtil;
 import com.muse.xiangta.utils.IMUtils;
+import com.muse.xiangta.utils.SPHelper;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.UIHelp;
 import com.muse.xiangta.utils.UserOnlineHeartUtils;
@@ -106,6 +107,9 @@ public class MainActivity extends BaseActivity implements PermissionUtils.OnPerm
 
         addTabAndViewPage();
 
+        if (!StringUtils.isEmpty(SPHelper.getString(MainActivity.this, "pass"))) {
+            startActivity(new Intent(MainActivity.this, TeenagersActivity.class));
+        }
     }
 
     private void initUnReadMessageView() {

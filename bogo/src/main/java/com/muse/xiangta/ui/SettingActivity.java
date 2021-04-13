@@ -138,6 +138,10 @@ public class SettingActivity extends BaseActivity {
         itemSettingVideoMoney.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemSettingVideoMoney.setId(R.id.sett_custom_video_coin);
 
+        QMUICommonListItemView itemTeenagers = groupListView.createItemView("青少年模式");
+        itemTeenagers.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+        itemTeenagers.setId(R.id.sett_teenagers);
+
 
         QMUICommonListItemView itemAboutView = groupListView.createItemView(getString(R.string.about_me));
         itemAboutView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
@@ -194,7 +198,8 @@ public class SettingActivity extends BaseActivity {
                 .addItemView(itemFeedback, this);
 
 //        if (sex == 2 && "1".equals(state)) {
-        section.addItemView(itemSettingVideoMoney, this);
+        section.addItemView(itemTeenagers, this);  //青少年
+        section.addItemView(itemSettingVideoMoney, this);  //收费
 //        }
 
         if (sex == 2) {
@@ -208,7 +213,6 @@ public class SettingActivity extends BaseActivity {
 
 
         section.addItemView(itemCancellation, this);
-
         section.addItemView(itemLoginOutView, this);
         section.addTo(groupListView);
 
@@ -260,6 +264,10 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.sett_switch_language:
                 clickSwitchLanguage();
+                break;
+            case R.id.sett_teenagers:
+                //青少年
+                startActivity(new Intent(this, SetTeenagersActivity.class));
                 break;
             case R.id.upload_log:
                 clickUploadLog();
