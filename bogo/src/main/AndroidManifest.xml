@@ -194,6 +194,9 @@
             android:name=".ui.TeenagersActivity"
             android:screenOrientation="portrait" /> <!-- 青少年模式 -->
         <activity
+            android:name=".ui.RankingListActivity"
+            android:screenOrientation="portrait" /> <!-- 群聊排行榜 -->
+        <activity
             android:name=".ui.ApplyActivity"
             android:screenOrientation="portrait" /> <!-- 申请入驻页面 -->
         <activity

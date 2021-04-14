@@ -58,6 +58,7 @@ import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
 import com.muse.xiangta.modle.custommsg.InputListenerMsgText;
 import com.muse.xiangta.ui.MemberGroupListActivity;
 import com.muse.xiangta.ui.PrivatePhotoActivity;
+import com.muse.xiangta.ui.RankingListActivity;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.utils.Utils;
 import com.tencent.imsdk.TIMConversationType;
@@ -243,6 +244,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                 break;
             case Group:
                 title.setMoreImg(R.mipmap.img_message_1);
+                title.setMoreImg2(R.mipmap.img_message_phb);
                 title.setMoreImgAction(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -251,6 +253,15 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                             startActivity(new Intent(ChatActivity2.this, MemberGroupListActivity.class)
                                     .putExtra("family_id", family_id));
                         }
+                    }
+                });
+
+                title.setMoreImgAction2(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //排行榜
+                        startActivity(new Intent(ChatActivity2.this, RankingListActivity.class)
+                                .putExtra("family_id", family_id));
                     }
                 });
                 title.setTitleText(userName);

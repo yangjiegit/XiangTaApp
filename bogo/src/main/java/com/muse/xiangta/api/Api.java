@@ -2790,5 +2790,18 @@ public class Api {
                 .execute(stringCallback);
     }
 
+    /*
+     * 首页礼物通知
+     * */
+    public static void rankList(String uid, String token, String type, String id, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/group_api/rank")
+                .params("uid", uid)
+                .params("token", token)
+                .params("type", type)
+                .params("id", id)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
 
 }
