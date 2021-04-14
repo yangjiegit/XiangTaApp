@@ -21,7 +21,9 @@ public class TemplateTitle extends RelativeLayout {
     private boolean canBack;
     private String backText;
     private String moreText;
+    private RelativeLayout rl_template_title;
     private int moreImg;
+    private int moreImg2;
     private TextView tvMore;
 
 
@@ -41,12 +43,13 @@ public class TemplateTitle extends RelativeLayout {
         }
     }
 
-    private void setUpView(){
+    private void setUpView() {
+        rl_template_title = (RelativeLayout) findViewById(R.id.rl_template_title);
         TextView tvTitle = (TextView) findViewById(R.id.title);
         tvTitle.setText(titleText);
         LinearLayout backBtn = (LinearLayout) findViewById(R.id.title_back);
         backBtn.setVisibility(canBack ? VISIBLE : INVISIBLE);
-        if (canBack){
+        if (canBack) {
             TextView tvBack = (TextView) findViewById(R.id.txt_back);
             tvBack.setText(backText);
             backBtn.setOnClickListener(new OnClickListener() {
@@ -56,7 +59,7 @@ public class TemplateTitle extends RelativeLayout {
                 }
             });
         }
-        if (moreImg != 0){
+        if (moreImg != 0) {
             ImageView moreImgView = (ImageView) findViewById(R.id.img_more);
             moreImgView.setImageDrawable(getContext().getResources().getDrawable(moreImg));
         }
@@ -70,10 +73,15 @@ public class TemplateTitle extends RelativeLayout {
      *
      * @param titleText 设置标题文案
      */
-    public void setTitleText(String titleText){
+    public void setTitleText(String titleText) {
         this.titleText = titleText;
         TextView tvTitle = (TextView) findViewById(R.id.title);
         tvTitle.setText(titleText);
+    }
+
+
+    public void setTitleBackgroundColor(int color) {
+        rl_template_title.setBackgroundColor(color);
     }
 
     /**
@@ -81,23 +89,33 @@ public class TemplateTitle extends RelativeLayout {
      *
      * @param img 设置更多按钮
      */
-    public void setMoreImg(int img){
+    public void setMoreImg(int img) {
         moreImg = img;
         ImageView moreImgView = (ImageView) findViewById(R.id.img_more);
         moreImgView.setImageDrawable(getContext().getResources().getDrawable(moreImg));
     }
 
+    public void setMoreImg2(int img) {
+        moreImg2 = img;
+        ImageView moreImgView = (ImageView) findViewById(R.id.img_more2);
+        moreImgView.setImageDrawable(getContext().getResources().getDrawable(moreImg2));
+    }
+
 
     /**
      * 设置更多按钮事件
      *
      * @param listener 事件监听
      */
-    public void setMoreImgAction(View.OnClickListener listener){
+    public void setMoreImgAction(View.OnClickListener listener) {
         ImageView moreImgView = (ImageView) findViewById(R.id.img_more);
         moreImgView.setOnClickListener(listener);
     }
 
+    public void setMoreImgAction2(View.OnClickListener listener) {
+        ImageView moreImgView = (ImageView) findViewById(R.id.img_more2);
+        moreImgView.setOnClickListener(listener);
+    }
 
 
     /**
@@ -105,19 +123,19 @@ public class TemplateTitle extends RelativeLayout {
      *
      * @param listener 事件监听
      */
-    public void setMoreTextAction(View.OnClickListener listener){
+    public void setMoreTextAction(View.OnClickListener listener) {
         tvMore.setOnClickListener(listener);
     }
 
 
     /**
      * 设置更多文字内容
+     *
      * @param text 更多文本
      */
-    public void setMoreTextContext(String text){
+    public void setMoreTextContext(String text) {
         tvMore.setText(text);
     }
-
 
 
     /**
@@ -125,16 +143,12 @@ public class TemplateTitle extends RelativeLayout {
      *
      * @param listener 事件监听
      */
-    public void setBackListener(OnClickListener listener){
-        if (canBack){
+    public void setBackListener(OnClickListener listener) {
+        if (canBack) {
             LinearLayout backBtn = (LinearLayout) findViewById(R.id.title_back);
             backBtn.setOnClickListener(listener);
         }
     }
-
-
-
-
 
 
 }
