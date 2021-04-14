@@ -217,11 +217,11 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
                 }
             });
             Log.i("性别", "initSet: 男");
-
+            setXiuQiuVisibility(false);
         } else {
             rollView.findViewById(R.id.boy_header).setVisibility(View.GONE);
             Log.i("性别", "initSet: 女");
-
+            setXiuQiuVisibility(true);
         }
 
         //添加头部

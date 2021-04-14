@@ -61,6 +61,14 @@ public abstract class BaseListFragment2<T> extends BaseFragment implements BaseQ
 
     }
 
+    public void setXiuQiuVisibility(boolean flag) {
+        if(flag==true){
+            iv_xiuqiu.setVisibility(View.VISIBLE);
+        }else{
+            iv_xiuqiu.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     protected void initDate(View view) {
 
