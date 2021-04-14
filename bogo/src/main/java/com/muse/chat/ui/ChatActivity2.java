@@ -119,6 +119,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     private Uri fileUri;
     private VoiceSendingView voiceSendingView;
     private String identify;
+    private String family_id;
     private String userName;
     //    private String avatar;
     private RecorderUtil recorder = new RecorderUtil();
@@ -137,6 +138,16 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         intent.putExtra("identify", identify);
         intent.putExtra("user_nickname", userName);
         intent.putExtra("type", type);
+        context.startActivity(intent);
+    }
+
+    public static void navToChat(Context context, String identify, String userName, TIMConversationType type
+            , String family_id) {
+        Intent intent = new Intent(context, ChatActivity2.class);
+        intent.putExtra("identify", identify);
+        intent.putExtra("user_nickname", userName);
+        intent.putExtra("type", type);
+        intent.putExtra("family_id", family_id);
         context.startActivity(intent);
     }
 
@@ -160,6 +171,9 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         identify = getIntent().getStringExtra("identify");
         userName = getIntent().getStringExtra("user_nickname");
         type = (TIMConversationType) getIntent().getSerializableExtra("type");
+        if (!StringUtils.isEmpty(getIntent().getStringExtra("family_id"))) {
+            family_id = getIntent().getStringExtra("family_id");
+        }
 
 
         mIvPrivateChat = findViewById(R.id.iv_private_img);
@@ -232,8 +246,10 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                     @Override
                     public void onClick(View view) {
                         //跳转
-                        startActivity(new Intent(ChatActivity2.this, MemberGroupListActivity.class)
-                                .putExtra("family_id", identify));
+                        if (!StringUtils.isEmpty(family_id)) {
+                            startActivity(new Intent(ChatActivity2.this, MemberGroupListActivity.class)
+                                    .putExtra("family_id", family_id));
+                        }
                     }
                 });
                 title.setTitleText(userName);

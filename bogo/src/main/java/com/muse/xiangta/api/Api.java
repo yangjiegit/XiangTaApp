@@ -2488,6 +2488,20 @@ public class Api {
     }
 
     /*
+     * 群成员列表
+     * */
+    public static void getGroupMemberList(String uid, String token, String id, String page, String sex, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/group_api/get_member_list")
+                .params("uid", uid)
+                .params("token", token)
+                .params("id", id)
+                .params("page", page)
+                .params("sex", sex)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
      * 加入家族
      * */
     public static void join(String uid, String token, String family_id, String group_id, StringCallback stringCallback) {

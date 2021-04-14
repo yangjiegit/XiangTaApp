@@ -96,12 +96,12 @@ public class GroupChatActivity extends BaseActivity {
             @Override
             public void onItemClick(View v, int position) {
                 qunliao(String.valueOf(mList.get(position).getGroupid()),
-                        mList.get(position).getName());
+                        mList.get(position).getName(),String.valueOf(mList.get(position).getId()));
             }
         });
     }
 
-    private void qunliao(final String id, String name) {
+    private void qunliao(final String id, String name,String family_id) {
         final String uid = SaveData.getInstance().getId();
         final String token = SaveData.getInstance().getToken();
 
@@ -110,7 +110,7 @@ public class GroupChatActivity extends BaseActivity {
             public void onSuccess(String s, Call call, Response response) {
                 Log.d("ret", "joker    " + s);
                 ChatActivity2.navToChat(GroupChatActivity.this,
-                        id, name, TIMConversationType.Group);
+                        id, name, TIMConversationType.Group,family_id);
             }
         });
     }
