@@ -164,7 +164,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
 
     @Override
     protected void initView() {
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.admin_color), 0);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.white), 0);
         StatusBarUtil.setLightMode(this);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -228,6 +228,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         });
         registerForContextMenu(listView);
         title = (TemplateTitle) findViewById(R.id.chat_title);
+        title.setTitleBackgroundColor(getResources().getColor(R.color.white));
 
         switch (type) {
             case C2C:
@@ -241,7 +242,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                 title.setTitleText(userName);
                 break;
             case Group:
-                title.setMoreImg(R.drawable.ic_chat_user_page);
+                title.setMoreImg(R.mipmap.img_message_1);
                 title.setMoreImgAction(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -934,6 +935,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         @Override
         public void run() {
             TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
+            title.setTitleBackgroundColor(getResources().getColor(R.color.white));
             title.setTitleText(titleStr);
         }
     };
