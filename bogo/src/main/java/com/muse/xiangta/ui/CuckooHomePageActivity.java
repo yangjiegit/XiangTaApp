@@ -556,7 +556,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
 
         TextView tv = menuDialog.findViewById(R.id.join_black_list);
 
-        if (targetUserData.getData().getIs_black() == 1) {
+        if (targetUserData.getData().getIs_black().equals("1")) {
             tv.setText(R.string.relieve_black);
         }
         menuDialog.show();
@@ -603,13 +603,13 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
         initViewPagerData();
         rollPath.clear();
 
-        if (Integer.valueOf(uId) == targetUserData.getData().getId()) {
+        if (Integer.valueOf(uId).equals(targetUserData.getData().getId())) {
             tv_guanzhu.setVisibility(View.GONE);
         } else {
             tv_guanzhu.setVisibility(View.VISIBLE);
         }
 
-        if (targetUserData.getData().getIs_auth() == 1) {
+        if (targetUserData.getData().getIs_auth().equals("1")) {
             iv_v.setVisibility(View.VISIBLE);
         } else {
             iv_v.setVisibility(View.GONE);
@@ -619,7 +619,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
                 + targetUserData.getData().getAttention_fans() + "   |   " +
                 targetUserData.getData().getAddress());
 //        getIs_auth
-        if (targetUserData.getData().getIs_auth() == 0) {
+        if (targetUserData.getData().getIs_auth().equals("0")) {
 //            ll_renzheng.setVisibility(View.VISIBLE);
             if (uId.equals(targetUserId)) {
                 ll_renzheng.setEnabled(true);
@@ -652,7 +652,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
         } else {
             chatLl.setVisibility(View.VISIBLE);
 
-            if (targetUserData.getData().getSex() == 2) {
+            if (targetUserData.getData().getSex().equals("2")) {
                 //显示打电话弹窗
                 TranslateAnimation showAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
@@ -666,7 +666,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
         }
 
         //排行榜
-        if (targetUserData.getData().getSex() == 2) {
+        if (targetUserData.getData().getSex().equals("2")) {
             ll_contact_rl.setVisibility(View.GONE);
 
             rankIv.setVisibility(View.GONE);
@@ -691,7 +691,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
         Utils.loadHttpImg(this, targetUserData.getData().getAvatar(), cardCircleView);
 
 
-        iv_level_sex.setBackgroundResource(targetUserData.getData().getSex() == 2 ? R.mipmap.woman_vip_bac : R.mipmap.man_vip_bac);
+        iv_level_sex.setBackgroundResource(targetUserData.getData().getSex().equals("2") ? R.mipmap.woman_vip_bac : R.mipmap.man_vip_bac);
         //设置是否显示关注
         userLoveMe.setBackgroundResource(StringUtils.toInt(targetUserData.getData().getAttention()) == 1
                 ? R.mipmap.followed_bat : R.mipmap.follow_bat);
@@ -722,7 +722,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
 
         }
 
-        int attestationResForSex = SelectResHelper.getAttestationResForSex(targetUserData.getData().getSex(), StringUtils.toInt(targetUserData.getData().getUser_status()));
+        int attestationResForSex = SelectResHelper.getAttestationResForSex(Integer.valueOf(targetUserData.getData().getSex()), StringUtils.toInt(targetUserData.getData().getUser_status()));
         if (attestationResForSex == 0) {
             home_page_auth_ll.setVisibility(View.GONE);
         } else {
@@ -730,7 +730,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
             iv_auth_status.setImageResource(attestationResForSex);
         }
 
-        if (targetUserData.getData().getSex() == 2) {
+        if (targetUserData.getData().getSex().equals("2")) {
             iv_auth_statusTv.setText(StringUtils.toInt(targetUserData.getData().getUser_status()) == 1 ? "已认证" : "未认证");
         } else {
             iv_auth_statusTv.setText(StringUtils.toInt(targetUserData.getData().getUser_status()) == 1 ? "已认证" : "");
@@ -740,7 +740,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
 //        fansNumber.setText(getString(R.string.fans) + ":" + targetUserData.getAttention_fans()); TODO 赋值
         fansNumber.setText("获赞:" + targetUserData.getData().getAttention_fans() + "");
 
-        if (targetUserData.getData().getSex() == 1) {
+        if (targetUserData.getData().getSex().equals("1")) {
             iv_sex.setImageResource(R.mipmap.img_xingbienan2);
         } else {
             iv_sex.setImageResource(R.mipmap.img_xingbie1);
@@ -750,22 +750,25 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
 //        userIsonLine.setImageResource(StringUtils.toInt(targetUserData.getData().getIs_online()) == 1 ? R.mipmap.on_line : R.mipmap.not_online);
 
         if (targetUserData.getData().getImg() != null) {
-//            for (TargetUserData2.DataBean.ImgBean img : targetUserData.getData().getImg()) {
-//                HomePageImgBean homePageImgBean = new HomePageImgBean();
-//                homePageImgBean.setUrl(Utils.getCompleteImgUrl(img.getImg()));
-//                rollPath.add(homePageImgBean);
-//            }
             if (targetUserData.getData().getImg().size() == 0) {
                 HomePageImgBean homePageImgBean = new HomePageImgBean();
-                homePageImgBean.setUrl(Utils.getCompleteImgUrl(Utils.getCompleteImgUrl(targetUserData.getData().getAvatar())));
+                homePageImgBean.setUrl(Utils.getCompleteImgUrl(targetUserData.getData().getAvatar()));
                 rollPath.add(homePageImgBean);
             }
         }
 
-        if (targetUserData.getData().getSex() == 2) {
-            listBarGiftText.setText(String.format(Locale.CHINA, "收到的礼物(%d)", targetUserData.getData().getGift_count()));
+        if (targetUserData.getData().getSex().equals("2")) {
+            if (!targetUserData.getData().getGift_count().equals("**")) {
+                listBarGiftText.setText(String.format(Locale.CHINA, "收到的礼物(%d)", targetUserData.getData().getGift_count()));
+            } else {
+                listBarGiftText.setText("收到的礼物(**)");
+            }
         } else {
-            listBarGiftText.setText(String.format(Locale.CHINA, "送出的礼物(%d)", targetUserData.getData().getGift_count()));
+            if (!targetUserData.getData().getGift_count().equals("**")) {
+                listBarGiftText.setText(String.format(Locale.CHINA, "送出的礼物(%d)", targetUserData.getData().getGift_count()));
+            } else {
+                listBarGiftText.setText("收到的礼物(**)");
+            }
         }
 
 
@@ -810,9 +813,9 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
                                 int follow = new JSONObject(s).getInt("follow");
                                 if (code == 1) {
                                     if (follow == 1) {
-                                        targetUserData.getData().setAttention(1);
+                                        targetUserData.getData().setAttention("1");
                                     } else {
-                                        targetUserData.getData().setAttention(0);
+                                        targetUserData.getData().setAttention("0");
                                     }
                                     userLoveMe.setBackgroundResource(StringUtils.toInt(targetUserData.getData().getAttention()) == 1 ? R.mipmap.followed_bat : R.mipmap.follow_bat);
                                     if (StringUtils.toInt(targetUserData.getData().getAttention()) == 1) {
@@ -872,8 +875,8 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
                 JsonRequestBase jsonObj = JsonRequestBase.getJsonObj(s, JsonRequestBase.class);
                 if (jsonObj.getCode() == 1) {
                     showToastMsg(getResources().getString(R.string.action_success));
-                    if (targetUserData.getData().getIs_black() == 1) {
-                        targetUserData.getData().setIs_black(0);
+                    if (targetUserData.getData().getIs_black().equals("1")) {
+                        targetUserData.getData().setIs_black("0");
                         IMHelp.deleteBlackUser(targetUserId, new TIMValueCallBack<List<TIMFriendResult>>() {
                             @Override
                             public void onError(int i, String s) {
@@ -886,7 +889,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
                             }
                         });
                     } else {
-                        targetUserData.getData().setIs_black(1);
+                        targetUserData.getData().setIs_black("1");
                         IMHelp.addBlackUser(targetUserId, new TIMValueCallBack<List<TIMFriendResult>>() {
                             @Override
                             public void onError(int i, String s) {

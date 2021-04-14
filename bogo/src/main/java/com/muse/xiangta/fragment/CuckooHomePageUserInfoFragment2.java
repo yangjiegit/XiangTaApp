@@ -20,6 +20,7 @@ import com.muse.xiangta.adapter.CommonRecyclerViewHolder;
 import com.muse.xiangta.base.BaseFragment;
 import com.muse.xiangta.json.jsonmodle.TargetUserData2;
 import com.muse.xiangta.utils.GlideImgManager;
+import com.muse.xiangta.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +114,7 @@ public class CuckooHomePageUserInfoFragment2 extends BaseFragment {
             @Override
             public void convert(CommonRecyclerViewHolder holder, TargetUserData2.DataBean.GiftBean entity, int position) {
                 GlideImgManager.glideLoader(getContext(),
-                        BuildConfig.SERVER_URL + entity.getImg(), (ImageView) holder.getView(R.id.iv_image), 0);
+                        Utils.getCompleteImgUrl(entity.getImg()), (ImageView) holder.getView(R.id.iv_image), 0);
                 holder.setText(R.id.tv_number, "x" + entity.getGift_count());
             }
 
@@ -133,13 +134,13 @@ public class CuckooHomePageUserInfoFragment2 extends BaseFragment {
                 mList3.add(targetUserData2.getData().getGuardian_user_list().get(i));
             }
             if (mList3.size() > 0) {
-                if (targetUserData2.getData().getSex() == 1) {
+                if (targetUserData2.getData().getSex().equals("1")) {
                     tv_shouhu.setText("他的守护(" + mList3.size() + "人)");
                 } else {
                     tv_shouhu.setText("她的守护(" + mList3.size() + "人)");
                 }
             } else {
-                if (targetUserData2.getData().getSex() == 1) {
+                if (targetUserData2.getData().getSex().equals("1")) {
                     tv_shouhu.setText("他的守护");
                 } else {
                     tv_shouhu.setText("她的守护");

@@ -195,15 +195,9 @@ public class Utils {
      * 获得一个完整的图片url地址
      * */
     public static String getCompleteImgUrl(String imgUrl) {
-
         if (imgUrl != null && !(imgUrl.contains("http://") || imgUrl.contains("https://"))) {
-
-            if (imgUrl.contains("admin")) {
-                return AppConfig.MAIN_URL + "/admin/public/upload/" + imgUrl;
-            }
             return AppConfig.MAIN_URL + imgUrl;
         }
-
         return imgUrl;
     }
 

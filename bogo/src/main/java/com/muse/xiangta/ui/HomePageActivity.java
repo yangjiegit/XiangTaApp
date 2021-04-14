@@ -378,8 +378,8 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
                 JsonRequestBase jsonObj = JsonRequestBase.getJsonObj(s, JsonRequestBase.class);
                 if (jsonObj.getCode() == 1) {
                     showToastMsg(getResources().getString(R.string.action_success));
-                    if (targetUserData.getData().getIs_black() == 1) {
-                        targetUserData.getData().setIs_black(0);
+                    if (targetUserData.getData().getIs_black().equals("1")) {
+                        targetUserData.getData().setIs_black("0");
                         IMHelp.deleteBlackUser(targetUserId, new TIMValueCallBack<List<TIMFriendResult>>() {
                             @Override
                             public void onError(int i, String s) {
@@ -392,7 +392,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
                             }
                         });
                     } else {
-                        targetUserData.getData().setIs_black(1);
+                        targetUserData.getData().setIs_black("1");
                         IMHelp.addBlackUser(targetUserId, new TIMValueCallBack<List<TIMFriendResult>>() {
                             @Override
                             public void onError(int i, String s) {
@@ -566,7 +566,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     private void callThisPlayer() {
         showToastMsg(getString(R.string.home_page_loading_call));
 
-        Common.callVideo(this, targetUserId,0);
+        Common.callVideo(this, targetUserId, 0);
     }
 
     //显示聊天页面
@@ -588,7 +588,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         int[] a = {R.id.join_black_list, R.id.report_this_user, R.id.dialog_dis};
         dialog = showButtomDialog(R.layout.dialog_float_meun, a, 20);
         TextView tv = dialog.findViewById(R.id.join_black_list);
-        if (targetUserData.getData().getIs_black() == 1) {
+        if (targetUserData.getData().getIs_black().equals("1")) {
             tv.setText(getResources().getString(R.string.relieve_black));
         }
         dialog.show();
