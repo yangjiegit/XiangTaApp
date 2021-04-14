@@ -585,6 +585,389 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/ll_xingqu"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:background="#ffF5F6FA"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="兴趣爱好"
+                android:textColor="#FFA6A6A6"
+                android:textSize="@dimen/dp_12" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/redact_yundong"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:drawableLeft="@mipmap/img_yundong"
+                android:drawablePadding="@dimen/dp_5"
+                android:text="我喜欢的运动"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/ysh_ic_gd" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/redact_yinyue"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:drawableLeft="@mipmap/img_yinyue"
+                android:drawablePadding="@dimen/dp_5"
+                android:text="我喜欢的音乐"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/ysh_ic_gd" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/redact_meishi"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:drawableLeft="@mipmap/img_meishi"
+                android:drawablePadding="@dimen/dp_5"
+                android:text="我喜欢的美食"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/ysh_ic_gd" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/redact_dianying"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:drawableLeft="@mipmap/img_dianying"
+                android:drawablePadding="@dimen/dp_5"
+                android:text="我喜欢的电影"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/ysh_ic_gd" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/redact_shuji"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:drawableLeft="@mipmap/img_shuji"
+                android:drawablePadding="@dimen/dp_5"
+                android:text="我喜欢的书籍和动漫"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/ysh_ic_gd" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/redact_lvxing"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:drawableLeft="@mipmap/img_lvxing"
+                android:drawablePadding="@dimen/dp_5"
+                android:text="我的旅行足迹"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/ysh_ic_gd" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_liaojie"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:background="#ffF5F6FA"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="深入了解"
+                android:textColor="#FFA6A6A6"
+                android:textSize="@dimen/dp_12" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/redact_juzhu"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="居住情况"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/juzhu_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_40"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/ysh_ic_gd" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/redact_tongju"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="婚前同居"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tongju_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_40"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/ysh_ic_gd" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/redact_yuehui"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="j接受约会"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/yuehui_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_40"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/ysh_ic_gd" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/redact_goufang"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="是否购房"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/goufang_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_40"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/ysh_ic_gd" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/redact_gouche"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="是否购车"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/gouche_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_40"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/ysh_ic_gd" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
             android:id="@+id/ll_jiaoyou"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_30"

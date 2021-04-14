@@ -197,6 +197,9 @@
             android:name=".ui.RankingListActivity"
             android:screenOrientation="portrait" /> <!-- 群聊排行榜 -->
         <activity
+            android:name=".ui.HobbyActivity"
+            android:screenOrientation="portrait" /> <!-- 兴趣爱好 -->
+        <activity
             android:name=".ui.ApplyActivity"
             android:screenOrientation="portrait" /> <!-- 申请入驻页面 -->
         <activity

@@ -2157,6 +2157,18 @@ public class Api {
     }
 
     /**
+     * 获取个人兴趣标签
+     */
+    public static void getUserRemarksData(String type, StringCallback stringCallback) {
+        OkGo.get(AppConfig.API_DOMAIN + "/user_api/user_remarks")
+                .params("uid", SaveData.getInstance().getId())
+                .params("token", SaveData.getInstance().getToken())
+                .params("type", type)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /**
      * 修改形象标签
      *
      * @param lables
@@ -2167,6 +2179,21 @@ public class Api {
                 .params("uid", SaveData.getInstance().getId())
                 .params("token", SaveData.getInstance().getToken())
                 .params("image_label", lables)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /**
+     * 修改形象标签
+     *
+     * @param stringCallback
+     */
+    public static void updRemarksInfo(String remark, String type, StringCallback stringCallback) {
+        OkGo.get(AppConfig.API_DOMAIN + "/user_api/upd_remarks")
+                .params("uid", SaveData.getInstance().getId())
+                .params("token", SaveData.getInstance().getToken())
+                .params("image_label", remark)
+                .params("type", type)
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }

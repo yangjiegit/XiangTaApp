@@ -1,7 +1,6 @@
 package com.muse.xiangta.ui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +16,7 @@ import com.muse.xiangta.LiveConstant;
 import com.muse.xiangta.R;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseActivity;
-import com.muse.xiangta.modle.LablesBean;
+import com.muse.xiangta.modle.UserRemarksBean;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -32,14 +31,15 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * 形象标签
+ * 兴趣爱好
  */
-public class CuckooSelectLabelActivity extends BaseActivity {
+public class HobbyActivity extends BaseActivity {
 
     @BindView(R.id.tab_flow)
     TagFlowLayout tab_flow;
-    private List<LablesBean.DataBean> lableList;
+    private List<UserRemarksBean.DataBean> lableList;
 
+    private int type = 0;
 
     @Override
     protected Context getNowContext() {
@@ -56,7 +56,29 @@ public class CuckooSelectLabelActivity extends BaseActivity {
         StatusBarUtil.setColor(this, getResources().getColor(R.color.white), 0);// 沉浸式状态栏
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-        getTopBar().setTitle(getString(R.string.plase_select_label));
+        type = getIntent().getIntExtra("type", 0);
+
+        switch (type) {
+            case 1:
+                getTopBar().setTitle("选择运动标签");
+                break;
+            case 2:
+                getTopBar().setTitle("选择音乐标签");
+                break;
+            case 3:
+                getTopBar().setTitle("选择美食标签");
+                break;
+            case 4:
+                getTopBar().setTitle("选择电影标签");
+                break;
+            case 5:
+                getTopBar().setTitle("选择书籍和动漫标签");
+                break;
+            case 6:
+                getTopBar().setTitle("选择旅行足迹标签");
+                break;
+        }
+
 
         findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,36 +103,26 @@ public class CuckooSelectLabelActivity extends BaseActivity {
             return;
         }
 
-
         StringBuilder stringBuilder = new StringBuilder();
-//        if (i == pos.length - 1) {
-//            stringBuilder.append(lableList.get(pos[i]).getName());
-//        } else {
-//            stringBuilder.append(lableList.get(pos[i]).getName() + " - ");
-//        }
+
         for (int i = 0; i < pos.length; i++) {
             if (i == pos.length - 1) {
-                stringBuilder.append(lableList.get(pos[i]).getId());
+                stringBuilder.append(lableList.get(pos[i]).getRemark_id());
             } else {
-                stringBuilder.append(lableList.get(pos[i]).getId() + ",");
+                stringBuilder.append(lableList.get(pos[i]).getRemark_id() + ",");
             }
 
         }
 
         Log.e("updateLableInfo", stringBuilder.toString());
-        Api.updateLableInfo(stringBuilder.toString(), new StringCallback() {
+        Api.updRemarksInfo(stringBuilder.toString(), String.valueOf(type), new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
-                Log.e("updateLableInfo", s);
-//                LablesBean bean = new Gson().fromJson(s, LablesBean.class);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     int code = jsonObject.getInt("code");
                     if (code == 1) {
-                        Intent intent = new Intent();
-                        String image_label = jsonObject.getString("image_label");
-                        intent.putExtra(CuckooAuthFormActivity.USER_LABEL, image_label);
-                        setResult(CuckooAuthFormActivity.RESULT_SELF_LABEL, intent);
+                        showToastMsg("设置成功");
                         finish();
                     } else {
                         ToastUtils.showShort(jsonObject.getString("msg"));
@@ -118,15 +130,6 @@ public class CuckooSelectLabelActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-//                if (bean.getCode() == 1) {
-//                    String image_label = bean.getImage_label();
-//                    Intent intent = new Intent();
-//                    intent.putExtra(CuckooAuthFormActivity.USER_LABEL, image_label);
-//                    setResult(CuckooAuthFormActivity.RESULT_SELF_LABEL, intent);
-//                    finish();
-//                } else {
-//                    ToastUtils.showShort(bean.getMsg());
-//                }
             }
 
 
@@ -151,10 +154,10 @@ public class CuckooSelectLabelActivity extends BaseActivity {
     }
 
     private void getLablesData() {
-        Api.getLablesData(new StringCallback() {
+        Api.getUserRemarksData(String.valueOf(type), new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
-                LablesBean bean = new Gson().fromJson(s, LablesBean.class);
+                UserRemarksBean bean = new Gson().fromJson(s, UserRemarksBean.class);
                 if (bean.getCode() == 1) {
                     lableList = bean.getData();
 
@@ -163,7 +166,7 @@ public class CuckooSelectLabelActivity extends BaseActivity {
                         public View getView(FlowLayout parent, int position, Object o) {
                             TextView tv = (TextView) LayoutInflater.from(getNowContext()).inflate(R.layout.view_evaluate_label,
                                     tab_flow, false);
-                            tv.setText(lableList.get(position).getName());
+                            tv.setText(lableList.get(position).getRemark_name());
                             tv.setTextSize(ConvertUtils.dp2px(5));
                             tv.setTextColor(getResources().getColor(R.color.white));
                             tv.setBackgroundResource(R.drawable.bg_evaluate_un_select);

@@ -281,11 +281,44 @@ public class EditActivity extends BaseActivity {
 
     @OnClick({R.id.redact_shengao, R.id.redact_tizhong, R.id.redact_xingzuo,
             R.id.redact_biaoqian, R.id.redact_jieshao, R.id.redact_zhiye, R.id.redact_xueli
-            , R.id.redact_qinggan, R.id.redact_xuanyan, R.id.redact_fengmian})
+            , R.id.redact_qinggan, R.id.redact_xuanyan, R.id.redact_fengmian,
+            R.id.redact_yundong, R.id.redact_yinyue, R.id.redact_meishi, R.id.redact_dianying,
+            R.id.redact_shuji, R.id.redact_lvxing})
     @Override
     public void onClick(View v) {
         super.onClick(v);
+        Intent intent = new Intent(this, HobbyActivity.class);
         switch (v.getId()) {
+            case R.id.redact_yundong:
+                //运动
+                intent.putExtra("type", 1);
+                startActivity(intent);
+                break;
+            case R.id.redact_yinyue:
+                //音乐
+                intent.putExtra("type", 2);
+                startActivity(intent);
+                break;
+            case R.id.redact_meishi:
+                //美食
+                intent.putExtra("type", 3);
+                startActivity(intent);
+                break;
+            case R.id.redact_dianying:
+                //电影
+                intent.putExtra("type", 4);
+                startActivity(intent);
+                break;
+            case R.id.redact_shuji:
+                //书籍
+                intent.putExtra("type", 5);
+                startActivity(intent);
+                break;
+            case R.id.redact_lvxing:
+                //旅行
+                intent.putExtra("type", 6);
+                startActivity(intent);
+                break;
             case R.id.redact_xuanyan:
                 //交友宣言
                 startActivity(new Intent(EditActivity.this, DeclarationActivity.class));
