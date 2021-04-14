@@ -84,6 +84,61 @@ public class UserData implements Serializable {
         private int declaration_length;
         private String video_url;
         private String video_img;
+        private String juzhuqingkuang;
+        private String huanqiantongju;
+        private String jieshouyuehui;
+        private String shifougoufang;
+        private String shifougouche;
+        private String age;
+
+        public String getJuzhuqingkuang() {
+            return juzhuqingkuang;
+        }
+
+        public void setJuzhuqingkuang(String juzhuqingkuang) {
+            this.juzhuqingkuang = juzhuqingkuang;
+        }
+
+        public String getHuanqiantongju() {
+            return huanqiantongju;
+        }
+
+        public void setHuanqiantongju(String huanqiantongju) {
+            this.huanqiantongju = huanqiantongju;
+        }
+
+        public String getJieshouyuehui() {
+            return jieshouyuehui;
+        }
+
+        public void setJieshouyuehui(String jieshouyuehui) {
+            this.jieshouyuehui = jieshouyuehui;
+        }
+
+        public String getShifougoufang() {
+            return shifougoufang;
+        }
+
+        public void setShifougoufang(String shifougoufang) {
+            this.shifougoufang = shifougoufang;
+        }
+
+        public String getShifougouche() {
+            return shifougouche;
+        }
+
+        public void setShifougouche(String shifougouche) {
+            this.shifougouche = shifougouche;
+        }
+
+        public String getAge() {
+            return age;
+        }
+
+        public void setAge(String age) {
+            this.age = age;
+        }
+
         /**
          * id : 487
          * img : http://xta.zzmzrj.com/avatar/1616570441505_mmexport1587029168758.jpg

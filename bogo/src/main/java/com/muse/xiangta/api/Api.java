@@ -378,7 +378,14 @@ public class Api {
             String uid, String token, String user_nickname, String avatar, int sex,
             String occupation, String education, String love_status, String overlapping_sound,
             String coverurl, String video_url,
-            List<String> img, String sign, StringCallback callback) {
+            List<String> img, String sign,
+            String juzhuqingkuang,
+            String huanqiantongju,
+            String jieshouyuehui,
+            String shifougoufang,
+            String shifougouche,
+            String age,
+            StringCallback callback) {
         PostRequest postRequest = OkGo.post(AppConfig.API_DOMAIN + "/user_api/update_user_info_190708");
         postRequest.params("uid", uid);
         postRequest.params("token", token);
@@ -397,6 +404,13 @@ public class Api {
         postRequest.params("introduce", introduce);
         postRequest.params("image_label", image_label);
         postRequest.params("self_label", self_label);
+
+        postRequest.params("juzhuqingkuang", juzhuqingkuang);
+        postRequest.params("huanqiantongju", huanqiantongju);
+        postRequest.params("jieshouyuehui", jieshouyuehui);
+        postRequest.params("shifougoufang", shifougoufang);
+        postRequest.params("shifougouche", shifougouche);
+        postRequest.params("age", age);
 
 
         if (avatar != null) {

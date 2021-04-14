@@ -109,7 +109,20 @@ public class EditActivity extends BaseActivity {
     RelativeLayout rl_yinpin;
     @BindView(R.id.tv_yinpin)
     TextView tv_yinpin;
+    @BindView(R.id.juzhu_tv)
+    TextView juzhu_tv;
+    @BindView(R.id.tongju_tv)
+    TextView tongju_tv;
+    @BindView(R.id.yuehui_tv)
+    TextView yuehui_tv;
+    @BindView(R.id.goufang_tv)
+    TextView goufang_tv;
+    @BindView(R.id.gouche_tv)
+    TextView gouche_tv;
+    @BindView(R.id.age_tv)
+    TextView age_tv;
 
+    private List<String> ageList = new ArrayList<>();
     private File headImgFile;//头像列表
     private ArrayList<File> filesByAll = new ArrayList<>();//要上传的图片
     private ArrayList<UserData.DataBean.ImgBean> imgLoader = new ArrayList<>();//网络图片视图列表
@@ -175,6 +188,10 @@ public class EditActivity extends BaseActivity {
         signRl = findViewById(R.id.redact_sign);
         signRl.setOnClickListener(this);
 
+
+        for (int i = 18; i < 81; i++) {
+            ageList.add(String.valueOf(i));
+        }
 
         itemHeight = groupListView.createItemView(getString(R.string.height));
         itemHeight.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
@@ -270,12 +287,6 @@ public class EditActivity extends BaseActivity {
 
             doSelectImage(1);
 
-//            PictureSelector.create(EditActivity.this)
-//                    .openGallery(selectType)
-//                    .maxSelectNum(6)
-//                    .previewVideo(true)
-//                    .recordVideoSecond(60)
-//                    .forResult(PictureConfig.CHOOSE_REQUEST);
         }
     };
 
@@ -283,12 +294,36 @@ public class EditActivity extends BaseActivity {
             R.id.redact_biaoqian, R.id.redact_jieshao, R.id.redact_zhiye, R.id.redact_xueli
             , R.id.redact_qinggan, R.id.redact_xuanyan, R.id.redact_fengmian,
             R.id.redact_yundong, R.id.redact_yinyue, R.id.redact_meishi, R.id.redact_dianying,
-            R.id.redact_shuji, R.id.redact_lvxing})
+            R.id.redact_shuji, R.id.redact_lvxing, R.id.redact_juzhu, R.id.redact_tongju,
+            R.id.redact_yuehui, R.id.redact_goufang, R.id.redact_gouche, R.id.redact_age})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         Intent intent = new Intent(this, HobbyActivity.class);
         switch (v.getId()) {
+            case R.id.redact_age:
+                onAgePicker();
+                break;
+            case R.id.redact_juzhu:
+                //居住情况
+                onJuzhuPicker();
+                break;
+            case R.id.redact_tongju:
+                //婚前同居
+                onTongjuPicker();
+                break;
+            case R.id.redact_yuehui:
+                //接受约会
+                onYuehuiPicker();
+                break;
+            case R.id.redact_goufang:
+                //是否购房
+                onGoufangPicker();
+                break;
+            case R.id.redact_gouche:
+                //是否购车
+                onGouchePicker();
+                break;
             case R.id.redact_yundong:
                 //运动
                 intent.putExtra("type", 1);
@@ -441,6 +476,13 @@ public class EditActivity extends BaseActivity {
                         if (StringUtils.toInt(userData.getData().getIs_change_name()) != 1) {
                             mRlChangeNameLayout.setEnabled(false);
                         }
+                        age_tv.setText(userData.getData().getAge());
+                        juzhu_tv.setText(userData.getData().getJuzhuqingkuang());
+                        tongju_tv.setText(userData.getData().getHuanqiantongju());
+                        yuehui_tv.setText(userData.getData().getJieshouyuehui());
+                        goufang_tv.setText(userData.getData().getShifougoufang());
+                        gouche_tv.setText(userData.getData().getShifougouche());
+
                         zhiye_tv.setText(userData.getData().getOccupation());
                         xueli_tv.setText(userData.getData().getEducation());
                         qinggan_tv.setText(userData.getData().getLove_status());
@@ -565,6 +607,13 @@ public class EditActivity extends BaseActivity {
                 uploadImageUrl, uploadVideoUrl,
                 pageImgList,
                 sign,
+                juzhu_tv.getText().toString().trim(),
+                tongju_tv.getText().toString().trim(),
+                yuehui_tv.getText().toString().trim(),
+                goufang_tv.getText().toString().trim(),
+                gouche_tv.getText().toString().trim(),
+                age_tv.getText().toString().trim(),
+
                 new JsonCallback() {
                     @Override
                     public Context getContextToJson() {
@@ -686,6 +735,249 @@ public class EditActivity extends BaseActivity {
     private void clickEditUserNickname() {
         Intent intent = new Intent(this, CuckooAuthUserNicknameActivity.class);
         startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    public void onJuzhuPicker() {
+        boolean isChinese = Locale.getDefault().getDisplayLanguage().contains("中文");
+        OptionPicker picker = new OptionPicker(this,
+                isChinese ? new String[]{
+                        "住自己买的房子", "租房自住", "与人合租", "住宿舍", "与父母同住"
+                } : new String[]{
+                        "住自己买的房子", "租房自住", "与人合租", "住宿舍", "与父母同住"
+                });
+
+        picker.setCycleDisable(true);//不禁用循环
+        picker.setTopBackgroundColor(0xFFEEEEEE);
+        picker.setTopHeight(30);
+        picker.setTopLineColor(getResources().getColor(R.color.line_color));
+        picker.setTopLineHeight(1);
+        picker.setTitleText(isChinese ? "请选择" : "Please pick");
+        picker.setTitleTextColor(getResources().getColor(R.color.picker_color));
+        picker.setTitleTextSize(12);
+        picker.setCancelTextColor(getResources().getColor(R.color.picker_color));
+        picker.setCancelTextSize(13);
+        picker.setSubmitTextColor(getResources().getColor(R.color.picker_color));
+        picker.setSubmitTextSize(13);
+        picker.setTextColor(getResources().getColor(R.color.picker_color), 0xFF999999);
+        WheelView.DividerConfig config = new WheelView.DividerConfig();
+        config.setColor(getResources().getColor(R.color.picker_color));//线颜色
+        config.setAlpha(140);//线透明度
+        config.setRatio((float) (1.0 / 8.0));//线比率
+        picker.setDividerConfig(config);
+        picker.setBackgroundColor(0xFFEEEEEE);
+        //picker.setSelectedItem(isChinese ? "处女座" : "Virgo");
+        picker.setSelectedIndex(7);
+        picker.setCanceledOnTouchOutside(true);
+        picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(int index, String item) {
+//                itemConstellation.setDetailText(item);
+                juzhu_tv.setText(item);
+            }
+        });
+        picker.show();
+    }
+
+    public void onAgePicker() {
+        boolean isChinese = Locale.getDefault().getDisplayLanguage().contains("中文");
+        OptionPicker picker = new OptionPicker(this,
+                isChinese ? ageList.toArray(new String[ageList.size()]) :
+                        ageList.toArray(new String[ageList.size()]));
+
+        picker.setCycleDisable(true);//不禁用循环
+        picker.setTopBackgroundColor(0xFFEEEEEE);
+        picker.setTopHeight(30);
+        picker.setTopLineColor(getResources().getColor(R.color.line_color));
+        picker.setTopLineHeight(1);
+        picker.setTitleText(isChinese ? "请选择" : "Please pick");
+        picker.setTitleTextColor(getResources().getColor(R.color.picker_color));
+        picker.setTitleTextSize(12);
+        picker.setCancelTextColor(getResources().getColor(R.color.picker_color));
+        picker.setCancelTextSize(13);
+        picker.setSubmitTextColor(getResources().getColor(R.color.picker_color));
+        picker.setSubmitTextSize(13);
+        picker.setTextColor(getResources().getColor(R.color.picker_color), 0xFF999999);
+        WheelView.DividerConfig config = new WheelView.DividerConfig();
+        config.setColor(getResources().getColor(R.color.picker_color));//线颜色
+        config.setAlpha(140);//线透明度
+        config.setRatio((float) (1.0 / 8.0));//线比率
+        picker.setDividerConfig(config);
+        picker.setBackgroundColor(0xFFEEEEEE);
+        //picker.setSelectedItem(isChinese ? "处女座" : "Virgo");
+        picker.setSelectedIndex(7);
+        picker.setCanceledOnTouchOutside(true);
+        picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(int index, String item) {
+//                itemConstellation.setDetailText(item);
+                age_tv.setText(item);
+            }
+        });
+        picker.show();
+    }
+
+    public void onTongjuPicker() {
+        boolean isChinese = Locale.getDefault().getDisplayLanguage().contains("中文");
+        OptionPicker picker = new OptionPicker(this,
+                isChinese ? new String[]{
+                        "接受", "不接受"
+                } : new String[]{
+                        "接受", "不接受"
+                });
+
+        picker.setCycleDisable(true);//不禁用循环
+        picker.setTopBackgroundColor(0xFFEEEEEE);
+        picker.setTopHeight(30);
+        picker.setTopLineColor(getResources().getColor(R.color.line_color));
+        picker.setTopLineHeight(1);
+        picker.setTitleText(isChinese ? "请选择" : "Please pick");
+        picker.setTitleTextColor(getResources().getColor(R.color.picker_color));
+        picker.setTitleTextSize(12);
+        picker.setCancelTextColor(getResources().getColor(R.color.picker_color));
+        picker.setCancelTextSize(13);
+        picker.setSubmitTextColor(getResources().getColor(R.color.picker_color));
+        picker.setSubmitTextSize(13);
+        picker.setTextColor(getResources().getColor(R.color.picker_color), 0xFF999999);
+        WheelView.DividerConfig config = new WheelView.DividerConfig();
+        config.setColor(getResources().getColor(R.color.picker_color));//线颜色
+        config.setAlpha(140);//线透明度
+        config.setRatio((float) (1.0 / 8.0));//线比率
+        picker.setDividerConfig(config);
+        picker.setBackgroundColor(0xFFEEEEEE);
+        //picker.setSelectedItem(isChinese ? "处女座" : "Virgo");
+        picker.setSelectedIndex(7);
+        picker.setCanceledOnTouchOutside(true);
+        picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(int index, String item) {
+//                itemConstellation.setDetailText(item);
+                tongju_tv.setText(item);
+            }
+        });
+        picker.show();
+    }
+
+    public void onYuehuiPicker() {
+        boolean isChinese = Locale.getDefault().getDisplayLanguage().contains("中文");
+        OptionPicker picker = new OptionPicker(this,
+                isChinese ? new String[]{
+                        "是", "否"
+                } : new String[]{
+                        "是", "否"
+                });
+
+        picker.setCycleDisable(true);//不禁用循环
+        picker.setTopBackgroundColor(0xFFEEEEEE);
+        picker.setTopHeight(30);
+        picker.setTopLineColor(getResources().getColor(R.color.line_color));
+        picker.setTopLineHeight(1);
+        picker.setTitleText(isChinese ? "请选择" : "Please pick");
+        picker.setTitleTextColor(getResources().getColor(R.color.picker_color));
+        picker.setTitleTextSize(12);
+        picker.setCancelTextColor(getResources().getColor(R.color.picker_color));
+        picker.setCancelTextSize(13);
+        picker.setSubmitTextColor(getResources().getColor(R.color.picker_color));
+        picker.setSubmitTextSize(13);
+        picker.setTextColor(getResources().getColor(R.color.picker_color), 0xFF999999);
+        WheelView.DividerConfig config = new WheelView.DividerConfig();
+        config.setColor(getResources().getColor(R.color.picker_color));//线颜色
+        config.setAlpha(140);//线透明度
+        config.setRatio((float) (1.0 / 8.0));//线比率
+        picker.setDividerConfig(config);
+        picker.setBackgroundColor(0xFFEEEEEE);
+        //picker.setSelectedItem(isChinese ? "处女座" : "Virgo");
+        picker.setSelectedIndex(7);
+        picker.setCanceledOnTouchOutside(true);
+        picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(int index, String item) {
+//                itemConstellation.setDetailText(item);
+                yuehui_tv.setText(item);
+            }
+        });
+        picker.show();
+    }
+
+    public void onGoufangPicker() {
+        boolean isChinese = Locale.getDefault().getDisplayLanguage().contains("中文");
+        OptionPicker picker = new OptionPicker(this,
+                isChinese ? new String[]{
+                        "已购房", "暂未购房", "计划中"
+                } : new String[]{
+                        "已购房", "暂未购房", "计划中"
+                });
+
+        picker.setCycleDisable(true);//不禁用循环
+        picker.setTopBackgroundColor(0xFFEEEEEE);
+        picker.setTopHeight(30);
+        picker.setTopLineColor(getResources().getColor(R.color.line_color));
+        picker.setTopLineHeight(1);
+        picker.setTitleText(isChinese ? "请选择" : "Please pick");
+        picker.setTitleTextColor(getResources().getColor(R.color.picker_color));
+        picker.setTitleTextSize(12);
+        picker.setCancelTextColor(getResources().getColor(R.color.picker_color));
+        picker.setCancelTextSize(13);
+        picker.setSubmitTextColor(getResources().getColor(R.color.picker_color));
+        picker.setSubmitTextSize(13);
+        picker.setTextColor(getResources().getColor(R.color.picker_color), 0xFF999999);
+        WheelView.DividerConfig config = new WheelView.DividerConfig();
+        config.setColor(getResources().getColor(R.color.picker_color));//线颜色
+        config.setAlpha(140);//线透明度
+        config.setRatio((float) (1.0 / 8.0));//线比率
+        picker.setDividerConfig(config);
+        picker.setBackgroundColor(0xFFEEEEEE);
+        //picker.setSelectedItem(isChinese ? "处女座" : "Virgo");
+        picker.setSelectedIndex(7);
+        picker.setCanceledOnTouchOutside(true);
+        picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(int index, String item) {
+//                itemConstellation.setDetailText(item);
+                goufang_tv.setText(item);
+            }
+        });
+        picker.show();
+    }
+
+    public void onGouchePicker() {
+        boolean isChinese = Locale.getDefault().getDisplayLanguage().contains("中文");
+        OptionPicker picker = new OptionPicker(this,
+                isChinese ? new String[]{
+                        "已购车（豪华型）", "已购车（中档）", "已购车（经济型）", "暂未购车"
+                } : new String[]{
+                        "已购车（豪华型）", "已购车（中档）", "已购车（经济型）", "暂未购车"
+                });
+
+        picker.setCycleDisable(true);//不禁用循环
+        picker.setTopBackgroundColor(0xFFEEEEEE);
+        picker.setTopHeight(30);
+        picker.setTopLineColor(getResources().getColor(R.color.line_color));
+        picker.setTopLineHeight(1);
+        picker.setTitleText(isChinese ? "请选择" : "Please pick");
+        picker.setTitleTextColor(getResources().getColor(R.color.picker_color));
+        picker.setTitleTextSize(12);
+        picker.setCancelTextColor(getResources().getColor(R.color.picker_color));
+        picker.setCancelTextSize(13);
+        picker.setSubmitTextColor(getResources().getColor(R.color.picker_color));
+        picker.setSubmitTextSize(13);
+        picker.setTextColor(getResources().getColor(R.color.picker_color), 0xFF999999);
+        WheelView.DividerConfig config = new WheelView.DividerConfig();
+        config.setColor(getResources().getColor(R.color.picker_color));//线颜色
+        config.setAlpha(140);//线透明度
+        config.setRatio((float) (1.0 / 8.0));//线比率
+        picker.setDividerConfig(config);
+        picker.setBackgroundColor(0xFFEEEEEE);
+        //picker.setSelectedItem(isChinese ? "处女座" : "Virgo");
+        picker.setSelectedIndex(7);
+        picker.setCanceledOnTouchOutside(true);
+        picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(int index, String item) {
+//                itemConstellation.setDetailText(item);
+                gouche_tv.setText(item);
+            }
+        });
+        picker.show();
     }
 
 

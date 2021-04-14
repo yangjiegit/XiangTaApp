@@ -271,6 +271,46 @@
             android:layout_height="1px" />
 
         <RelativeLayout
+            android:id="@+id/redact_age"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="年龄"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/age_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_40"
+                android:textColor="@color/track_matte"
+                android:textSize="13sp"
+                tools:text="@string/redact_sextext" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/ysh_ic_gd" />
+
+        </RelativeLayout>
+
+        <View
+            style="@style/h_line"
+            android:layout_height="1px" />
+
+        <RelativeLayout
             android:id="@+id/redact_chengshi"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -869,7 +909,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
-                android:text="j接受约会"
+                android:text="接受约会"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
