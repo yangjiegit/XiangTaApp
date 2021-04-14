@@ -20,6 +20,7 @@ import com.muse.xiangta.adapter.CommonRecyclerViewHolder;
 import com.muse.xiangta.base.BaseFragment;
 import com.muse.xiangta.json.jsonmodle.TargetUserData2;
 import com.muse.xiangta.utils.GlideImgManager;
+import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
 
 import java.util.ArrayList;
@@ -166,6 +167,14 @@ public class CuckooHomePageUserInfoFragment2 extends BaseFragment {
 
     private void initRecyclerView2() {
         mList2.clear();
+
+        if (null != targetUserData2.getData()) {
+            for (int i = 0; i < targetUserData2.getData().getImage_label().size(); i++) {
+                if(!StringUtils.isEmpty(targetUserData2.getData().getImage_label().get(i))){
+                    mList2.add(targetUserData2.getData().getImage_label().get(i));
+                }
+            }
+        }
 
         mAdapter2 = new CommonRecyclerViewAdapter<String>(getContext(), mList2) {
             @Override

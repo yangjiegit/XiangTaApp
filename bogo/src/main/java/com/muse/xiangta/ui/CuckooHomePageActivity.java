@@ -758,16 +758,24 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
         }
 
         if (targetUserData.getData().getSex().equals("2")) {
-            if (!targetUserData.getData().getGift_count().equals("**")) {
-                listBarGiftText.setText(String.format(Locale.CHINA, "收到的礼物(%d)", targetUserData.getData().getGift_count()));
+            if (!StringUtils.isEmpty(targetUserData.getData().getGift_count())) {
+                if (!targetUserData.getData().getGift_count().equals("**")) {
+                    listBarGiftText.setText(String.format(Locale.CHINA, "收到的礼物(%d)", Integer.valueOf(targetUserData.getData().getGift_count())));
+                } else {
+                    listBarGiftText.setText("收到的礼物(**)");
+                }
             } else {
-                listBarGiftText.setText("收到的礼物(**)");
+                listBarGiftText.setText("收到的礼物(0)");
             }
         } else {
-            if (!targetUserData.getData().getGift_count().equals("**")) {
-                listBarGiftText.setText(String.format(Locale.CHINA, "送出的礼物(%d)", targetUserData.getData().getGift_count()));
+            if (!StringUtils.isEmpty(targetUserData.getData().getGift_count())) {
+                if (!targetUserData.getData().getGift_count().equals("**")) {
+                    listBarGiftText.setText(String.format(Locale.CHINA, "送出的礼物(%d)", Integer.valueOf(targetUserData.getData().getGift_count())));
+                } else {
+                    listBarGiftText.setText("收到的礼物(**)");
+                }
             } else {
-                listBarGiftText.setText("收到的礼物(**)");
+                listBarGiftText.setText("收到的礼物(0)");
             }
         }
 
