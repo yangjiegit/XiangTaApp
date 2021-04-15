@@ -22,13 +22,13 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.muse.xiangta.R;
 import com.muse.xiangta.inter.MsgDialogClick;
 import com.muse.xiangta.manage.RequestConfig;
 import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.msg.ui.MsgActivity;
 import com.muse.xiangta.ui.HomePageActivity;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
@@ -446,7 +446,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         //点击监听
         //限制不能连续点击
-        if (BaseActivity.Utils.isFastDoubleClick()) {
+        if (Utils1.isFastDoubleClick()) {
             return;
         }
     }
@@ -494,7 +494,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         }
     }
 
-    public static class Utils {
+    public static class Utils1 {
         private static long lastClickTime;
 
         public static boolean isFastDoubleClick() {

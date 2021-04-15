@@ -668,13 +668,13 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         //限制不能连续点击
-        if (Utils.isFastDoubleClick()) {
+        if (Utils1.isFastDoubleClick()) {
             return;
         }
 
     }
 
-    public static class Utils {
+    public static class Utils1 {
         private static long lastClickTime;
 
         public static boolean isFastDoubleClick() {
