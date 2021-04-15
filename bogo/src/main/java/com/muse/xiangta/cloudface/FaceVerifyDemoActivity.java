@@ -420,13 +420,14 @@ public class FaceVerifyDemoActivity extends BaseActivity {
                                 if (!isShowSuccess) {
 //                                    Toast.makeText(FaceVerifyDemoActivity.this, "刷脸成功", Toast.LENGTH_SHORT).show();
 
-                                    Api.authPassed(uId, uToken, new StringCallback() {
-                                        @Override
-                                        public void onSuccess(String s, Call call, Response response) {
-                                            showToastMsg("认证成功");
-                                            finish();
-                                        }
-                                    });
+                                    Api.authPassed(uId, uToken, nameEt.getText().toString().trim(),
+                                            idNoEt.getText().toString().trim(), new StringCallback() {
+                                                @Override
+                                                public void onSuccess(String s, Call call, Response response) {
+                                                    showToastMsg("认证成功");
+                                                    finish();
+                                                }
+                                            });
                                 }
                             } else {
                                 WbFaceError error = result.getError();

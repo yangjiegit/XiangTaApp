@@ -2900,10 +2900,12 @@ public class Api {
     /*
      * 认证通过
      * */
-    public static void authPassed(String uid, String token, StringCallback stringCallback) {
+    public static void authPassed(String uid, String token, String real_name, String id_no, StringCallback stringCallback) {
         OkGo.post(AppConfig.API_DOMAIN + "/user_api/auth_passed")
                 .params("uid", uid)
                 .params("token", token)
+                .params("real_name", real_name)
+                .params("id_no", id_no)
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }
