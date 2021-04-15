@@ -147,6 +147,10 @@ public class SettingActivity extends BaseActivity {
         HelpCenter.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         HelpCenter.setId(R.id.help_center);
 
+        QMUICommonListItemView AristocraticPrivilege = groupListView.createItemView("贵族特权");
+        AristocraticPrivilege.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+        AristocraticPrivilege.setId(R.id.aristocratic_privilege);
+
         QMUICommonListItemView itemSetCustomSayHiMsg = groupListView.createItemView("自定义打招呼话术");
         itemSetCustomSayHiMsg.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemSetCustomSayHiMsg.setId(R.id.set_custom_say_hi_msg);
@@ -164,7 +168,7 @@ public class SettingActivity extends BaseActivity {
                 .addItemView(itemSettingVideoMoney, this)//设置按时付费价格
                 .addItemView(itemSetCustomSayHiMsg, this)//自定义打招呼话术
                 .addItemView(PrivacySettings, this)//隐私设置
-                //贵族特权设置
+                .addItemView(AristocraticPrivilege, this)//贵族特权设置
                 .addItemView(itemTeenagers, this)//青少年模式
                 .addItemView(itemCancellation, this)//注销账号
                 .addItemView(itemLoginOutView, this)//退出登录
@@ -182,6 +186,10 @@ public class SettingActivity extends BaseActivity {
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.aristocratic_privilege:
+                //贵族特权
+                startActivity(new Intent(this, AristocraticPrivilegeActivity.class));
+                break;
             case R.id.privacy_settings:
                 //隐私设置
                 startActivity(new Intent(this, PrivacySettingsActivity.class));

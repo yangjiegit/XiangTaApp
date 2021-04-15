@@ -63,6 +63,8 @@
 
     <item name="help_center" type="id"/>
 
+    <item name="aristocratic_privilege" type="id"/>
+
     <item name="set_custom_say_hi_msg" type="id"/>
 
     <item name="setting_contact" type="id"/>

@@ -185,6 +185,9 @@
             android:name=".ui.PrivacySettingsActivity"
             android:screenOrientation="portrait" /> <!-- 隐私设置 -->
         <activity
+            android:name=".ui.AristocraticPrivilegeActivity"
+            android:screenOrientation="portrait" /> <!-- 贵族特权 -->
+        <activity
             android:name=".ui.VideoDetailsActivity"
             android:screenOrientation="portrait" /> <!-- 测试页 -->
         <activity
