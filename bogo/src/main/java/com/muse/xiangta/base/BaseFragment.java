@@ -44,8 +44,8 @@ import butterknife.ButterKnife;
 /**
  * 基础的Fragment类
  */
-public abstract class BaseFragment extends Fragment implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener
-        ,BaseQuickAdapter.RequestLoadMoreListener {
+public abstract class BaseFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener
+        , BaseQuickAdapter.RequestLoadMoreListener {
     private View view;
 
     //数据
@@ -61,34 +61,40 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     private boolean isLoadMore;
 
     //////////////////////////////////////////抽象方法///////////////////////////////////////////////
+
     /**
      * 返回当前引入的根布局
-     * @return View
+     *
      * @param inflater
      * @param container
+     * @return View
      */
     protected abstract View getBaseView(LayoutInflater inflater, ViewGroup container);
 
     /**
      * 初始化控件
+     *
      * @param view 根布局
      */
     protected abstract void initView(View view);
 
     /**
      * 初始化数据
+     *
      * @param view 根布局
      */
     protected abstract void initDate(View view);
 
     /**
      * 初始化设置
+     *
      * @param view 根布局
      */
     protected abstract void initSet(View view);
 
     /**
      * 初始化显示数据/操作
+     *
      * @param view 根布局
      */
     protected abstract void initDisplayData(View view);
@@ -98,11 +104,11 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = getBaseView(inflater,container);
+        view = getBaseView(inflater, container);
         //初始化静态数据
         initStaticData();
         init(view);
-        Log.i("显示Fragment", this.getClass().getName()+" from "+getActivity().getClass().getName());
+        Log.i("显示Fragment", this.getClass().getName() + " from " + getActivity().getClass().getName());
         return view;
     }
 
@@ -121,7 +127,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         prepareFetchData();
     }
 
-    public void fetchData(){
+    public void fetchData() {
 
     }
 
@@ -140,23 +146,24 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     /**
      * 初始化操作
+     *
      * @param view
      */
-    protected void init(View view){
-        ButterKnife.bind(this,view);
+    protected void init(View view) {
+        ButterKnife.bind(this, view);
         initView(view);
         initDate(view);
         initSet(view);
     }
 
-    protected void requestGetData(boolean isCache){
+    protected void requestGetData(boolean isCache) {
 
     }
 
     /**
      * 初始化静态数据
      */
-    protected void initStaticData(){
+    protected void initStaticData() {
         //用户id和token
         uId = SaveData.getInstance().getId();
         uToken = SaveData.getInstance().getToken();
@@ -169,7 +176,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         initDisplayData(view);
         super.onStart();
 
-        if(isRegEvent()){
+        if (isRegEvent()) {
             EventBus.getDefault().register(this);
         }
     }
@@ -177,163 +184,180 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     @Override
     public void onStop() {
         super.onStop();
-        if(isRegEvent()){
+        if (isRegEvent()) {
             EventBus.getDefault().unregister(this);
         }
     }
 
-    protected boolean isRegEvent(){
+    protected boolean isRegEvent() {
         return false;
     }
 
     ///////////////////////////////////////////工具方法///////////////////////////////////////////////
+
     /**
      * 获取解析的map集合
+     *
      * @param jsonStr
      * @return
      */
-    public static Map<String,Object> getJsonObj(String jsonStr){
-        Map<String,Object> map = new HashMap<>();
-        map = JSON.parseObject(jsonStr,new TypeReference<HashMap<String,Object>>(){});
+    public static Map<String, Object> getJsonObj(String jsonStr) {
+        Map<String, Object> map = new HashMap<>();
+        map = JSON.parseObject(jsonStr, new TypeReference<HashMap<String, Object>>() {
+        });
         return map;
     }
 
     /**
      * 获取解析的map集合
+     *
      * @param jsonStr
      * @return
      */
-    public static JSONObject getJson(String jsonStr){
+    public static JSONObject getJson(String jsonStr) {
         JSONObject jsonObject = JSON.parseObject(jsonStr);
         return jsonObject;
     }
+
     /**
      * 批量更改控件显示状态
+     *
      * @param view
      */
-    protected void showOrConceal(View... view){
-        for (View v:view) {
+    protected void showOrConceal(View... view) {
+        for (View v : view) {
             v.setVisibility(v.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
         }
     }
 
     /**
      * 显示控件
+     *
      * @param view
      * @return
      */
-    protected View showView(View view){
+    protected View showView(View view) {
         view.setVisibility(View.VISIBLE);
         return view;
     }
 
     /**
      * 隐藏控件
+     *
      * @param view
      * @return
      */
-    protected View concealView(View view){
+    protected View concealView(View view) {
         view.setVisibility(View.GONE);
         return view;
     }
 
     /**
      * Activity跳转方法
+     *
      * @param cls
      * @return 返回Activity对象
      */
-    protected Activity goActivity(Context context,Class cls){
-        Intent intent = new Intent(context,cls);
+    protected Activity goActivity(Context context, Class cls) {
+        Intent intent = new Intent(context, cls);
         startActivity(intent);
-        return (Activity)context;
+        return (Activity) context;
     }
 
     /**
      * Activity跳转方法
+     *
      * @param cls 目标位置
      * @param str 字符串参数
      * @return
      */
-    protected Activity goActivity(Context context,Class cls,String str){
-        Intent intent = new Intent(context,cls);
-        intent.putExtra("str",str);
+    protected Activity goActivity(Context context, Class cls, String str) {
+        Intent intent = new Intent(context, cls);
+        intent.putExtra("str", str);
         startActivity(intent);
-        return (Activity)context;
+        return (Activity) context;
     }
 
     /**
      * Activity跳转方法(跳转到聊天页)
+     *
      * @param id 目标用户id
      * @return 返回Activity对象
      */
-    protected Activity goActivityMsg(Context context,String id){
+    protected Activity goActivityMsg(Context context, String id) {
         Intent intent = new Intent(context, MsgActivity.class);
-        intent.putExtra("id",id);
+        intent.putExtra("id", id);
         startActivity(intent);
-        return (Activity)context;
+        return (Activity) context;
     }
 
     /**
      * Activity跳转方法(跳转到用户主页)
+     *
      * @param id 目标用户id
      * @return 返回Activity对象
      */
-    protected Activity goActivityMain(Context context,String id) {
+    protected Activity goActivityMain(Context context, String id) {
         Intent intent = new Intent(context, HomePageActivity.class);
         intent.putExtra("id", id);
         startActivity(intent);
-        return (Activity)context;
-    }
-
-        /**
-         * Activity跳转方法
-         * @param cls 目标位置
-         * @param inter 整型参数
-         * @return
-         */
-    protected Activity goActivity(Context context,Class cls,int inter){
-        Intent intent = new Intent(context,cls);
-        intent.putExtra("inter",inter);
-        startActivity(intent);
-        return (Activity)context;
+        return (Activity) context;
     }
 
     /**
      * Activity跳转方法
+     *
+     * @param cls   目标位置
+     * @param inter 整型参数
+     * @return
+     */
+    protected Activity goActivity(Context context, Class cls, int inter) {
+        Intent intent = new Intent(context, cls);
+        intent.putExtra("inter", inter);
+        startActivity(intent);
+        return (Activity) context;
+    }
+
+    /**
+     * Activity跳转方法
+     *
      * @param cls 目标位置
      * @param obj 序列化之后的对象
      * @return 获取:Object obj = getIntent().getParcelableExtra("obj");
      */
-    protected Activity goActivity(Context context,Class cls,Object obj){
-        Intent intent = new Intent(context,cls);
-        intent.putExtra("obj",(Parcelable)obj);
+    protected Activity goActivity(Context context, Class cls, Object obj) {
+        Intent intent = new Intent(context, cls);
+        intent.putExtra("obj", (Parcelable) obj);
         startActivity(intent);
-        return (Activity)context;
+        return (Activity) context;
     }
 
     /**
      * log
+     *
      * @param msg
      */
-    protected void log(String msg){
-        Log.d("tag",msg);
+    protected void log(String msg) {
+        Log.d("tag", msg);
     }
 
     /**
      * 显示一条toast
+     *
      * @param msg
      */
-    protected  void showToastMsg(Context context,String msg){
-        Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
+    protected void showToastMsg(Context context, String msg) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
     /**
      * 给控件对象批量设置点击监听
+     *
      * @param view
      */
-    protected void setOnclickListener(View... view){
-        if (view != null && view.length != 0){
-            for (View v:view) {
+    protected void setOnclickListener(View... view) {
+        if (view != null && view.length != 0) {
+            for (View v : view) {
                 v.setOnClickListener(this);
             }
         }
@@ -341,11 +365,12 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     /**
      * 根据控件id批量设置点击监听(引用布局)
+     *
      * @param ids
      */
-    protected void setOnclickListener(View view,int... ids){
-        if (ids.length != 0 && view != null){
-            for (int id:ids) {
+    protected void setOnclickListener(View view, int... ids) {
+        if (ids.length != 0 && view != null) {
+            for (int id : ids) {
                 view.findViewById(id).setOnClickListener(this);
             }
         }
@@ -353,39 +378,41 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     /**
      * 显示并延时关闭dialog
+     *
      * @param dialog 要关闭的dialog
      */
-    protected void showThenDialog(final QMUITipDialog dialog){
+    protected void showThenDialog(final QMUITipDialog dialog) {
         dialog.show();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 dialog.dismiss();
             }
-        },1000);
+        }, 1000);
     }
 
     /**
      * 显示一个信息提示框,自行执行了show方法,内置监听自带dismiss方法
-     * @param msg 提示消息
+     *
+     * @param msg            提示消息
      * @param msgDialogClick 点击回调监听
      * @return MessageDialogBuilder实例
      */
-    protected QMUIDialog.MessageDialogBuilder showMsgDialog(Context context,String title, String msg, final MsgDialogClick msgDialogClick){
-        QMUIDialog.MessageDialogBuilder messageDialogBuilder =  new QMUIDialog.MessageDialogBuilder(context);
-        messageDialogBuilder .setTitle(title)
+    protected QMUIDialog.MessageDialogBuilder showMsgDialog(Context context, String title, String msg, final MsgDialogClick msgDialogClick) {
+        QMUIDialog.MessageDialogBuilder messageDialogBuilder = new QMUIDialog.MessageDialogBuilder(context);
+        messageDialogBuilder.setTitle(title)
                 .setMessage(msg)
                 .addAction("取消", new QMUIDialogAction.ActionListener() {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
-                        msgDialogClick.doNo(dialog,index);
+                        msgDialogClick.doNo(dialog, index);
                         dialog.dismiss();
                     }
                 })
                 .addAction("确定", new QMUIDialogAction.ActionListener() {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
-                        msgDialogClick.doYes(dialog,index);
+                        msgDialogClick.doYes(dialog, index);
                         dialog.dismiss();
                     }
                 })
@@ -395,20 +422,21 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     /**
      * 显示一个中间弹出的自定义布局提示框
+     *
      * @return dialog对象
      */
-    protected Dialog showViewDialog(Context context,int layoutRes, int[] ids){
+    protected Dialog showViewDialog(Context context, int layoutRes, int[] ids) {
         Dialog dialog = new Dialog(context, R.style.ActionSheetDialogStyle);
         //填充对话框的布局
         View inflate = LayoutInflater.from(context).inflate(layoutRes, null);
         //调用接口方法
-        setOnclickListener(inflate,ids);
+        setOnclickListener(inflate, ids);
         //将布局设置给Dialog
         dialog.setContentView(inflate);
         //获取当前Activity所在的窗体
         Window dialogWindow = dialog.getWindow();
         //设置Dialog从窗体中间弹出
-        dialogWindow.setGravity( Gravity.CENTER);
+        dialogWindow.setGravity(Gravity.CENTER);
         dialog.show();
         return dialog;
     }
@@ -417,6 +445,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     @Override
     public void onClick(View v) {
         //点击监听
+        //限制不能连续点击
+        if (BaseActivity.Utils.isFastDoubleClick()) {
+            return;
+        }
     }
 
     @Override
@@ -444,9 +476,9 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
 
-    protected void showLoadingDialog(String msg){
+    protected void showLoadingDialog(String msg) {
 
-        if(tipD != null){
+        if (tipD != null) {
             tipD.dismiss();
         }
         tipD = new QMUITipDialog.Builder(getContext())
@@ -456,9 +488,22 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         tipD.show();
     }
 
-    protected void hideLoadingDialog(){
-        if(tipD != null){
+    protected void hideLoadingDialog() {
+        if (tipD != null) {
             tipD.dismiss();
+        }
+    }
+
+    public static class Utils {
+        private static long lastClickTime;
+
+        public static boolean isFastDoubleClick() {
+            long time = System.currentTimeMillis();
+            if (time - lastClickTime < 500) {
+                return true;
+            }
+            lastClickTime = time;
+            return false;
         }
     }
 }

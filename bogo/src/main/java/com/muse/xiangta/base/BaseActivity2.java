@@ -693,7 +693,26 @@ public abstract class BaseActivity2 extends FragmentActivity implements RtcEngin
 
     @Override
     public void onClick(View v) {
+        //限制不能连续点击
+        if (BaseActivity.Utils.isFastDoubleClick()) {
+            return;
+        }
+
     }
+
+    public static class Utils {
+        private static long lastClickTime;
+
+        public static boolean isFastDoubleClick() {
+            long time = System.currentTimeMillis();
+            if (time - lastClickTime < 500) {
+                return true;
+            }
+            lastClickTime = time;
+            return false;
+        }
+    }
+
 
     /**
      * 给控件对象批量设置点击监听

@@ -27,6 +27,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.muse.xiangta.CuckooApplication;
 import com.muse.xiangta.R;
 import com.muse.xiangta.dialog.DoCallVideoWaitDialog;
@@ -48,7 +49,6 @@ import com.muse.xiangta.ui.CuckooVideoCallWaitActivity;
 import com.muse.xiangta.ui.HomePageActivity;
 import com.muse.xiangta.ui.RegisterSelectActivity;
 import com.muse.xiangta.widget.CuckooAllGiftView;
-import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -667,6 +667,24 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
+        //限制不能连续点击
+        if (Utils.isFastDoubleClick()) {
+            return;
+        }
+
+    }
+
+    public static class Utils {
+        private static long lastClickTime;
+
+        public static boolean isFastDoubleClick() {
+            long time = System.currentTimeMillis();
+            if (time - lastClickTime < 500) {
+                return true;
+            }
+            lastClickTime = time;
+            return false;
+        }
     }
 
     /**
