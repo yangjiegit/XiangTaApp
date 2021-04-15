@@ -2844,5 +2844,14 @@ public class Api {
                 .execute(stringCallback);
     }
 
+    /*
+     * 帮助中心
+     * */
+    public static void helpIndex(StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/article_api/help_index")
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
 
 }

@@ -24,7 +24,6 @@ import com.muse.xiangta.base.BaseActivity;
 import com.muse.xiangta.json.JsonRequestBase;
 import com.muse.xiangta.manage.RequestConfig;
 import com.muse.xiangta.manage.SaveData;
-import com.muse.xiangta.modle.ConfigModel;
 import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.ui.common.LoginUtils;
@@ -111,30 +110,25 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void initGroupList() {
-
-        QMUICommonListItemView itemCustomQQView = groupListView.createItemView(getString(R.string.contact_custom_service));
-        itemCustomQQView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-        itemCustomQQView.setId(R.id.custom_qq);
+//        QMUICommonListItemView itemCustomQQView = groupListView.createItemView(getString(R.string.contact_custom_service));
+//        itemCustomQQView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+//        itemCustomQQView.setId(R.id.custom_qq);
 
         //获取当前APP版本号
         String version = String.valueOf(AppUtils.getAppVersionCode());
-
         QMUICommonListItemView itemVersionView = groupListView.createItemView(getString(R.string.version_to_update));
         itemVersionView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemVersionView.setDetailText(version);
 
-
         QMUICommonListItemView itemLoginOutView = groupListView.createItemView(getString(R.string.login_out));
         itemLoginOutView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemLoginOutView.setId(R.id.sett_login_out);
+//        QMUICommonListItemView itemBlackView = groupListView.createItemView(getString(R.string.black_list));
+//        itemBlackView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+//        itemBlackView.setId(R.id.sett_black);
 
 
-        QMUICommonListItemView itemBlackView = groupListView.createItemView(getString(R.string.black_list));
-        itemBlackView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-        itemBlackView.setId(R.id.sett_black);
-
-
-        QMUICommonListItemView itemSettingVideoMoney = groupListView.createItemView(getString(R.string.set_call_mony));
+        QMUICommonListItemView itemSettingVideoMoney = groupListView.createItemView("设置按时付费价格");
         itemSettingVideoMoney.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemSettingVideoMoney.setId(R.id.sett_custom_video_coin);
 
@@ -148,72 +142,50 @@ public class SettingActivity extends BaseActivity {
         itemAboutView.setId(R.id.sett_about_me);
 
 
-        QMUICommonListItemView itemSwitchLanguage = groupListView.createItemView(getString(R.string.switch_language));
-        itemSwitchLanguage.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-        itemSwitchLanguage.setId(R.id.sett_switch_language);
+//        QMUICommonListItemView itemSwitchLanguage = groupListView.createItemView(getString(R.string.switch_language));
+//        itemSwitchLanguage.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+//        itemSwitchLanguage.setId(R.id.sett_switch_language);
 
 
-        QMUICommonListItemView itemUploadFile = groupListView.createItemView("上传日志");
-        itemUploadFile.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-        itemUploadFile.setId(R.id.upload_log);
+//        QMUICommonListItemView itemUploadFile = groupListView.createItemView("上传日志");
+//        itemUploadFile.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+//        itemUploadFile.setId(R.id.upload_log);
 
 
         QMUICommonListItemView itemFeedback = groupListView.createItemView("意见反馈");
         itemFeedback.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemFeedback.setId(R.id.feed_back);
 
+        QMUICommonListItemView HelpCenter = groupListView.createItemView("帮助中心");
+        HelpCenter.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+        HelpCenter.setId(R.id.help_center);
+
         QMUICommonListItemView itemSetCustomSayHiMsg = groupListView.createItemView("自定义打招呼话术");
         itemSetCustomSayHiMsg.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemSetCustomSayHiMsg.setId(R.id.set_custom_say_hi_msg);
 
-        QMUICommonListItemView itemContact = groupListView.createItemView("设置联系方式");
-        itemContact.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-        itemContact.setId(R.id.setting_contact);
+//        QMUICommonListItemView itemContact = groupListView.createItemView("设置联系方式");
+//        itemContact.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+//        itemContact.setId(R.id.setting_contact);
 
         QMUICommonListItemView itemCancellation = groupListView.createItemView("注销账号");
         itemCancellation.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemCancellation.setId(R.id.cancellation);
 
-//        QMUICommonListItemView itemDoNotView = groupListView.createItemView("免打扰");
-//        itemDoNotView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
-//        itemDoNotView.setId(R.id.sett_do_not);
-
-//        if (StringUtils.toInt(SaveData.getInstance().getUserInfo().getIs_open_do_not_disturb()) == 1) {
-//            itemDoNotView.getSwitch().setChecked(true);
-//        }
-//        itemDoNotView.getSwitch().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                clickChangeDoNotDisturbStatus(b);
-//            }
-//        });
-
         QMUIGroupListView.Section section = QMUIGroupListView.newSection(this)
-                .addItemView(itemCustomQQView, this)
-                .addItemView(itemBlackView, this)
-                .addItemView(itemVersionView, this)
-                .addItemView(itemSwitchLanguage, this)
-                .addItemView(itemAboutView, this)
-                //.addItemView(itemUploadFile, this)
-                .addItemView(itemFeedback, this);
-
-//        if (sex == 2 && "1".equals(state)) {
-        section.addItemView(itemTeenagers, this);  //青少年
-        section.addItemView(itemSettingVideoMoney, this);  //收费
-//        }
-
-        if (sex == 2) {
-            section.addItemView(itemContact, this);
-        }
-
-        if (ConfigModel.getInitData().getOpen_auto_see_hi_plugs() == 1
-                && SaveData.getInstance().getUserInfo().getSex() == 2) {
-            section.addItemView(itemSetCustomSayHiMsg, this);
-        }
-
-
-        section.addItemView(itemCancellation, this);
-        section.addItemView(itemLoginOutView, this);
+                .addItemView(itemVersionView, this)//版本更新
+                .addItemView(itemAboutView, this)//关于我们
+                .addItemView(itemFeedback, this)//意见反馈
+                .addItemView(HelpCenter, this) //帮助中心
+                //清除缓存
+                .addItemView(itemSettingVideoMoney, this)//设置按时付费价格
+                .addItemView(itemSetCustomSayHiMsg, this)//自定义打招呼话术
+                //隐私设置
+                //贵族特权设置
+                .addItemView(itemTeenagers, this)//青少年模式
+                .addItemView(itemCancellation, this)//注销账号
+                .addItemView(itemLoginOutView, this)//退出登录
+                ;
         section.addTo(groupListView);
 
     }
@@ -232,6 +204,10 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.custom_qq:
                 openCustomServiceQQ();
+                break;
+            case R.id.help_center:
+                //帮助中心
+                startActivity(new Intent(this, HelpCenterActivity.class));
                 break;
             case R.id.sett_login_out:
                 //退出登录
