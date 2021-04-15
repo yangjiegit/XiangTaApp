@@ -110,9 +110,6 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void initGroupList() {
-//        QMUICommonListItemView itemCustomQQView = groupListView.createItemView(getString(R.string.contact_custom_service));
-//        itemCustomQQView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-//        itemCustomQQView.setId(R.id.custom_qq);
 
         //获取当前APP版本号
         String version = String.valueOf(AppUtils.getAppVersionCode());
@@ -123,10 +120,6 @@ public class SettingActivity extends BaseActivity {
         QMUICommonListItemView itemLoginOutView = groupListView.createItemView(getString(R.string.login_out));
         itemLoginOutView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemLoginOutView.setId(R.id.sett_login_out);
-//        QMUICommonListItemView itemBlackView = groupListView.createItemView(getString(R.string.black_list));
-//        itemBlackView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-//        itemBlackView.setId(R.id.sett_black);
-
 
         QMUICommonListItemView itemSettingVideoMoney = groupListView.createItemView("设置按时付费价格");
         itemSettingVideoMoney.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
@@ -142,19 +135,13 @@ public class SettingActivity extends BaseActivity {
         itemAboutView.setId(R.id.sett_about_me);
 
 
-//        QMUICommonListItemView itemSwitchLanguage = groupListView.createItemView(getString(R.string.switch_language));
-//        itemSwitchLanguage.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-//        itemSwitchLanguage.setId(R.id.sett_switch_language);
-
-
-//        QMUICommonListItemView itemUploadFile = groupListView.createItemView("上传日志");
-//        itemUploadFile.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-//        itemUploadFile.setId(R.id.upload_log);
-
-
         QMUICommonListItemView itemFeedback = groupListView.createItemView("意见反馈");
         itemFeedback.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemFeedback.setId(R.id.feed_back);
+
+        QMUICommonListItemView PrivacySettings = groupListView.createItemView("隐私设置");
+        PrivacySettings.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+        PrivacySettings.setId(R.id.privacy_settings);
 
         QMUICommonListItemView HelpCenter = groupListView.createItemView("帮助中心");
         HelpCenter.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
@@ -163,10 +150,6 @@ public class SettingActivity extends BaseActivity {
         QMUICommonListItemView itemSetCustomSayHiMsg = groupListView.createItemView("自定义打招呼话术");
         itemSetCustomSayHiMsg.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemSetCustomSayHiMsg.setId(R.id.set_custom_say_hi_msg);
-
-//        QMUICommonListItemView itemContact = groupListView.createItemView("设置联系方式");
-//        itemContact.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-//        itemContact.setId(R.id.setting_contact);
 
         QMUICommonListItemView itemCancellation = groupListView.createItemView("注销账号");
         itemCancellation.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
@@ -180,7 +163,7 @@ public class SettingActivity extends BaseActivity {
                 //清除缓存
                 .addItemView(itemSettingVideoMoney, this)//设置按时付费价格
                 .addItemView(itemSetCustomSayHiMsg, this)//自定义打招呼话术
-                //隐私设置
+                .addItemView(PrivacySettings, this)//隐私设置
                 //贵族特权设置
                 .addItemView(itemTeenagers, this)//青少年模式
                 .addItemView(itemCancellation, this)//注销账号
@@ -199,6 +182,10 @@ public class SettingActivity extends BaseActivity {
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.privacy_settings:
+                //隐私设置
+                startActivity(new Intent(this, PrivacySettingsActivity.class));
+                break;
             case R.id.cancellation:
                 dialog();
                 break;

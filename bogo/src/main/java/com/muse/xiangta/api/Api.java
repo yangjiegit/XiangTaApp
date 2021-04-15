@@ -2692,6 +2692,20 @@ public class Api {
     }
 
     /*
+     *隐私设置
+     * */
+    public static void setDiySetting2(String uid, String token, String type, String status, String group, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user/set_diy_setting")
+                .params("uid", uid)
+                .params("token", token)
+                .params("type", type)
+                .params("status", status)
+                .params("group", group)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
      * 申请入驻页面
      * */
     public static void applyInfo(String uid, String token, StringCallback stringCallback) {

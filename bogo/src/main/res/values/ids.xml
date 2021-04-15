@@ -59,6 +59,8 @@
 
     <item name="feed_back" type="id"/>
 
+    <item name="privacy_settings" type="id"/>
+
     <item name="help_center" type="id"/>
 
     <item name="set_custom_say_hi_msg" type="id"/>
