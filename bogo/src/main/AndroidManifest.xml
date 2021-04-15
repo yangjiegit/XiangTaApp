@@ -20,7 +20,7 @@
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- 网络相关 -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 读写文件 -->
+    <!--    <uses-permission android:name="android.permission.INTERNET" /> &lt;!&ndash; 读写文件 &ndash;&gt;-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 多媒体 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 如果需要实时音视频通话模块，下面的权限也是必须的。否则，可以不加 -->
@@ -46,13 +46,14 @@
 
     <application
         android:name=".CuckooApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:persistent="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/qmuiThemeNoBar">
+        android:theme="@style/qmuiThemeNoBar"
+        tools:replace="android:allowBackup">
         <activity android:name=".ui.XWebViewActivity"></activity>
         <!-- TODO 看情况再说 -->
         <activity android:name=".ui.PairingActivity" />
@@ -184,6 +185,9 @@
         <activity
             android:name=".ui.PrivacySettingsActivity"
             android:screenOrientation="portrait" /> <!-- 隐私设置 -->
+        <activity
+            android:name=".cloudface.FaceVerifyDemoActivity"
+            android:screenOrientation="portrait" /> <!-- 人脸识别 -->
         <activity
             android:name=".ui.AristocraticPrivilegeActivity"
             android:screenOrientation="portrait" /> <!-- 贵族特权 -->
@@ -534,6 +538,7 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="@string/amap_key" />
+
     </application>
 
 </manifest>

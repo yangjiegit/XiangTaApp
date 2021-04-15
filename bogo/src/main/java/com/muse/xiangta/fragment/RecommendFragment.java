@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -27,6 +26,7 @@ import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.recycler.RecyclerRecommendAdapter;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseListFragment2;
+import com.muse.xiangta.cloudface.FaceVerifyDemoActivity;
 import com.muse.xiangta.inter.JsonCallback;
 import com.muse.xiangta.json.JsonRequestOneKeyCall;
 import com.muse.xiangta.json.JsonRequestsImage;
@@ -279,9 +279,10 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
                     return;
                 }
                 if (userCenterData.getData().getIs_auth() == 0) {
-                    Intent intent = new Intent(getContext(), CuckooAuthFormActivity.class);
-                    intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getData().getUser_auth_status()));
-                    startActivity(intent);
+//                    Intent intent = new Intent(getContext(), CuckooAuthFormActivity.class);
+//                    intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getData().getUser_auth_status()));
+//                    startActivity(intent);
+                    startActivityForResult(new Intent(getContext(), FaceVerifyDemoActivity.class), 80);
                 } else {
                     if (userCenterData.getData().getHas_declaration() == 0) {
                         //提示录制宣言
@@ -346,12 +347,23 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
             return;
         }
         if (userCenterData.getData().getIs_auth() == 0) {
-            Intent intent = new Intent(getContext(), CuckooAuthFormActivity.class);
-            intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getData().getUser_auth_status()));
-            startActivity(intent);
+//            Intent intent = new Intent(getContext(), CuckooAuthFormActivity.class);
+//            intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getData().getUser_auth_status()));
+//            startActivity(intent);
+            startActivityForResult(new Intent(getContext(), FaceVerifyDemoActivity.class), 80);
         } else {//认证成功
             startActivity(new Intent(getContext(), MatchingActivity.class)
                     .putExtra("type", "1"));
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 80:
+                requestUserData();
+                break;
         }
     }
 

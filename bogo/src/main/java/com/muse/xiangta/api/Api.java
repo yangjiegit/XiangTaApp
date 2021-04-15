@@ -2867,5 +2867,46 @@ public class Api {
                 .execute(stringCallback);
     }
 
+    /*
+     * 获取签名
+     * */
+    public static void getOauthInfo(String uid, String token, String nonce, String user_id, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/tencent_api/get_oauth_info")
+                .params("uid", uid)
+                .params("token", token)
+                .params("nonce", nonce)
+                .params("user_id", user_id)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 获取face_id
+     * */
+    public static void getFaceId(String uid, String token, String user_id, String order_no,
+                                 String name, String id_no, String sign, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/tencent_api/get_face_id")
+                .params("uid", uid)
+                .params("token", token)
+                .params("user_id", user_id)
+                .params("order_no", order_no)
+                .params("name", name)
+                .params("id_no", id_no)
+                .params("sign", sign)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 认证通过
+     * */
+    public static void authPassed(String uid, String token, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user_api/auth_passed")
+                .params("uid", uid)
+                .params("token", token)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
 
 }

@@ -17,6 +17,10 @@
         <item name="android:windowIsTranslucent">true</item>  <!-- 透明背景 -->
     </style>
 
+    <style name="WeEditText">
+        <item name="colorControlNormal">#303133</item>
+    </style>
+
     <!-- QMUI-bar -->
     <style name="qmuiThemeNoBar" parent="QMUI.Compat.NoActionBar">
         <item name="colorPrimary">@color/colorAccent</item>

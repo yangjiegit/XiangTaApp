@@ -19,6 +19,7 @@ import com.muse.xiangta.R;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.api.ApiUtils;
 import com.muse.xiangta.base.BaseFragment;
+import com.muse.xiangta.cloudface.FaceVerifyDemoActivity;
 import com.muse.xiangta.helper.SelectResHelper;
 import com.muse.xiangta.json.JsonRequestUserCenterInfo;
 import com.muse.xiangta.json.jsonmodle.UserCenterData;
@@ -248,9 +249,10 @@ public class UserPage2Fragment extends BaseFragment {
             return;
         }
 
-        Intent intent = new Intent(getContext(), CuckooAuthFormActivity.class);
-        intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getData().getUser_auth_status()));
-        startActivity(intent);
+//        Intent intent = new Intent(getContext(), CuckooAuthFormActivity.class);
+//        intent.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(userCenterData.getData().getUser_auth_status()));
+//        startActivity(intent);
+        startActivityForResult(new Intent(getContext(), FaceVerifyDemoActivity.class), 80);
     }
 
     @Override
