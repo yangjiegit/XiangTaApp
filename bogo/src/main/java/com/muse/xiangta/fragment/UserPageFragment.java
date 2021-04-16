@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.lzy.okgo.callback.StringCallback;
+import com.muse.chat.ui.ChatActivity;
 import com.muse.xiangta.ApiConstantDefine;
 import com.muse.xiangta.R;
 import com.muse.xiangta.api.Api;
@@ -26,6 +28,7 @@ import com.muse.xiangta.cloudface.FaceVerifyDemoActivity;
 import com.muse.xiangta.helper.SelectResHelper;
 import com.muse.xiangta.json.JsonGetIsAuth;
 import com.muse.xiangta.json.JsonRequestBase;
+import com.muse.xiangta.json.JsonRequestDoPrivateChat;
 import com.muse.xiangta.json.jsonmodle.UserCenterData;
 import com.muse.xiangta.manage.RequestConfig;
 import com.muse.xiangta.manage.SaveData;
@@ -61,6 +64,7 @@ import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.UIHelp;
 import com.muse.xiangta.utils.Utils;
 import com.muse.xiangta.widget.BGLevelTextView;
+import com.tencent.imsdk.TIMConversationType;
 
 import java.util.Locale;
 
@@ -208,12 +212,45 @@ public class UserPageFragment extends BaseFragment {
 
     @OnClick({R.id.ll_wallet, R.id.iv_user_center_sign, R.id.ll_beauty_setting, R.id.ll_family
             , R.id.tv_reward, R.id.ll_guard, R.id.ll_grade, R.id.tv_profit, R.id.ll_noble,
-            R.id.ll_car, R.id.ll_haoyou, R.id.ll_miyou, R.id.tv_chongzhi, R.id.ll_dynamic, R.id.iv_yaoqing})
+            R.id.ll_car, R.id.ll_haoyou, R.id.ll_miyou, R.id.tv_chongzhi, R.id.ll_dynamic, R.id.iv_yaoqing,
+            R.id.iv_kefu})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_kefu:
+                Api.doPrivateChat(uId, uToken, RequestConfig.getConfigObj().getCustom_service_user().getUser_id(), new StringCallback() {
+
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        Log.e("doPrivateChat", s);
+//                        tipD.dismiss();
+                        JsonRequestDoPrivateChat jsonObj =
+                                (JsonRequestDoPrivateChat) JsonRequestBase.getJsonObj(s, JsonRequestDoPrivateChat.class);
+                        if (jsonObj.getCode() == 1) {
+
+                            if (jsonObj.getUser_info() == null) {
+                                return;
+                            }
+                            ChatActivity.navToChat(getContext(), jsonObj.getUser_info().getId(), jsonObj.getUser_info().getUser_nickname()
+                                    , jsonObj.getUser_info().getAvatar(), jsonObj.getIs_pay(), jsonObj.getPay_coin()
+                                    , jsonObj.getSex(), jsonObj.getIs_auth(), jsonObj.getFollow()
+                                    , TIMConversationType.C2C);
+                        } else {
+                            ToastUtils.showLong(jsonObj.getMsg());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        tipD.dismiss();
+                        Log.e("doPrivateChat", e.toString());
+                    }
+                });
+                break;
             case R.id.iv_yaoqing:
-                showToastMsg(getContext(),"该功能暂未开放");
+//                showToastMsg(getContext(), "该功能暂未开放");
+                InviteActivityNew.start(getContext());
                 break;
             case R.id.ll_dynamic://我的动态
                 startActivity(new Intent(getContext(), DynamicActivity.class));
@@ -429,7 +466,7 @@ public class UserPageFragment extends BaseFragment {
         if (!StringUtils.isEmpty(userCenterData.getData().getNoble())) {
             iv_huizhang.setVisibility(View.VISIBLE);
             GlideImgManager.loadImage(getContext(), userCenterData.getData().getNoble(), iv_huizhang);
-        }else{
+        } else {
             iv_huizhang.setVisibility(View.GONE);
         }
 

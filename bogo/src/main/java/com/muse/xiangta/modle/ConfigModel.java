@@ -425,6 +425,7 @@ public class ConfigModel {
         RequestConfig.getConfigObj().setSplashImage(configObj.getSplash_img_url());
         RequestConfig.getConfigObj().setCurrency(configObj.getCurrency_name());
         RequestConfig.getConfigObj().setCustom_service_phone(configObj.getCustom_service_phone());
+        RequestConfig.getConfigObj().setCustom_service_user(configObj.getCustom_service_user());
 
         JsonData jsonData = new JsonData();
         jsonData.setKey(SAVE_CONFIG_INFO_KEY);

@@ -23,6 +23,15 @@ public class RequestConfig {
     private String systemMessage;//系统公告消息
     private String splashUrl;
     private String splashImage;
+    private ConfigModel.CustomServiceUser custom_service_user;
+
+    public ConfigModel.CustomServiceUser getCustom_service_user() {
+        return custom_service_user;
+    }
+
+    public void setCustom_service_user(ConfigModel.CustomServiceUser custom_service_user) {
+        this.custom_service_user = custom_service_user;
+    }
 
     /**
      * 直播心跳间隔
@@ -233,6 +242,7 @@ public class RequestConfig {
         RequestConfig.configObj = configObj;
     }
 
+
     public long getRequestIntervalIsOnLine() {
         return requestIntervalIsOnLine;
     }
@@ -299,4 +309,5 @@ public class RequestConfig {
     public int getHas_dirty_words() {
         return 1;
     }
+
 }

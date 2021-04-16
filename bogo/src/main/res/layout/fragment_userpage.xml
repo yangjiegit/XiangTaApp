@@ -157,6 +157,12 @@
                                 android:src="@mipmap/user_center_sign_bac"
                                 android:visibility="gone" />
 
+                            <ImageView
+                                android:id="@+id/iv_kefu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/my_kefu" />
+
                         </RelativeLayout>
 
 
@@ -340,10 +346,10 @@
 
 
                     <RelativeLayout
-                        android:visibility="gone"
                         android:id="@+id/ll_phone"
                         style="@style/persion_list_ll_style"
-                        android:layout_marginLeft="@dimen/dp_10">
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:visibility="gone">
 
                         <ImageView
                             android:id="@+id/iv_phone"

@@ -50,7 +50,7 @@ public class InviteActivityNew extends BaseActivity implements BaseQuickAdapter.
 
     @Override
     protected void initView() {
-        Utils.initTransTitleBar(title, "分成计划", this);
+        Utils.initTransTitleBar(title, "邀请有奖", this);
         mTvInviteHelp = findViewById(R.id.tv_invite_help);
         mTvInviteHelp.setText(ConfigModel.getInitData().getInvitation_withdrawal_rules());
     }
