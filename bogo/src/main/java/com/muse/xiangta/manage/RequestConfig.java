@@ -249,6 +249,16 @@ public class RequestConfig {
         this.currency = currency;
     }
 
+    private String custom_service_phone;
+
+    public String getCustom_service_phone() {
+        return custom_service_phone;
+    }
+
+    public void setCustom_service_phone(String custom_service_phone) {
+        this.custom_service_phone = custom_service_phone;
+    }
+
     public String getAppCertificate() {
         return app_certificate;
     }

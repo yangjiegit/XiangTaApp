@@ -219,8 +219,9 @@ public class SettingActivity extends BaseActivity {
                         .show();
                 break;
             case R.id.sett_about_me:
-                WebViewActivity.openH5Activity(this, false, getString(R.string.about_me), RequestConfig.getConfigObj().getAboutUrl());
+//                WebViewActivity.openH5Activity(this, false, getString(R.string.about_me), RequestConfig.getConfigObj().getAboutUrl());
                 //WealthDetailedActivity.start(this,WealthDetailedActivity.TYPE_ABOUT_US);
+                startActivity(new Intent(this, AboutUsActivity.class));
                 //关于我们
                 break;
             case R.id.all_backbtn:

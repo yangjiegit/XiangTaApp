@@ -207,6 +207,9 @@
             android:name=".ui.DynamicNotificationActivity"
             android:screenOrientation="portrait" /> <!-- 动态通知 -->
         <activity
+            android:name=".ui.AboutUsActivity"
+            android:screenOrientation="portrait" /> <!-- 关于我们 -->
+        <activity
             android:name=".ui.RankingListActivity"
             android:screenOrientation="portrait" /> <!-- 群聊排行榜 -->
         <activity

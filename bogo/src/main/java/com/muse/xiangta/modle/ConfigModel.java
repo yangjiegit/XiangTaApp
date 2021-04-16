@@ -27,6 +27,17 @@ public class ConfigModel {
      */
     private String group_id;
 
+
+    private CustomServiceUser custom_service_user;
+
+    public CustomServiceUser getCustom_service_user() {
+        return custom_service_user;
+    }
+
+    public void setCustom_service_user(CustomServiceUser custom_service_user) {
+        this.custom_service_user = custom_service_user;
+    }
+
     /*
      * 声网 appid
      * */
@@ -92,18 +103,18 @@ public class ConfigModel {
     private String currency_name;
 
     /*
-    * 是否开启私信付费
-    * */
+     * 是否开启私信付费
+     * */
     private String is_open_chat_pay;
 
     /*
-    * 私信价格
-    * */
+     * 私信价格
+     * */
     private String private_chat_money;
 
     /*
-    * 视频警告信息
-    * */
+     * 视频警告信息
+     * */
     private String video_call_msg_alert;
 
     private String open_invite;
@@ -122,18 +133,19 @@ public class ConfigModel {
     private int open_sandbox;
 
     /*
-    * 分享话术标题
-    * */
+     * 分享话术标题
+     * */
     private String share_title;
 
     /*
-    * 分享话术内容
-    * */
+     * 分享话术内容
+     * */
     private String share_content;
 
+
     /*
-    * 视频上传时长限制
-    * */
+     * 视频上传时长限制
+     * */
     private String upload_short_video_time_limit;
 
     private String upload_certification;
@@ -141,18 +153,18 @@ public class ConfigModel {
     private int check_huang_rate;
 
     /*
-    * 认证类型，固定信息认证
-    * */
+     * 认证类型，固定信息认证
+     * */
     private int auth_type;
 
     /*
-    * 美颜KEY
-    * */
+     * 美颜KEY
+     * */
     private String bogokj_beauty_sdk_key;
 
     /*
-    * 是否开启自动打招呼插件
-    * */
+     * 是否开启自动打招呼插件
+     * */
     private int open_auto_see_hi_plugs = -1;
 
     //是否开启签到
@@ -163,8 +175,8 @@ public class ConfigModel {
     private String earnings_withdrawal_rules;
 
     /*
-    * 上传类型
-    * */
+     * 上传类型
+     * */
     private String upload_type;
 
     public String getUpload_type() {
@@ -412,7 +424,7 @@ public class ConfigModel {
         RequestConfig.getConfigObj().setSplashUrl(configObj.getSplash_url());
         RequestConfig.getConfigObj().setSplashImage(configObj.getSplash_img_url());
         RequestConfig.getConfigObj().setCurrency(configObj.getCurrency_name());
-
+        RequestConfig.getConfigObj().setCustom_service_phone(configObj.getCustom_service_phone());
 
         JsonData jsonData = new JsonData();
         jsonData.setKey(SAVE_CONFIG_INFO_KEY);
@@ -649,5 +661,36 @@ public class ConfigModel {
         this.group_id = group_id;
     }
 
+    private String custom_service_phone;
+
+
+    public String getCustom_service_phone() {
+        return custom_service_phone;
+    }
+
+    public void setCustom_service_phone(String custom_service_phone) {
+        this.custom_service_phone = custom_service_phone;
+    }
+
+    public class CustomServiceUser {
+        private String user_id;
+        private String user_nickname;
+
+        public String getUser_id() {
+            return user_id;
+        }
+
+        public void setUser_id(String user_id) {
+            this.user_id = user_id;
+        }
+
+        public String getUser_nickname() {
+            return user_nickname;
+        }
+
+        public void setUser_nickname(String user_nickname) {
+            this.user_nickname = user_nickname;
+        }
+    }
 
 }

@@ -12,10 +12,10 @@ android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
         applicationId "com.muse.xiangta"
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode rootProject.ext.android.versionCode
-        versionName rootProject.ext.android.versionName
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 24
+        versionName "1.1.8"
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
