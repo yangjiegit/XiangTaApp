@@ -42,6 +42,7 @@ import com.muse.xiangta.ui.CuckooAuthFormActivity;
 import com.muse.xiangta.ui.DeclarationActivity;
 import com.muse.xiangta.ui.GroupChatActivity;
 import com.muse.xiangta.ui.MatchingActivity;
+import com.muse.xiangta.ui.RewardActivity;
 import com.muse.xiangta.ui.VideoDatingActivity;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.utils.StringUtils;
@@ -50,6 +51,7 @@ import com.muse.xiangta.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -187,6 +189,8 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
         view_fujin = rollView.findViewById(R.id.view_fujin);
         tv_title1 = rollView.findViewById(R.id.tv_title1);
         tv_time1 = rollView.findViewById(R.id.tv_time1);
+        ImageView iv_hongbao=rollView.findViewById(R.id.iv_hongbao);
+        iv_hongbao.setOnClickListener(this);
 
         mTextList.clear();
         mTextList.add(tv_tuijian);
@@ -248,6 +252,10 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_hongbao:
+                //任务奖励
+                startActivity(new Intent(getContext(), RewardActivity.class));
+                break;
             case R.id.iv_xiuqiu://抛绣球
                 dialogXiuQiu();
                 break;
