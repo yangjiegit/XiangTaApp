@@ -30,6 +30,7 @@ import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.FragAdapter;
 import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseActivity;
+import com.muse.xiangta.cloudface.FaceVerifyDemoActivity;
 import com.muse.xiangta.fragment.CuckooHomePageUserInfoFragment2;
 import com.muse.xiangta.fragment.DynamicMyFragment2;
 import com.muse.xiangta.helper.SelectResHelper;
@@ -266,9 +267,11 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
         switch (v.getId()) {
             case R.id.ll_renzheng:
                 if (uId.equals(targetUserId)) {
-                    Intent intent1 = new Intent(CuckooHomePageActivity.this, CuckooAuthFormActivity.class);
-                    intent1.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(targetUserData.getData().getIs_auth()));
-                    startActivity(intent1);
+//                    Intent intent1 = new Intent(CuckooHomePageActivity.this, CuckooAuthFormActivity.class);
+//                    intent1.putExtra(CuckooAuthFormActivity.STATUS, StringUtils.toInt(targetUserData.getData().getIs_auth()));
+//                    startActivity(intent1);
+                    startActivityForResult(new Intent(CuckooHomePageActivity.this,
+                            FaceVerifyDemoActivity.class), 20);
                 }
                 break;
             case R.id.tv_guanzhu:
