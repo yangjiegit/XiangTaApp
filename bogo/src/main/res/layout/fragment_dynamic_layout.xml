@@ -51,11 +51,6 @@
         android:layout_height="50dp"
         android:background="@color/white">
 
-        <com.qmuiteam.qmui.widget.QMUITabSegment
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true" />
 
         <ImageView
             android:id="@+id/iv_dynamic"
@@ -64,8 +59,16 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/ic_upload_media"
-            android:visibility="gone" />
+            android:src="@mipmap/img_dt_tz"
+            android:visibility="visible" />
+
+        <com.qmuiteam.qmui.widget.QMUITabSegment
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_toLeftOf="@+id/iv_dynamic" />
 
     </RelativeLayout>
 

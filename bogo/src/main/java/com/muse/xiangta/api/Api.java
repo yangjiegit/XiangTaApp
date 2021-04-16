@@ -2910,5 +2910,17 @@ public class Api {
                 .execute(stringCallback);
     }
 
+    /*
+     * 动态通知
+     * */
+    public static void NoticeIndex(String uid, String token, String page,  StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/bzone_api/notice_index")
+                .params("uid", uid)
+                .params("token", token)
+                .params("page", page)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
 
 }

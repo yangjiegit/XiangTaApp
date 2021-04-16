@@ -204,6 +204,9 @@
             android:name=".ui.TeenagersActivity"
             android:screenOrientation="portrait" /> <!-- 青少年模式 -->
         <activity
+            android:name=".ui.DynamicNotificationActivity"
+            android:screenOrientation="portrait" /> <!-- 动态通知 -->
+        <activity
             android:name=".ui.RankingListActivity"
             android:screenOrientation="portrait" /> <!-- 群聊排行榜 -->
         <activity

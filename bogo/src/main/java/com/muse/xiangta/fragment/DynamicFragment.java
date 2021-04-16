@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.lzy.okgo.callback.StringCallback;
 import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.FragAdapter;
 import com.muse.xiangta.api.Api;
@@ -16,8 +17,8 @@ import com.muse.xiangta.base.BaseFragment;
 import com.muse.xiangta.json.JsonGetIsAuth;
 import com.muse.xiangta.json.JsonRequestBase;
 import com.muse.xiangta.manage.SaveData;
+import com.muse.xiangta.ui.DynamicNotificationActivity;
 import com.muse.xiangta.ui.PushDynamicActivity;
-import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 import com.qmuiteam.qmui.widget.QMUIViewPager;
 
@@ -38,7 +39,7 @@ public class DynamicFragment extends BaseFragment {
     private List<String> titleList;
     private FragAdapter mDynamicFragAdapter;
     private ImageView iv_fabu;
-//    private ImageView dynamicIv;
+    private ImageView dynamicIv;
 
     @Override
     protected View getBaseView(LayoutInflater inflater, ViewGroup container) {
@@ -53,14 +54,15 @@ public class DynamicFragment extends BaseFragment {
         rollViewViewpage = view.findViewById(R.id.roll_view_viewpage);
 
         iv_fabu.setOnClickListener(this);
-//        dynamicIv = view.findViewById(R.id.iv_dynamic);
-        //发动态
-//        dynamicIv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
+        dynamicIv = view.findViewById(R.id.iv_dynamic);
+//      动态通知
+        dynamicIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 //                clickPushDynamic();
-//            }
-//        });
+                startActivity(new Intent(getContext(), DynamicNotificationActivity.class));
+            }
+        });
     }
 
     @Override
