@@ -50,12 +50,14 @@ import com.muse.xiangta.dialog.CuckooRewardCoinDialog;
 import com.muse.xiangta.dialog.GiftBottomDialog;
 import com.muse.xiangta.event.EventChatClickPrivateImgMessage;
 import com.muse.xiangta.inter.JsonCallback;
+import com.muse.xiangta.json.FamilyBean;
 import com.muse.xiangta.json.JsonRequest;
 import com.muse.xiangta.json.JsonRequestDoPrivateSendGif;
 import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
 import com.muse.xiangta.modle.custommsg.InputListenerMsgText;
+import com.muse.xiangta.ui.FamilyDetailsActivity;
 import com.muse.xiangta.ui.MemberGroupListActivity;
 import com.muse.xiangta.ui.PrivatePhotoActivity;
 import com.muse.xiangta.ui.RankingListActivity;
@@ -125,6 +127,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     //    private String avatar;
     private RecorderUtil recorder = new RecorderUtil();
     private TIMConversationType type;
+    private FamilyBean.DataBean dataBean;
     private String titleStr;
 
     //    private int isPay;
@@ -152,6 +155,16 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         context.startActivity(intent);
     }
 
+    public static void navToChat(Context context, String identify, String userName, TIMConversationType type
+            , FamilyBean.DataBean dataBean) {
+        Intent intent = new Intent(context, ChatActivity2.class);
+        intent.putExtra("identify", identify);
+        intent.putExtra("user_nickname", userName);
+        intent.putExtra("type", type);
+        intent.putExtra("dataBean", dataBean);
+        context.startActivity(intent);
+    }
+
 
     @Override
     protected Context getNowContext() {
@@ -175,7 +188,9 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         if (!StringUtils.isEmpty(getIntent().getStringExtra("family_id"))) {
             family_id = getIntent().getStringExtra("family_id");
         }
-
+        if (null != getIntent().getSerializableExtra("dataBean")) {
+            dataBean = (FamilyBean.DataBean) getIntent().getSerializableExtra("dataBean");
+        }
 
         mIvPrivateChat = findViewById(R.id.iv_private_img);
         mIvGift = findViewById(R.id.iv_gift);
@@ -243,27 +258,41 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                 title.setTitleText(userName);
                 break;
             case Group:
-                title.setMoreImg(R.mipmap.img_message_1);
-                title.setMoreImg2(R.mipmap.img_message_phb);
-                title.setMoreImgAction(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //跳转
-                        if (!StringUtils.isEmpty(family_id)) {
-                            startActivity(new Intent(ChatActivity2.this, MemberGroupListActivity.class)
+                if (null != dataBean) {
+                    //是家族
+                    title.setMoreImg(R.mipmap.img_message_1);
+                    title.setMoreImgAction(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivityForResult(new Intent(
+                                    ChatActivity2.this, FamilyDetailsActivity.class
+                            ).putExtra("data", dataBean)
+                                    .putExtra("type", 2), 20);
+                        }
+                    });
+                } else {
+                    title.setMoreImg(R.mipmap.img_message_1);
+                    title.setMoreImg2(R.mipmap.img_message_phb);
+                    title.setMoreImgAction(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //跳转
+                            if (!StringUtils.isEmpty(family_id)) {
+                                startActivity(new Intent(ChatActivity2.this, MemberGroupListActivity.class)
+                                        .putExtra("family_id", family_id));
+                            }
+                        }
+                    });
+
+                    title.setMoreImgAction2(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //排行榜
+                            startActivity(new Intent(ChatActivity2.this, RankingListActivity.class)
                                     .putExtra("family_id", family_id));
                         }
-                    }
-                });
-
-                title.setMoreImgAction2(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //排行榜
-                        startActivity(new Intent(ChatActivity2.this, RankingListActivity.class)
-                                .putExtra("family_id", family_id));
-                    }
-                });
+                    });
+                }
                 title.setTitleText(userName);
                 break;
 
@@ -863,6 +892,9 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 50) {
+            finish();
+        }
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK && fileUri != null) {
                 showImagePreview(fileUri.getPath());

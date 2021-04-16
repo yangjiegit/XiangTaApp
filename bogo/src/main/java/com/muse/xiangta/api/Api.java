@@ -2913,11 +2913,23 @@ public class Api {
     /*
      * 动态通知
      * */
-    public static void NoticeIndex(String uid, String token, String page,  StringCallback stringCallback) {
+    public static void NoticeIndex(String uid, String token, String page, StringCallback stringCallback) {
         OkGo.post(AppConfig.API_DOMAIN + "/bzone_api/notice_index")
                 .params("uid", uid)
                 .params("token", token)
                 .params("page", page)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
+     * 退出家族
+     * */
+    public static void quit(String uid, String token, String family_id, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/family/quit")
+                .params("uid", uid)
+                .params("token", token)
+                .params("family_id", family_id)
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(stringCallback);
     }

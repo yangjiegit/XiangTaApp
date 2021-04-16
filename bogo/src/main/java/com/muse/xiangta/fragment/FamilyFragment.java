@@ -59,6 +59,13 @@ public class FamilyFragment extends BaseFragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        int page = 1;
+        getFamilyListData(type, page);
+    }
+
+    @Override
     protected void initView(View view) {
         rv_data = view.findViewById(R.id.rv_data);
         sw_refresh = view.findViewById(R.id.sw_refresh);
@@ -167,7 +174,7 @@ public class FamilyFragment extends BaseFragment {
                     //已加入了家族
                     ChatActivity2.navToChat(getContext(),
                             mList.get(position).getGroup_id(), mList.get(position).getFamily_name(),
-                            TIMConversationType.Group);
+                            TIMConversationType.Group, mList.get(position));
                 } else {
                     startActivity(new Intent(
                             getContext(), FamilyDetailsActivity.class

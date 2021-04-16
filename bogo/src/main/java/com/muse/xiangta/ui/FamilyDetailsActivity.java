@@ -64,6 +64,7 @@ public class FamilyDetailsActivity extends BaseActivity {
 
     private int page = 1;
     private int limit = 10;
+    private int type;
 
     private List<MemberItemBean.DataBean> mList = new ArrayList<>();
     private CommonRecyclerViewAdapter<MemberItemBean.DataBean> mAdapter;
@@ -91,6 +92,14 @@ public class FamilyDetailsActivity extends BaseActivity {
     @Override
     protected void initData() {
         mData = (FamilyBean.DataBean) getIntent().getSerializableExtra("data");
+        type = getIntent().getIntExtra("type", 0);
+        if (type == 2) {
+//            tv_comm.setVisibility(View.GONE);
+            tv_comm.setText("退出家族");
+        } else {
+            tv_comm.setText("申请加入");
+//            tv_comm.setVisibility(View.VISIBLE);
+        }
 
         initRecyclerView();
         setData();
@@ -178,21 +187,50 @@ public class FamilyDetailsActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.tv_comm:
-                joinData();
+                if (type == 2) {
+                    quit();
+                } else {
+                    joinData();
+                }
                 break;
         }
+    }
+
+    private void quit() {
+        Api.quit(uId, uToken, String.valueOf(mData.getFamily_id()), new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                if (!StringUtils.isEmpty(s)) {
+                    try {
+                        int code = new JSONObject(s).getInt("code");
+                        if (code == 1) {
+                            showToastMsg("退出成功");
+                            setResult(50);
+                            finish();
+                        } else {
+                            showToastMsg(new JSONObject(s).getString("msg"));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
     }
 
     private void joinData() {
         Api.join(uId, uToken, String.valueOf(mData.getFamily_id()), mData.getGroup_id(), new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
-                if (StringUtils.isEmpty(s)) {
+                if (!StringUtils.isEmpty(s)) {
                     try {
                         int code = new JSONObject(s).getInt("code");
                         if (code == 1) {
-                            showToastMsg(new JSONObject(s).getString("msg"));
+                            showToastMsg("加入成功");
                             finish();
+                        } else {
+                            showToastMsg(new JSONObject(s).getString("msg"));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
