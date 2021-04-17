@@ -387,8 +387,9 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
             adapter.notifyDataSetChanged();
         } else {
             Log.d("ret", "joker    接受到的消息 ");
-            if (message.getElement(0).getType() != TIMElemType.GroupTips &&
-                    message.getElement(0).getType() != TIMElemType.Custom) {
+            if (message.getElement(0).getType() != TIMElemType.GroupTips
+//                    && message.getElement(0).getType() != TIMElemType.Custom
+            ) {
                 Message2 mMessage = MessageFactory2.getMessage(message);
 
                 if (null != message.getSenderGroupMemberProfile()) {
@@ -466,7 +467,8 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         if (messages.size() > 0) {
             for (int i = 0; i < messages.size(); ++i) {
                 if (messages.get(i).getElement(0).getType() != TIMElemType.GroupTips
-                        && messages.get(i).getElement(0).getType() != TIMElemType.Custom) {
+//                        && messages.get(i).getElement(0).getType() != TIMElemType.Custom
+                ) {
                     Message2 mMessage = MessageFactory2.getMessage(messages.get(i));
 
                     if (null != messages.get(i).getSenderGroupMemberProfile()) {

@@ -1,16 +1,26 @@
 package com.muse.chat.model;
 
 import android.content.Context;
+import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.muse.chat.adapter.ChatAdapter;
 import com.muse.chat.adapter.ChatAdapter2;
 import com.muse.chat.utils.TimeUtil;
@@ -20,10 +30,14 @@ import com.muse.xiangta.ICustomMsg;
 import com.muse.xiangta.LiveConstant;
 import com.muse.xiangta.R;
 import com.muse.xiangta.event.EventChatClickPrivateImgMessage;
+import com.muse.xiangta.event.EventChatClickPrivateRedEnvelopesMessage;
 import com.muse.xiangta.modle.UserModel;
 import com.muse.xiangta.modle.custommsg.CustomMsg;
+import com.muse.xiangta.modle.custommsg.CustomMsgDice;
+import com.muse.xiangta.modle.custommsg.CustomMsgGuessing;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
+import com.muse.xiangta.modle.custommsg.CustomMsgRedEnvelopes;
 import com.muse.xiangta.utils.Utils;
 import com.tencent.imsdk.TIMCustomElem;
 import com.tencent.imsdk.TIMMessage;
@@ -42,6 +56,21 @@ public class CustomMessage2 extends Message2 {
 
     private CustomMsg customMsg;
 
+    private ImageView iv_cai, iv_dong;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    iv_dong.setVisibility(View.GONE);
+                    iv_cai.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+    };
+
     public CustomMessage2(TIMMessage message) {
         this.message = message;
     }
@@ -51,7 +80,17 @@ public class CustomMessage2 extends Message2 {
 
         switch (type) {
             case LiveConstant.CustomMsgType.MSG_PRIVATE_GIFT:
-
+                message = customMsg.parseToTIMMessage(message);
+                break;
+            case LiveConstant.CustomMsgType.MSG_ALL_RED_ENVELOPES:
+                message = customMsg.parseToTIMMessage(message);
+                break;
+            case LiveConstant.CustomMsgType.CY_CHAT_CAIQUAN:
+                //猜拳
+                message = customMsg.parseToTIMMessage(message);
+                break;
+            case LiveConstant.CustomMsgType.CY_CHAT_SHAIZI:
+                //骰子
                 message = customMsg.parseToTIMMessage(message);
                 break;
             default:
@@ -100,7 +139,25 @@ public class CustomMessage2 extends Message2 {
                         setPrivateMsgType(viewHolder, context, customMsgPrivateGift);
                     }
                     break;
-
+                case LiveConstant.CustomMsgType.MSG_ALL_RED_ENVELOPES:
+                    //红包
+                    CustomMsgRedEnvelopes customMsgRedEnvelopes = getCustomMsgReal();
+                    if (null != customMsgRedEnvelopes) {
+                        setPrivateMsgRedEnvelopes(viewHolder, context, customMsgRedEnvelopes);
+                    }
+                    break;
+                case LiveConstant.CustomMsgType.CY_CHAT_CAIQUAN://猜拳
+                    CustomMsgGuessing customMsgGuessing = getCustomMsgReal();
+                    if (null != customMsgGuessing) {
+                        setPrivateMsgGuessing(viewHolder, context, customMsgGuessing);
+                    }
+                    break;
+                case LiveConstant.CustomMsgType.CY_CHAT_SHAIZI://骰子
+                    CustomMsgDice customMsgDice = getCustomMsgReal();
+                    if (null != customMsgDice) {
+                        setPrivateMsgDice(viewHolder, context, customMsgDice);
+                    }
+                    break;
                 case LiveConstant.CustomMsgType.MSG_VIDEO_LINE_CALL:
 
                     setVideoLinMsgType(viewHolder, context, customMsg.getSender(), "拨打视频通话");
@@ -131,6 +188,303 @@ public class CustomMessage2 extends Message2 {
             }
         }
 
+    }
+
+    private void setPrivateMsgDice(ChatAdapter2.ViewHolder viewHolder, Context context, CustomMsgDice customMsgDice) {
+        clearView(viewHolder);
+        if (checkRevoke(viewHolder)) {
+            return;
+        }
+        viewHolder.systemMessage.setVisibility(hasTime ? View.VISIBLE : View.GONE);
+        viewHolder.systemMessage.setText(TimeUtil.getChatTimeStr(message.timestamp()));
+        if (message.isSelf()) {
+            View view_private_msg_view = getView(R.layout.view_private_send_guessing);//发送
+
+            iv_cai = view_private_msg_view.findViewById(R.id.iv_cai);
+            iv_dong = view_private_msg_view.findViewById(R.id.iv_dong);
+            Glide.with(context).asGif().load(R.mipmap.img_shai_dong).listener(new RequestListener<GifDrawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
+                    Log.d("ret", "joker   动画播放完毕");
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                sleep(2000);
+                                android.os.Message msg = new android.os.Message();
+                                msg.what = 1;
+                                handler.sendMessage(msg);
+//                                iv_dong.setVisibility(View.GONE);
+//                                iv_cai.setVisibility(View.VISIBLE);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
+                    return false;
+                }
+            }).into(iv_dong);
+
+            switch (customMsgDice.getStaticimg()) {
+                case "ysh_chat_dian1":
+                    iv_cai.setImageResource(R.mipmap.img_shai1);
+                    break;
+                case "ysh_chat_dian2":
+                    iv_cai.setImageResource(R.mipmap.img_shai2);
+                    break;
+                case "ysh_chat_dian3":
+                    iv_cai.setImageResource(R.mipmap.img_shai3);
+                    break;
+                case "ysh_chat_dian4":
+                    iv_cai.setImageResource(R.mipmap.img_shai4);
+                    break;
+                case "ysh_chat_dian5":
+                    iv_cai.setImageResource(R.mipmap.img_shai5);
+                    break;
+                case "ysh_chat_dian6":
+                    iv_cai.setImageResource(R.mipmap.img_shai6);
+                    break;
+            }
+
+            viewHolder.rightMessage.setBackgroundResource(0);
+            viewHolder.rightMessage.setPadding(0, 0, 0, 0);
+            viewHolder.rightMessage.addView(view_private_msg_view);
+        } else {
+            View view_private_msg_view = getView(R.layout.view_private_send_guessing);//接受
+
+            iv_cai = view_private_msg_view.findViewById(R.id.iv_cai);
+            iv_dong = view_private_msg_view.findViewById(R.id.iv_dong);
+            Glide.with(context).asGif().load(R.mipmap.img_shai_dong).listener(new RequestListener<GifDrawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
+                    Log.d("ret", "joker   动画播放完毕");
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                sleep(2000);
+                                android.os.Message msg = new android.os.Message();
+                                msg.what = 1;
+                                handler.sendMessage(msg);
+//                                iv_dong.setVisibility(View.GONE);
+//                                iv_cai.setVisibility(View.VISIBLE);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
+                    return false;
+                }
+            }).into(iv_dong);
+
+            switch (customMsgDice.getStaticimg()) {
+                case "ysh_chat_dian1":
+                    iv_cai.setImageResource(R.mipmap.img_shai1);
+                    break;
+                case "ysh_chat_dian2":
+                    iv_cai.setImageResource(R.mipmap.img_shai2);
+                    break;
+                case "ysh_chat_dian3":
+                    iv_cai.setImageResource(R.mipmap.img_shai3);
+                    break;
+                case "ysh_chat_dian4":
+                    iv_cai.setImageResource(R.mipmap.img_shai4);
+                    break;
+                case "ysh_chat_dian5":
+                    iv_cai.setImageResource(R.mipmap.img_shai5);
+                    break;
+                case "ysh_chat_dian6":
+                    iv_cai.setImageResource(R.mipmap.img_shai6);
+                    break;
+            }
+
+            viewHolder.leftMessage.setBackgroundResource(0);
+            viewHolder.leftMessage.setPadding(0, 0, 0, 0);
+            viewHolder.leftMessage.addView(view_private_msg_view);
+        }
+        setSenderUserInfo(viewHolder, context, customMsgDice.getSender());
+        showStatus(viewHolder);
+    }
+
+    private void setPrivateMsgGuessing(ChatAdapter2.ViewHolder viewHolder, Context context, CustomMsgGuessing customMsgGuessing) {
+        clearView(viewHolder);
+        if (checkRevoke(viewHolder)) {
+            return;
+        }
+        viewHolder.systemMessage.setVisibility(hasTime ? View.VISIBLE : View.GONE);
+        viewHolder.systemMessage.setText(TimeUtil.getChatTimeStr(message.timestamp()));
+        if (message.isSelf()) {
+            View view_private_msg_view = getView(R.layout.view_private_send_guessing);//发送
+
+            iv_cai = view_private_msg_view.findViewById(R.id.iv_cai);
+            iv_dong = view_private_msg_view.findViewById(R.id.iv_dong);
+            Glide.with(context).asGif().load(R.mipmap.img_caiquan_dong).listener(new RequestListener<GifDrawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
+                    Log.d("ret", "joker   动画播放完毕");
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                sleep(2000);
+                                android.os.Message msg = new android.os.Message();
+                                msg.what = 1;
+                                handler.sendMessage(msg);
+//                                iv_dong.setVisibility(View.GONE);
+//                                iv_cai.setVisibility(View.VISIBLE);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
+                    return false;
+                }
+            }).into(iv_dong);
+
+            switch (customMsgGuessing.getStaticimg()) {
+                case "ysh_chat_shitou":
+                    iv_cai.setImageResource(R.mipmap.img_shitou);
+                    break;
+                case "ysh_chat_jiandao":
+                    iv_cai.setImageResource(R.mipmap.img_jiandao);
+                    break;
+                case "ysh_chat_bu":
+                    iv_cai.setImageResource(R.mipmap.img_bu);
+                    break;
+            }
+
+            viewHolder.rightMessage.setBackgroundResource(0);
+            viewHolder.rightMessage.setPadding(0, 0, 0, 0);
+            viewHolder.rightMessage.addView(view_private_msg_view);
+        } else {
+            View view_private_msg_view = getView(R.layout.view_private_send_guessing);//接受
+
+            iv_cai = view_private_msg_view.findViewById(R.id.iv_cai);
+            iv_dong = view_private_msg_view.findViewById(R.id.iv_dong);
+            Glide.with(context).asGif().load(R.mipmap.img_caiquan_dong).listener(new RequestListener<GifDrawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
+                    Log.d("ret", "joker   动画播放完毕");
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                sleep(2000);
+                                android.os.Message msg = new android.os.Message();
+                                msg.what = 1;
+                                handler.sendMessage(msg);
+//                                iv_dong.setVisibility(View.GONE);
+//                                iv_cai.setVisibility(View.VISIBLE);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
+                    return false;
+                }
+            }).into(iv_dong);
+
+            switch (customMsgGuessing.getStaticimg()) {
+                case "ysh_chat_shitou":
+                    iv_cai.setImageResource(R.mipmap.img_shitou);
+                    break;
+                case "ysh_chat_jiandao":
+                    iv_cai.setImageResource(R.mipmap.img_jiandao);
+                    break;
+                case "ysh_chat_bu":
+                    iv_cai.setImageResource(R.mipmap.img_bu);
+                    break;
+            }
+
+            viewHolder.leftMessage.setBackgroundResource(0);
+            viewHolder.leftMessage.setPadding(0, 0, 0, 0);
+            viewHolder.leftMessage.addView(view_private_msg_view);
+        }
+        setSenderUserInfo(viewHolder, context, customMsgGuessing.getSender());
+        showStatus(viewHolder);
+    }
+
+    private void setPrivateMsgRedEnvelopes(ChatAdapter2.ViewHolder viewHolder, Context context, CustomMsgRedEnvelopes customMsgRedEnvelopes) {
+        clearView(viewHolder);
+        if (checkRevoke(viewHolder)) {
+            return;
+        }
+        viewHolder.systemMessage.setVisibility(hasTime ? View.VISIBLE : View.GONE);
+        viewHolder.systemMessage.setText(TimeUtil.getChatTimeStr(message.timestamp()));
+        if (message.isSelf()) {
+            View view_private_msg_view = getView(R.layout.view_private_send_red_envelopes);//发送
+            FrameLayout fl_layout = view_private_msg_view.findViewById(R.id.fl_layout);
+            TextView tv_title = view_private_msg_view.findViewById(R.id.tv_title);
+            initLayoutRedEnvelopes(customMsgRedEnvelopes, tv_title);
+            viewHolder.leftPanel.setVisibility(View.GONE);
+            viewHolder.rightPanel.setVisibility(View.VISIBLE);
+
+            fl_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EventChatClickPrivateRedEnvelopesMessage event = new EventChatClickPrivateRedEnvelopesMessage();
+                    event.setId(customMsgRedEnvelopes.getRpID());
+                    EventBus.getDefault().post(event);
+                }
+            });
+
+
+            viewHolder.rightMessage.setBackgroundResource(0);
+            viewHolder.rightMessage.setPadding(0, 0, 0, 0);
+            viewHolder.rightMessage.addView(view_private_msg_view);
+
+        } else {
+            View view_private_msg_view = getView(R.layout.view_private_recived_red_envelopes);//接受
+            FrameLayout fl_layout = view_private_msg_view.findViewById(R.id.fl_layout);
+            TextView tv_title = view_private_msg_view.findViewById(R.id.tv_title);
+            initLayoutRedEnvelopes(customMsgRedEnvelopes, tv_title);
+
+            viewHolder.leftPanel.setVisibility(View.VISIBLE);
+            viewHolder.rightPanel.setVisibility(View.GONE);
+
+            fl_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EventChatClickPrivateRedEnvelopesMessage event = new EventChatClickPrivateRedEnvelopesMessage();
+                    event.setId(customMsgRedEnvelopes.getRpID());
+                    EventBus.getDefault().post(event);
+                }
+            });
+
+            viewHolder.leftMessage.setBackgroundResource(0);
+            viewHolder.leftMessage.setPadding(0, 0, 0, 0);
+            viewHolder.leftMessage.addView(view_private_msg_view);
+        }
+        setSenderUserInfo(viewHolder, context, customMsgRedEnvelopes.getSender());
+        showStatus(viewHolder);
+    }
+
+    private void initLayoutRedEnvelopes(CustomMsgRedEnvelopes customMsgRedEnvelopes, TextView tv) {
+        tv.setText(customMsgRedEnvelopes.getRptit());
     }
 
     //私照信息

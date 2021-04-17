@@ -305,7 +305,7 @@ public class LoveBean implements Serializable {
                 private String user_nickname;
                 private int sex;
                 private int level;
-                private int coin;
+                private String coin;
                 private int user_status;
                 private int is_auth;
                 private int is_online;
@@ -352,11 +352,11 @@ public class LoveBean implements Serializable {
                     this.level = level;
                 }
 
-                public int getCoin() {
+                public String getCoin() {
                     return coin;
                 }
 
-                public void setCoin(int coin) {
+                public void setCoin(String coin) {
                     this.coin = coin;
                 }
 
