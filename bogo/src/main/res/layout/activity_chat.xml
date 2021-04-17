@@ -35,9 +35,12 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_toRightOf="@+id/chat_img_horn"
-            android:singleLine="true"
-            android:text="@string/chat_hint"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:text="发链接,二维码,引导加微信,QQ的都是诈骗,请勿轻信,举报有奖!"
             android:textColor="#FC5808"
             android:textSize="12sp" />
 
