@@ -44,7 +44,9 @@ import com.muse.xiangta.ui.GroupChatActivity;
 import com.muse.xiangta.ui.MatchingActivity;
 import com.muse.xiangta.ui.RewardActivity;
 import com.muse.xiangta.ui.VideoDatingActivity;
+import com.muse.xiangta.ui.XieYiActivity;
 import com.muse.xiangta.ui.common.Common;
+import com.muse.xiangta.utils.SPHelper;
 import com.muse.xiangta.utils.StringUtils;
 import com.muse.xiangta.utils.Utils;
 
@@ -81,6 +83,7 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
     private ArrayList<BannerImgBean> rollImg = new ArrayList<>();
     private RelativeLayout emptyLayout;
     private int type = 1;
+    private boolean is_dianshi = false;
 
     private UserCenterData userCenterData;//个人中心接口返回信息
 
@@ -100,6 +103,7 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
     protected void initDate(View view) {
         requestUserData();//服务端请求用户数据并设置到页面
 
+//        tv_time1.setEnabled(false);
         handler.postDelayed(runnable, 1000);
     }
 
@@ -110,13 +114,22 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
                 Log.d("ret", "joker     " + s);
                 if (!StringUtils.isEmpty(s)) {
                     MsgBean msgBean = new Gson().fromJson(s, MsgBean.class);
-
+                    if (!StringUtils.isEmpty(SPHelper.getString(getContext(), "msg_id"))) {
+                        if (SPHelper.getString(getContext(), "msg_id")
+                                .equals(String.valueOf(msgBean.getData().getId()))) {
+                            //一致 可以点击
+                            is_dianshi = true;
+                        } else {
+                            is_dianshi = false;
+                        }
+                    }
                     String str = "<font color='#FA8599'>" + msgBean.getData().getFrom_user() + "</font>" + "在" +
                             "<font color='#4C8DF3'>" + msgBean.getData().getGroup_name() + "</font>" +
                             "家族送给" + "<font color='#FA8599'>" + msgBean.getData().getTo_user() + "</font>" +
                             msgBean.getData().getCount() + "<font color='#BA61E4'>" +
                             msgBean.getData().getGift_name() + "</font>" + ",一起来祝福他们吧！！！";
                     tv_title1.setText(Html.fromHtml(str));
+                    SPHelper.setString(getContext(), "msg_id", msgBean.getData().getId() + "");
                 }
             }
         });
@@ -127,11 +140,24 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
         public void run() {
             if (time == 1) {
                 time = 15;
-                tv_time1.setText("锁定屏幕" + time + "s");
+                if (is_dianshi == false) {
+                    tv_time1.setText("锁定屏幕" + time + "s");
+                    tv_time1.setEnabled(false);
+                } else {
+                    tv_time1.setText("如何上电视墙");
+                    tv_time1.setEnabled(true);
+                }
                 getMsg();
             } else {
                 --time;
-                tv_time1.setText("锁定屏幕" + time + "s");
+                //如何上电视墙
+                if (is_dianshi == false) {
+                    tv_time1.setText("锁定屏幕" + time + "s");
+                    tv_time1.setEnabled(false);
+                } else {
+                    tv_time1.setText("如何上电视墙");
+                    tv_time1.setEnabled(true);
+                }
             }
             handler.postDelayed(runnable, 1000);//每1000毫秒执行一次run方法
         }
@@ -189,8 +215,10 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
         view_fujin = rollView.findViewById(R.id.view_fujin);
         tv_title1 = rollView.findViewById(R.id.tv_title1);
         tv_time1 = rollView.findViewById(R.id.tv_time1);
-        ImageView iv_hongbao=rollView.findViewById(R.id.iv_hongbao);
+        tv_time1.setEnabled(false);
+        ImageView iv_hongbao = rollView.findViewById(R.id.iv_hongbao);
         iv_hongbao.setOnClickListener(this);
+        tv_time1.setOnClickListener(this);
 
         mTextList.clear();
         mTextList.add(tv_tuijian);
@@ -252,6 +280,12 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_time1:
+                String intStr1 = "30";
+                String url1 = "http://xiangta.zzmzrj.com/admin/public/index.php/page/article/index/id/" + intStr1 + ".html";
+                startActivity(new Intent(getContext(), XieYiActivity.class)
+                        .putExtra("title", "上电视规则").putExtra("url", url1));
+                break;
             case R.id.iv_hongbao:
                 //任务奖励
                 startActivity(new Intent(getContext(), RewardActivity.class));
