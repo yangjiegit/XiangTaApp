@@ -1,5 +1,6 @@
 package com.muse.chat.ui;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -14,16 +15,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.lzy.okgo.callback.StringCallback;
 import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.muse.chat.adapter.ChatAdapter2;
 import com.muse.chat.model.CustomMessage;
@@ -53,15 +58,21 @@ import com.muse.xiangta.inter.JsonCallback;
 import com.muse.xiangta.json.FamilyBean;
 import com.muse.xiangta.json.JsonRequest;
 import com.muse.xiangta.json.JsonRequestDoPrivateSendGif;
+import com.muse.xiangta.json.JsonRequestDoPrivateSendGuessing;
+import com.muse.xiangta.json.JsonRequestDoPrivateSendRedEnvelopes;
 import com.muse.xiangta.manage.SaveData;
+import com.muse.xiangta.modle.custommsg.CustomMsgDice;
+import com.muse.xiangta.modle.custommsg.CustomMsgGuessing;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
+import com.muse.xiangta.modle.custommsg.CustomMsgRedEnvelopes;
 import com.muse.xiangta.modle.custommsg.InputListenerMsgText;
 import com.muse.xiangta.ui.FamilyDetailsActivity;
 import com.muse.xiangta.ui.MemberGroupListActivity;
 import com.muse.xiangta.ui.PrivatePhotoActivity;
 import com.muse.xiangta.ui.RankingListActivity;
 import com.muse.xiangta.ui.common.Common;
+import com.muse.xiangta.ui.view.LastInputEditText;
 import com.muse.xiangta.utils.Utils;
 import com.tencent.imsdk.TIMConversationType;
 import com.tencent.imsdk.TIMCustomElem;
@@ -86,6 +97,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -129,6 +141,9 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     private TIMConversationType type;
     private FamilyBean.DataBean dataBean;
     private String titleStr;
+
+    private String[] caiquanStr = {"ysh_chat_shitou", "ysh_chat_jiandao", "ysh_chat_bu"};
+    private String[] shaiziStr = {"ysh_chat_dian1", "ysh_chat_dian2", "ysh_chat_dian3", "ysh_chat_dian4", "ysh_chat_dian5", "ysh_chat_dian6"};
 
     //    private int isPay;
 //    private String payCoin;
@@ -192,13 +207,13 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
             dataBean = (FamilyBean.DataBean) getIntent().getSerializableExtra("dataBean");
         }
 
-        mIvPrivateChat = findViewById(R.id.iv_private_img);
-        mIvGift = findViewById(R.id.iv_gift);
-        mIvVideo = findViewById(R.id.iv_video);
-        findViewById(R.id.iv_reward).setOnClickListener(this);
-        mIvPrivateChat.setOnClickListener(this);
-        mIvGift.setOnClickListener(this);
-        mIvVideo.setOnClickListener(this);
+//        mIvPrivateChat = findViewById(R.id.iv_private_img);
+//        mIvGift = findViewById(R.id.iv_gift);
+//        mIvVideo = findViewById(R.id.iv_video);
+//        findViewById(R.id.iv_reward).setOnClickListener(this);
+//        mIvPrivateChat.setOnClickListener(this);
+//        mIvGift.setOnClickListener(this);
+//        mIvVideo.setOnClickListener(this);
 
         input = (ChatInput2) findViewById(R.id.input_panel);
         input.setChatView(this);
@@ -834,17 +849,118 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
 
     @Override
     public void onAction(int id) {
-        if (id == R.id.btn_gift) {
+        if (id == R.id.iv_liwu) {//礼物
             clickShowGift();
-        } else if (id == R.id.btn_image) {
-
-        } else if (id == R.id.btn_private_img) {
-
+        }
+//        else if (id == R.id.iv_video) {//视频
+//            dialog();
+//        }
+        else if (id == R.id.iv_si) {
             //选择私照发送
             clickSelectPrivatePhoto();
-        } else if (id == R.id.btn_video_call) {
-            Common.callVideo(this, identify, 0);
+        } else if (id == R.id.iv_hong) {
+            //红包
+            dialog_hongbao();
+        } else if (id == R.id.iv_cai) {
+            //猜拳
+            caiquan();
+        } else if (id == R.id.iv_shai) {
+            //筛子
+            shaizi();
         }
+    }
+
+    private void shaizi() {
+        Random rand = new Random();
+        int suiji = rand.nextInt(5);
+        Log.d("ret", "joker    随机数==" + rand.nextInt(5));
+        JsonRequestDoPrivateSendGuessing.SendBean sendBean = new JsonRequestDoPrivateSendGuessing.SendBean();
+        sendBean.setGifimg("");
+        sendBean.setStaticimg(shaiziStr[suiji]);
+        CustomMsgDice customMsgGuessing = new CustomMsgDice();
+        customMsgGuessing.fillData(sendBean);
+        Message message = new CustomMessage(customMsgGuessing, LiveConstant.CustomMsgType.CY_CHAT_SHAIZI);
+        presenter.sendMessage(message.getMessage());
+    }
+
+    private void caiquan() {
+        Random rand = new Random();
+        int suiji = rand.nextInt(3);
+        Log.d("ret", "joker    随机数==" + rand.nextInt(3));
+        JsonRequestDoPrivateSendGuessing.SendBean sendBean = new JsonRequestDoPrivateSendGuessing.SendBean();
+        sendBean.setGifimg("");
+        sendBean.setStaticimg(caiquanStr[suiji]);
+        CustomMsgGuessing customMsgGuessing = new CustomMsgGuessing();
+        customMsgGuessing.fillData(sendBean);
+        Message message = new CustomMessage(customMsgGuessing, LiveConstant.CustomMsgType.CY_CHAT_CAIQUAN);
+        presenter.sendMessage(message.getMessage());
+    }
+
+    private void dialog_hongbao() {
+        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.show();  //注意：必须在window.setContentView之前show
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        Window window = dialog.getWindow();
+        window.setContentView(R.layout.dialog_hongbao);
+        // 这样子 第二和第三个按钮的空隙才会显示出来
+//        window.setGravity(Gravity.BOTTOM);//这个也很重要，将弹出菜单的位置设置为底部
+        window.setWindowAnimations(R.style.animation_bottom_menu);//菜单进入和退出屏幕的动画，实现了上下滑动的动画效果
+        window.setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);//设置菜单的尺寸
+
+        FrameLayout fl_comm = dialog.findViewById(R.id.fl_comm);//发红包
+        LastInputEditText et_title = dialog.findViewById(R.id.et_title);//标题
+        LastInputEditText et_number = dialog.findViewById(R.id.et_number);//钻石数量
+
+        fl_comm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (com.muse.xiangta.utils.StringUtils.isEmpty(et_number.getText().toString().trim())
+                        && (Integer.valueOf(et_number.getText().toString().trim()) > 100)) {
+                    showToast("请输入有效钻石金额");
+                    return;
+                } else {
+                    if (com.muse.xiangta.utils.StringUtils.isEmpty(et_title.getText().toString().trim())) {
+                        distribute("恭喜发财",
+                                et_number.getText().toString().trim(), dialog);
+                    } else {
+                        distribute(et_title.getText().toString().trim(),
+                                et_number.getText().toString().trim(), dialog);
+                    }
+                }
+            }
+        });
+    }
+
+    private void distribute(final String title, String amount, AlertDialog dialog) {
+        Api.distribute(uId, uToken, title, amount, new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                if (!com.muse.xiangta.utils.StringUtils.isEmpty(s)) {
+                    try {
+                        int code = new JSONObject(s).getInt("code");
+                        if (code == 1) {
+                            String red_envelope_id = new JSONObject(s).getJSONObject("data").getString("red_envelope_id");
+                            JsonRequestDoPrivateSendRedEnvelopes.SendBean sendBean = new JsonRequestDoPrivateSendRedEnvelopes.SendBean();
+                            sendBean.setRpID(red_envelope_id);
+                            sendBean.setRptit(title);
+                            sendBean.setRpnum(amount);
+                            sendBean.setRppnum("1");
+                            sendBean.setRptype("1");
+                            CustomMsgRedEnvelopes customMsgRedEnvelopes = new CustomMsgRedEnvelopes();
+                            customMsgRedEnvelopes.fillData(sendBean);
+                            Message message = new CustomMessage(customMsgRedEnvelopes, LiveConstant.CustomMsgType.MSG_ALL_RED_ENVELOPES);
+                            presenter.sendMessage(message.getMessage());
+                            if (null != dialog) {
+                                dialog.dismiss();
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
     }
 
 
