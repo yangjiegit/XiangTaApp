@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -51,8 +52,14 @@ public class WealthRechargeFragment extends BaseFragment {
     RecyclerView recy_recharge;
     @BindView(R.id.recharge_payway)
     RecyclerView recy_payway;
-    @BindView(R.id.zs_coin)
-    TextView zs;
+    @BindView(R.id.zs_coin1)
+    TextView zs1;
+    @BindView(R.id.zs_coin2)
+    TextView zs2;
+    @BindView(R.id.view1)
+    TextView view1;
+    @BindView(R.id.view2)
+    TextView view2;
 
     private BaseQuickAdapter rechageAdapter;
     private String TAG = "pay";
@@ -94,7 +101,15 @@ public class WealthRechargeFragment extends BaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 nowSelRecharge = position;
-                zs.setText("赠送" + mRechargeRuleDataList.get(position).getGive() + getResources().getString(R.string.company) + "!");
+                if (!StringUtils.isEmpty(mRechargeRuleDataList.get(position).getName())) {
+                    view1.setVisibility(View.VISIBLE);
+                    view2.setVisibility(View.VISIBLE);
+                } else {
+                    view1.setVisibility(View.GONE);
+                    view2.setVisibility(View.GONE);
+                }
+                zs1.setText("赠送" + mRechargeRuleDataList.get(position).getGive() + getResources().getString(R.string.company));
+                zs2.setText(mRechargeRuleDataList.get(position).getName());
                 adapter.notifyDataSetChanged();
             }
         });
