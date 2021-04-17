@@ -69,7 +69,7 @@ public class ChatAdapter2 extends ArrayAdapter<Message2> {
                 @Override
                 public void onClick(View view) {
                     if (listen != null) {
-                        listen.onChildrenClick(R.id.leftAvatar);
+                        listen.onChildrenClick(R.id.leftAvatar, position);
                     }
                 }
             });
@@ -77,7 +77,7 @@ public class ChatAdapter2 extends ArrayAdapter<Message2> {
                 @Override
                 public void onClick(View view) {
                     if (listen != null) {
-                        listen.onChildrenClick(R.id.rightAvatar);
+                        listen.onChildrenClick(R.id.rightAvatar, position);
                     }
                 }
             });
@@ -112,7 +112,7 @@ public class ChatAdapter2 extends ArrayAdapter<Message2> {
     }
 
     public interface OnChatChildrenItemListen {
-        void onChildrenClick(int id);
+        void onChildrenClick(int id, int position);
     }
 
 

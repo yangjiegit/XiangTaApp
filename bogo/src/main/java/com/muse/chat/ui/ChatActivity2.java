@@ -1075,14 +1075,13 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
 
 
     @Override
-    public void onChildrenClick(int id) {
+    public void onChildrenClick(int id, int position) {
         switch (id) {
             case R.id.leftAvatar:
-
-                Common.jumpUserPage(this, identify);
+                String idStr = messageList.get(position).getSender();
+                Common.jumpUserPage(this, idStr);
                 break;
             case R.id.rightAvatar:
-
                 Common.jumpUserPage(this, SaveData.getInstance().getId());
                 break;
             default:
