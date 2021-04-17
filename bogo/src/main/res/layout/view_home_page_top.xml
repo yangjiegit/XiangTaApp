@@ -224,35 +224,57 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="财富"
+                            android:textColor="#ff959595"
+                            android:textSize="@dimen/dp_10" />
+
+                        <TextView
                             android:id="@+id/userinfo_bar_time_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="5dp"
+                            android:textColor="#ffFF8E65"
+                            android:textSize="@dimen/dp_11"
+                            android:textStyle="bold"
+                            tools:text="LV.10" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:text="魅力"
                             android:textColor="#ff959595"
-                            android:textSize="13sp"
-                            tools:text="财富:" />
+                            android:textSize="@dimen/dp_10" />
 
                         <TextView
                             android:id="@+id/userinfo_bar_good_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_5"
-                            android:layout_marginRight="5dp"
-                            android:textColor="#ff959595"
-                            android:textSize="13sp"
-                            tools:text="魅力:" />
+                            android:textColor="#ffFF6565"
+                            android:textSize="@dimen/dp_11"
+                            android:textStyle="bold"
+                            tools:text="LV.10" />
 
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:gravity="center"
+                            android:text="获赞"
+                            android:textColor="#ff959595"
+                            android:textSize="@dimen/dp_10" />
 
                         <TextView
                             android:id="@+id/fans_number"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_5"
-                            android:layout_marginRight="5dp"
                             android:gravity="center"
-                            android:textColor="#ff959595"
-                            android:textSize="13sp"
-                            tools:text="获赞:" />
+                            android:textColor="#ffFFAF66"
+                            android:textSize="@dimen/dp_11"
+                            android:textStyle="bold"
+                            tools:text="LV.10" />
                     </LinearLayout>
 
 
