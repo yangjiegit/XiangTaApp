@@ -53,7 +53,7 @@ public class ChatInput2 extends RelativeLayout implements TextWatcher, View.OnCl
     private final int REQUEST_CODE_ASK_PERMISSIONS = 100;
     private float startY;
     private boolean mCancelSend;
-    private LinearLayout imgLl;
+//    private LinearLayout imgLl;
 
     public ChatInput2(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -64,23 +64,8 @@ public class ChatInput2 extends RelativeLayout implements TextWatcher, View.OnCl
 
     private void initView() {
         textPanel = (LinearLayout) findViewById(R.id.text_panel);
-        btnAdd = (ImageButton) findViewById(R.id.btn_add);
-        btnAdd.setOnClickListener(this);
-        btnSend = (ImageButton) findViewById(R.id.btn_send);
-        btnSend.setOnClickListener(this);
+        morePanel = (LinearLayout) findViewById(R.id.morePanel);//功能列表
         btnVoice = (ImageButton) findViewById(R.id.btn_voice);
-        btnVoice.setOnClickListener(this);
-        btnEmotion = (ImageButton) findViewById(R.id.btnEmoticon);
-        btnEmotion.setOnClickListener(this);
-        morePanel = (LinearLayout) findViewById(R.id.morePanel);
-        LinearLayout BtnImage = (LinearLayout) findViewById(R.id.btn_photo);
-        BtnImage.setOnClickListener(this);
-        LinearLayout BtnPhoto = (LinearLayout) findViewById(R.id.btn_image);
-        BtnPhoto.setOnClickListener(this);
-        LinearLayout btnVideo = (LinearLayout) findViewById(R.id.btn_video);
-        btnVideo.setOnClickListener(this);
-        LinearLayout btnFile = (LinearLayout) findViewById(R.id.btn_file);
-        btnFile.setOnClickListener(this);
         setSendBtn();
         btnKeyboard = (ImageButton) findViewById(R.id.btn_keyboard);
         btnKeyboard.setOnClickListener(this);
@@ -119,7 +104,7 @@ public class ChatInput2 extends RelativeLayout implements TextWatcher, View.OnCl
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    updateView(InputMode.TEXT);
+                    updateView(ChatInput2.InputMode.TEXT);
                 }
             }
         });
@@ -127,19 +112,26 @@ public class ChatInput2 extends RelativeLayout implements TextWatcher, View.OnCl
         emoticonPanel = (LinearLayout) findViewById(R.id.emoticonPanel);
 
 
-        findViewById(R.id.btn_gift).setOnClickListener(this);
+        findViewById(R.id.iv_image).setOnClickListener(this);
+        findViewById(R.id.iv_si).setOnClickListener(this);
+//        findViewById(R.id.iv_video).setOnClickListener(this);
+        findViewById(R.id.iv_hong).setOnClickListener(this);
+        findViewById(R.id.iv_liwu).setOnClickListener(this);
+        findViewById(R.id.iv_cai).setOnClickListener(this);
+        findViewById(R.id.iv_shai).setOnClickListener(this);
+        findViewById(R.id.btn_add).setOnClickListener(this);
+        findViewById(R.id.btnEmoticon).setOnClickListener(this);
+        findViewById(R.id.btn_send).setOnClickListener(this);
+        findViewById(R.id.btn_voice).setOnClickListener(this);
 
-        imgLl = (LinearLayout) findViewById(R.id.btn_private_img);
-        imgLl.setOnClickListener(this);
-        findViewById(R.id.btn_video_call).setOnClickListener(this);
     }
 
 
     public void setSex(int sex) {
         if (sex == 1) {
-            imgLl.setVisibility(GONE);
+//            imgLl.setVisibility(GONE);
         } else {
-            imgLl.setVisibility(GONE);
+//            imgLl.setVisibility(GONE);
         }
     }
 
@@ -344,7 +336,9 @@ public class ChatInput2 extends RelativeLayout implements TextWatcher, View.OnCl
     public void onClick(View v) {
         Activity activity = (Activity) getContext();
         int id = v.getId();
-        if (v.getId() == R.id.btn_video_call || v.getId() == R.id.btn_private_img || v.getId() == R.id.btn_gift) {
+        //视频    礼物
+        if (v.getId() == R.id.iv_video || v.getId() == R.id.iv_liwu || v.getId() == R.id.iv_si
+                || v.getId() == R.id.iv_hong || v.getId() == R.id.iv_cai || v.getId() == R.id.iv_shai) {
             chatView.onAction(v.getId());
             return;
         }
@@ -352,46 +346,50 @@ public class ChatInput2 extends RelativeLayout implements TextWatcher, View.OnCl
             chatView.sendText();
         }
         if (id == R.id.btn_add) {
-            updateView(inputMode == InputMode.MORE ? InputMode.TEXT : InputMode.MORE);
+            updateView(inputMode == ChatInput2.InputMode.MORE ? ChatInput2.InputMode.TEXT : ChatInput2.InputMode.MORE);
         }
-        if (id == R.id.btn_photo) {
-            if (activity != null && requestCamera(activity)) {
-                chatView.sendPhoto();
-            }
-        }
-        if (id == R.id.btn_image) {
+//        if (id == R.id.iv_add_img) { //拍照
+//            if (activity != null && requestCamera(activity)) {
+////                chatView.sendPhoto();
+//                Toast.makeText(getContext(), "该功能尚未开放", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+        if (id == R.id.iv_image) {//图片
             if (activity != null && requestStorage(activity)) {
                 chatView.sendImage();
             }
         }
-        if (id == R.id.btn_voice) {
+        if (id == R.id.btn_voice) {//语音消息
             if (activity != null && requestAudio(activity)) {
-                updateView(InputMode.VOICE);
+                updateView(ChatInput2.InputMode.VOICE);
             }
         }
-        if (id == R.id.btn_keyboard) {
-            updateView(InputMode.TEXT);
+        if (id == R.id.btn_keyboard) {//语音文字切换
+            updateView(ChatInput2.InputMode.TEXT);
         }
-        if (id == R.id.btn_video) {
-            if (getContext() instanceof FragmentActivity) {
-                FragmentActivity fragmentActivity = (FragmentActivity) getContext();
-                if (requestVideo(fragmentActivity)) {
-//                    VideoInputDialog.show(fragmentActivity.getSupportFragmentManager());
-                    if (requestRtmp()) {
-                        chatView.videoAction();
-                    } else {
-                        Toast.makeText(activity, "系统版本太低", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-            }
+//        if (id == R.id.btn_video) {//小视频
+//            if (getContext() instanceof FragmentActivity) {
+//                FragmentActivity fragmentActivity = (FragmentActivity) getContext();
+//                if (requestVideo(fragmentActivity)) {
+////                    VideoInputDialog.show(fragmentActivity.getSupportFragmentManager());
+//                    if (requestRtmp()) {
+//                        chatView.videoAction();
+//                    } else {
+//                        Toast.makeText(activity, "系统版本太低", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                }
+//            }
+//        }
+        if (id == R.id.btnEmoticon) {//表情
+            updateView(inputMode == ChatInput2.InputMode.EMOTICON ? ChatInput2.InputMode.TEXT : ChatInput2.InputMode.EMOTICON);
         }
-        if (id == R.id.btnEmoticon) {
-            updateView(inputMode == InputMode.EMOTICON ? InputMode.TEXT : InputMode.EMOTICON);
-        }
-        if (id == R.id.btn_file) {
-            chatView.sendFile();
-        }
+//        if (id == R.id.iv_hong) {
+//            Toast.makeText(getContext(), "该功能尚未开放", Toast.LENGTH_SHORT).show();
+//        }
+//        if (id == R.id.btn_file) {//文件
+//            chatView.sendFile();
+//        }
     }
 
 
