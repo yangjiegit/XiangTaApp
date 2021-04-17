@@ -35,8 +35,11 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_toRightOf="@+id/chat_img_horn"
-            android:singleLine="true"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
             android:text="@string/chat_hint"
             android:textColor="#FC5808"
             android:textSize="12sp" />
@@ -54,12 +57,12 @@
         android:divider="@null" />
 
     <android.support.v7.widget.CardView
-        android:visibility="gone"
         android:id="@+id/chat_attribute_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rl_system_message"
         android:layout_margin="10sp"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="5dp"
         app:cardElevation="3dp">
