@@ -1,7 +1,9 @@
 package com.muse.xiangta.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -132,6 +134,18 @@ public class MemberListActivity extends BaseActivity {
         };
 
         rv_data.setAdapter(mAdapter);
+
+        mAdapter.setOnRecyclerViewItemClickListener(new CommonRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putString("id", String.valueOf(mList.get(position).getUid()));
+                intent.putExtras(bundle);
+                setResult(88, intent);
+                finish();
+            }
+        });
     }
 
     @OnClick(R.id.iv_back)

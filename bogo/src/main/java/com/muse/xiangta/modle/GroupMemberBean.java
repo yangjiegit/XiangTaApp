@@ -163,7 +163,7 @@ public class GroupMemberBean implements Serializable {
         private int score;
         private int user_money;
         private int coin_system;
-        private int coin;
+        private String coin;
         private int user_status;
         private String user_login;
         private String user_pass;
@@ -350,11 +350,11 @@ public class GroupMemberBean implements Serializable {
             this.coin_system = coin_system;
         }
 
-        public int getCoin() {
+        public String getCoin() {
             return coin;
         }
 
-        public void setCoin(int coin) {
+        public void setCoin(String coin) {
             this.coin = coin;
         }
 

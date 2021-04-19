@@ -73,6 +73,7 @@ import com.muse.xiangta.modle.custommsg.CustomMsgRedEnvelopes;
 import com.muse.xiangta.modle.custommsg.InputListenerMsgText;
 import com.muse.xiangta.ui.FamilyDetailsActivity;
 import com.muse.xiangta.ui.MemberGroupListActivity;
+import com.muse.xiangta.ui.MemberListActivity;
 import com.muse.xiangta.ui.PrivatePhotoActivity;
 import com.muse.xiangta.ui.RankingListActivity;
 import com.muse.xiangta.ui.RedEnvelopesDetailsActivity;
@@ -141,6 +142,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     private String identify;
     private String family_id;
     private String userName;
+    private String identifyStr = "";
     //    private String avatar;
     private RecorderUtil recorder = new RecorderUtil();
     private TIMConversationType type;
@@ -977,11 +979,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     public void onAction(int id) {
         if (id == R.id.iv_liwu) {//礼物
             clickShowGift();
-        }
-//        else if (id == R.id.iv_video) {//视频
-//            dialog();
-//        }
-        else if (id == R.id.iv_si) {
+        } else if (id == R.id.iv_si) {
             //选择私照发送
             clickSelectPrivatePhoto();
         } else if (id == R.id.iv_hong) {
@@ -1140,6 +1138,16 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 88) {
+            identifyStr = data.getExtras().getString("id");
+            Log.d("ret", "joker   返回的id===" + identifyStr);
+            if (giftBottomDialog == null) {
+                giftBottomDialog = new GiftBottomDialog(this, identifyStr);
+                giftBottomDialog.hideMenu();
+                giftBottomDialog.setDoSendGiftListen(this);
+            }
+            giftBottomDialog.show();
+        }
         if (resultCode == 50) {
             finish();
         }
@@ -1275,14 +1283,22 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
 
     //点击打赏礼物
     private void clickShowGift() {
-        if (giftBottomDialog == null) {
-            giftBottomDialog = new GiftBottomDialog(this, identify);
-//            if (isAuth == 1) {
-            giftBottomDialog.hideMenu();
-//            }
-            giftBottomDialog.setDoSendGiftListen(this);
+        //先选择人员
+        if (null != dataBean) {
+            //是家族
+            startActivityForResult(new Intent(ChatActivity2.this, MemberListActivity.class)
+                    .putExtra("family_id", String.valueOf(dataBean.getFamily_id())), 88);
+        } else {
+            startActivityForResult(new Intent(ChatActivity2.this, MemberGroupListActivity.class)
+                    .putExtra("family_id", family_id), 88);
         }
-        giftBottomDialog.show();
+
+//        if (giftBottomDialog == null) {
+//            giftBottomDialog = new GiftBottomDialog(this, identify);
+//            giftBottomDialog.hideMenu();
+//            giftBottomDialog.setDoSendGiftListen(this);
+//        }
+//        giftBottomDialog.show();
     }
 
     //点击打赏金币
