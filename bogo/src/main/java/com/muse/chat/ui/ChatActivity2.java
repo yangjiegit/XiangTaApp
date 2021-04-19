@@ -1027,7 +1027,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         dialog.show();  //注意：必须在window.setContentView之前show
         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         Window window = dialog.getWindow();
-        window.setContentView(R.layout.dialog_hongbao);
+        window.setContentView(R.layout.dialog_hongbao2);
         // 这样子 第二和第三个按钮的空隙才会显示出来
 //        window.setGravity(Gravity.BOTTOM);//这个也很重要，将弹出菜单的位置设置为底部
         window.setWindowAnimations(R.style.animation_bottom_menu);//菜单进入和退出屏幕的动画，实现了上下滑动的动画效果
@@ -1036,29 +1036,33 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         FrameLayout fl_comm = dialog.findViewById(R.id.fl_comm);//发红包
         LastInputEditText et_title = dialog.findViewById(R.id.et_title);//标题
         LastInputEditText et_number = dialog.findViewById(R.id.et_number);//钻石数量
+        LastInputEditText et_number2 = dialog.findViewById(R.id.et_number2);//红包数量
 
         fl_comm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (com.muse.xiangta.utils.StringUtils.isEmpty(et_number.getText().toString().trim())
+                if (StringUtils.isEmpty(et_number.getText().toString().trim())
                         && (Integer.valueOf(et_number.getText().toString().trim()) > 100)) {
                     showToast("请输入有效钻石金额");
+                    return;
+                } else if (StringUtils.isEmpty(et_number2.getText().toString().trim())) {
+                    showToast("请输入有效红包数量");
                     return;
                 } else {
                     if (com.muse.xiangta.utils.StringUtils.isEmpty(et_title.getText().toString().trim())) {
                         distribute("恭喜发财",
-                                et_number.getText().toString().trim(), dialog);
+                                et_number.getText().toString().trim(), et_number2.getText().toString().trim(), dialog);
                     } else {
                         distribute(et_title.getText().toString().trim(),
-                                et_number.getText().toString().trim(), dialog);
+                                et_number.getText().toString().trim(), et_number2.getText().toString().trim(), dialog);
                     }
                 }
             }
         });
     }
 
-    private void distribute(final String title, String amount, AlertDialog dialog) {
-        Api.distribute(uId, uToken, title, amount, new StringCallback() {
+    private void distribute(final String title, String amount, String count, AlertDialog dialog) {
+        Api.distribute2(uId, uToken, title, amount, count, new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 if (!com.muse.xiangta.utils.StringUtils.isEmpty(s)) {
@@ -1070,8 +1074,8 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                             sendBean.setRpID(red_envelope_id);
                             sendBean.setRptit(title);
                             sendBean.setRpnum(amount);
-                            sendBean.setRppnum("1");
-                            sendBean.setRptype("1");
+                            sendBean.setRppnum(count);
+                            sendBean.setRptype("2");
                             CustomMsgRedEnvelopes customMsgRedEnvelopes = new CustomMsgRedEnvelopes();
                             customMsgRedEnvelopes.fillData(sendBean);
                             Message message = new CustomMessage(customMsgRedEnvelopes, LiveConstant.CustomMsgType.MSG_ALL_RED_ENVELOPES);

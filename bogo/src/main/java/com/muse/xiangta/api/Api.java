@@ -2813,6 +2813,21 @@ public class Api {
     }
 
     /*
+     * 发送红包
+     * */
+    public static void distribute2(String uid, String token, String title, String amount, String count, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/red_envelope/distribute")
+                .params("uid", uid)
+                .params("token", token)
+                .params("title", title)
+                .params("amount", amount)
+                .params("type", "2")
+                .params("count", count)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
+    /*
      * 领红包
      * */
     public static void red_envelope_receive(String uid, String token, String red_envelope_id, StringCallback stringCallback) {
