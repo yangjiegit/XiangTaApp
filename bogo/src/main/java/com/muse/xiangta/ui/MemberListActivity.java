@@ -1,11 +1,14 @@
 package com.muse.xiangta.ui;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.lzy.okgo.callback.StringCallback;
@@ -88,6 +91,38 @@ public class MemberListActivity extends BaseActivity {
                 holder.setText(R.id.tv_name, entity.getUser().getUser_nickname());
                 holder.setText(R.id.tv_age, entity.getUser().getAge() + "");
                 holder.setText(R.id.tv_address, entity.getUser().getAddress());
+                ImageView iv_v = holder.getView(R.id.iv_v);
+                if (entity.getUser().getIs_auth() == 0) {
+                    iv_v.setVisibility(View.GONE);
+                } else {
+                    iv_v.setVisibility(View.VISIBLE);
+                }
+                TextView tv_age = holder.getView(R.id.tv_age);
+
+                Drawable nan = getResources().getDrawable(R.mipmap.img_nan_1);
+                // 调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
+                nan.setBounds(0, 0, nan.getMinimumWidth(), nan.getMinimumHeight());
+
+                Drawable nv = getResources().getDrawable(R.mipmap.img_nv_1);
+                // 调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
+                nv.setBounds(0, 0, nv.getMinimumWidth(), nv.getMinimumHeight());
+
+                if (entity.getUser().getSex() == 1) {
+                    tv_age.setBackgroundResource(R.drawable.bg_main_nan);
+                    tv_age.setCompoundDrawables(nan, null, null, null); //设置左图标
+                } else {
+                    tv_age.setBackgroundResource(R.drawable.bg_main_nv);
+                    tv_age.setCompoundDrawables(nv, null, null, null); //设置左图标
+                }
+                ImageView iv_vip = holder.getView(R.id.iv_vip);
+
+                if (StringUtils.isEmpty(entity.getUser().getNoble())) {
+                    iv_vip.setVisibility(View.GONE);
+                } else {
+                    iv_vip.setVisibility(View.VISIBLE);
+                    GlideImgManager.loadImage(MemberListActivity.this,
+                            entity.getUser().getNoble(), iv_vip);
+                }
             }
 
             @Override

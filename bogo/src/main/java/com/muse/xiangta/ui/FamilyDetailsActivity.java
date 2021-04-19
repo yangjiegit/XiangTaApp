@@ -60,6 +60,8 @@ public class FamilyDetailsActivity extends BaseActivity {
     TextView tv_comm;
     @BindView(R.id.tv_name_number)
     TextView tv_name_number;
+    @BindView(R.id.iv_sm)
+    ImageView iv_sm;
 
     private FamilyBean.DataBean mData;
 
@@ -183,13 +185,20 @@ public class FamilyDetailsActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.iv_back)
+    @OnClick({R.id.iv_back, R.id.iv_sm})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.iv_sm:
+                //家族说明
+                String intStr1 = "14";
+                String url1 = "http://xiangta.zzmzrj.com/admin/public/index.php/page/article/index/id/" + intStr1 + ".html";
+                startActivity(new Intent(this, XieYiActivity.class)
+                        .putExtra("title", "活跃度说明").putExtra("url", url1));
                 break;
             case R.id.tv_comm:
                 if (type == 2) {
