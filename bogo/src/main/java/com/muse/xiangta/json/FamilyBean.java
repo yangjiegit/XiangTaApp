@@ -8,32 +8,32 @@ public class FamilyBean implements Serializable {
     /**
      * code : 1
      * msg :
-     * data : [{"family_id":5,"family_name":"拾壹家族","family_cover":"http://xta.zzmzrj.com/idImage/1615861277219.png","family_level_id":1,"family_people":1,"family_activation":0,"family_description_id":0,"family_active":1,"is_delete":0,"owner_uid":102604,"create_time":"2021-03-16 10:22:27","is_hot":0,"group_id":"@TGS#2FITPGBHE","city":"郑州市","lat":"34.785849","lng":"113.685894","is_join":1,"level":{"level_id":1,"level_name":"1级","min_activation":0,"max_activation":100,"max_people":100},"description":{"description_id":5,"description":"靠样子，半辈子，靠才华，一辈子","family_id":5},"owner":{"id":102604,"user_type":2,"sex":2,"birthday":0,"last_login_time":1615859467,"score":0,"coin_system":0,"coin":0,"create_time":"2021-03-08 16:29:47","user_status":2,"user_login":"","user_pass":"","user_nickname":"帅哥2","user_email":"","user_url":"","avatar":"http://xta.zzmzrj.com/idImage/1615360951953.png","signature":"","last_login_ip":"171.8.114.45","user_activation_key":"","mobile":"15137830553","more":null,"token":"c8869250fb43feee585d13c8a030c778","address":"郑州市","level":1,"noble_level":0,"status":1,"teacher":0,"income":0,"income_total":0,"last_remove_message_time":1615859560,"fabulous":0,"is_reg_perfect":1,"custom_video_charging_coin":15,"is_open_do_not_disturb":0,"login_type":0,"plat_id":"","reference":0,"last_change_name_time":0,"is_use_free_time":0,"is_online":0,"vip_end_time":0,"link_id":"0","invitation_coin":"0.00","alipay_account":"","sort":0,"is_auth":1,"alipay_account_name":"","host_bay_video_proportion":"0","host_bay_phone_proportion":"0","host_bay_gift_proportion":"0","host_one_video_proportion":"0","host_direct_messages":"0","device_uuid":"3C66D59A-58B4-41F8-A459-CC809B9EE020","host_guardian_proportion":"0","invite_buckle_probability":0,"invite_buckle_recharge_probability":0,"host_turntable_ratio":"0","province":"","city":"郑州市","is_open_auto_see_hi":0,"wx_number":"","qq_number":"","phone_number":"","wx_price":0,"qq_price":0,"phone_price":0,"orderno":0,"shielding_time":0,"login_way":1,"lat":"34.785970","lng":"113.685911","height":"0","weight":"","constellation":"","image_label":"","introduce":"","host_bay_contact_proportion":"","diamond":0,"diamond_system":0,"glamour":0,"glamour_level_id":5,"wealth":5,"wealth_level_id":1,"has_declaration":1,"declaration":"http://xta.zzmzrj.com/idIosAudio/1615360349342.wav","overlapping_sound":"","love_status":"","declaration_length":0,"education":"","occupation":"","is_settled":2,"age":18,"noble":""}},{"family_id":4,"family_name":"biu~","family_cover":"http://xta.zzmzrj.com/idImage/1615861255799.png","family_level_id":1,"family_people":2,"family_activation":0,"family_description_id":0,"family_active":1,"is_delete":0,"owner_uid":102595,"create_time":"2021-03-16 10:21:28","is_hot":0,"group_id":"@TGS#22HRPGBHM","city":"郑州市","lat":"34.785771","lng":"113.686223","is_join":0,"level":{"level_id":1,"level_name":"1级","min_activation":0,"max_activation":100,"max_people":100},"description":{"description_id":4,"description":"图五图教育了哭哭哭跳舞楼塌楼梯DJ体操土豪与跳舞吧宽体具体的位置就是这样吧。图很开心说啥时候回来嘛","family_id":4},"owner":{"id":102595,"user_type":2,"sex":2,"birthday":0,"last_login_time":1616149403,"score":1414,"coin_system":0,"coin":1001889,"create_time":"2021-03-01 10:20:32","user_status":2,"user_login":"","user_pass":"","user_nickname":"晨晨！","user_email":"","user_url":"","avatar":"http://xta.zzmzrj.com/6e3ea202103081120398748.png","signature":"嗯哼大王叫我来巡山～","last_login_ip":"171.8.115.19","user_activation_key":"","mobile":"18595457559","more":null,"token":"7e28b1e7525c06e26151c70547191084","address":"郑州市","level":7,"noble_level":0,"status":1,"teacher":0,"income":2199,"income_total":2199,"last_remove_message_time":1615972916,"fabulous":0,"is_reg_perfect":1,"custom_video_charging_coin":22,"is_open_do_not_disturb":0,"login_type":0,"plat_id":"","reference":1,"last_change_name_time":0,"is_use_free_time":0,"is_online":1,"vip_end_time":0,"link_id":"0","invitation_coin":"0.00","alipay_account":"","sort":0,"is_auth":1,"alipay_account_name":"","host_bay_video_proportion":"0","host_bay_phone_proportion":"0","host_bay_gift_proportion":"0","host_one_video_proportion":"0","host_direct_messages":"0","device_uuid":"223D22D4-A2C7-4E6C-B7B1-91335E97ADBD","host_guardian_proportion":"0","invite_buckle_probability":0,"invite_buckle_recharge_probability":0,"host_turntable_ratio":"0","province":"","city":"郑州市","is_open_auto_see_hi":0,"wx_number":"","qq_number":"","phone_number":"","wx_price":0,"qq_price":0,"phone_price":0,"orderno":0,"shielding_time":0,"login_way":1,"lat":"34.785741","lng":"113.685961","height":"178","weight":"50","constellation":"水瓶座","image_label":"呵呵哒-哇塞-逗比","introduce":"没有介绍","host_bay_contact_proportion":"","diamond":0,"diamond_system":0,"glamour":0,"glamour_level_id":1,"wealth":22,"wealth_level_id":5,"has_declaration":1,"declaration":"http://xta.zzmzrj.com/idIosAudio/1616211420260.wav","overlapping_sound":"没有独白","love_status":"保密","declaration_length":12,"education":"双学士","occupation":"传媒/艺术","is_settled":2,"age":18,"noble":""}}]
+     * data : [{"family_id":4,"family_name":"大自然","family_cover":"http://xta.zzmzrj.com/idImage/1618025131932.png","family_level_id":1,"family_people":6,"family_activation":0,"family_description_id":0,"family_active":1,"is_delete":0,"owner_uid":102712,"create_time":1618025133,"is_hot":0,"group_id":"@TGS#2T4WH4CHF","city":"郑州市","lat":"34.785698","lng":"113.686226","owner":{"id":102712,"user_type":2,"sex":2,"birthday":0,"last_login_time":1618476885,"score":570,"user_money":0,"coin_system":0,"coin":4294967185,"create_time":1617850275,"user_status":2,"user_login":"","user_pass":"","user_nickname":"浮沉","user_email":"","user_url":"","avatar":"http://xta.zzmzrj.com/idImage/1618469957977.png","signature":"","last_login_ip":"171.8.112.157","user_activation_key":"","mobile":"13525500144","more":null,"token":"f50b7b31962172d5781e7a1b18cfe36d","address":"郑州市","level":2,"noble_level":0,"status":1,"teacher":0,"income":99994469,"income_total":100000349,"last_remove_message_time":1618625827,"fabulous":0,"is_reg_perfect":1,"custom_video_charging_coin":0,"is_open_do_not_disturb":0,"login_type":0,"plat_id":"oeV0v6Wh1mWMJCWJHKBo5mdG4pKA","reference":1,"last_change_name_time":1617851174,"is_use_free_time":0,"is_online":1,"vip_end_time":0,"link_id":"0","invitation_coin":"0.00","alipay_account":"yishanhui123456@163.com","sort":0,"is_auth":1,"alipay_account_name":"","host_bay_video_proportion":"0","host_bay_phone_proportion":"0","host_bay_gift_proportion":"0","host_one_video_proportion":"0","host_direct_messages":"0","device_uuid":"D9B8A51A-990E-4FBF-A73B-C5D72449DCE4","host_guardian_proportion":"0","invite_buckle_probability":0,"invite_buckle_recharge_probability":0,"host_turntable_ratio":"0","province":"","city":"郑州市","is_open_auto_see_hi":0,"wx_number":"","qq_number":"","phone_number":"","wx_price":0,"qq_price":0,"phone_price":0,"orderno":0,"shielding_time":0,"login_way":1,"lat":"34.785694","lng":"113.686166","height":"178","weight":"56","constellation":"水瓶座","image_label":"强啊-无敌","introduce":"","host_bay_contact_proportion":"","diamond":0,"diamond_system":0,"glamour":512,"glamour_level_id":5,"wealth":435,"wealth_level_id":5,"has_declaration":1,"declaration":"http://xta.zzmzrj.com/idIosAudio/1618469789274.wav","overlapping_sound":"","love_status":"保密","declaration_length":4,"education":"博士","occupation":"传媒/艺术","is_settled":2,"remark_type_1":"游泳-瑜伽","remark_type_2":"欧美-摇滚","remark_type_3":"烤串-麻辣香锅","remark_type_4":"交付","remark_type_5":"刘慈欣-韩寒","remark_type_6":"丽江-搭理","juzhuqingkuang":"住自己买的房子","huanqiantongju":"接受","jieshouyuehui":"是","shifougoufang":"已购房","shifougouche":"已购车（豪华型）","update_nickname_time":0,"is_delete":0,"real_name":"易善晖","age":23,"id_no":"","nob":"http://xta.zzmzrj.com/admin/20210323/a36545159119b105e121f455ed6e4ded.png"},"description":{"description_id":4,"description":"夏之月销量第一时间发现了一款全新车型将在今年正式上市拒绝了哦看看你来了啊联系咯女。alt said he had the most recent time for her last week in January when the company opened in","family_id":4},"level":{"level_id":1,"level_name":"1级","min_activation":0,"max_activation":100,"max_people":100},"is_join":0},{"family_id":3,"family_name":"你，过来买燕窝","family_cover":"http://xta.zzmzrj.com/idImage/16178521571000.png","family_level_id":1,"family_people":11,"family_activation":0,"family_description_id":0,"family_active":1,"is_delete":0,"owner_uid":102714,"create_time":1617852430,"is_hot":0,"group_id":"@TGS#2MBI7XCHR","city":"郑州市","lat":"34.785771","lng":"113.686150","owner":{"id":102714,"user_type":2,"sex":1,"birthday":0,"last_login_time":1618560920,"score":0,"user_money":0,"coin_system":0,"coin":99245,"create_time":1617850407,"user_status":2,"user_login":"","user_pass":"","user_nickname":"挖藕","user_email":"","user_url":"","avatar":"http://xta.zzmzrj.com/idImage/1617851407844.png","signature":"","last_login_ip":"171.8.115.247","user_activation_key":"","mobile":"18530963337","more":null,"token":"4030b8bf126ef0b5c3d6f7ef137a4ad1","address":"郑州市","level":2,"noble_level":0,"status":1,"teacher":0,"income":137,"income_total":100235,"last_remove_message_time":1618630369,"fabulous":0,"is_reg_perfect":1,"custom_video_charging_coin":0,"is_open_do_not_disturb":0,"login_type":1,"plat_id":"oeV0v6UeHUitehVFWTdwJWFbTEPM","reference":1,"last_change_name_time":1617850891,"is_use_free_time":0,"is_online":1,"vip_end_time":0,"link_id":"0","invitation_coin":"0.00","alipay_account":"18530963337","sort":0,"is_auth":1,"alipay_account_name":"","host_bay_video_proportion":"0","host_bay_phone_proportion":"0","host_bay_gift_proportion":"0","host_one_video_proportion":"0","host_direct_messages":"0","device_uuid":"658A7A6A-D19A-4E7D-9DEF-723D1E59CB96","host_guardian_proportion":"0","invite_buckle_probability":0,"invite_buckle_recharge_probability":0,"host_turntable_ratio":"0","province":"","city":"郑州市","is_open_auto_see_hi":0,"wx_number":"","qq_number":"","phone_number":"","wx_price":0,"qq_price":0,"phone_price":0,"orderno":0,"shielding_time":0,"login_way":3,"lat":"34.785741","lng":"113.686257","height":"0","weight":"","constellation":"天秤座","image_label":"哇塞-逗比","introduce":"","host_bay_contact_proportion":"","diamond":0,"diamond_system":0,"glamour":26,"glamour_level_id":1,"wealth":43,"wealth_level_id":5,"has_declaration":0,"declaration":"","overlapping_sound":"","love_status":"","declaration_length":0,"education":"","occupation":"","is_settled":0,"remark_type_1":"跑步","remark_type_2":"","remark_type_3":"","remark_type_4":"","remark_type_5":"","remark_type_6":"","juzhuqingkuang":"","huanqiantongju":"接受","jieshouyuehui":"","shifougoufang":"","shifougouche":"","update_nickname_time":0,"is_delete":0,"real_name":"赵鹏恩","age":18,"id_no":"","nob":"http://xta.zzmzrj.com/admin/20210415/3c07a7780cac6c427a87fb0f1e65a577.png"},"description":{"description_id":3,"description":"过来买燕窝","family_id":3},"level":{"level_id":1,"level_name":"1级","min_activation":0,"max_activation":100,"max_people":100},"is_join":1}]
      */
 
     private int code;
     private String msg;
     /**
-     * family_id : 5
-     * family_name : 拾壹家族
-     * family_cover : http://xta.zzmzrj.com/idImage/1615861277219.png
+     * family_id : 4
+     * family_name : 大自然
+     * family_cover : http://xta.zzmzrj.com/idImage/1618025131932.png
      * family_level_id : 1
-     * family_people : 1
+     * family_people : 6
      * family_activation : 0
      * family_description_id : 0
      * family_active : 1
      * is_delete : 0
-     * owner_uid : 102604
-     * create_time : 2021-03-16 10:22:27
+     * owner_uid : 102712
+     * create_time : 1618025133
      * is_hot : 0
-     * group_id : @TGS#2FITPGBHE
+     * group_id : @TGS#2T4WH4CHF
      * city : 郑州市
-     * lat : 34.785849
-     * lng : 113.685894
-     * is_join : 1
+     * lat : 34.785698
+     * lng : 113.686226
+     * owner : {"id":102712,"user_type":2,"sex":2,"birthday":0,"last_login_time":1618476885,"score":570,"user_money":0,"coin_system":0,"coin":4294967185,"create_time":1617850275,"user_status":2,"user_login":"","user_pass":"","user_nickname":"浮沉","user_email":"","user_url":"","avatar":"http://xta.zzmzrj.com/idImage/1618469957977.png","signature":"","last_login_ip":"171.8.112.157","user_activation_key":"","mobile":"13525500144","more":null,"token":"f50b7b31962172d5781e7a1b18cfe36d","address":"郑州市","level":2,"noble_level":0,"status":1,"teacher":0,"income":99994469,"income_total":100000349,"last_remove_message_time":1618625827,"fabulous":0,"is_reg_perfect":1,"custom_video_charging_coin":0,"is_open_do_not_disturb":0,"login_type":0,"plat_id":"oeV0v6Wh1mWMJCWJHKBo5mdG4pKA","reference":1,"last_change_name_time":1617851174,"is_use_free_time":0,"is_online":1,"vip_end_time":0,"link_id":"0","invitation_coin":"0.00","alipay_account":"yishanhui123456@163.com","sort":0,"is_auth":1,"alipay_account_name":"","host_bay_video_proportion":"0","host_bay_phone_proportion":"0","host_bay_gift_proportion":"0","host_one_video_proportion":"0","host_direct_messages":"0","device_uuid":"D9B8A51A-990E-4FBF-A73B-C5D72449DCE4","host_guardian_proportion":"0","invite_buckle_probability":0,"invite_buckle_recharge_probability":0,"host_turntable_ratio":"0","province":"","city":"郑州市","is_open_auto_see_hi":0,"wx_number":"","qq_number":"","phone_number":"","wx_price":0,"qq_price":0,"phone_price":0,"orderno":0,"shielding_time":0,"login_way":1,"lat":"34.785694","lng":"113.686166","height":"178","weight":"56","constellation":"水瓶座","image_label":"强啊-无敌","introduce":"","host_bay_contact_proportion":"","diamond":0,"diamond_system":0,"glamour":512,"glamour_level_id":5,"wealth":435,"wealth_level_id":5,"has_declaration":1,"declaration":"http://xta.zzmzrj.com/idIosAudio/1618469789274.wav","overlapping_sound":"","love_status":"保密","declaration_length":4,"education":"博士","occupation":"传媒/艺术","is_settled":2,"remark_type_1":"游泳-瑜伽","remark_type_2":"欧美-摇滚","remark_type_3":"烤串-麻辣香锅","remark_type_4":"交付","remark_type_5":"刘慈欣-韩寒","remark_type_6":"丽江-搭理","juzhuqingkuang":"住自己买的房子","huanqiantongju":"接受","jieshouyuehui":"是","shifougoufang":"已购房","shifougouche":"已购车（豪华型）","update_nickname_time":0,"is_delete":0,"real_name":"易善晖","age":23,"id_no":"","nob":"http://xta.zzmzrj.com/admin/20210323/a36545159119b105e121f455ed6e4ded.png"}
+     * description : {"description_id":4,"description":"夏之月销量第一时间发现了一款全新车型将在今年正式上市拒绝了哦看看你来了啊联系咯女。alt said he had the most recent time for her last week in January when the company opened in","family_id":4}
      * level : {"level_id":1,"level_name":"1级","min_activation":0,"max_activation":100,"max_people":100}
-     * description : {"description_id":5,"description":"靠样子，半辈子，靠才华，一辈子","family_id":5}
-     * owner : {"id":102604,"user_type":2,"sex":2,"birthday":0,"last_login_time":1615859467,"score":0,"coin_system":0,"coin":0,"create_time":"2021-03-08 16:29:47","user_status":2,"user_login":"","user_pass":"","user_nickname":"帅哥2","user_email":"","user_url":"","avatar":"http://xta.zzmzrj.com/idImage/1615360951953.png","signature":"","last_login_ip":"171.8.114.45","user_activation_key":"","mobile":"15137830553","more":null,"token":"c8869250fb43feee585d13c8a030c778","address":"郑州市","level":1,"noble_level":0,"status":1,"teacher":0,"income":0,"income_total":0,"last_remove_message_time":1615859560,"fabulous":0,"is_reg_perfect":1,"custom_video_charging_coin":15,"is_open_do_not_disturb":0,"login_type":0,"plat_id":"","reference":0,"last_change_name_time":0,"is_use_free_time":0,"is_online":0,"vip_end_time":0,"link_id":"0","invitation_coin":"0.00","alipay_account":"","sort":0,"is_auth":1,"alipay_account_name":"","host_bay_video_proportion":"0","host_bay_phone_proportion":"0","host_bay_gift_proportion":"0","host_one_video_proportion":"0","host_direct_messages":"0","device_uuid":"3C66D59A-58B4-41F8-A459-CC809B9EE020","host_guardian_proportion":"0","invite_buckle_probability":0,"invite_buckle_recharge_probability":0,"host_turntable_ratio":"0","province":"","city":"郑州市","is_open_auto_see_hi":0,"wx_number":"","qq_number":"","phone_number":"","wx_price":0,"qq_price":0,"phone_price":0,"orderno":0,"shielding_time":0,"login_way":1,"lat":"34.785970","lng":"113.685911","height":"0","weight":"","constellation":"","image_label":"","introduce":"","host_bay_contact_proportion":"","diamond":0,"diamond_system":0,"glamour":0,"glamour_level_id":5,"wealth":5,"wealth_level_id":1,"has_declaration":1,"declaration":"http://xta.zzmzrj.com/idIosAudio/1615360349342.wav","overlapping_sound":"","love_status":"","declaration_length":0,"education":"","occupation":"","is_settled":2,"age":18,"noble":""}
+     * is_join : 0
      */
 
     private List<DataBean> data;
@@ -62,7 +62,7 @@ public class FamilyBean implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean implements Serializable{
+    public static class DataBean implements Serializable {
         private int family_id;
         private String family_name;
         private String family_cover;
@@ -73,74 +73,58 @@ public class FamilyBean implements Serializable {
         private int family_active;
         private int is_delete;
         private int owner_uid;
-        private String create_time;
+        private int create_time;
         private int is_hot;
         private String group_id;
         private String city;
         private String lat;
         private String lng;
-        private int is_join;
         /**
-         * level_id : 1
-         * level_name : 1级
-         * min_activation : 0
-         * max_activation : 100
-         * max_people : 100
-         */
-
-        private LevelBean level;
-        /**
-         * description_id : 5
-         * description : 靠样子，半辈子，靠才华，一辈子
-         * family_id : 5
-         */
-
-        private DescriptionBean description;
-        /**
-         * id : 102604
+         * id : 102712
          * user_type : 2
          * sex : 2
          * birthday : 0
-         * last_login_time : 1615859467
-         * score : 0
+         * last_login_time : 1618476885
+         * score : 570
+         * user_money : 0
          * coin_system : 0
-         * coin : 0
-         * create_time : 2021-03-08 16:29:47
+         * coin : 4294967185
+         * create_time : 1617850275
          * user_status : 2
          * user_login :
          * user_pass :
-         * user_nickname : 帅哥2
+         * user_nickname : 浮沉
          * user_email :
          * user_url :
-         * avatar : http://xta.zzmzrj.com/idImage/1615360951953.png
+         * avatar : http://xta.zzmzrj.com/idImage/1618469957977.png
          * signature :
-         * last_login_ip : 171.8.114.45
+         * last_login_ip : 171.8.112.157
          * user_activation_key :
-         * mobile : 15137830553
+         * mobile : 13525500144
          * more : null
-         * token : c8869250fb43feee585d13c8a030c778
+         * token : f50b7b31962172d5781e7a1b18cfe36d
          * address : 郑州市
-         * level : 1
+         * level : 2
          * noble_level : 0
          * status : 1
          * teacher : 0
-         * income : 0
-         * income_total : 0
-         * last_remove_message_time : 1615859560
+         * income : 99994469
+         * income_total : 100000349
+         * last_remove_message_time : 1618625827
          * fabulous : 0
          * is_reg_perfect : 1
-         * custom_video_charging_coin : 15
+         * custom_video_charging_coin : 0
          * is_open_do_not_disturb : 0
          * login_type : 0
-         * plat_id :
-         * reference : 0
-         * last_change_name_time : 0
+         * plat_id : oeV0v6Wh1mWMJCWJHKBo5mdG4pKA
+         * reference : 1
+         * last_change_name_time : 1617851174
          * is_use_free_time : 0
-         * is_online : 0
+         * is_online : 1
          * vip_end_time : 0
          * link_id : 0
          * invitation_coin : 0.00
-         * alipay_account :
+         * alipay_account : yishanhui123456@163.com
          * sort : 0
          * is_auth : 1
          * alipay_account_name :
@@ -149,7 +133,7 @@ public class FamilyBean implements Serializable {
          * host_bay_gift_proportion : 0
          * host_one_video_proportion : 0
          * host_direct_messages : 0
-         * device_uuid : 3C66D59A-58B4-41F8-A459-CC809B9EE020
+         * device_uuid : D9B8A51A-990E-4FBF-A73B-C5D72449DCE4
          * host_guardian_proportion : 0
          * invite_buckle_probability : 0
          * invite_buckle_recharge_probability : 0
@@ -166,33 +150,65 @@ public class FamilyBean implements Serializable {
          * orderno : 0
          * shielding_time : 0
          * login_way : 1
-         * lat : 34.785970
-         * lng : 113.685911
-         * height : 0
-         * weight :
-         * constellation :
-         * image_label :
+         * lat : 34.785694
+         * lng : 113.686166
+         * height : 178
+         * weight : 56
+         * constellation : 水瓶座
+         * image_label : 强啊-无敌
          * introduce :
          * host_bay_contact_proportion :
          * diamond : 0
          * diamond_system : 0
-         * glamour : 0
+         * glamour : 512
          * glamour_level_id : 5
-         * wealth : 5
-         * wealth_level_id : 1
+         * wealth : 435
+         * wealth_level_id : 5
          * has_declaration : 1
-         * declaration : http://xta.zzmzrj.com/idIosAudio/1615360349342.wav
+         * declaration : http://xta.zzmzrj.com/idIosAudio/1618469789274.wav
          * overlapping_sound :
-         * love_status :
-         * declaration_length : 0
-         * education :
-         * occupation :
+         * love_status : 保密
+         * declaration_length : 4
+         * education : 博士
+         * occupation : 传媒/艺术
          * is_settled : 2
-         * age : 18
-         * noble :
+         * remark_type_1 : 游泳-瑜伽
+         * remark_type_2 : 欧美-摇滚
+         * remark_type_3 : 烤串-麻辣香锅
+         * remark_type_4 : 交付
+         * remark_type_5 : 刘慈欣-韩寒
+         * remark_type_6 : 丽江-搭理
+         * juzhuqingkuang : 住自己买的房子
+         * huanqiantongju : 接受
+         * jieshouyuehui : 是
+         * shifougoufang : 已购房
+         * shifougouche : 已购车（豪华型）
+         * update_nickname_time : 0
+         * is_delete : 0
+         * real_name : 易善晖
+         * age : 23
+         * id_no :
+         * nob : http://xta.zzmzrj.com/admin/20210323/a36545159119b105e121f455ed6e4ded.png
          */
 
         private OwnerBean owner;
+        /**
+         * description_id : 4
+         * description : 夏之月销量第一时间发现了一款全新车型将在今年正式上市拒绝了哦看看你来了啊联系咯女。alt said he had the most recent time for her last week in January when the company opened in
+         * family_id : 4
+         */
+
+        private DescriptionBean description;
+        /**
+         * level_id : 1
+         * level_name : 1级
+         * min_activation : 0
+         * max_activation : 100
+         * max_people : 100
+         */
+
+        private LevelBean level;
+        private int is_join;
 
         public int getFamily_id() {
             return family_id;
@@ -274,11 +290,11 @@ public class FamilyBean implements Serializable {
             this.owner_uid = owner_uid;
         }
 
-        public String getCreate_time() {
+        public int getCreate_time() {
             return create_time;
         }
 
-        public void setCreate_time(String create_time) {
+        public void setCreate_time(int create_time) {
             this.create_time = create_time;
         }
 
@@ -322,20 +338,12 @@ public class FamilyBean implements Serializable {
             this.lng = lng;
         }
 
-        public int getIs_join() {
-            return is_join;
+        public OwnerBean getOwner() {
+            return owner;
         }
 
-        public void setIs_join(int is_join) {
-            this.is_join = is_join;
-        }
-
-        public LevelBean getLevel() {
-            return level;
-        }
-
-        public void setLevel(LevelBean level) {
-            this.level = level;
+        public void setOwner(OwnerBean owner) {
+            this.owner = owner;
         }
 
         public DescriptionBean getDescription() {
@@ -346,102 +354,33 @@ public class FamilyBean implements Serializable {
             this.description = description;
         }
 
-        public OwnerBean getOwner() {
-            return owner;
+        public LevelBean getLevel() {
+            return level;
         }
 
-        public void setOwner(OwnerBean owner) {
-            this.owner = owner;
+        public void setLevel(LevelBean level) {
+            this.level = level;
         }
 
-        public static class LevelBean implements Serializable{
-            private int level_id;
-            private String level_name;
-            private int min_activation;
-            private int max_activation;
-            private int max_people;
-
-            public int getLevel_id() {
-                return level_id;
-            }
-
-            public void setLevel_id(int level_id) {
-                this.level_id = level_id;
-            }
-
-            public String getLevel_name() {
-                return level_name;
-            }
-
-            public void setLevel_name(String level_name) {
-                this.level_name = level_name;
-            }
-
-            public int getMin_activation() {
-                return min_activation;
-            }
-
-            public void setMin_activation(int min_activation) {
-                this.min_activation = min_activation;
-            }
-
-            public int getMax_activation() {
-                return max_activation;
-            }
-
-            public void setMax_activation(int max_activation) {
-                this.max_activation = max_activation;
-            }
-
-            public int getMax_people() {
-                return max_people;
-            }
-
-            public void setMax_people(int max_people) {
-                this.max_people = max_people;
-            }
+        public int getIs_join() {
+            return is_join;
         }
 
-        public static class DescriptionBean implements Serializable {
-            private int description_id;
-            private String description;
-            private int family_id;
-
-            public int getDescription_id() {
-                return description_id;
-            }
-
-            public void setDescription_id(int description_id) {
-                this.description_id = description_id;
-            }
-
-            public String getDescription() {
-                return description;
-            }
-
-            public void setDescription(String description) {
-                this.description = description;
-            }
-
-            public int getFamily_id() {
-                return family_id;
-            }
-
-            public void setFamily_id(int family_id) {
-                this.family_id = family_id;
-            }
+        public void setIs_join(int is_join) {
+            this.is_join = is_join;
         }
 
-        public static class OwnerBean implements Serializable{
+        public static class OwnerBean implements Serializable {
             private int id;
             private int user_type;
             private int sex;
             private int birthday;
             private int last_login_time;
             private int score;
+            private int user_money;
             private int coin_system;
-            private int coin;
-            private String create_time;
+            private String coin;
+            private int create_time;
             private int user_status;
             private String user_login;
             private String user_pass;
@@ -524,8 +463,23 @@ public class FamilyBean implements Serializable {
             private String education;
             private String occupation;
             private int is_settled;
+            private String remark_type_1;
+            private String remark_type_2;
+            private String remark_type_3;
+            private String remark_type_4;
+            private String remark_type_5;
+            private String remark_type_6;
+            private String juzhuqingkuang;
+            private String huanqiantongju;
+            private String jieshouyuehui;
+            private String shifougoufang;
+            private String shifougouche;
+            private int update_nickname_time;
+            private int is_delete;
+            private String real_name;
             private int age;
-            private String noble;
+            private String id_no;
+            private String nob;
 
             public int getId() {
                 return id;
@@ -575,6 +529,14 @@ public class FamilyBean implements Serializable {
                 this.score = score;
             }
 
+            public int getUser_money() {
+                return user_money;
+            }
+
+            public void setUser_money(int user_money) {
+                this.user_money = user_money;
+            }
+
             public int getCoin_system() {
                 return coin_system;
             }
@@ -583,19 +545,19 @@ public class FamilyBean implements Serializable {
                 this.coin_system = coin_system;
             }
 
-            public int getCoin() {
+            public String getCoin() {
                 return coin;
             }
 
-            public void setCoin(int coin) {
+            public void setCoin(String coin) {
                 this.coin = coin;
             }
 
-            public String getCreate_time() {
+            public int getCreate_time() {
                 return create_time;
             }
 
-            public void setCreate_time(String create_time) {
+            public void setCreate_time(int create_time) {
                 this.create_time = create_time;
             }
 
@@ -1255,6 +1217,118 @@ public class FamilyBean implements Serializable {
                 this.is_settled = is_settled;
             }
 
+            public String getRemark_type_1() {
+                return remark_type_1;
+            }
+
+            public void setRemark_type_1(String remark_type_1) {
+                this.remark_type_1 = remark_type_1;
+            }
+
+            public String getRemark_type_2() {
+                return remark_type_2;
+            }
+
+            public void setRemark_type_2(String remark_type_2) {
+                this.remark_type_2 = remark_type_2;
+            }
+
+            public String getRemark_type_3() {
+                return remark_type_3;
+            }
+
+            public void setRemark_type_3(String remark_type_3) {
+                this.remark_type_3 = remark_type_3;
+            }
+
+            public String getRemark_type_4() {
+                return remark_type_4;
+            }
+
+            public void setRemark_type_4(String remark_type_4) {
+                this.remark_type_4 = remark_type_4;
+            }
+
+            public String getRemark_type_5() {
+                return remark_type_5;
+            }
+
+            public void setRemark_type_5(String remark_type_5) {
+                this.remark_type_5 = remark_type_5;
+            }
+
+            public String getRemark_type_6() {
+                return remark_type_6;
+            }
+
+            public void setRemark_type_6(String remark_type_6) {
+                this.remark_type_6 = remark_type_6;
+            }
+
+            public String getJuzhuqingkuang() {
+                return juzhuqingkuang;
+            }
+
+            public void setJuzhuqingkuang(String juzhuqingkuang) {
+                this.juzhuqingkuang = juzhuqingkuang;
+            }
+
+            public String getHuanqiantongju() {
+                return huanqiantongju;
+            }
+
+            public void setHuanqiantongju(String huanqiantongju) {
+                this.huanqiantongju = huanqiantongju;
+            }
+
+            public String getJieshouyuehui() {
+                return jieshouyuehui;
+            }
+
+            public void setJieshouyuehui(String jieshouyuehui) {
+                this.jieshouyuehui = jieshouyuehui;
+            }
+
+            public String getShifougoufang() {
+                return shifougoufang;
+            }
+
+            public void setShifougoufang(String shifougoufang) {
+                this.shifougoufang = shifougoufang;
+            }
+
+            public String getShifougouche() {
+                return shifougouche;
+            }
+
+            public void setShifougouche(String shifougouche) {
+                this.shifougouche = shifougouche;
+            }
+
+            public int getUpdate_nickname_time() {
+                return update_nickname_time;
+            }
+
+            public void setUpdate_nickname_time(int update_nickname_time) {
+                this.update_nickname_time = update_nickname_time;
+            }
+
+            public int getIs_delete() {
+                return is_delete;
+            }
+
+            public void setIs_delete(int is_delete) {
+                this.is_delete = is_delete;
+            }
+
+            public String getReal_name() {
+                return real_name;
+            }
+
+            public void setReal_name(String real_name) {
+                this.real_name = real_name;
+            }
+
             public int getAge() {
                 return age;
             }
@@ -1263,12 +1337,98 @@ public class FamilyBean implements Serializable {
                 this.age = age;
             }
 
-            public String getNoble() {
-                return noble;
+            public String getId_no() {
+                return id_no;
             }
 
-            public void setNoble(String noble) {
-                this.noble = noble;
+            public void setId_no(String id_no) {
+                this.id_no = id_no;
+            }
+
+            public String getNob() {
+                return nob;
+            }
+
+            public void setNob(String nob) {
+                this.nob = nob;
+            }
+        }
+
+        public static class DescriptionBean implements Serializable {
+            private int description_id;
+            private String description;
+            private int family_id;
+
+            public int getDescription_id() {
+                return description_id;
+            }
+
+            public void setDescription_id(int description_id) {
+                this.description_id = description_id;
+            }
+
+            public String getDescription() {
+                return description;
+            }
+
+            public void setDescription(String description) {
+                this.description = description;
+            }
+
+            public int getFamily_id() {
+                return family_id;
+            }
+
+            public void setFamily_id(int family_id) {
+                this.family_id = family_id;
+            }
+        }
+
+        public static class LevelBean implements Serializable {
+            private int level_id;
+            private String level_name;
+            private int min_activation;
+            private int max_activation;
+            private int max_people;
+
+            public int getLevel_id() {
+                return level_id;
+            }
+
+            public void setLevel_id(int level_id) {
+                this.level_id = level_id;
+            }
+
+            public String getLevel_name() {
+                return level_name;
+            }
+
+            public void setLevel_name(String level_name) {
+                this.level_name = level_name;
+            }
+
+            public int getMin_activation() {
+                return min_activation;
+            }
+
+            public void setMin_activation(int min_activation) {
+                this.min_activation = min_activation;
+            }
+
+            public int getMax_activation() {
+                return max_activation;
+            }
+
+            public void setMax_activation(int max_activation) {
+                this.max_activation = max_activation;
+            }
+
+            public int getMax_people() {
+                return max_people;
+            }
+
+            public void setMax_people(int max_people) {
+                this.max_people = max_people;
             }
         }
     }
