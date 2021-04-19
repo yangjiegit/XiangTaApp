@@ -10,13 +10,21 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.muse.xiangta.R;
+import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseActivity;
+import com.muse.xiangta.inter.JsonCallback;
 import com.muse.xiangta.modle.VideoBean;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.utils.GlideImgManager;
+import com.muse.xiangta.utils.StringUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 public class VideoDetailsActivity extends BaseActivity {
 
@@ -30,6 +38,8 @@ public class VideoDetailsActivity extends BaseActivity {
     TextView tv_content;
     @BindView(R.id.iv_head)
     ImageView iv_head;
+    @BindView(R.id.iv_guanzhu)
+    ImageView iv_guanzhu;
 
     private VideoBean.DataBean mData;
 
@@ -94,6 +104,12 @@ public class VideoDetailsActivity extends BaseActivity {
             tv_age.setCompoundDrawables(imgnan, null, null, null); //设置左图标
         } else {
             tv_age.setCompoundDrawables(imgnv, null, null, null); //设置左图标
+        }
+
+        if (mData.getFocus() == 0) {
+            iv_guanzhu.setImageResource(R.mipmap.img_gz_jia);
+        } else {
+            iv_guanzhu.setImageResource(R.mipmap.img_gz_jian);
         }
 
         tv_age.setText(mData.getAge() + "");
@@ -181,7 +197,7 @@ public class VideoDetailsActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_back, R.id.ll_button, R.id.tv_message})
+    @OnClick({R.id.iv_back, R.id.ll_button, R.id.tv_message, R.id.iv_guanzhu})
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -195,7 +211,49 @@ public class VideoDetailsActivity extends BaseActivity {
             case R.id.tv_message:
                 showChatPage();
                 break;
+            case R.id.iv_guanzhu:
+                loveThisPlayer();
+                break;
         }
+    }
+
+    private void loveThisPlayer() {
+        Api.doLoveTheUser(
+                String.valueOf(mData.getUid()),
+                uId,
+                uToken,
+                new JsonCallback() {
+                    @Override
+                    public Context getContextToJson() {
+                        return getNowContext();
+                    }
+
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        super.onSuccess(s, call, response);
+                        if (!StringUtils.isEmpty(s)) {
+                            try {
+                                int code = new JSONObject(s).getInt("code");
+                                int follow = new JSONObject(s).getInt("follow");
+                                if (code == 1) {
+                                    if (follow == 1) {
+                                        mData.setFocus(1);
+                                    } else {
+                                        mData.setFocus(0);
+                                    }
+                                    if (mData.getFocus() == 1) {
+                                        iv_guanzhu.setImageResource(R.mipmap.img_gz_jian);
+                                    } else {
+                                        iv_guanzhu.setImageResource(R.mipmap.img_gz_jia);
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+        );
     }
 
     private void showChatPage() {

@@ -119,7 +119,7 @@ public class VideoDatingActivity extends BaseActivity {
                         entity.getImg(), (ImageView) holder.getView(R.id.iv_head));
                 holder.setText(R.id.tv_content, entity.getUser_nickname());
                 holder.setText(R.id.tv_age, entity.getAge() + "岁");
-//                holder.setText(R.id.tv_address,entity.get);
+                holder.setText(R.id.tv_address, entity.getCity());
             }
 
             @Override
