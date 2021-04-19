@@ -34,16 +34,16 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="@dimen/dp_40">
 
 
-                <View
-
+                <ImageView
                     android:id="@+id/left"
-                    android:layout_width="130dp"
-                    android:layout_height="162dp"
+                    android:layout_width="@dimen/dp_70"
+                    android:layout_height="@dimen/dp_70"
                     android:layout_centerVertical="true"
-                    android:background="@mipmap/invite_icon" />
+                    android:layout_margin="@dimen/dp_10"
+                    android:src="@mipmap/img_yaoqing" />
 
                 <LinearLayout
                     android:id="@+id/center"
@@ -56,22 +56,22 @@
                     android:paddingBottom="40dp">
 
                     <TextView
-                        android:visibility="invisible"
                         android:id="@+id/ye"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textColor="@color/white"
                         android:textSize="27dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
 
                     <TextView
-                        android:visibility="invisible"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="可提现金额"
                         android:textColor="@color/white"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:visibility="invisible" />
 
 
                 </LinearLayout>
@@ -82,6 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginTop="50dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="15dp"
