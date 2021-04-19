@@ -137,6 +137,8 @@ public class LiveConstant {
 
         public static final int MSG_ALL_RED_ENVELOPES = 800;//红包
 
+        public static final int MSG_APPROACH = 801;//进场特效
+
         public static final int CY_CHAT_CAIQUAN = 802;//接受猜拳
 
         public static final int CY_CHAT_SHAIZI = 803;//接受骰子
