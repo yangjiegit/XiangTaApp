@@ -380,6 +380,69 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
         }
     }
 
+
+    private void dialog2(int type) {
+        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.show();  //注意：必须在window.setContentView之前show
+        Window window = dialog.getWindow();
+        window.setContentView(R.layout.dialog_koufei);
+        // 这样子 第二和第三个按钮的空隙才会显示出来
+//        window.setGravity(Gravity.BOTTOM);//这个也很重要，将弹出菜单的位置设置为底部
+        window.setWindowAnimations(R.style.animation_bottom_menu);//菜单进入和退出屏幕的动画，实现了上下滑动的动画效果
+        window.setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);//设置菜单的尺寸
+
+        TextView tv_text = dialog.findViewById(R.id.tv_text);
+
+        TextView tv_comm1 = dialog.findViewById(R.id.tv_comm1);
+        TextView tv_comm2 = dialog.findViewById(R.id.tv_comm2);
+
+        tv_comm1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        tv_comm2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (type == 1) {
+                    callVoice();
+                } else {
+                    callThisPlayer();
+                }
+                dialog.dismiss();
+            }
+        });
+
+        Api.getUserChargeInfo(uId, uToken, targetUserId, new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                if (!StringUtils.isEmpty(s)) {
+                    try {
+                        int code = new JSONObject(s).getInt("code");
+                        if (code == 1) {
+                            JSONObject jsonObject = new JSONObject(s).getJSONObject("data");
+                            String voice_chat = jsonObject.getString("voice_chat");
+                            String video_chat = jsonObject.getString("video_chat");
+                            if (type == 1) {
+                                //音频
+//                                本次通话，你将支付%@钻石/分钟，是否确定拨打？
+                                tv_text.setText("本次通话，你将支付" + voice_chat + "钻石/分钟，是否确定拨打");
+                            } else {
+                                tv_text.setText("本次视频，你将支付" + video_chat + "钻石/分钟，是否确定拨打");
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+    }
+
     private void dialog() {
         final AlertDialog dialog = new AlertDialog.Builder(this).create();
         dialog.show();  //注意：必须在window.setContentView之前show
@@ -397,7 +460,9 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
         tv_yuyin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callVoice();
+//                callVoice();
+//                dialog.dismiss();
+                dialog2(1);
                 dialog.dismiss();
             }
         });
@@ -405,7 +470,9 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
         tv_shipin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callThisPlayer();
+//                callThisPlayer();
+//                dialog.dismiss();
+                dialog2(2);
                 dialog.dismiss();
             }
         });

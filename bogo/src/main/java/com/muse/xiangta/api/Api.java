@@ -2934,5 +2934,17 @@ public class Api {
                 .execute(stringCallback);
     }
 
+    /*
+     * 获取个人收费信息
+     * */
+    public static void getUserChargeInfo(String uid, String token, String to_uid, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/user_api/get_user_charge_info")
+                .params("uid", uid)
+                .params("token", token)
+                .params("to_uid", to_uid)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
 
 }
