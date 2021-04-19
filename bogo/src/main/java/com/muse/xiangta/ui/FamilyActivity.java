@@ -117,11 +117,17 @@ public class FamilyActivity extends BaseActivity {
         ll_new.setOnClickListener(this);
     }
 
-    @OnClick(R.id.iv_back)
+    @OnClick({R.id.iv_back, R.id.iv_sc})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.iv_sc:
+                String intStr1 = "13";
+                String url1 = "http://xiangta.zzmzrj.com/admin/public/index.php/page/article/index/id/" + intStr1 + ".html";
+                startActivity(new Intent(this, XieYiActivity.class)
+                        .putExtra("title", "家族手册").putExtra("url", url1));
+                break;
             case R.id.iv_back:
                 finish();
                 break;

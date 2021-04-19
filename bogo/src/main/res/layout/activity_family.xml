@@ -34,6 +34,7 @@
         android:background="#ffe0e0e0" />
 
     <ImageView
+        android:id="@+id/iv_sc"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         android:layout_marginLeft="@dimen/dp_10"
