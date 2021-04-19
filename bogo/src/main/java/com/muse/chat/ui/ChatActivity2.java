@@ -252,7 +252,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && firstItem == 0) {
                     //如果拉到顶端读取更多消息
-                    presenter.getMessage(messageList.size() > 0 ? messageList.get(0).getMessage() : null);
+//                    presenter.getMessage(messageList.size() > 0 ? messageList.get(0).getMessage() : null);
 
                 }
             }
