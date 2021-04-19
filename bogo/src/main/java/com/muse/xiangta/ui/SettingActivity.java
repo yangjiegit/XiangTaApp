@@ -117,6 +117,10 @@ public class SettingActivity extends BaseActivity {
         itemVersionView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemVersionView.setDetailText(version);
 
+        QMUICommonListItemView itemBlackView = groupListView.createItemView(getString(R.string.black_list));
+        itemBlackView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+        itemBlackView.setId(R.id.sett_black);
+
         QMUICommonListItemView itemLoginOutView = groupListView.createItemView(getString(R.string.login_out));
         itemLoginOutView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         itemLoginOutView.setId(R.id.sett_login_out);
@@ -165,6 +169,7 @@ public class SettingActivity extends BaseActivity {
                 .addItemView(itemFeedback, this)//意见反馈
                 .addItemView(HelpCenter, this) //帮助中心
                 //清除缓存
+                .addItemView(itemBlackView, this)//黑名单
                 .addItemView(itemSettingVideoMoney, this)//设置按时付费价格
                 .addItemView(itemSetCustomSayHiMsg, this)//自定义打招呼话术
                 .addItemView(PrivacySettings, this)//隐私设置
@@ -227,7 +232,7 @@ public class SettingActivity extends BaseActivity {
             case R.id.all_backbtn:
                 finish();
                 break;
-            case R.id.sett_black:
+            case R.id.sett_black://黑名单
                 intent = new Intent(this, BlackListActivity.class);
                 startActivity(intent);
                 break;

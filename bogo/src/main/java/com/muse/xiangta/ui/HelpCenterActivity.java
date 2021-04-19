@@ -41,6 +41,8 @@ public class HelpCenterActivity extends BaseActivity {
     private List<HelpIndexBean.DataBean.HotHelpBean> mList2 = new ArrayList<>();
     private CommonRecyclerViewAdapter<HelpIndexBean.DataBean.HotHelpBean> mAdapter2;
 
+    private HelpIndexBean helpIndexBean;
+
 
     @Override
     protected Context getNowContext() {
@@ -57,13 +59,19 @@ public class HelpCenterActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.iv_back)
+    @OnClick({R.id.iv_back, R.id.iv_title})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.iv_title:
+//                String intStr1 = "12";
+//                String url1 = "http://xiangta.zzmzrj.com/admin/public/index.php/page/article/index/id/" + intStr1 + ".html";
+                startActivity(new Intent(this, XieYiActivity.class)
+                        .putExtra("title", "绿色公约").putExtra("url", helpIndexBean.getData().getGongyue().getUrl()));
                 break;
         }
     }
@@ -138,9 +146,9 @@ public class HelpCenterActivity extends BaseActivity {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 if (!StringUtils.isEmpty(s)) {
-                    HelpIndexBean helpIndexBean = new Gson().fromJson(s, HelpIndexBean.class);
-                    GlideImgManager.loadImage(HelpCenterActivity.this
-                            , helpIndexBean.getData().getGongyue().getUrl(), iv_title);
+                    helpIndexBean = new Gson().fromJson(s, HelpIndexBean.class);
+//                    GlideImgManager.loadImage(HelpCenterActivity.this
+//                            , helpIndexBean.getData().getGongyue().getUrl(), iv_title);
 
                     if (helpIndexBean.getData().getHelp().size() > 0) {
                         for (int i = 0; i < helpIndexBean.getData().getHelp().size(); i++) {
