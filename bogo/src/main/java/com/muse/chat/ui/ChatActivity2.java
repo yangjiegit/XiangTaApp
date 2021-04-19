@@ -54,6 +54,7 @@ import com.muse.xiangta.base.BaseActivity;
 import com.muse.xiangta.dialog.CuckooRewardCoinDialog;
 import com.muse.xiangta.dialog.GiftBottomDialog;
 import com.muse.xiangta.event.EventChatClickPrivateImgMessage;
+import com.muse.xiangta.event.EventChatClickPrivateRedEnvelopesMessage;
 import com.muse.xiangta.inter.JsonCallback;
 import com.muse.xiangta.json.FamilyBean;
 import com.muse.xiangta.json.JsonRequest;
@@ -71,6 +72,7 @@ import com.muse.xiangta.ui.FamilyDetailsActivity;
 import com.muse.xiangta.ui.MemberGroupListActivity;
 import com.muse.xiangta.ui.PrivatePhotoActivity;
 import com.muse.xiangta.ui.RankingListActivity;
+import com.muse.xiangta.ui.RedEnvelopesDetailsActivity;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.ui.view.LastInputEditText;
 import com.muse.xiangta.utils.Utils;
@@ -628,6 +630,29 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
 
         Message message = new CustomMessage(img, LiveConstant.CustomMsgType.MSG_PRIVATE_GIFT);
         presenter.sendMessage(message.getMessage());
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventClickPrivateRedEnvelopes(EventChatClickPrivateRedEnvelopesMessage var1) {
+        Api.red_envelope_receive(uId, uToken, var1.getId(), new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                if (!com.muse.xiangta.utils.StringUtils.isEmpty(s)) {
+                    try {
+                        int code = new JSONObject(s).getInt("code");
+                        if (code == 1) {
+                            //领取成功
+//                            跳转到红包详情
+                            startActivity(new Intent(ChatActivity2.this, RedEnvelopesDetailsActivity.class)
+                                    .putExtra("red_envelope_id", var1.getId()));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     /**
