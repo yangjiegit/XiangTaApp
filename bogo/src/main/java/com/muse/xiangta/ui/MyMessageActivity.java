@@ -1,7 +1,9 @@
 package com.muse.xiangta.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -43,6 +45,9 @@ public class MyMessageActivity extends BaseActivity {
     View view_fensi;
     @BindView(R.id.view_haoyou)
     View view_haoyou;
+
+    @BindView(R.id.iv_wen)
+    ImageView iv_wen;
 
     private int page;
     private int type;
@@ -120,11 +125,18 @@ public class MyMessageActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.iv_back)
+    @OnClick({R.id.iv_back, R.id.iv_wen})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.iv_wen:
+                //问题
+                String intStr1 = "15";
+                String url1 = "http://xiangta.zzmzrj.com/admin/public/index.php/page/article/index/id/" + intStr1 + ".html";
+                startActivity(new Intent(this, XieYiActivity.class)
+                        .putExtra("title", "亲密度规则").putExtra("url", url1));
+                break;
             case R.id.iv_back:
                 finish();
                 break;

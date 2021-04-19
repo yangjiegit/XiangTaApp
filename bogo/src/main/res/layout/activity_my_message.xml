@@ -137,12 +137,13 @@
 
 
         <ImageView
+            android:id="@+id/iv_wen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="@dimen/dp_10"
             android:src="@mipmap/img_wen"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
     </LinearLayout>
 
