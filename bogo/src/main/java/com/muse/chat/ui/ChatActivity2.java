@@ -47,7 +47,6 @@ import com.muse.chat.model.VoiceMessage;
 import com.muse.chat.utils.FileUtil;
 import com.muse.chat.utils.MediaUtil;
 import com.muse.chat.utils.RecorderUtil;
-import com.muse.xiangta.BuildConfig;
 import com.muse.xiangta.CuckooApplication;
 import com.muse.xiangta.LiveConstant;
 import com.muse.xiangta.R;
@@ -80,6 +79,7 @@ import com.muse.xiangta.ui.RedEnvelopesDetailsActivity;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.ui.view.LastInputEditText;
 import com.muse.xiangta.utils.Utils;
+import com.qmuiteam.qmui.BuildConfig;
 import com.tencent.imsdk.TIMConversationType;
 import com.tencent.imsdk.TIMCustomElem;
 import com.tencent.imsdk.TIMElem;
@@ -203,6 +203,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         StatusBarUtil.setColor(this, getResources().getColor(R.color.white), 0);
         StatusBarUtil.setLightMode(this);
 
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         identify = getIntent().getStringExtra("identify");
         userName = getIntent().getStringExtra("user_nickname");
@@ -212,6 +213,12 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         }
         if (null != getIntent().getSerializableExtra("dataBean")) {
             dataBean = (FamilyBean.DataBean) getIntent().getSerializableExtra("dataBean");
+        }
+
+
+        if (null != dataBean) {
+            //家族发消息
+            activation("1");
         }
 
 //        mIvPrivateChat = findViewById(R.id.iv_private_img);
@@ -705,6 +712,12 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         if (!checkSendMessage(SEND_IMAGE_MESSAGE)) {
             return;
         }
+
+        if (null != dataBean) {
+            //家族发消息
+            activation("2");
+        }
+
         doSwitchMessageSend(SEND_IMAGE_MESSAGE);
     }
 
@@ -763,23 +776,32 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
      */
     @Override
     public void sendText() {
-
         if (TextUtils.isEmpty(input.getText())) {
             showToast("发送内容不能为空!");
             return;
         }
-
         if (!Utils.dirtyWordFilter(input.getText().toString())) {
             showToast("发送内容包含敏感词汇!");
             return;
         }
-
         if (!checkSendMessage(SEND_TEXT_MESSAGE)) {
             return;
         }
+        if (null != dataBean) {
+            //家族发消息
+            activation("2");
+        }
 
         doSwitchMessageSend(SEND_TEXT_MESSAGE);
+    }
 
+    private void activation(String type) {
+        Api.activation(uId, uToken, type, family_id, new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+
+            }
+        });
     }
 
     /**
@@ -824,7 +846,10 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                 if (!checkSendMessage(SEND_VOICE_MESSAGE)) {
                     return;
                 }
-
+                if (null != dataBean) {
+                    //家族发消息
+                    activation("2");
+                }
                 doSwitchMessageSend(SEND_VOICE_MESSAGE);
             }
         }
@@ -1005,6 +1030,11 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         customMsgGuessing.fillData(sendBean);
         Message message = new CustomMessage(customMsgGuessing, LiveConstant.CustomMsgType.CY_CHAT_SHAIZI);
         presenter.sendMessage(message.getMessage());
+
+        if (null != dataBean) {
+            //家族发消息
+            activation("2");
+        }
     }
 
     private void caiquan() {
@@ -1018,6 +1048,11 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         customMsgGuessing.fillData(sendBean);
         Message message = new CustomMessage(customMsgGuessing, LiveConstant.CustomMsgType.CY_CHAT_CAIQUAN);
         presenter.sendMessage(message.getMessage());
+
+        if (null != dataBean) {
+            //家族发消息
+            activation("2");
+        }
     }
 
     private void dialog_hongbao() {
@@ -1047,6 +1082,12 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                     showToast("请输入有效红包数量");
                     return;
                 } else {
+                    if (null != dataBean) {
+                        //家族发消息
+                        activation("4");
+                    }
+
+
                     if (com.muse.xiangta.utils.StringUtils.isEmpty(et_title.getText().toString().trim())) {
                         distribute("恭喜发财",
                                 et_number.getText().toString().trim(), et_number2.getText().toString().trim(), dialog);
@@ -1198,6 +1239,11 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         } else if (requestCode == RESULT_SELECT_PRIVATE_PHOTO) {
             if (resultCode == RESULT_OK) {
                 sendPrivateImg(data.getStringExtra("img_id"), data.getStringExtra("img_url"));
+
+                if (null != dataBean) {
+                    //家族发消息
+                    activation("2");
+                }
             }
         }
 
@@ -1334,6 +1380,11 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         gift.fillData(sendGif.getSend());
         Message message = new CustomMessage(gift, LiveConstant.CustomMsgType.MSG_PRIVATE_GIFT);
         presenter.sendMessage(message.getMessage());
+
+        if (null != dataBean) {
+            //家族发消息
+            activation("3");
+        }
         //giftBottomDialog.dismiss();
     }
 

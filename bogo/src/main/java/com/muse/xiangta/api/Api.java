@@ -2961,5 +2961,18 @@ public class Api {
                 .execute(stringCallback);
     }
 
+    /*
+     * 增加活跃度
+     * */
+    public static void activation(String uid, String token, String type, String family_id, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/family/activation")
+                .params("uid", uid)
+                .params("token", token)
+                .params("type", type)
+                .params("family_id", family_id)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
 
 }
