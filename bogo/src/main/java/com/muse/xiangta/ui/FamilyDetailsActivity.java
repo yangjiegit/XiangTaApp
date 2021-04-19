@@ -67,7 +67,6 @@ public class FamilyDetailsActivity extends BaseActivity {
 
     private int page = 1;
     private int limit = 10;
-    private int type;
 
     private List<MemberItemBean.DataBean> mList = new ArrayList<>();
     private CommonRecyclerViewAdapter<MemberItemBean.DataBean> mAdapter;
@@ -95,13 +94,12 @@ public class FamilyDetailsActivity extends BaseActivity {
     @Override
     protected void initData() {
         mData = (FamilyBean.DataBean) getIntent().getSerializableExtra("data");
-        type = getIntent().getIntExtra("type", 0);
-        if (type == 2) {
-//            tv_comm.setVisibility(View.GONE);
+        if (mData.getIs_join() == 2) {
+            tv_comm.setText("待审核");
+        } else if (mData.getIs_join() == 1) {
             tv_comm.setText("退出家族");
         } else {
             tv_comm.setText("申请加入");
-//            tv_comm.setVisibility(View.VISIBLE);
         }
 
         initRecyclerView();
@@ -201,9 +199,9 @@ public class FamilyDetailsActivity extends BaseActivity {
                         .putExtra("title", "活跃度说明").putExtra("url", url1));
                 break;
             case R.id.tv_comm:
-                if (type == 2) {
+                if (mData.getIs_join() == 1) {
                     quit();
-                } else {
+                } else if (mData.getIs_join() == 0) {
                     joinData();
                 }
                 break;
@@ -241,7 +239,7 @@ public class FamilyDetailsActivity extends BaseActivity {
                     try {
                         int code = new JSONObject(s).getInt("code");
                         if (code == 1) {
-                            showToastMsg("加入成功");
+                            showToastMsg("申请成功");
                             finish();
                         } else {
                             showToastMsg(new JSONObject(s).getString("msg"));

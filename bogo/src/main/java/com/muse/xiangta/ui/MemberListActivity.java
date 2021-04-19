@@ -41,6 +41,8 @@ public class MemberListActivity extends BaseActivity {
     SwipeRefreshLayout sw_refresh;
     @BindView(R.id.rv_data)
     RecyclerView rv_data;
+    @BindView(R.id.tv_sq)
+    TextView tv_sq;
 
     private List<MemberItemBean.DataBean> mList = new ArrayList<>();
     private CommonRecyclerViewAdapter<MemberItemBean.DataBean> mAdapter;
@@ -148,11 +150,15 @@ public class MemberListActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.iv_back)
+    @OnClick({R.id.iv_back, R.id.tv_sq})
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.tv_sq:
+                //申请列表
+
+                break;
             case R.id.iv_back:
                 finish();
                 break;

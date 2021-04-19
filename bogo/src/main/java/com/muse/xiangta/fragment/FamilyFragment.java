@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.lzy.okgo.callback.StringCallback;
-import com.muse.chat.ui.ChatActivity;
 import com.muse.chat.ui.ChatActivity2;
 import com.muse.xiangta.R;
 import com.muse.xiangta.adapter.CommonRecyclerViewAdapter;
@@ -23,7 +22,6 @@ import com.muse.xiangta.api.Api;
 import com.muse.xiangta.base.BaseFragment;
 import com.muse.xiangta.json.FamilyBean;
 import com.muse.xiangta.ui.FamilyDetailsActivity;
-import com.muse.xiangta.ui.GroupChatActivity;
 import com.muse.xiangta.utils.GlideImgManager;
 import com.muse.xiangta.utils.StringUtils;
 import com.tencent.imsdk.TIMConversationType;
@@ -154,7 +152,11 @@ public class FamilyFragment extends BaseFragment {
 
                 if (entity.getIs_join() == 1) {
                     tv_dashan.setVisibility(View.GONE);
+                } else if (entity.getIs_join() == 2) {
+                    tv_dashan.setText("待审核");
+                    tv_dashan.setVisibility(View.VISIBLE);
                 } else {
+                    tv_dashan.setText("加入");
                     tv_dashan.setVisibility(View.VISIBLE);
                 }
             }

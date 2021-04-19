@@ -295,8 +295,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                         public void onClick(View view) {
                             startActivityForResult(new Intent(
                                     ChatActivity2.this, FamilyDetailsActivity.class
-                            ).putExtra("data", dataBean)
-                                    .putExtra("type", 2), 20);
+                            ).putExtra("data", dataBean), 20);
                         }
                     });
                 } else {
