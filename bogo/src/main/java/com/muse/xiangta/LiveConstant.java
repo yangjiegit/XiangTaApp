@@ -9,6 +9,7 @@ import com.muse.xiangta.modle.custommsg.CustomMsgOpenVip;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
 import com.muse.xiangta.modle.custommsg.CustomMsgRedEnvelopes;
+import com.muse.xiangta.modle.custommsg.CustomMsgSpecialEffects;
 import com.muse.xiangta.modle.custommsg.CustomMsgVideoCall;
 import com.muse.xiangta.modle.custommsg.CustomMsgVideoCallEnd;
 import com.muse.xiangta.modle.custommsg.CustomMsgVideoCallReply;
@@ -163,6 +164,8 @@ public class LiveConstant {
         mapCustomMsgClass.put(CustomMsgType.CY_CHAT_CAIQUAN, CustomMsgGuessing.class);
         //筛子
         mapCustomMsgClass.put(CustomMsgType.CY_CHAT_SHAIZI, CustomMsgDice.class);
+        //特效
+        mapCustomMsgClass.put(CustomMsgType.MSG_APPROACH, CustomMsgSpecialEffects.class);
     }
 
     /**

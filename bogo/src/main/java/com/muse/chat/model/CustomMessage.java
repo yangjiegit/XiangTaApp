@@ -92,6 +92,10 @@ public class CustomMessage extends Message {
                 //骰子
                 message = customMsg.parseToTIMMessage(message);
                 break;
+            case LiveConstant.CustomMsgType.MSG_APPROACH:
+                //特效
+                message = customMsg.parseToTIMMessage(message);
+                break;
             default:
                 break;
         }

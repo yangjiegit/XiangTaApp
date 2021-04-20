@@ -27,6 +27,16 @@ public class ConfigModel {
      */
     private String group_id;
 
+    private String car;
+
+
+    public String getCar() {
+        return car;
+    }
+
+    public void setCar(String car) {
+        this.car = car;
+    }
 
     private CustomServiceUser custom_service_user;
 
@@ -426,6 +436,7 @@ public class ConfigModel {
         RequestConfig.getConfigObj().setCurrency(configObj.getCurrency_name());
         RequestConfig.getConfigObj().setCustom_service_phone(configObj.getCustom_service_phone());
         RequestConfig.getConfigObj().setCustom_service_user(configObj.getCustom_service_user());
+        RequestConfig.getConfigObj().setCar(configObj.getCar());
 
         JsonData jsonData = new JsonData();
         jsonData.setKey(SAVE_CONFIG_INFO_KEY);

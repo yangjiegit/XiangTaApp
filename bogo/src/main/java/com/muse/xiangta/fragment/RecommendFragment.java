@@ -174,10 +174,11 @@ public class RecommendFragment extends BaseListFragment2<TargetUserData> {
                             userCenterData = new Gson().fromJson(s, UserCenterData.class);
                             if (userCenterData.getCode() == 1) {
                                 UserModel userModel = SaveData.getInstance().getUserInfo();
-//                            userModel.setIs_open_do_not_disturb(userCenterData.getIs_open_do_not_disturb());
                                 userModel.setAvatar(userCenterData.getData().getAvatar());
                                 userModel.setUser_nickname(userCenterData.getData().getUser_nickname());
+                                userModel.setCar(userCenterData.getData().getCar());
                                 SaveData.getInstance().saveData(userModel);
+                                SPHelper.setObjectToShare(getContext(), userCenterData, "user_bean");
                             }
                         }
                     }

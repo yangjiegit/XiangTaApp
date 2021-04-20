@@ -108,14 +108,17 @@ public class MyCarActivity extends BaseActivity {
                     if (entity.get(0).getStatus() == 0) {
                         //没有骑
                         tv_month1.setVisibility(View.GONE);
-                    } else if (entity.get(1).getStatus() == 0) {
+                    }
+                    if (entity.get(1).getStatus() == 0) {
                         //没有骑
                         tv_month2.setVisibility(View.GONE);
-                    } else if (entity.get(0).getStatus() == 1) {
+                    }
+                    if (entity.get(0).getStatus() == 1) {
                         //骑
                         tv_month1.setVisibility(View.VISIBLE);
                         tv_month1.setText("已选中");
-                    } else if (entity.get(1).getStatus() == 1) {
+                    }
+                    if (entity.get(1).getStatus() == 1) {
                         //骑
                         tv_month2.setVisibility(View.VISIBLE);
                         tv_month2.setText("已选中");
@@ -178,7 +181,7 @@ public class MyCarActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 finish();
                 break;

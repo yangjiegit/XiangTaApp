@@ -67,6 +67,8 @@ import com.muse.xiangta.json.JsonRequest;
 import com.muse.xiangta.json.JsonRequestDoPrivateSendGif;
 import com.muse.xiangta.json.JsonRequestDoPrivateSendGuessing;
 import com.muse.xiangta.json.JsonRequestDoPrivateSendRedEnvelopes;
+import com.muse.xiangta.json.JsonRequestDoPrivateSendSpecialEffects;
+import com.muse.xiangta.json.jsonmodle.UserCenterData;
 import com.muse.xiangta.manage.SaveData;
 import com.muse.xiangta.modle.custommsg.CustomMsg;
 import com.muse.xiangta.modle.custommsg.CustomMsgDice;
@@ -85,6 +87,7 @@ import com.muse.xiangta.ui.RedEnvelopesDetailsActivity;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.ui.view.LastInputEditText;
 import com.muse.xiangta.utils.GlideImgManager;
+import com.muse.xiangta.utils.SPHelper;
 import com.muse.xiangta.utils.Utils;
 import com.qmuiteam.qmui.BuildConfig;
 import com.tencent.imsdk.TIMConversationType;
@@ -216,7 +219,6 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         StatusBarUtil.setColor(this, getResources().getColor(R.color.white), 0);
         StatusBarUtil.setLightMode(this);
 
-
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         identify = getIntent().getStringExtra("identify");
         userName = getIntent().getStringExtra("user_nickname");
@@ -228,12 +230,10 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
             dataBean = (FamilyBean.DataBean) getIntent().getSerializableExtra("dataBean");
         }
 
-
         if (null != dataBean) {
             //家族发消息
             activation("1");
         }
-
 
         fl_layout = findViewById(R.id.fl_layout);
 
@@ -335,17 +335,9 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         }
         voiceSendingView = (VoiceSendingView) findViewById(R.id.voice_sending);
 
-
-//        if (isAuth == 1) {
-//            mIvGift.setVisibility(View.GONE);
-//        }
-
-//        if (follow == 1) {
-//            attributeCv.setVisibility(View.GONE);
-//        } else {
-//            attributeCv.setVisibility(View.VISIBLE);
-//        }
         CuckooApplication.getInstances().setInPrivateChatPage(true);
+
+        Approach();
     }
 
     @Override
@@ -356,6 +348,20 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     @Override
     protected void initData() {
 
+    }
+
+    private void Approach() {
+        UserCenterData userCenterData = (UserCenterData) SPHelper.getObjectFromShare(ChatActivity2.this, "user_bean");
+        JsonRequestDoPrivateSendSpecialEffects.SendBean sendBean = new JsonRequestDoPrivateSendSpecialEffects.SendBean();
+        sendBean.setTo_user_id(uId);
+        sendBean.setTo_msg(userCenterData.getData().getUser_nickname());
+        sendBean.setProp_icon(userCenterData.getData().getAvatar());
+        sendBean.setSelfcar(userCenterData.getData().getCar());
+        sendBean.setGroupID(identify);
+        CustomMsgSpecialEffects customMsgSpecialEffects = new CustomMsgSpecialEffects();
+        customMsgSpecialEffects.fillData(sendBean);
+        Message message = new CustomMessage(customMsgSpecialEffects, LiveConstant.CustomMsgType.MSG_APPROACH);
+        presenter.sendMessage(message.getMessage());
     }
 
     @Override

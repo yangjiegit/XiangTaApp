@@ -19,10 +19,19 @@ public class UserModel implements Parcelable {
     private String sdkappid;
     private int is_reg_perfect;
     private String user_sign;
-//    private String is_open_do_not_disturb;
+    //    private String is_open_do_not_disturb;
     private String level;
     private String noble;
     private String follow;
+    private String car;
+
+    public String getCar() {
+        return car;
+    }
+
+    public void setCar(String car) {
+        this.car = car;
+    }
 
     public String getNoble() {
         return noble;
@@ -75,7 +84,6 @@ public class UserModel implements Parcelable {
     public int getSex() {
         return sex;
     }
-
 
 
     public void setSex(int sex) {
@@ -150,6 +158,7 @@ public class UserModel implements Parcelable {
         dest.writeString(this.sdkappid);
         dest.writeInt(this.is_reg_perfect);
         dest.writeString(this.user_sign);
+        dest.writeString(this.car);
 //        dest.writeString(this.is_open_do_not_disturb);
     }
 
@@ -163,6 +172,7 @@ public class UserModel implements Parcelable {
         this.sdkappid = in.readString();
         this.is_reg_perfect = in.readInt();
         this.user_sign = in.readString();
+        this.car = in.readString();
 //        this.is_open_do_not_disturb = in.readString();
     }
 

@@ -23,6 +23,7 @@ public class RequestConfig {
     private String systemMessage;//系统公告消息
     private String splashUrl;
     private String splashImage;
+    private String car;
     private ConfigModel.CustomServiceUser custom_service_user;
 
     public ConfigModel.CustomServiceUser getCustom_service_user() {
@@ -180,6 +181,15 @@ public class RequestConfig {
         this.splashImage = splashImage;
     }
 
+
+    public String getCar() {
+        return car;
+    }
+
+    public void setCar(String car) {
+        this.car = car;
+    }
+
     public String getMainSystemMessage() {
 
         return systemMessage;
@@ -297,13 +307,15 @@ public class RequestConfig {
         super();
     }
 
-    public RequestConfig(long requestIntervalIsOnLine, String currency, String ogorqAppId, String appCertificate, String aisleName, String groupId) {
+    public RequestConfig(long requestIntervalIsOnLine, String currency, String ogorqAppId, String appCertificate, String aisleName, String groupId
+            , String car) {
         this.requestIntervalIsOnLine = requestIntervalIsOnLine;
         this.currency = currency;
         this.app_qgorq_key = ogorqAppId;
         this.app_certificate = appCertificate;
         this.aisleName = aisleName;
         this.groupId = groupId;
+        this.car = car;
     }
 
     public int getHas_dirty_words() {

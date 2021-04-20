@@ -9,11 +9,11 @@ import com.muse.xiangta.json.JsonRequestDoPrivateSendSpecialEffects;
  */
 public class CustomMsgSpecialEffects extends CustomMsg {
 
-    private String to_user_id; // 标题
-    private String to_msg; // 红包数量
-    private String prop_icon; // 红包金额
-    private String selfcar; // 红包类型
-    private String groupID; // 红包ID
+    private String to_user_id; //
+    private String to_msg; //
+    private String prop_icon; //
+    private String selfcar; //
+    private String groupID; //
 
     public CustomMsgSpecialEffects() {
         super();
