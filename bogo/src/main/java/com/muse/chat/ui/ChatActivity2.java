@@ -1,5 +1,6 @@
 package com.muse.chat.ui;
 
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -24,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -81,6 +84,7 @@ import com.muse.xiangta.ui.RankingListActivity;
 import com.muse.xiangta.ui.RedEnvelopesDetailsActivity;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.ui.view.LastInputEditText;
+import com.muse.xiangta.utils.GlideImgManager;
 import com.muse.xiangta.utils.Utils;
 import com.qmuiteam.qmui.BuildConfig;
 import com.tencent.imsdk.TIMConversationType;
@@ -117,14 +121,12 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     @BindView(R.id.chat_attribute_card_view)
     CardView attributeCv;
 
-    private ImageView iv_gif;
+    private FrameLayout fl_layout;
 
-    private static final String TAG = "ChatActivity";
     public static final int SEND_TEXT_MESSAGE = 1;
     public static final int SEND_VOICE_MESSAGE = 2;
     public static final int SEND_IMAGE_MESSAGE = 3;
     public static final int SEND_FILE_MESSAGE = 4;
-    public static final int SEND_VIDEO_MESSAGE = 5;
 
     private List<Message2> messageList = new ArrayList<>();
     private ChatAdapter2 adapter;
@@ -133,7 +135,6 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     private ChatInput2 input;
     private GiftBottomDialog giftBottomDialog;
 
-    private ImageView mIvPrivateChat, mIvGift, mIvVideo;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int IMAGE_STORE = 200;
     private static final int FILE_CODE = 300;
@@ -147,7 +148,6 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     private String family_id;
     private String userName;
     private String identifyStr = "";
-    //    private String avatar;
     private RecorderUtil recorder = new RecorderUtil();
     private TIMConversationType type;
     private FamilyBean.DataBean dataBean;
@@ -156,12 +156,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     private String[] caiquanStr = {"ysh_chat_shitou", "ysh_chat_jiandao", "ysh_chat_bu"};
     private String[] shaiziStr = {"ysh_chat_dian1", "ysh_chat_dian2", "ysh_chat_dian3", "ysh_chat_dian4", "ysh_chat_dian5", "ysh_chat_dian6"};
 
-    //    private int isPay;
-//    private String payCoin;
-//    private int sex;
-//    private int isAuth;
     private TemplateTitle title;
-//    private int follow;
 
 
     private Handler handler = new Handler() {
@@ -170,7 +165,8 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
             super.handleMessage(msg);
             switch (msg.what) {
                 case 10:
-                    iv_gif.setVisibility(View.GONE);
+                    fl_layout.removeAllViews();
+                    fl_layout.setVisibility(View.GONE);
                     break;
             }
         }
@@ -238,14 +234,8 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
             activation("1");
         }
 
-        iv_gif = findViewById(R.id.iv_gif);
-//        mIvPrivateChat = findViewById(R.id.iv_private_img);
-//        mIvGift = findViewById(R.id.iv_gift);
-//        mIvVideo = findViewById(R.id.iv_video);
-//        findViewById(R.id.iv_reward).setOnClickListener(this);
-//        mIvPrivateChat.setOnClickListener(this);
-//        mIvGift.setOnClickListener(this);
-//        mIvVideo.setOnClickListener(this);
+
+        fl_layout = findViewById(R.id.fl_layout);
 
         input = (ChatInput2) findViewById(R.id.input_panel);
         input.setChatView(this);
@@ -485,29 +475,34 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                     } else {
                         //TODO 进场特效
                         CustomMsgSpecialEffects customMsgSpecialEffects = parseToModel(message, CustomMsgSpecialEffects.class);
-                        Log.d("ret", "joker   进场特效" + customMsgSpecialEffects.getSelfcar() + "     " +
-                                "     " + customMsgSpecialEffects.getTo_msg() + "    id  " + customMsgSpecialEffects.getGroupID());
-                        Log.d("ret", "joker    传过来的 ==identify " + identify + "   family_id" + family_id);
                         if (customMsgSpecialEffects.getGroupID().equals(identify)) {
-                            iv_gif.setVisibility(View.VISIBLE);
+                            fl_layout.setVisibility(View.VISIBLE);
+                            View view = LayoutInflater.from(ChatActivity2.this).inflate(R.layout.fl_donghua, null);
+
+                            ImageView iv_gif = view.findViewById(R.id.iv_gif);
+                            ImageView iv_bg = view.findViewById(R.id.iv_bg);
+                            ImageView iv_head = view.findViewById(R.id.iv_head);
+                            TextView tv_name = view.findViewById(R.id.tv_name);
+                            FrameLayout fl_name = view.findViewById(R.id.fl_name);
                             Glide.with(ChatActivity2.this).asGif().
                                     load(customMsgSpecialEffects.getSelfcar()).into(iv_gif);
+                            Glide.with(ChatActivity2.this).asGif().
+                                    load("http://xta.zzmzrj.com/%E8%BF%9B%E5%9C%BA1.gif").into(iv_bg);
+                            GlideImgManager.glideLoader(ChatActivity2.this,
+                                    customMsgSpecialEffects.getProp_icon()
+                                    , iv_head, 0);
+                            tv_name.setText(customMsgSpecialEffects.getTo_msg() + ":来了");
+                            int kuan = getWindowManager().getDefaultDisplay().getWidth();
+                            int kuan2 = fl_name.getWidth();
+                            int kuan3 = kuan2 - kuan;
+                            ObjectAnimator.ofFloat(fl_name, "translationX", kuan3 + 350
+                            ).setDuration(2000).start();
 
-                            new Thread() {
-                                @Override
-                                public void run() {
-                                    super.run();
-                                    try {
-                                        sleep(4000);
-//                                    iv_gif.setVisibility(View.GONE);
-                                        android.os.Message msg = new android.os.Message();
-                                        msg.what = 10;
-                                        handler.sendMessage(msg);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }.start();
+                            fl_layout.addView(view);
+
+                            android.os.Message msg = new android.os.Message();
+                            msg.what = 10;
+                            handler.sendMessageDelayed(msg, 4000);
                         }
                     }
                 } else {
