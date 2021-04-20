@@ -352,6 +352,9 @@
             android:name=".ui.DeclarationActivity"
             android:screenOrientation="portrait" /> <!-- 交友宣言 -->
         <activity
+            android:name=".ui.ApplicationListActivity"
+            android:screenOrientation="portrait" /> <!-- 申请列表 -->
+        <activity
             android:name=".ui.VideoDatingActivity"
             android:screenOrientation="portrait" /> <!-- 交友宣言 -->
         <activity

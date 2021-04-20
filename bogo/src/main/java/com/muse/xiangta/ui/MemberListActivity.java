@@ -33,7 +33,7 @@ import okhttp3.Response;
 
 public class MemberListActivity extends BaseActivity {
 
-    private String family_id;
+    private String family_id, id;
     private int page = 1;
     private int limit = 10;
 
@@ -70,6 +70,18 @@ public class MemberListActivity extends BaseActivity {
     @Override
     protected void initData() {
         family_id = getIntent().getStringExtra("family_id");
+        id = getIntent().getStringExtra("id");
+
+        if (!StringUtils.isEmpty(id)) {
+            if (id.equals(uId)) {
+                //是族长
+                tv_sq.setVisibility(View.VISIBLE);
+            } else {
+                tv_sq.setVisibility(View.GONE);
+            }
+        } else {
+            tv_sq.setVisibility(View.GONE);
+        }
 
         initRecyclerView();
 
@@ -157,7 +169,8 @@ public class MemberListActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.tv_sq:
                 //申请列表
-
+                startActivity(new Intent(this, ApplicationListActivity.class)
+                        .putExtra("family_id", family_id));
                 break;
             case R.id.iv_back:
                 finish();

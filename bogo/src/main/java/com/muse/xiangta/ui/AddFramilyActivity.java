@@ -2,9 +2,12 @@ package com.muse.xiangta.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -44,6 +47,8 @@ public class AddFramilyActivity extends BaseActivity {
     LastInputEditText et_name;
     @BindView(R.id.et_content)
     LastInputEditText et_content;
+    @BindView(R.id.tv_number)
+    TextView tv_number;
 
     private List<File> mFileList = new ArrayList<>();
 
@@ -186,7 +191,22 @@ public class AddFramilyActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        et_content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                tv_number.setText(editable.length() + "/100");
+            }
+        });
     }
 
     @Override

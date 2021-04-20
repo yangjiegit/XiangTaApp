@@ -2974,5 +2974,19 @@ public class Api {
                 .execute(stringCallback);
     }
 
+    /*
+     * 获取待审核成员列表
+     * */
+    public static void getAuditMemberList(String uid, String token, String family_id, String page, String limit, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/family/get_audit_member_list")
+                .params("uid", uid)
+                .params("token", token)
+                .params("family_id", family_id)
+                .params("page", page)
+                .params("limit", limit)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
 
 }

@@ -129,7 +129,8 @@ public class FamilyDetailsActivity extends BaseActivity {
             @Override
             public void onItemClick(View v, int position) {
                 startActivity(new Intent(FamilyDetailsActivity.this, MemberListActivity.class)
-                        .putExtra("family_id", String.valueOf(mData.getFamily_id())));
+                        .putExtra("family_id", String.valueOf(mData.getFamily_id()))
+                        .putExtra("id", String.valueOf(mData.getOwner().getId())));
             }
         });
     }
