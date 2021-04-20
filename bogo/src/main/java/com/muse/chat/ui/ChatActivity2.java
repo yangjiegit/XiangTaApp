@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.widget.CardView;
 import android.text.SpannableStringBuilder;
@@ -29,6 +30,7 @@ import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.bumptech.glide.Glide;
 import com.lzy.okgo.callback.StringCallback;
 import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.muse.chat.adapter.ChatAdapter2;
@@ -69,6 +71,7 @@ import com.muse.xiangta.modle.custommsg.CustomMsgGuessing;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivateGift;
 import com.muse.xiangta.modle.custommsg.CustomMsgPrivatePhoto;
 import com.muse.xiangta.modle.custommsg.CustomMsgRedEnvelopes;
+import com.muse.xiangta.modle.custommsg.CustomMsgSpecialEffects;
 import com.muse.xiangta.modle.custommsg.InputListenerMsgText;
 import com.muse.xiangta.ui.FamilyDetailsActivity;
 import com.muse.xiangta.ui.MemberGroupListActivity;
@@ -114,6 +117,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     @BindView(R.id.chat_attribute_card_view)
     CardView attributeCv;
 
+    private ImageView iv_gif;
 
     private static final String TAG = "ChatActivity";
     public static final int SEND_TEXT_MESSAGE = 1;
@@ -158,6 +162,19 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
 //    private int isAuth;
     private TemplateTitle title;
 //    private int follow;
+
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 10:
+                    iv_gif.setVisibility(View.GONE);
+                    break;
+            }
+        }
+    };
 
     public static void navToChat(Context context, String identify, String userName, TIMConversationType type) {
         Intent intent = new Intent(context, ChatActivity2.class);
@@ -221,6 +238,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
             activation("1");
         }
 
+        iv_gif = findViewById(R.id.iv_gif);
 //        mIvPrivateChat = findViewById(R.id.iv_private_img);
 //        mIvGift = findViewById(R.id.iv_gift);
 //        mIvVideo = findViewById(R.id.iv_video);
@@ -463,6 +481,33 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                             adapter.notifyDataSetChanged();
                             listView.setSelection(adapter.getCount() - 1);
 
+                        }
+                    } else {
+                        //TODO 进场特效
+                        CustomMsgSpecialEffects customMsgSpecialEffects = parseToModel(message, CustomMsgSpecialEffects.class);
+                        Log.d("ret", "joker   进场特效" + customMsgSpecialEffects.getSelfcar() + "     " +
+                                "     " + customMsgSpecialEffects.getTo_msg() + "    id  " + customMsgSpecialEffects.getGroupID());
+                        Log.d("ret", "joker    传过来的 ==identify " + identify + "   family_id" + family_id);
+                        if (customMsgSpecialEffects.getGroupID().equals(identify)) {
+                            iv_gif.setVisibility(View.VISIBLE);
+                            Glide.with(ChatActivity2.this).asGif().
+                                    load(customMsgSpecialEffects.getSelfcar()).into(iv_gif);
+
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    super.run();
+                                    try {
+                                        sleep(4000);
+//                                    iv_gif.setVisibility(View.GONE);
+                                        android.os.Message msg = new android.os.Message();
+                                        msg.what = 10;
+                                        handler.sendMessage(msg);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }.start();
                         }
                     }
                 } else {
@@ -1435,4 +1480,6 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
         }
         return model;
     }
+
+
 }
