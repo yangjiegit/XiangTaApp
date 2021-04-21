@@ -39,7 +39,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/fl_layout"
             android:layout_centerHorizontal="true"
+            android:ellipsize="end"
             android:gravity="center"
+            android:maxLength="5"
             android:textColor="@color/black"
             android:textSize="@dimen/dp_10"
             tools:text="用户昵称" />
