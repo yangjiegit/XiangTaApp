@@ -2,6 +2,7 @@ package com.muse.xiangta.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -146,7 +147,21 @@ public class FamilyDetailsActivity extends BaseActivity {
 
         tv_age.setText(mData.getOwner().getAge() + "");
 
-        tv_number.setText("今日活跃度:");
+
+        Drawable nan = getResources().getDrawable(R.mipmap.img_nan_1);
+        //调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
+        nan.setBounds(0, 0, nan.getMinimumWidth(), nan.getMinimumHeight());
+
+        Drawable nv = getResources().getDrawable(R.mipmap.img_nv_1);
+        //调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
+        nv.setBounds(0, 0, nv.getMinimumWidth(), nv.getMinimumHeight());
+        if (mData.getOwner().getSex() == 1) {
+            tv_age.setCompoundDrawables(nan, null, null, null); //设置左图标
+        } else {
+            tv_age.setCompoundDrawables(nv, null, null, null); //设置左图标
+        }
+
+        tv_number.setText("今日活跃度:" + mData.getOwner().getUser_activation_key());
 
         page = 1;
         getMemberListData(String.valueOf(page));
@@ -167,6 +182,8 @@ public class FamilyDetailsActivity extends BaseActivity {
                         }
                         mAdapter.notifyDataSetChanged();
                         tv_name_number.setText("家族成员(" + mList.size() + ")");
+                    } else {
+                        tv_name_number.setText("家族成员");
                     }
                 }
             }
@@ -239,8 +256,9 @@ public class FamilyDetailsActivity extends BaseActivity {
                 if (!StringUtils.isEmpty(s)) {
                     try {
                         int code = new JSONObject(s).getInt("code");
-                        if (code == 1) {
-                            showToastMsg("申请成功");
+                        String msg = new JSONObject(s).getString("msg");
+                        if (code == 0) {
+                            showToastMsg(msg);
                             finish();
                         } else {
                             showToastMsg(new JSONObject(s).getString("msg"));

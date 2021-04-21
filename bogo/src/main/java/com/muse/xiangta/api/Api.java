@@ -2988,5 +2988,19 @@ public class Api {
                 .execute(stringCallback);
     }
 
+    /*
+     * 家族成员审核接口
+     * */
+    public static void familyAudit(String uid, String token, String family_id, String user_id, String status, StringCallback stringCallback) {
+        OkGo.post(AppConfig.API_DOMAIN + "/family/audit")
+                .params("uid", uid)
+                .params("token", token)
+                .params("family_id", family_id)
+                .params("user_id", user_id)
+                .params("status", status)
+                .cacheMode(CacheMode.DEFAULT)
+                .execute(stringCallback);
+    }
+
 
 }
