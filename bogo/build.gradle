@@ -77,7 +77,7 @@ android {
         debug {
             zipAlignEnabled false
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro','webank-KYC-demo-proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'webank-KYC-demo-proguard-rules.pro'
 //            signingConfig signingConfigs.release
         }
 
@@ -138,6 +138,7 @@ dependencies {
     implementation project(':timImUI')
     implementation project(':utilcode')
     implementation project(':faceunity')
+    implementation project(':easythread')
 //    implementation project(':KnowYourCustomer')
 
     implementation(name: 'LiteAVSDK_UGC_3.5.2170', ext: 'aar')

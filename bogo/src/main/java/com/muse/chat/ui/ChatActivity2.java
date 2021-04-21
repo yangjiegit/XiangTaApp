@@ -34,6 +34,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.lzh.easythread.EasyThread;
 import com.lzy.okgo.callback.StringCallback;
 import com.maning.imagebrowserlibrary.utils.StatusBarUtil;
 import com.muse.chat.adapter.ChatAdapter2;
@@ -86,6 +87,7 @@ import com.muse.xiangta.ui.RankingListActivity;
 import com.muse.xiangta.ui.RedEnvelopesDetailsActivity;
 import com.muse.xiangta.ui.common.Common;
 import com.muse.xiangta.ui.view.LastInputEditText;
+import com.muse.xiangta.utils.DownLoadExecutor;
 import com.muse.xiangta.utils.GlideImgManager;
 import com.muse.xiangta.utils.SPHelper;
 import com.muse.xiangta.utils.Utils;
@@ -114,6 +116,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -144,6 +149,8 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     private static final int IMAGE_PREVIEW = 400;
     private static final int VIDEO_RECORD = 500;
 
+    private int message_number = 0;
+
     public static final int RESULT_SELECT_PRIVATE_PHOTO = 0x11;
     private Uri fileUri;
     private VoiceSendingView voiceSendingView;
@@ -155,12 +162,12 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     private TIMConversationType type;
     private FamilyBean.DataBean dataBean;
     private String titleStr;
+    public ReadWriteLock rwl = new ReentrantReadWriteLock();
 
     private String[] caiquanStr = {"ysh_chat_shitou", "ysh_chat_jiandao", "ysh_chat_bu"};
     private String[] shaiziStr = {"ysh_chat_dian1", "ysh_chat_dian2", "ysh_chat_dian3", "ysh_chat_dian4", "ysh_chat_dian5", "ysh_chat_dian6"};
 
     private TemplateTitle title;
-
 
     private Handler handler = new Handler() {
         @Override
@@ -484,7 +491,6 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                         if (customMsgSpecialEffects.getGroupID().equals(identify)) {
                             fl_layout.setVisibility(View.VISIBLE);
                             View view = LayoutInflater.from(ChatActivity2.this).inflate(R.layout.fl_donghua, null);
-
                             ImageView iv_gif = view.findViewById(R.id.iv_gif);
                             ImageView iv_bg = view.findViewById(R.id.iv_bg);
                             ImageView iv_head = view.findViewById(R.id.iv_head);
@@ -503,13 +509,11 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                             int kuan3 = kuan2 - kuan;
                             ObjectAnimator.ofFloat(fl_name, "translationX", kuan3 + 350
                             ).setDuration(2000).start();
-
                             fl_layout.addView(view);
-
-                            android.os.Message msg = new android.os.Message();
-                            msg.what = 10;
-                            handler.sendMessageDelayed(msg, 4000);
                         }
+                        android.os.Message msg = new android.os.Message();
+                        msg.what = 10;
+                        handler.sendMessageDelayed(msg, 4000);
                     }
                 } else {
                     Message2 mMessage = MessageFactory2.getMessage(message);
