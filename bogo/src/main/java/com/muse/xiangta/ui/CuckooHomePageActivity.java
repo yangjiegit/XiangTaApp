@@ -808,7 +808,7 @@ public class CuckooHomePageActivity extends BaseActivity implements ViewPager.On
         }
 
 //        fansNumber.setText(getString(R.string.fans) + ":" + targetUserData.getAttention_fans()); TODO 赋值
-        fansNumber.setText("LV." + targetUserData.getData().getAttention_fans() + "");
+        fansNumber.setText(targetUserData.getData().getAttention_fans() + "");
 
         if (targetUserData.getData().getSex().equals("1")) {
             iv_sex.setImageResource(R.mipmap.img_xingbienan2);
