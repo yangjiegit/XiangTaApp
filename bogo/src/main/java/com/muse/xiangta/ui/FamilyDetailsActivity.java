@@ -107,6 +107,14 @@ public class FamilyDetailsActivity extends BaseActivity {
         setData();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        page = 1;
+        getMemberListData(String.valueOf(page));
+    }
+
     private void initRecyclerView() {
         rv_data.setLayoutManager(new LinearLayoutManager(this, LinearLayout.HORIZONTAL, false));
 
@@ -173,6 +181,9 @@ public class FamilyDetailsActivity extends BaseActivity {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 Log.d("ret", "joker    " + s);
+                if (page.equals("1")) {
+                    mList.clear();
+                }
                 if (!StringUtils.isEmpty(s)) {
                     MemberItemBean memberItemBean = new Gson().fromJson(s, MemberItemBean.class);
                     if (null != memberItemBean.getData() &&
@@ -180,12 +191,12 @@ public class FamilyDetailsActivity extends BaseActivity {
                         for (int i = 0; i < memberItemBean.getData().size(); i++) {
                             mList.add(memberItemBean.getData().get(i));
                         }
-                        mAdapter.notifyDataSetChanged();
                         tv_name_number.setText("家族成员(" + mList.size() + ")");
                     } else {
                         tv_name_number.setText("家族成员");
                     }
                 }
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override

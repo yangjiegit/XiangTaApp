@@ -170,6 +170,9 @@ public class ApplicationListActivity extends BaseActivity {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 sw_refresh.setRefreshing(false);
+                if (page == 1) {
+                    mList.clear();
+                }
                 if (!StringUtils.isEmpty(s)) {
                     AuditMemberBean auditMemberBean = new Gson().fromJson(s, AuditMemberBean.class);
                     List<AuditMemberBean.DataBean> list = new ArrayList<>();
@@ -184,8 +187,8 @@ public class ApplicationListActivity extends BaseActivity {
                             mAdapter.refreshDatas(list, false);
                         }
                     }
-                    mAdapter.notifyDataSetChanged();
                 }
+                mAdapter.notifyDataSetChanged();
             }
         });
     }

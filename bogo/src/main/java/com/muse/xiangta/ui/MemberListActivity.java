@@ -68,6 +68,14 @@ public class MemberListActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        page = 1;
+        getMemberListData(page);
+    }
+
+    @Override
     protected void initData() {
         family_id = getIntent().getStringExtra("family_id");
         id = getIntent().getStringExtra("id");
@@ -85,6 +93,7 @@ public class MemberListActivity extends BaseActivity {
 
         initRecyclerView();
 
+        page = 1;
         getMemberListData(page);
 
         sw_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -184,6 +193,9 @@ public class MemberListActivity extends BaseActivity {
             public void onSuccess(String s, Call call, Response response) {
                 Log.d("ret", "joker    " + s);
                 sw_refresh.setRefreshing(false);
+                if (page == 1) {
+                    mList.clear();
+                }
                 if (!StringUtils.isEmpty(s)) {
                     MemberItemBean memberItemBean = new Gson().fromJson(s, MemberItemBean.class);
                     List<MemberItemBean.DataBean> list = new ArrayList<>();
@@ -199,6 +211,7 @@ public class MemberListActivity extends BaseActivity {
                         }
                     }
                 }
+                mAdapter.notifyDataSetChanged();
             }
         });
     }
