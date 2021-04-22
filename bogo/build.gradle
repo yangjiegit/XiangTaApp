@@ -14,8 +14,8 @@ android {
         applicationId "com.muse.xiangta"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 25
-        versionName "1.1.9"
+        versionCode 26
+        versionName "1.2.0"
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

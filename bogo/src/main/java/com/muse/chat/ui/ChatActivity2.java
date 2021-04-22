@@ -528,7 +528,9 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
                     } else {
                         //TODO 进场特效
                         CustomMsgSpecialEffects customMsgSpecialEffects = parseToModel(message, CustomMsgSpecialEffects.class);
-                        mMsgList.add(customMsgSpecialEffects);
+                        if (!customMsgSpecialEffects.getTo_user_id().equals(uId)) {
+                            mMsgList.add(customMsgSpecialEffects);
+                        }
                     }
                 } else {
                     Message2 mMessage = MessageFactory2.getMessage(message);
