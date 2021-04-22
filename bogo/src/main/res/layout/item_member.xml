@@ -29,6 +29,7 @@
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_10"
+                android:visibility="gone"
                 tools:text="长老" />
 
         </FrameLayout>

@@ -133,10 +133,10 @@ public class MemberListActivity extends BaseActivity {
                 nv.setBounds(0, 0, nv.getMinimumWidth(), nv.getMinimumHeight());
 
                 if (entity.getUser().getSex() == 1) {
-                    tv_age.setBackgroundResource(R.drawable.bg_main_nan);
+                    tv_age.setBackgroundResource(R.drawable.bg_main_lan_1);
                     tv_age.setCompoundDrawables(nan, null, null, null); //设置左图标
                 } else {
-                    tv_age.setBackgroundResource(R.drawable.bg_main_nv);
+                    tv_age.setBackgroundResource(R.drawable.bg_main_red_1);
                     tv_age.setCompoundDrawables(nv, null, null, null); //设置左图标
                 }
                 ImageView iv_vip = holder.getView(R.id.iv_vip);

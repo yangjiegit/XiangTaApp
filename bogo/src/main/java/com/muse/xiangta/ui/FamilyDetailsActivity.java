@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -67,6 +68,8 @@ public class FamilyDetailsActivity extends BaseActivity {
     ImageView iv_renzheng;
 
     private FamilyBean.DataBean mData;
+
+    private float scrollX, scrollY;
 
     private int page = 1;
     private int limit = 10;
@@ -142,6 +145,25 @@ public class FamilyDetailsActivity extends BaseActivity {
                 startActivity(new Intent(FamilyDetailsActivity.this, MemberListActivity.class)
                         .putExtra("family_id", String.valueOf(mData.getFamily_id()))
                         .putExtra("id", String.valueOf(mData.getOwner().getId())));
+            }
+        });
+
+        rv_data.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    scrollX = event.getX();
+                    scrollY = event.getY();
+                }
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (v.getId() != 0 && Math.abs(scrollX - event.getX()) <= 5 && Math.abs(scrollY - event.getY()) <= 5) {
+                        //recyclerView空白处点击事件
+                        startActivity(new Intent(FamilyDetailsActivity.this, MemberListActivity.class)
+                                .putExtra("family_id", String.valueOf(mData.getFamily_id()))
+                                .putExtra("id", String.valueOf(mData.getOwner().getId())));
+                    }
+                }
+                return false;
             }
         });
     }

@@ -61,7 +61,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_3"
         android:layout_toRightOf="@+id/fl_head"
-        android:background="@drawable/bg_main_red5"
+        android:background="@drawable/bg_main_red_1"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         android:textColor="@color/white"
