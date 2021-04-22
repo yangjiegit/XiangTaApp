@@ -398,6 +398,7 @@ public class FamilyBean implements Serializable {
             private int level;
             private int noble_level;
             private int status;
+            private String noble;
             private int teacher;
             private int income;
             private int income_total;
@@ -480,6 +481,14 @@ public class FamilyBean implements Serializable {
             private int age;
             private String id_no;
             private String nob;
+
+            public String getNoble() {
+                return noble;
+            }
+
+            public void setNoble(String noble) {
+                this.noble = noble;
+            }
 
             public int getId() {
                 return id;

@@ -63,6 +63,8 @@ public class FamilyDetailsActivity extends BaseActivity {
     TextView tv_name_number;
     @BindView(R.id.iv_sm)
     ImageView iv_sm;
+    @BindView(R.id.iv_renzheng)
+    ImageView iv_renzheng;
 
     private FamilyBean.DataBean mData;
 
@@ -155,6 +157,11 @@ public class FamilyDetailsActivity extends BaseActivity {
 
         tv_age.setText(mData.getOwner().getAge() + "");
 
+        if (mData.getOwner().getIs_auth() == 1) {
+            iv_renzheng.setVisibility(View.VISIBLE);
+        } else {
+            iv_renzheng.setVisibility(View.GONE);
+        }
 
         Drawable nan = getResources().getDrawable(R.mipmap.img_nan_1);
         //调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
