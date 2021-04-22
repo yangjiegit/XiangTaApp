@@ -1445,8 +1445,6 @@ public class Api {
                 .params("uid", uid)
                 .params("token", token)
                 .params("page", page)
-                .params("to_user_id", uid)
-                .params("type", 2)
                 .params("action", "near")
                 .cacheMode(CacheMode.DEFAULT)
                 .execute(callback);
