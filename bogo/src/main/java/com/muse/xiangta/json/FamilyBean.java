@@ -79,6 +79,16 @@ public class FamilyBean implements Serializable {
         private String city;
         private String lat;
         private String lng;
+        private String user_activation;
+
+        public String getUser_activation() {
+            return user_activation;
+        }
+
+        public void setUser_activation(String user_activation) {
+            this.user_activation = user_activation;
+        }
+
         /**
          * id : 102712
          * user_type : 2
@@ -392,6 +402,7 @@ public class FamilyBean implements Serializable {
             private String last_login_ip;
             private String user_activation_key;
             private String mobile;
+            private String user_activation;
             private Object more;
             private String token;
             private String address;
@@ -481,6 +492,14 @@ public class FamilyBean implements Serializable {
             private int age;
             private String id_no;
             private String nob;
+
+            public String getUser_activation() {
+                return user_activation;
+            }
+
+            public void setUser_activation(String user_activation) {
+                this.user_activation = user_activation;
+            }
 
             public String getNoble() {
                 return noble;

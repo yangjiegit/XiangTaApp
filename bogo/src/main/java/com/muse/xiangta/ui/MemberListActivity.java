@@ -148,6 +148,12 @@ public class MemberListActivity extends BaseActivity {
                     GlideImgManager.loadImage(MemberListActivity.this,
                             entity.getUser().getNoble(), iv_vip);
                 }
+
+                if (!StringUtils.isEmpty(entity.getUser_activation())) {
+                    holder.setText(R.id.tv_number, "今日活跃度:" + entity.getUser_activation());
+                } else {
+                    holder.setText(R.id.tv_number, "今日活跃度:0");
+                }
             }
 
             @Override

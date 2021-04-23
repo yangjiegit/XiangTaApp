@@ -69,6 +69,7 @@ public class FamilyDetailsActivity extends BaseActivity {
 
     private FamilyBean.DataBean mData;
 
+    private MemberItemBean memberItemBean;
     private float scrollX, scrollY;
 
     private int page = 1;
@@ -198,7 +199,11 @@ public class FamilyDetailsActivity extends BaseActivity {
             tv_age.setCompoundDrawables(nv, null, null, null); //设置左图标
         }
 
-        tv_number.setText("今日活跃度:" + mData.getOwner().getUser_activation_key());
+//        if (!StringUtils.isEmpty(mData.getUser_activation())) {
+//            tv_number.setText("今日活跃度:" + mData.getUser_activation());
+//        } else {
+//            tv_number.setText("今日活跃度:0");
+//        }
 
         page = 1;
         getMemberListData(String.valueOf(page));
@@ -214,11 +219,22 @@ public class FamilyDetailsActivity extends BaseActivity {
                     mList.clear();
                 }
                 if (!StringUtils.isEmpty(s)) {
-                    MemberItemBean memberItemBean = new Gson().fromJson(s, MemberItemBean.class);
+                    memberItemBean = new Gson().fromJson(s, MemberItemBean.class);
                     if (null != memberItemBean.getData() &&
                             memberItemBean.getData().size() > 0) {
                         for (int i = 0; i < memberItemBean.getData().size(); i++) {
                             mList.add(memberItemBean.getData().get(i));
+                        }
+                        if (page.equals("1")) {
+                            if (mList.size() > 0) {
+                                if (mList.get(0).getUser().getId() == mData.getOwner().getId()) {
+                                    if (!StringUtils.isEmpty(mList.get(0).getUser_activation())) {
+                                        tv_number.setText("今日活跃度:" + mList.get(0).getUser_activation());
+                                    } else {
+                                        tv_number.setText("今日活跃度:0");
+                                    }
+                                }
+                            }
                         }
                         tv_name_number.setText("家族成员(" + mList.size() + ")");
                     } else {

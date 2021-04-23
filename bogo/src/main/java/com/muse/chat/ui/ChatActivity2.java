@@ -862,7 +862,7 @@ public class ChatActivity2 extends BaseActivity implements ChatView, View.OnClic
     }
 
     private void activation(String type) {
-        Api.activation(uId, uToken, type, family_id, new StringCallback() {
+        Api.activation(uId, uToken, type, String.valueOf(dataBean.getFamily_id()), new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
 

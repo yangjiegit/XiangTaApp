@@ -54,6 +54,7 @@ public class MemberItemBean implements Serializable {
         private int family_id;
         private int is_delete;
         private String create_time;
+        private String user_activation;
         /**
          * id : 102714
          * user_type : 2
@@ -166,6 +167,8 @@ public class MemberItemBean implements Serializable {
          * noble : http://xta.zzmzrj.com/admin/20210415/3c07a7780cac6c427a87fb0f1e65a577.png
          */
 
+
+
         private UserBean user;
 
         public int getId() {
@@ -216,6 +219,14 @@ public class MemberItemBean implements Serializable {
             this.user = user;
         }
 
+        public String getUser_activation() {
+            return user_activation;
+        }
+
+        public void setUser_activation(String user_activation) {
+            this.user_activation = user_activation;
+        }
+
         public static class UserBean implements Serializable{
             private int id;
             private int user_type;
@@ -237,6 +248,7 @@ public class MemberItemBean implements Serializable {
             private String signature;
             private String last_login_ip;
             private String user_activation_key;
+            private String user_activation;
             private String mobile;
             private Object more;
             private String token;
@@ -326,6 +338,14 @@ public class MemberItemBean implements Serializable {
             private int age;
             private String id_no;
             private String noble;
+
+            public String getUser_activation() {
+                return user_activation;
+            }
+
+            public void setUser_activation(String user_activation) {
+                this.user_activation = user_activation;
+            }
 
             public int getId() {
                 return id;
